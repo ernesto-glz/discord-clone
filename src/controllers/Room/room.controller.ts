@@ -14,4 +14,11 @@ export class RoomController {
     const rooms = await RoomService.getAllRooms(user._id.toString(), true);
     res.status(200).send(rooms);
   }
+
+  static async deleteRoom(req: Request, res: Response) {
+    const { user } = res.locals;
+    const { roomId } = req.params;
+    const deletedRoom = await RoomService.deleteRoom(roomId, user._id);
+    res.status(200).send(deletedRoom);
+  }
 }

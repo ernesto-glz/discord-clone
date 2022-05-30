@@ -11,5 +11,6 @@ export const ApiResponses = {
   REQUEST_NOT_FOUND: 'Request not found!',
   ERROR_CREATE_REQUEST: `Hm, didn't work. Double check that the capitalization, spelling, any spaces, and numbers are correct.`,
   ALREADY_FRIENDS: `You're already friends with that user!`,
-  REQUEST_ALREADY_EXISTS: 'Friend request already exists!'
+  REQUEST_ALREADY_EXISTS: 'Friend request already exists!',
+  ROOM_NOT_FOUND: "Room not found"
 };

@@ -3,10 +3,12 @@ import { CreateRoom } from 'interfaces/Room';
 import { RoomRepository } from 'repositories/room.repository';
 import { UserRepository } from 'repositories/user.repository';
 import { ApiResponses } from 'config/constants/api-responses';
+import { MessageRepository } from '../repositories/message.repository';
 
 export class RoomService {
   private static roomRepository = new RoomRepository();
   private static userRepository = new UserRepository();
+  private static messageRepository = new MessageRepository();
 
   static async getOrCreateRoom({ userId, receiverId }: CreateRoom) {
     const alreadyRoom = await this.roomRepository.checkExistence(userId, receiverId);
@@ -41,5 +43,19 @@ export class RoomService {
         return { ...room.toObject(), userInfo };
       })
     );
+  }
+
+  static async deleteRoom(roomId: string, userId: string) {
+    const room = await this.roomRepository.findOne({
+      _id: roomId, $or: [{ sender: userId }, { receiver: userId }]
+    });
+
+    if (!room) {
+      throw new ApiError(400, ApiResponses.ROOM_NOT_FOUND);
+    }
+
+    //first delete messages from the room
+    await this.messageRepository.deleteMany({ roomId: room._id });
+    return await room.delete();
   }
 }

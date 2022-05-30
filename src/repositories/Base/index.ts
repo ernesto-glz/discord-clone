@@ -52,4 +52,8 @@ export abstract class Repository<T> {
   async paginate(entityFilterQuery: FilterQuery<T>, options?: object) {
     return await this.entityModel.paginate(entityFilterQuery, options);
   }
+
+  async deleteMany(entityFilterQuery: FilterQuery<T>) {
+    return await this.entityModel.deleteMany(entityFilterQuery);
+  }
 }
