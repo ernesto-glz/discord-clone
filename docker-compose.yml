@@ -1,0 +1,30 @@
+version: '3.9'
+services:
+  discord-mongo-dev:
+    hostname: discord-mongo-dev
+    container_name: discord-mongo-dev
+    image: mongo
+    ports:
+      - '27017:27017'
+    tty: true
+    command: mongod --quiet --logpath /dev/null
+
+  discord-api-dev:
+    hostname: discord-api-dev
+    container_name: discord-api-dev
+    image: discord-api-dev
+    build:
+      context: .
+      dockerfile: .docker/development/Dockerfile
+    environment:
+      - PORT=4000
+      - MONGO_URI=mongodb://discord-mongo-dev:27017
+      - JWT_SECRET_KEY=development
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - '4000:4000'
+    tty: true
+    links:
+      - discord-mongo-dev
