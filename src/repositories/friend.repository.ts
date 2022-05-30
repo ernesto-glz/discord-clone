@@ -29,10 +29,10 @@ export class FriendRepository extends Repository<FriendDocument> {
   }
 
   async getFriends(userId: string) {
-    return await this.find({
+    return await this.findAndPopulate({
       $or: [{ from: userId }, { to: userId }],
       friend_status: FriendStatus.FRIEND
-    });
+    }, 'from', 'to');
   }
 
   async acceptFriendRequest(requestId: string) {

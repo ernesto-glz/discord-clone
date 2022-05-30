@@ -1,5 +1,4 @@
-import mongoose from 'mongoose';
-import { FilterQuery, Model, UpdateQuery } from 'mongoose';
+import mongoose, { FilterQuery, Model, UpdateQuery } from 'mongoose';
 
 export abstract class Repository<T> {
   protected constructor(
@@ -55,5 +54,16 @@ export abstract class Repository<T> {
 
   async deleteMany(entityFilterQuery: FilterQuery<T>) {
     return await this.entityModel.deleteMany(entityFilterQuery);
+  }
+
+  async findAndPopulate(
+    entityFilterQuery: FilterQuery<T>,
+    populateItem: string,
+    populateItemTwo?: string
+  ): Promise<T[] | null> {
+    if (populateItemTwo) {
+      return this.entityModel.find(entityFilterQuery).populate(populateItem).populate(populateItemTwo);
+    }
+    return this.entityModel.find(entityFilterQuery).populate(populateItem);
   }
 }
