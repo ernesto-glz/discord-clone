@@ -7,3 +7,12 @@ export const generateShortId = () => {
   });
   return uniqueId();
 };
+
+export const catchError = async (call: () => any) => {
+  try {
+    await call();
+    await Promise.reject(Error('Failed'));
+  } catch (error: any) {
+    return error;
+  }
+}

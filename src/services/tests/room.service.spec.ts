@@ -2,6 +2,8 @@ import { RoomService } from '../room.service';
 import { RoomRepository } from 'repositories/room.repository';
 import { RoomDocument } from 'interfaces/Room';
 import { ApiResponses } from 'config/constants/api-responses';
+import { catchError } from 'utils';
+import { ApiError } from 'errors/ApiError';
 
 const RoomDocumentMock = {
   _id: '123',
@@ -34,12 +36,9 @@ describe('GetAllRooms', () => {
   it('When room not found -> Should throw an ApiError', async () => {
     const mockFindRoomsNull = jest.fn(() => Promise.resolve(null));
     jest.spyOn(RoomRepository.prototype, 'find').mockImplementation(mockFindRoomsNull);
-    try {
-      await RoomService.getAllRooms('1', false);
-    } catch (e: any) {
-      expect(mockFindRoomsNull).toHaveBeenCalledTimes(1);
-      expect(e.message).toEqual(ApiResponses.NO_ROOMS_FOUND);
-    }
+    const error = await catchError(async () => RoomService.getAllRooms('1', false));
+    expect(error instanceof ApiError).toEqual(true);
+    expect(error.message).toEqual(ApiResponses.NO_ROOMS_FOUND);
   });
 
   it('When found rooms but 0 length -> Should return empty array', async () => {
@@ -48,5 +47,15 @@ describe('GetAllRooms', () => {
     const rooms = await RoomService.getAllRooms('1', false);
     expect(mockFindRoomsEmpty).toHaveBeenCalledTimes(1);
     expect(rooms).toEqual([]);
+  });
+});
+
+describe('DeleteRoom', () => {
+  it('If the room does not exist, it should return not found.', async () => {
+    const mockFindRoomNull = jest.fn(() => Promise.resolve(null));
+    jest.spyOn(RoomRepository.prototype, 'findOne').mockImplementation(mockFindRoomNull);
+    const error = await catchError(async () => RoomService.deleteRoom('1', '2'));
+    expect(error instanceof ApiError).toEqual(true);
+    expect(error.message).toEqual(ApiResponses.ROOM_NOT_FOUND);
   });
 });

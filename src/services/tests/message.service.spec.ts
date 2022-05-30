@@ -3,6 +3,8 @@ import { MessageService } from '../message.service';
 import { RoomDocument } from 'interfaces/Room';
 import { MessageRepository } from 'repositories/message.repository';
 import { ApiResponses } from 'config/constants/api-responses';
+import { catchError } from 'utils';
+import { ApiError } from 'errors/ApiError';
 
 const RoomDocumentMock = {
   _id: '9',
@@ -15,12 +17,10 @@ describe('GetAllInRoom', () => {
   it('When room not found -> Should throw ApiError', async () => {
     const mockFindRoomNull = jest.fn(() => Promise.resolve(null));
     jest.spyOn(RoomRepository.prototype, 'findOne').mockImplementation(mockFindRoomNull);
-    try {
-      await MessageService.getAllInRoom('1', '1', 30, 0);
-    } catch (e: any) {
-      expect(mockFindRoomNull).toHaveBeenCalledTimes(1);
-      expect(e.message).toEqual(ApiResponses.NO_MESSAGES_FOUND);
-    }
+    const error = await catchError(async () => MessageService.getAllInRoom('1', '1', 30, 0));
+    expect(error instanceof ApiError).toEqual(true);
+    expect(mockFindRoomNull).toHaveBeenCalledTimes(1);
+    expect(error.message).toEqual(ApiResponses.NO_MESSAGES_FOUND);
   });
 
   it('When no messages found -> Should throw ApiError', async () => {
