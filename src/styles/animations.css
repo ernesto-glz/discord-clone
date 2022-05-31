@@ -1,0 +1,187 @@
+.spinner-container {
+  position: relative;
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  contain: paint;
+}
+
+.wanderingCubesItem-3Us-UG {
+  background-color: hsl(235, calc(var(--saturation-factor, 1) * 86.1%), 71.8%);
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  -webkit-animation: spinner-wandering-cubes-E8DV84 1.8s ease-in-out infinite;
+  animation: spinner-wandering-cubes-E8DV84 1.8s ease-in-out infinite;
+}
+.wanderingCubesItem-3Us-UG:last-child {
+  -webkit-animation-delay: -0.9s;
+  animation-delay: -0.9s;
+}
+
+@-webkit-keyframes spinner-wandering-cubes-E8DV84 {
+  25% {
+    -webkit-transform: translateX(22px) rotate(-90deg) scale(0.5);
+    transform: translateX(22px) rotate(-90deg) scale(0.5);
+  }
+  50% {
+    -webkit-transform: translateX(22px) translateY(22px) rotate(-180deg);
+    transform: translateX(22px) translateY(22px) rotate(-180deg);
+  }
+  75% {
+    -webkit-transform: translateX(0) translateY(22px) rotate(-270deg) scale(0.5);
+    transform: translateX(0) translateY(22px) rotate(-270deg) scale(0.5);
+  }
+  to {
+    -webkit-transform: rotate(-1turn);
+    transform: rotate(-1turn);
+  }
+}
+@keyframes spinner-wandering-cubes-E8DV84 {
+  25% {
+    -webkit-transform: translateX(22px) rotate(-90deg) scale(0.5);
+    transform: translateX(22px) rotate(-90deg) scale(0.5);
+  }
+  50% {
+    -webkit-transform: translateX(22px) translateY(22px) rotate(-180deg);
+    transform: translateX(22px) translateY(22px) rotate(-180deg);
+  }
+  75% {
+    -webkit-transform: translateX(0) translateY(22px) rotate(-270deg) scale(0.5);
+    transform: translateX(0) translateY(22px) rotate(-270deg) scale(0.5);
+  }
+  to {
+    -webkit-transform: rotate(-1turn);
+    transform: rotate(-1turn);
+  }
+}
+@-webkit-keyframes spinner-chasing-dots-rotate-1FNFlo {
+  to {
+    -webkit-transform: rotate(1turn);
+    transform: rotate(1turn);
+  }
+}
+@keyframes spinner-chasing-dots-rotate-1FNFlo {
+  to {
+    -webkit-transform: rotate(1turn);
+    transform: rotate(1turn);
+  }
+}
+@-webkit-keyframes spinner-chasing-dots-bounce-1u5AiH {
+  0%,
+  to {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+  50% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+@keyframes spinner-chasing-dots-bounce-1u5AiH {
+  0%,
+  to {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+  50% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+@-webkit-keyframes spinner-pulsing-ellipsis-Zju_Ib {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    -webkit-transform: scale(0.8);
+    transform: scale(0.8);
+    opacity: 0.3;
+  }
+  to {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@keyframes spinner-pulsing-ellipsis-Zju_Ib {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    -webkit-transform: scale(0.8);
+    transform: scale(0.8);
+    opacity: 0.3;
+  }
+  to {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@-webkit-keyframes spinner-low-motion-2PeSaO {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes spinner-low-motion-2PeSaO {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes spinner-spinning-circle-rotate-377lhj {
+  to {
+    -webkit-transform: rotate(1turn);
+    transform: rotate(1turn);
+  }
+}
+@keyframes spinner-spinning-circle-rotate-377lhj {
+  to {
+    -webkit-transform: rotate(1turn);
+    transform: rotate(1turn);
+  }
+}
+@-webkit-keyframes spinner-spinning-circle-dash-YaFg25 {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 130, 200;
+  }
+  to {
+    stroke-dasharray: 130, 200;
+    stroke-dashoffset: -124;
+  }
+}
+@keyframes spinner-spinning-circle-dash-YaFg25 {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 130, 200;
+  }
+  to {
+    stroke-dasharray: 130, 200;
+    stroke-dashoffset: -124;
+  }
+}
