@@ -5,7 +5,10 @@ export class RoomController {
   static async createRoom(req: Request, res: Response) {
     const { user } = res.locals;
     const { receiverId } = req.body;
-    const room = await RoomService.getOrCreateRoom({ userId: user._id.toString(), receiverId });
+    const room = await RoomService.getOrCreateRoom({
+      userId: user._id.toString(),
+      receiverId
+    });
     res.status(200).send(room);
   }
 

@@ -8,7 +8,12 @@ export class MessageService {
   private static messageRepository = new MessageRepository();
   private static roomRepository = new RoomRepository();
 
-  static async getAllInRoom(roomId: string, userId: string, limit: number, selectedPage: number) {
+  static async getAllInRoom(
+    roomId: string,
+    userId: string,
+    limit: number,
+    selectedPage: number
+  ) {
     const room = await this.roomRepository.findOne({
       _id: roomId,
       $or: [{ sender: userId }, { receiver: userId }]
@@ -31,7 +36,9 @@ export class MessageService {
   }
 
   static async createMessage(data: Message) {
-    const message = await (await this.messageRepository.create(data)).populate('sender');
+    const message = await (
+      await this.messageRepository.create(data)
+    ).populate('sender');
     return { ...message.toObject() };
   }
 }

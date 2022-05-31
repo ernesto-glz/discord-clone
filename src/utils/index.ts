@@ -15,4 +15,4 @@ export const catchError = async (call: () => any) => {
   } catch (error: any) {
     return error;
   }
-}
+};

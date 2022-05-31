@@ -17,12 +17,16 @@ const userMock = {
 describe('CreateFriendRequest', () => {
   it('When you try to friend yourself -> Should throw ApiError', async () => {
     const mockFindUser = jest.fn(() => Promise.resolve(userMock));
-    jest.spyOn(UserRepository.prototype, 'findOne').mockImplementation(mockFindUser);
-    const error = await catchError(async () => FriendService.createFriendRequest({
-      from: '1',
-      toUsername: 'john',
-      toShortId: '3332'
-    }));
+    jest
+      .spyOn(UserRepository.prototype, 'findOne')
+      .mockImplementation(mockFindUser);
+    const error = await catchError(async () =>
+      FriendService.createFriendRequest({
+        from: '1',
+        toUsername: 'john',
+        toShortId: '3332'
+      })
+    );
     expect(error instanceof ApiError).toEqual(true);
     expect(mockFindUser).toHaveBeenCalledTimes(1);
     expect(error.message).toEqual(ApiResponses.ERROR_CREATE_REQUEST);
@@ -34,14 +38,22 @@ describe('CreateFriendRequest', () => {
       friend_status: FriendStatus.FRIEND
     } as FriendDocument;
     const mockFindUser = jest.fn(() => Promise.resolve(userMock));
-    const mockCheckExistence = jest.fn(() => Promise.resolve(friendRequestMock));
-    jest.spyOn(UserRepository.prototype, 'findOne').mockImplementation(mockFindUser);
-    jest.spyOn(FriendRepository.prototype, 'checkExistence').mockImplementation(mockCheckExistence);
-    const error = await catchError(async () => FriendService.createFriendRequest({
-      from: '2',
-      toUsername: 'john',
-      toShortId: '3332'
-    }));
+    const mockCheckExistence = jest.fn(() =>
+      Promise.resolve(friendRequestMock)
+    );
+    jest
+      .spyOn(UserRepository.prototype, 'findOne')
+      .mockImplementation(mockFindUser);
+    jest
+      .spyOn(FriendRepository.prototype, 'checkExistence')
+      .mockImplementation(mockCheckExistence);
+    const error = await catchError(async () =>
+      FriendService.createFriendRequest({
+        from: '2',
+        toUsername: 'john',
+        toShortId: '3332'
+      })
+    );
     expect(error instanceof ApiError).toEqual(true);
     expect(mockFindUser).toHaveBeenCalledTimes(1);
     expect(error.message).toEqual(ApiResponses.ALREADY_FRIENDS);
@@ -53,14 +65,22 @@ describe('CreateFriendRequest', () => {
       friend_status: FriendStatus.PENDING
     } as FriendDocument;
     const mockFindUser = jest.fn(() => Promise.resolve(userMock));
-    const mockCheckExistence = jest.fn(() => Promise.resolve(friendRequestMock));
-    jest.spyOn(UserRepository.prototype, 'findOne').mockImplementation(mockFindUser);
-    jest.spyOn(FriendRepository.prototype, 'checkExistence').mockImplementation(mockCheckExistence);
-    const error = await catchError(async () => FriendService.createFriendRequest({
-      from: '2',
-      toUsername: 'john',
-      toShortId: '3332'
-    }));
+    const mockCheckExistence = jest.fn(() =>
+      Promise.resolve(friendRequestMock)
+    );
+    jest
+      .spyOn(UserRepository.prototype, 'findOne')
+      .mockImplementation(mockFindUser);
+    jest
+      .spyOn(FriendRepository.prototype, 'checkExistence')
+      .mockImplementation(mockCheckExistence);
+    const error = await catchError(async () =>
+      FriendService.createFriendRequest({
+        from: '2',
+        toUsername: 'john',
+        toShortId: '3332'
+      })
+    );
     expect(error instanceof ApiError).toEqual(true);
     expect(mockFindUser).toHaveBeenCalledTimes(1);
     expect(error.message).toEqual(ApiResponses.REQUEST_ALREADY_EXISTS);
@@ -68,10 +88,14 @@ describe('CreateFriendRequest', () => {
 });
 
 describe('DeleteFriendRequest', () => {
-  it('When try to delete a request that doesn\'t exist', async () => {
+  it("When try to delete a request that doesn't exist", async () => {
     const mockFindRequest = jest.fn(() => Promise.resolve(null));
-    jest.spyOn(FriendRepository.prototype, 'findOne').mockImplementation(mockFindRequest);
-    const error = await catchError(async () => FriendService.deleteFriendRequest('10', '1'));
+    jest
+      .spyOn(FriendRepository.prototype, 'findOne')
+      .mockImplementation(mockFindRequest);
+    const error = await catchError(async () =>
+      FriendService.deleteFriendRequest('10', '1')
+    );
     expect(error instanceof ApiError).toEqual(true);
     expect(mockFindRequest).toHaveBeenCalledTimes(1);
     expect(error.message).toEqual(ApiResponses.REQUEST_NOT_FOUND);
@@ -79,10 +103,14 @@ describe('DeleteFriendRequest', () => {
 });
 
 describe('AcceptFriendRequest', () => {
-  it('When try to accept a request that doesn\'t exist', async () => {
+  it("When try to accept a request that doesn't exist", async () => {
     const mockFindRequest = jest.fn(() => Promise.resolve(null));
-    jest.spyOn(FriendRepository.prototype, 'findOne').mockImplementation(mockFindRequest);
-    const error = await catchError(async () => FriendService.acceptFriendRequest('10', '1'));
+    jest
+      .spyOn(FriendRepository.prototype, 'findOne')
+      .mockImplementation(mockFindRequest);
+    const error = await catchError(async () =>
+      FriendService.acceptFriendRequest('10', '1')
+    );
     expect(error instanceof ApiError).toEqual(true);
     expect(mockFindRequest).toHaveBeenCalledTimes(1);
     expect(error.message).toEqual(ApiResponses.REQUEST_NOT_FOUND);

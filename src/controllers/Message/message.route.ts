@@ -6,6 +6,10 @@ import { MessageRoutes } from '../../config/constants/api-routes';
 const router = AsyncRouter();
 
 router.get(MessageRoutes.GET_MESSAGES, MessageController.getAllInRoom);
-router.post(MessageRoutes.CREATE_MESSAGE, validateCreateMessage, MessageController.createMessage);
+router.post(
+  MessageRoutes.CREATE_MESSAGE,
+  validateCreateMessage,
+  MessageController.createMessage
+);
 
 export default router;

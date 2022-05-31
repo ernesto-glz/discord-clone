@@ -62,7 +62,10 @@ export abstract class Repository<T> {
     populateItemTwo?: string
   ): Promise<T[] | null> {
     if (populateItemTwo) {
-      return this.entityModel.find(entityFilterQuery).populate(populateItem).populate(populateItemTwo);
+      return this.entityModel
+        .find(entityFilterQuery)
+        .populate(populateItem)
+        .populate(populateItemTwo);
     }
     return this.entityModel.find(entityFilterQuery).populate(populateItem);
   }

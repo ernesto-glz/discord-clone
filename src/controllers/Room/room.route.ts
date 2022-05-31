@@ -5,7 +5,11 @@ import { validateCreateRoom } from './validations/room.validation';
 
 const router = AsyncRouter();
 
-router.post(RoomRoutes.CREATE_ROOM, validateCreateRoom, RoomController.createRoom);
+router.post(
+  RoomRoutes.CREATE_ROOM,
+  validateCreateRoom,
+  RoomController.createRoom
+);
 router.get(RoomRoutes.GET_ROOMS, RoomController.getAllRooms);
 router.delete(RoomRoutes.DELETE_ROOM, RoomController.deleteRoom);
 

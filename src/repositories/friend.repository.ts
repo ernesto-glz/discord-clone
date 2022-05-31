@@ -10,7 +10,10 @@ export class FriendRepository extends Repository<FriendDocument> {
 
   async checkExistence(fromId: string, userId: string) {
     return await this.findOne({
-      $or: [{ $and: [{ from: userId }, { to: fromId }] }, { $and: [{ from: fromId }, { to: userId }] }]
+      $or: [
+        { $and: [{ from: userId }, { to: fromId }] },
+        { $and: [{ from: fromId }, { to: userId }] }
+      ]
     });
   }
 
@@ -29,13 +32,20 @@ export class FriendRepository extends Repository<FriendDocument> {
   }
 
   async getFriends(userId: string) {
-    return await this.findAndPopulate({
-      $or: [{ from: userId }, { to: userId }],
-      friend_status: FriendStatus.FRIEND
-    }, 'from', 'to');
+    return await this.findAndPopulate(
+      {
+        $or: [{ from: userId }, { to: userId }],
+        friend_status: FriendStatus.FRIEND
+      },
+      'from',
+      'to'
+    );
   }
 
   async acceptFriendRequest(requestId: string) {
-    return await this.updateOne({ _id: requestId }, { friend_status: FriendStatus.FRIEND });
+    return await this.updateOne(
+      { _id: requestId },
+      { friend_status: FriendStatus.FRIEND }
+    );
   }
 }

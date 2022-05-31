@@ -11,7 +11,10 @@ export class RoomService {
   private static messageRepository = new MessageRepository();
 
   static async getOrCreateRoom({ userId, receiverId }: CreateRoom) {
-    const alreadyRoom = await this.roomRepository.checkExistence(userId, receiverId);
+    const alreadyRoom = await this.roomRepository.checkExistence(
+      userId,
+      receiverId
+    );
 
     if (alreadyRoom) return alreadyRoom;
 
@@ -47,7 +50,8 @@ export class RoomService {
 
   static async deleteRoom(roomId: string, userId: string) {
     const room = await this.roomRepository.findOne({
-      _id: roomId, $or: [{ sender: userId }, { receiver: userId }]
+      _id: roomId,
+      $or: [{ sender: userId }, { receiver: userId }]
     });
 
     if (!room) {
