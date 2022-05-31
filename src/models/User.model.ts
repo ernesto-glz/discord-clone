@@ -25,8 +25,13 @@ const userSchema = new Schema(
       select: false
     },
     shortId: {
-      type: 'String',
+      type: String,
       required: true
+    },
+    avatar: {
+      type: String,
+      default: Math.floor(Math.random() * 5),
+      select: true
     }
   },
   { timestamps: true, versionKey: false }
