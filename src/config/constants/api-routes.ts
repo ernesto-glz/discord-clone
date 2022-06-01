@@ -28,7 +28,8 @@ export const MessageRoutes = {
 export const RoomRoutes = {
   CREATE_ROOM: '/create-room',
   GET_ROOMS: '/get-all',
-  DELETE_ROOM: '/:roomId'
+  DELETE_ROOM: '/:roomId',
+  GET_ROOM_BY_ID: '/:roomId'
 };
 
 export const UserRoutes = {

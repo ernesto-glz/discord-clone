@@ -62,4 +62,21 @@ export class RoomService {
     await this.messageRepository.deleteMany({ roomId: room._id });
     return await room.delete();
   }
+
+  static async getRoomById(roomId: string, userId: string) {
+    const room = await this.roomRepository.findOneAndPopulate(
+      {
+        $or: [{ sender: userId }, { receiver: userId }],
+        _id: roomId
+      },
+      'sender',
+      'receiver'
+    );
+
+    if (!room) {
+      throw new ApiError(400, ApiResponses.ROOM_NOT_FOUND);
+    }
+
+    return room;
+  }
 }

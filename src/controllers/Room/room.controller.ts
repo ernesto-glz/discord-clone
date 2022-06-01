@@ -24,4 +24,11 @@ export class RoomController {
     const deletedRoom = await RoomService.deleteRoom(roomId, user._id);
     res.status(200).send(deletedRoom);
   }
+
+  static async getRoomById(req: Request, res: Response) {
+    const { user } = res.locals;
+    const { roomId } = req.params;
+    const room = await RoomService.getRoomById(roomId, user._id);
+    res.status(200).send(room);
+  }
 }

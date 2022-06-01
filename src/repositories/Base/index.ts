@@ -69,4 +69,19 @@ export abstract class Repository<T> {
     }
     return this.entityModel.find(entityFilterQuery).populate(populateItem);
   }
+
+  async findOneAndPopulate(
+    entityFilterQuery: FilterQuery<T>,
+    populateItem: string,
+    populateItemTwo?: string
+  ) {
+    if (populateItemTwo) {
+      return this.entityModel
+        .findOne(entityFilterQuery)
+        .populate(populateItem)
+        .populate(populateItemTwo);
+    }
+
+    return this.entityModel.findOne(entityFilterQuery).populate(populateItem);
+  }
 }

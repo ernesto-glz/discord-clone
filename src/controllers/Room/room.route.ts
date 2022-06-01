@@ -12,5 +12,6 @@ router.post(
 );
 router.get(RoomRoutes.GET_ROOMS, RoomController.getAllRooms);
 router.delete(RoomRoutes.DELETE_ROOM, RoomController.deleteRoom);
+router.get(RoomRoutes.GET_ROOM_BY_ID, RoomController.getRoomById);
 
 export default router;
