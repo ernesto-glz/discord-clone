@@ -20,9 +20,6 @@ export const socketAuth = async (socket: SocketIo, next: SocketIoNext) => {
 
   try {
     decoded = verify(token.toString(), process.env.JWT_SECRET_KEY);
-    const user = await userRepository.findById(decoded._id);
-    socket.handshake.auth = { ...user?.toObject() };
-    next();
   } catch (error: any) {
     if (error?.name === 'JsonWebTokenError' || decoded === undefined) {
       return next(new Error(ApiResponses.INVALID_TOKEN));
@@ -36,4 +33,13 @@ export const socketAuth = async (socket: SocketIo, next: SocketIoNext) => {
       return next(new Error(ApiResponses.SOMETHING_WRONG));
     }
   }
+
+  const user = await userRepository.findById(decoded._id);
+
+  if (!user) {
+    return next(new Error(ApiResponses.USER_NOT_FOUND));
+  }
+
+  socket.handshake.auth = { ...user?.toObject() };
+  next();
 };
