@@ -19,7 +19,7 @@ import {
 
 interface Props {
   channelId: string;
-  channelName: string;
+  channelName: string | null;
 }
 
 const ChannelData: React.FC<Props> = ({ channelId, channelName }) => {
@@ -133,7 +133,7 @@ const ChannelData: React.FC<Props> = ({ channelId, channelName }) => {
               value={currentMessage}
               onChange={onChange}
               type="text"
-              placeholder={`Message @${channelName}`}
+              placeholder={`Message @${channelName || 'Undetermined'}`}
             />
             <InputIcon />
           </InputWrapper>

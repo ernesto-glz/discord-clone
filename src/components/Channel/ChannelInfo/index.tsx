@@ -19,13 +19,19 @@ interface Props {
   channelId: string | undefined;
   setPage: React.Dispatch<React.SetStateAction<Pages>>;
   page: string;
+  channelName: string | null;
 }
 
 export interface AddFriendProps {
   active: boolean;
 }
 
-const ChannelInfo: React.FC<Props> = ({ channelId, setPage, page }) => {
+const ChannelInfo: React.FC<Props> = ({
+  channelId,
+  setPage,
+  page,
+  channelName
+}) => {
   const notifications = useSelector(
     (state: NotificationState) => state.notifications
   );
@@ -36,7 +42,7 @@ const ChannelInfo: React.FC<Props> = ({ channelId, setPage, page }) => {
         {channelId ? (
           <>
             <AIcon />
-            <Title>Test</Title>
+            <Title>{channelName || 'Undetermined'}</Title>
           </>
         ) : (
           <>

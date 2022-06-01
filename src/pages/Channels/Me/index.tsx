@@ -13,16 +13,21 @@ import useFirstLoad from 'src/hooks/useFirstLoad';
 export const Me: React.FC = () => {
   const [page, setPage] = useState<Pages>('Online');
   const { channelId } = useParams();
-  const { initialRooms, isLoading } = useFirstLoad();
+  const { initialRooms, isLoading, channelName } = useFirstLoad(channelId);
 
   return (
     <React.Fragment>
       <Loading loading={isLoading} />
       <ServerName />
-      <ChannelInfo channelId={channelId} setPage={setPage} page={page} />
+      <ChannelInfo
+        channelId={channelId}
+        setPage={setPage}
+        page={page}
+        channelName={channelName}
+      />
       <ChannelList channelId={channelId} initialRooms={initialRooms} />
       {channelId ? (
-        <ChannelData channelId={channelId} channelName="replaceMe" />
+        <ChannelData channelId={channelId} channelName={channelName} />
       ) : (
         <FriendsPage page={page} />
       )}

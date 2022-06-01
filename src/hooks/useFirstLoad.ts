@@ -1,13 +1,19 @@
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getPendingRequests } from 'src/api/friend';
 import { getAllRooms } from 'src/api/room';
+import { UserState } from 'src/models/user.model';
 import { setNotifCount } from 'src/redux/states/notification';
+import { RoomService } from 'src/services/room.service';
 import { loadAbort } from 'src/utils/load-abort-axios';
+import useFetchAndLoad from './useFetchAndLoad';
 
-const useFirstLoad = () => {
+const useFirstLoad = (channelId?: string) => {
   const [isLoading, setIsLoading] = useState(true);
   const [initialRooms, setInitialRooms] = useState([]);
+  const myUsername = useSelector((state: UserState) => state.user.username);
+  const { callEndpoint } = useFetchAndLoad();
+  const [channelName, setChannelName] = useState(null);
   const dispatch = useDispatch();
 
   const fetchNotifications = async () => {
@@ -33,13 +39,31 @@ const useFirstLoad = () => {
     }, 2000);
   };
 
+  const fetchChannelInfo = async () => {
+    if (channelId) {
+      const { data: channelInfo } = await callEndpoint(
+        RoomService.getRoomById(channelId)
+      );
+      setChannelName(
+        myUsername === channelInfo.sender.username
+          ? channelInfo.receiver.username
+          : channelInfo.sender.username
+      );
+    }
+  };
+
   useEffect(() => {
     fetchAllInformation();
   }, []);
 
+  useEffect(() => {
+    fetchChannelInfo();
+  }, [channelId]);
+
   return {
     isLoading,
-    initialRooms
+    initialRooms,
+    channelName
   };
 };
 
