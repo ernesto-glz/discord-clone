@@ -5,10 +5,13 @@ import { getJwt } from 'src/utils/user';
 import { UserState } from '../models/user.model';
 
 const token = getJwt();
-export const socket = io(`${process.env.REACT_APP_API_URL || 'http://localhost:4000'}`, {
-  query: { token },
-  autoConnect: false
-});
+export const socket = io(
+  `${process.env.REACT_APP_API_URL || 'http://localhost:4000'}`,
+  {
+    query: { token },
+    autoConnect: false
+  }
+);
 const SocketContext = React.createContext(socket);
 
 export const useSocket = () => useContext(SocketContext);

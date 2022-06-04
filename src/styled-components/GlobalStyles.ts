@@ -21,6 +21,7 @@ export default createGlobalStyle`
     font-size: calc(10px + 2vmin);
     color: white;
     box-sizing: border-box;
+    text-rendering: optimizeLegibility;
   }
   :root {
     --primary: #36393f;

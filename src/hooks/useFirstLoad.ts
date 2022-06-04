@@ -44,11 +44,12 @@ const useFirstLoad = (channelId?: string) => {
       const { data: channelInfo } = await callEndpoint(
         RoomService.getRoomById(channelId)
       );
-      setChannelName(
-        myUsername === channelInfo.sender.username
-          ? channelInfo.receiver.username
-          : channelInfo.sender.username
-      );
+      channelInfo &&
+        setChannelName(
+          myUsername === channelInfo.sender.username
+            ? channelInfo.receiver.username
+            : channelInfo.sender.username
+        );
     }
   };
 

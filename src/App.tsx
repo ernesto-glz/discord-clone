@@ -7,7 +7,7 @@ import { SocketListeners } from './components/SocketListeners';
 import { Channels } from './pages/Channels';
 import { Me } from './pages/Channels/Me';
 import './styles/fonts.css';
-import './styles/animations.css'
+import './styles/animations.css';
 
 function App() {
   return (

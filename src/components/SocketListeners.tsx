@@ -14,6 +14,7 @@ export const SocketListeners: React.FC<Props> = ({ children }) => {
   const dispatch = useDispatch();
   const user = useSelector((state: UserState) => state.user.username);
   const { callEndpoint } = useFetchAndLoad();
+  const socket = useSocket();
 
   const fetchNotifications = async () => {
     if (user) {
@@ -25,7 +26,6 @@ export const SocketListeners: React.FC<Props> = ({ children }) => {
       }
     }
   };
-  const socket = useSocket();
 
   useEffect(() => {
     if (socket) {
