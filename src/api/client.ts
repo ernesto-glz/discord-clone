@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { logOut } from 'src/redux/states/user';
+import store from 'src/redux/store';
 import { getJwt, getUser } from 'src/utils/user';
 
 const client = axios.create({
@@ -12,5 +14,15 @@ client.interceptors.request.use((config) => {
   }
   return config;
 });
+
+client.interceptors.response.use(
+  (response) => response,
+  async (err) => {
+    if (err.response.status === 401) {
+      store.dispatch(logOut());
+    }
+    return Promise.reject(err);
+  }
+);
 
 export default client;

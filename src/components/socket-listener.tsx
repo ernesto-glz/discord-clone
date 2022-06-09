@@ -33,9 +33,7 @@ export const SocketListeners: React.FC<Props> = ({ children }) => {
     if (socket) {
       socket.on('notify-new-fr', fetchNotifications);
       socket.on('notify-update-fr', fetchNotifications);
-      socket.on('friend-connected', () => {
-        console.log(friends);
-      });
+      socket.on('friend-connected', () => {});
     }
 
     return () => {

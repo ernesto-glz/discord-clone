@@ -29,7 +29,6 @@ const useFirstLoad = (channelId?: string) => {
         }
       });
       dispatch(setFriends(myFriends));
-      console.log('data -> ', friends);
     }
   };
 
