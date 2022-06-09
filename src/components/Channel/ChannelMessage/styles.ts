@@ -34,6 +34,9 @@ export const Message = styled.div<MessageProps>`
   margin-left: 17px;
   word-break: break-all;
   padding-right: 40px;
+  user-select: text;
+  -moz-user-select: text;
+  -webkit-user-select: text;
   &.stackMessage {
     margin-left: 57px;
   }

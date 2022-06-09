@@ -22,6 +22,9 @@ export default createGlobalStyle`
     color: white;
     box-sizing: border-box;
     text-rendering: optimizeLegibility;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
   }
   :root {
     --primary: #36393f;

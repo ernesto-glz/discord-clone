@@ -31,10 +31,16 @@ export const UserData = styled.div`
     font-size: 13px;
     color: var(--white);
     display: block;
+    user-select: text;
+    -moz-user-select: text;
+    -webkit-user-select: text;
   }
   > span {
     color: var(--gray);
     font-size: 13px;
+    user-select: text;
+    -moz-user-select: text;
+    -webkit-user-select: text;
   }
 `;
 
