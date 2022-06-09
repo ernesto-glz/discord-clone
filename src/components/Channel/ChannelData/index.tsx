@@ -14,7 +14,8 @@ import {
   InputContainer,
   InputWrapper,
   Input,
-  InputIcon
+  InputIcon,
+  MessagesContainer
 } from './styles';
 
 interface Props {
@@ -108,16 +109,18 @@ const ChannelData: React.FC<Props> = ({ channelId, channelName }) => {
     <Container>
       {!isLoading ? (
         <Messages>
-          {messages.map((msg: any, i: number) => (
-            <ChannelMessage
-              key={i}
-              author={msg.sender}
-              date={dateFormatted(msg.createdAt)}
-              content={msg.content}
-              stackMessage={msg.stackMessage}
-            />
-          ))}
-          <div className="lastMessage" ref={(el) => (messagesEnd = el)} />
+          <MessagesContainer>
+            {messages.map((msg: any, i: number) => (
+              <ChannelMessage
+                key={i}
+                author={msg.sender}
+                date={dateFormatted(msg.createdAt)}
+                content={msg.content}
+                stackMessage={msg.stackMessage}
+              />
+            ))}
+            <div className="lastMessage" ref={(el) => (messagesEnd = el)} />
+          </MessagesContainer>
         </Messages>
       ) : (
         <LoaderContainer>

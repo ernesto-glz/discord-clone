@@ -9,21 +9,32 @@ export const Container = styled.div`
   background-color: var(--primary);
 `;
 
+export const MessagesContainer = styled.section`
+  height: 100%;
+  max-height: calc(100vh - 46px - 72px);
+  overflow-y: scroll;
+  overflow-x: hidden;
+  ::-webkit-scrollbar {
+    width: 8px;
+    background-color: var(--secondary);
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--tertiary);
+    border-radius: 10px;
+  }
+`;
+
 export const Messages = styled.div`
   flex: 1;
-  padding: 20px 0;
+  min-height: 0;
+  max-height: calc(100vh - 46px - 72px);
+  padding: 5px 0;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  max-height: calc(100vh - 46px - 72px);
-  overflow-y: scroll;
-  ::-webkit-scrollbar {
-    width: 8px;
-  }
-  ::-webkit-scrollbar-thumb {
-    background-color: var(--tertiary);
-    border-radius: 4px;
-  }
+  padding-right: 4px;
 `;
 
 export const InputContainer = styled.div`
