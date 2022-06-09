@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { getFriends, getPendingRequests } from 'src/api/friend';
 import { getAllRooms } from 'src/api/room';
 import { setNotifCount } from 'src/redux/states/notification';
@@ -8,15 +7,16 @@ import { loadAbort } from 'src/utils/load-abort-axios';
 import { selectFriends, setFriends } from 'src/redux/states/friend';
 import useFetchAndLoad from './useFetchAndLoad';
 import { selectUsername } from 'src/redux/states/user';
+import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 
 const useFirstLoad = (channelId?: string) => {
   const [isLoading, setIsLoading] = useState(true);
   const [initialRooms, setInitialRooms] = useState([]);
-  const myUsername = useSelector(selectUsername);
-  const friends = useSelector(selectFriends);
+  const myUsername = useAppSelector(selectUsername);
+  const friends = useAppSelector(selectFriends);
   const { callEndpoint } = useFetchAndLoad();
   const [channelName, setChannelName] = useState(null);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const fetchFriends = async () => {
     const { data } = await getFriends(loadAbort());
@@ -28,8 +28,8 @@ const useFirstLoad = (channelId?: string) => {
           return { userId: friend.from._id, status: 'offline' };
         }
       });
-      console.log('data -> ', myFriends);
       dispatch(setFriends(myFriends));
+      console.log('data -> ', friends);
     }
   };
 
@@ -76,7 +76,7 @@ const useFirstLoad = (channelId?: string) => {
 
   useEffect(() => {
     fetchFriends();
-  }, [channelName]);
+  }, [initialRooms]);
 
   useEffect(() => {
     fetchChannelInfo();

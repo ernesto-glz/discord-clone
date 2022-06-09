@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { DiscordLogo } from 'src/components/Logo';
+import { useAppSelector } from 'src/redux/hooks';
 import { selectNotifications } from 'src/redux/states/notification';
 import { Button } from './styles';
 
@@ -17,7 +17,7 @@ const ServerButton: React.FC<Props> = ({
   hasNotifications,
   mentions
 }) => {
-  const notifications = useSelector(selectNotifications);
+  const notifications = useAppSelector(selectNotifications);
   const [actualNotifications, setActualNotifications] = useState(0);
 
   useEffect(() => {

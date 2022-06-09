@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useSocket } from 'src/contexts/socket.context';
 import useFriendRequests from 'src/hooks/useFriendRequests';
 import { PendingRequest } from 'src/models/friend.model';
-import { useDispatch } from 'react-redux';
 import { setNotifCount } from 'src/redux/states/notification';
 import {
   Container,
@@ -15,13 +14,14 @@ import {
 } from '../styles';
 import { RequestItem } from './friend-request';
 import { DiscordLoadingDots } from 'src/components/LoadingSpinner';
+import { useAppDispatch } from 'src/redux/hooks';
 
 export const PendingRequests: React.FC = () => {
   const [isMounted, setIsMounted] = useState(false);
   const { isLoading, outgoingRequests, pendingRequests, fetchAllRequests } =
     useFriendRequests();
   const socket = useSocket();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const totalRequests =
     pendingRequests?.length || 0 + outgoingRequests?.length || 0;
 

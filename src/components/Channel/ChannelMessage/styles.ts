@@ -38,7 +38,7 @@ export const Message = styled.div<MessageProps>`
   -moz-user-select: text;
   -webkit-user-select: text;
   &.stackMessage {
-    margin-left: 57px;
+    margin-left: 55px;
   }
 `;
 

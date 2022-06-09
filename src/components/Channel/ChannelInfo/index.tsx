@@ -1,7 +1,7 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { FriendImage } from 'src/components/Images';
 import { Pages } from 'src/components/Layout';
+import { useAppSelector } from 'src/redux/hooks';
 import { selectNotifications } from 'src/redux/states/notification';
 import {
   Container,
@@ -32,7 +32,7 @@ const ChannelInfo: React.FC<Props> = ({
   page,
   channelName
 }) => {
-  const notifications = useSelector(selectNotifications);
+  const notifications = useAppSelector(selectNotifications);
 
   return (
     <Container>

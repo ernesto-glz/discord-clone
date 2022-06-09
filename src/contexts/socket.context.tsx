@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { io } from 'socket.io-client';
+import { useAppSelector } from 'src/redux/hooks';
 import { selectToken } from 'src/redux/states/user';
 import { getJwt } from 'src/utils/user';
 
@@ -20,7 +20,7 @@ export const useSocket = () => useContext(SocketContext);
 type Props = { children: React.ReactNode };
 
 export const SocketProvider: React.FC<Props> = ({ children }) => {
-  const isLoggedIn = useSelector(selectToken);
+  const isLoggedIn = useAppSelector(selectToken);
 
   useEffect(() => {
     if (isLoggedIn && !socket.connected) {

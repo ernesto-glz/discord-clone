@@ -1,7 +1,7 @@
 import { FormEvent, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import useFetchAndLoad from 'src/hooks/useFetchAndLoad';
 import { UserCredentials } from 'src/models/user.model';
+import { useAppDispatch } from 'src/redux/hooks';
 import { logIn } from 'src/redux/states/user';
 import { LoginService } from 'src/services/auth.service';
 
@@ -9,7 +9,7 @@ const useLogin = ({ email, password }: UserCredentials) => {
   const { callEndpoint } = useFetchAndLoad();
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({ email: null, password: null });
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
