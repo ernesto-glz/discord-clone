@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FriendService } from 'src/services/friend.service';
 import { setNotifCount } from 'src/redux/states/notification';
 import { useSocket } from 'src/contexts/socket.context';
-import { UserState } from 'src/models/user.model';
 import useFetchAndLoad from 'src/hooks/useFetchAndLoad';
+import { selectToken } from 'src/redux/states/user';
 
 interface Props {
   children: React.ReactNode;
@@ -12,12 +12,12 @@ interface Props {
 
 export const SocketListeners: React.FC<Props> = ({ children }) => {
   const dispatch = useDispatch();
-  const user = useSelector((state: UserState) => state.user.username);
+  const isLoggedIn = useSelector(selectToken);
   const { callEndpoint } = useFetchAndLoad();
   const socket = useSocket();
 
   const fetchNotifications = async () => {
-    if (user) {
+    if (isLoggedIn) {
       const { data } = await callEndpoint(FriendService.getPendingRequests());
       if (data?.length) {
         dispatch(setNotifCount(data.length));
@@ -37,7 +37,7 @@ export const SocketListeners: React.FC<Props> = ({ children }) => {
       socket.off('notify-new-fr');
       socket.off('notify-update-fr');
     };
-  }, [user]);
+  }, [isLoggedIn]);
 
   return <>{children}</>;
 };

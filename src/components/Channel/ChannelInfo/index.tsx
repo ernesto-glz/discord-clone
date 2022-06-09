@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { FriendImage } from 'src/components/Images';
 import { Pages } from 'src/components/Layout';
-import { NotificationState } from 'src/components/Server/ServerButton';
-import { FriendsImg } from 'src/components/UserImage';
+import { selectNotifications } from 'src/redux/states/notification';
 import {
   Container,
   Title,
@@ -32,9 +32,7 @@ const ChannelInfo: React.FC<Props> = ({
   page,
   channelName
 }) => {
-  const notifications = useSelector(
-    (state: NotificationState) => state.notifications
-  );
+  const notifications = useSelector(selectNotifications);
 
   return (
     <Container>
@@ -46,7 +44,7 @@ const ChannelInfo: React.FC<Props> = ({
           </>
         ) : (
           <>
-            <FriendsImg />
+            <FriendImage width="24" height="32" fill="var(--gray)" />
             <Title>Friends</Title>
             <Separator />
             <MenuButton onClick={() => setPage('Online')}>Online</MenuButton>

@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
-import { UserState } from 'src/models/user.model';
+import { selectToken } from 'src/redux/states/user';
 
 export const ProtectedRoute = () => {
-  const isLoggedIn = useSelector((state: UserState) => state.user.token);
+  const isLoggedIn = useSelector(selectToken);
 
   if (!isLoggedIn) {
     return <Navigate to="/login" replace />;

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { NotificationState } from 'src/components/Server/ServerButton';
 import { UserImage } from 'src/components/UserImage';
+import { selectNotifications } from 'src/redux/states/notification';
 import { CloseIcon, Container, NotificationMark } from './styles';
 
 export interface Props {
@@ -27,9 +27,7 @@ const ChannelButton: React.FC<Props> = ({
   setSelected
 }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const notifications = useSelector(
-    (state: NotificationState) => state.notifications
-  );
+  const notifications = useSelector(selectNotifications);
   const navigate = useNavigate();
 
   const goToChannel = () => {

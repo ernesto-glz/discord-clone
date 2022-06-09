@@ -7,8 +7,10 @@ const store = configureStore({
   reducer: {
     user: userReducer,
     notifications: notifReducer,
-    friend: friendReducer
+    friends: friendReducer
   }
 });
 
+export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>;
 export default store;

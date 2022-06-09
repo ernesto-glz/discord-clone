@@ -16,13 +16,3 @@ export interface User {
   token: string;
   avatar?: string;
 }
-
-export interface UserState {
-  user: {
-    username: string;
-    shortId: string;
-    email: string;
-    token: string;
-    avatar: string;
-  };
-}

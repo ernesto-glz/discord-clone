@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { UserImage } from 'src/components/UserImage';
-import { Avatar, Profile, UserData } from 'src/components/UserInfo/styles';
-import { UserState } from 'src/models/user.model';
+import { Profile, UserData } from 'src/components/UserInfo/styles';
+import { selectUsername } from 'src/redux/states/user';
 import { FriendRequest } from '../styles';
 import { FriendItemActions } from './friend-actions';
 
@@ -11,7 +11,7 @@ interface Props {
 }
 
 export const FriendItem: React.FC<Props> = ({ data }) => {
-  const myUsername = useSelector((state: UserState) => state.user.username);
+  const myUsername = useSelector(selectUsername);
   const userInfo = myUsername === data.to.username ? data.from : data.to;
 
   return (

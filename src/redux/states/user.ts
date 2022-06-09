@@ -4,29 +4,44 @@ import {
   removeUserFromLocalStorage,
   setUserInLocalStorage
 } from 'src/utils/user';
+import { RootState } from '../store';
 
-export const userEmptyState = {
+export interface UserState {
+  username: string | null;
+  email: string | null;
+  shortId: string | null;
+  token: string | null;
+  avatar: string | null;
+}
+
+export const userEmptyState: UserState = {
   username: null,
-  shortId: null,
   email: null,
+  shortId: null,
   token: null,
   avatar: null
 };
+const actualUser: UserState = getUserFromLocalStorage();
 
 export const userSlice = createSlice({
   name: 'user',
-  initialState: getUserFromLocalStorage() || userEmptyState,
+  initialState: actualUser || userEmptyState,
   reducers: {
     logIn: (state, action) => {
       setUserInLocalStorage(action.payload);
-      return action.payload;
+      state = action.payload;
     },
-    logOut: () => {
+    logOut: (state) => {
       removeUserFromLocalStorage();
       return userEmptyState;
     }
   }
 });
 
+export const selectUser = (state: RootState) => state.user;
+export const selectToken = (state: RootState) => state.user.token;
+export const selectUsername = (state: RootState) => state.user.username;
+export const selectAvatar = (state: RootState) => state.user.avatar;
+export const selectEmail = (state: RootState) => state.user.email;
 export const { logIn, logOut } = userSlice.actions;
 export default userSlice.reducer;

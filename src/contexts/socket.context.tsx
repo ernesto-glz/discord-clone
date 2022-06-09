@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { io } from 'socket.io-client';
+import { selectToken } from 'src/redux/states/user';
 import { getJwt } from 'src/utils/user';
-import { UserState } from '../models/user.model';
 
 const token = getJwt();
 export const socket = io(
@@ -19,17 +19,17 @@ export const useSocket = () => useContext(SocketContext);
 type Props = { children: React.ReactNode };
 
 export const SocketProvider: React.FC<Props> = ({ children }) => {
-  const user = useSelector((state: UserState) => state.user.username);
+  const isLoggedIn = useSelector(selectToken);
 
   useEffect(() => {
-    if (user && !socket.connected) {
+    if (isLoggedIn && !socket.connected) {
       socket.connect();
     }
 
-    if (!user && socket.connected) {
+    if (!isLoggedIn && socket.connected) {
       socket.disconnect();
     }
-  }, [user]);
+  }, [isLoggedIn]);
 
   return (
     <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>

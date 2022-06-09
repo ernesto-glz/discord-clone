@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { DiscordLogo } from 'src/components/Logo';
+import { selectNotifications } from 'src/redux/states/notification';
 import { Button } from './styles';
 
 export interface Props {
@@ -10,19 +11,13 @@ export interface Props {
   mentions?: number;
 }
 
-export interface NotificationState {
-  notifications: number;
-}
-
 const ServerButton: React.FC<Props> = ({
   selected,
   isHome,
   hasNotifications,
   mentions
 }) => {
-  const notifications = useSelector(
-    (state: NotificationState) => state.notifications
-  );
+  const notifications = useSelector(selectNotifications);
   const [actualNotifications, setActualNotifications] = useState(0);
 
   useEffect(() => {

@@ -1,20 +1,37 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPendingRequests } from 'src/api/friend';
+import { getFriends, getPendingRequests } from 'src/api/friend';
 import { getAllRooms } from 'src/api/room';
-import { UserState } from 'src/models/user.model';
 import { setNotifCount } from 'src/redux/states/notification';
 import { RoomService } from 'src/services/room.service';
 import { loadAbort } from 'src/utils/load-abort-axios';
+import { selectFriends, setFriends } from 'src/redux/states/friend';
 import useFetchAndLoad from './useFetchAndLoad';
+import { selectUsername } from 'src/redux/states/user';
 
 const useFirstLoad = (channelId?: string) => {
   const [isLoading, setIsLoading] = useState(true);
   const [initialRooms, setInitialRooms] = useState([]);
-  const myUsername = useSelector((state: UserState) => state.user.username);
+  const myUsername = useSelector(selectUsername);
+  const friends = useSelector(selectFriends);
   const { callEndpoint } = useFetchAndLoad();
   const [channelName, setChannelName] = useState(null);
   const dispatch = useDispatch();
+
+  const fetchFriends = async () => {
+    const { data } = await getFriends(loadAbort());
+    if (data?.length) {
+      const myFriends = data.map((friend: any) => {
+        if (friend.from.username === myUsername) {
+          return { userId: friend.to._id, status: 'offline' };
+        } else {
+          return { userId: friend.from._id, status: 'offline' };
+        }
+      });
+      console.log('data -> ', myFriends);
+      dispatch(setFriends(myFriends));
+    }
+  };
 
   const fetchNotifications = async () => {
     const controller = loadAbort();
@@ -56,6 +73,10 @@ const useFirstLoad = (channelId?: string) => {
   useEffect(() => {
     fetchAllInformation();
   }, []);
+
+  useEffect(() => {
+    fetchFriends();
+  }, [channelName]);
 
   useEffect(() => {
     fetchChannelInfo();

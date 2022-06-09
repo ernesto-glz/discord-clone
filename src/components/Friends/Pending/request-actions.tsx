@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useSocket } from 'src/contexts/socket.context';
 import useFetchAndLoad from 'src/hooks/useFetchAndLoad';
-import { UserState } from 'src/models/user.model';
+import { selectUsername } from 'src/redux/states/user';
 import { FriendService } from 'src/services/friend.service';
 import {
   AcceptIcon,
@@ -24,7 +24,7 @@ export const RequestActionsItem: React.FC<Props> = ({
   type
 }) => {
   const { callEndpoint } = useFetchAndLoad();
-  const username = useSelector((state: UserState) => state.user.username);
+  const username = useSelector(selectUsername);
   const socket = useSocket();
 
   const handleDenyOrCancelRequest = async () => {
