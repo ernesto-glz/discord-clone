@@ -3,7 +3,7 @@ import { ProtectedRoute } from './components/ProtectedRoute';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { Layout } from './components/Layout';
-import { SocketListeners } from './components/SocketListeners';
+import { SocketListeners } from './components/socket-listener';
 import { Channels } from './pages/Channels';
 import { Me } from './pages/Channels/Me';
 import './styles/fonts.css';

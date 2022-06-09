@@ -32,7 +32,7 @@ export const AllFriends: React.FC = () => {
     return (
       <FlexColumnContainer>
         <RequestsHeader>
-          <h2>FRIENDS -{friends.length}</h2>
+          <h2>FRIENDS - {friends.length}</h2>
         </RequestsHeader>
         <RequestsBody>
           {friends.map((friend, i) => (
