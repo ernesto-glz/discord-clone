@@ -1,8 +1,10 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
-  getUserFromLocalStorage,
-  removeUserFromLocalStorage,
-  setUserInLocalStorage
+  getUserFromStorage,
+  removeJwt,
+  removeUserFromStorage,
+  setJwt,
+  setUserInStorage
 } from 'src/utils/user';
 import { RootState } from '../store';
 
@@ -10,36 +12,40 @@ export interface UserState {
   username: string | null;
   email: string | null;
   shortId: string | null;
-  token: string | null;
   avatar: string | null;
+}
+
+interface LoginPayload {
+  user: UserState;
+  jwt: string;
 }
 
 export const userEmptyState: UserState = {
   username: null,
   email: null,
   shortId: null,
-  token: null,
   avatar: null
 };
-const actualUser: UserState = getUserFromLocalStorage();
+const actualUser: UserState = getUserFromStorage();
 
 export const userSlice = createSlice({
   name: 'user',
   initialState: actualUser || userEmptyState,
   reducers: {
-    logIn: (state, action) => {
-      setUserInLocalStorage(action.payload);
-      state = action.payload;
+    logIn: (state, action: PayloadAction<LoginPayload>) => {
+      setJwt(action.payload.jwt);
+      setUserInStorage(action.payload.user);
+      state = action.payload.user;
     },
     logOut: (state) => {
-      removeUserFromLocalStorage();
+      removeJwt();
+      removeUserFromStorage();
       return userEmptyState;
     }
   }
 });
 
 export const selectUser = (state: RootState) => state.user;
-export const selectToken = (state: RootState) => state.user.token;
 export const selectUsername = (state: RootState) => state.user.username;
 export const selectAvatar = (state: RootState) => state.user.avatar;
 export const selectEmail = (state: RootState) => state.user.email;

@@ -22,16 +22,7 @@ const useRegister = ({ username, email, password }: UserCredentials) => {
       const { data } = await callEndpoint(
         RegisterService({ username, email, password })
       );
-      dispatch(
-        logIn({
-          id: data.user._id,
-          username: data.user.username,
-          shortId: data.user.shortId,
-          email: data.user.email,
-          token: data.token,
-          avatar: data.user.avatar
-        })
-      );
+      dispatch(logIn({ user: data.user, jwt: data.token }));
       window.location.assign('/channels/@me');
     } catch (error: any) {
       setLoading(false);
