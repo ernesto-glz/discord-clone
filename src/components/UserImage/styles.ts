@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { UserStatusProps } from '.';
 
 export const AvatarImage = styled.img`
   display: block;
@@ -7,16 +8,46 @@ export const AvatarImage = styled.img`
   width: 100%;
   height: 100%;
   grid-area: 1/1;
-  border-radius: 100%;
+  border-radius: 50%;
+  width: 38px;
 `;
 
 export const GenericSvg = styled.svg`
   margin-right: 10px;
 `;
 
-export const UserStatus = styled.rect`
-  fill: hsl(38, calc(var(--saturation-factor, 1) * 95.7%), 54.1%);
-  width: 25px;
-  height: 15px;
-  mask: url(#a46440c9-e0ff-4a3d-a98c-20a9bb4eddd5);
+export const UserStatus = styled.div<UserStatusProps>`
+  border-radius: 50%;
+  position: absolute;
+  display: flex;
+  bottom: -0.5px;
+  right: -1px;
+  width: 16px;
+  height: 16px;
+  margin-right: -2px;
+  > div {
+    border: 3px solid var(--background-primary);
+    position: relative;
+    display: inline-flex;
+    border-radius: 50%;
+    background-color: ${(props) =>
+      props.isOnline ? 'var(--green)' : 'var(--gray)'};
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+`;
+
+export const StatusOffline = styled.div`
+  width: 100%;
+  background: var(--background-secondary);
+  border-radius: 50%;
+  width: 4px;
+  height: 4px;
+`;
+
+export const AvatarImageContainer = styled.div`
+  position: relative;
 `;

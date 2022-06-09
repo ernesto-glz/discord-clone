@@ -20,7 +20,7 @@ const ChannelList: React.FC<Props> = ({ channelId, initialRooms }) => {
     <Container>
       <ChannelButton
         channelName="Friends"
-        isGeneric
+        isGeneric={true}
         channelId=""
         selected={selected}
         setSelected={setSelected}
@@ -40,7 +40,6 @@ const ChannelList: React.FC<Props> = ({ channelId, initialRooms }) => {
             channelName={e.userInfo.username}
             setSelected={setSelected}
             imageUrl={`/assets/avatars/${e.userInfo.avatar || '1'}.png`}
-            isGeneric={false}
           />
         ))}
     </Container>

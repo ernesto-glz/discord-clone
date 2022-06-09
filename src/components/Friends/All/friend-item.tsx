@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { UserImage } from 'src/components/UserImage';
 import { Avatar, Profile, UserData } from 'src/components/UserInfo/styles';
 import { UserState } from 'src/models/user.model';
 import { FriendRequest } from '../styles';
@@ -17,7 +18,11 @@ export const FriendItem: React.FC<Props> = ({ data }) => {
     <FriendRequest>
       <div>
         <Profile>
-          <Avatar />
+          <UserImage
+            isGeneric={false}
+            displayStatus={false}
+            imageUrl={`/assets/avatars/${userInfo.avatar}.png`}
+          />
           <UserData>
             <strong>{userInfo.username}</strong>
             <span>#{userInfo.shortId}</span>
