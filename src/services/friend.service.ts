@@ -79,7 +79,26 @@ export class FriendService {
     return await this.friendRepository.acceptFriendRequest(requestId);
   }
 
-  static async getFriends(userId: string) {
-    return await this.friendRepository.getFriends(userId);
+  static async getFriends(userId: string, extraInfo: boolean) {
+    const friends = await this.friendRepository.getFriends(userId);
+
+    if (!friends) {
+      throw new ApiError(400, ApiResponses.NO_FRIENDS);
+    }
+
+    if (!friends.length) {
+      return friends;
+    }
+
+    if (!extraInfo) {
+      return friends.map((entity: any) => {
+        if (entity.from._id.toString() === userId.toString()) {
+          return { userId: entity.to._id };
+        }
+        return { userId: entity.from._id };
+      });
+    }
+
+    return friends;
   }
 }

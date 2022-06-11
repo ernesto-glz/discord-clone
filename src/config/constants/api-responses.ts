@@ -12,5 +12,7 @@ export const ApiResponses = {
   ERROR_CREATE_REQUEST: `Hm, didn't work. Double check that the capitalization, spelling, any spaces, and numbers are correct.`,
   ALREADY_FRIENDS: `You're already friends with that user!`,
   REQUEST_ALREADY_EXISTS: 'Friend request already exists!',
-  ROOM_NOT_FOUND: 'Room not found'
+  ROOM_NOT_FOUND: 'Room not found',
+  NO_FRIENDS: 'This user has no friends',
+  QS_EXTRA_INFO_REQUIRED: 'The query param extraInfo is required',
 };

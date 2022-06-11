@@ -1,3 +1,5 @@
+import { ApiResponses } from 'config/constants/api-responses';
+import { ApiError } from 'errors/ApiError';
 import { Request, Response } from 'express';
 import { FriendService } from 'services/friend.service';
 
@@ -41,7 +43,16 @@ export class FriendController {
 
   static async getFriends(req: Request, res: Response) {
     const { user } = res.locals;
-    const result = await FriendService.getFriends(user._id);
+    const { extraInfo } = req.query;
+
+    if (!extraInfo) {
+      throw new ApiError(400, ApiResponses.QS_EXTRA_INFO_REQUIRED);
+    }
+
+    const result = await FriendService.getFriends(
+      user._id,
+      extraInfo === 'true' ? true : false
+    );
     res.status(200).send(result);
   }
 }
