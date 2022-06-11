@@ -47,7 +47,7 @@ const ChannelData: React.FC<Props> = ({ channelId, channelName }) => {
     if (data?.docs?.length) {
       let lastMessage: any = null;
 
-      const messagesFound = data.docs.map((message: any) => {
+      const messagesFound = data.docs.reverse().map((message: any) => {
         let result: any;
 
         if (

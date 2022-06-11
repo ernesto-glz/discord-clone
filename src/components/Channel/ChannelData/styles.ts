@@ -15,8 +15,7 @@ export const MessagesContainer = styled.section`
   overflow-y: scroll;
   overflow-x: hidden;
   display: flex;
-  flex-direction: column-reverse;
-  justify-content: flex-start;
+  flex-direction: column;
   ::-webkit-scrollbar {
     width: 8px;
     background-color: var(--secondary);
@@ -34,9 +33,6 @@ export const Messages = styled.div`
   min-height: 0;
   max-height: calc(100vh - 46px - 72px);
   padding: 5px 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
   padding-right: 4px;
 `;
 
