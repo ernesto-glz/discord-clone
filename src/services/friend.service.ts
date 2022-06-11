@@ -50,10 +50,10 @@ export class FriendService {
     };
   }
 
-  static getFriends() {
+  static getFriends(extraInfo: boolean) {
     const controller = loadAbort();
     return {
-      call: getFriends(controller),
+      call: getFriends(controller, extraInfo),
       controller
     };
   }

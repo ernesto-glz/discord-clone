@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRooms } from 'src/hooks/useRooms';
+import { useAppSelector } from 'src/redux/hooks';
+import { selectUserId } from 'src/redux/states/user';
 import ChannelButton from '../ChannelButton';
 import { Container, Category, AddCategoryIcon } from './styles';
 
@@ -11,6 +13,7 @@ interface Props {
 const ChannelList: React.FC<Props> = ({ channelId, initialRooms }) => {
   const [selected, setSelected] = useState(channelId || '');
   const { rooms } = useRooms(initialRooms);
+  const myId = useAppSelector(selectUserId);
 
   useEffect(() => {
     setSelected(channelId || '');
@@ -37,6 +40,7 @@ const ChannelList: React.FC<Props> = ({ channelId, initialRooms }) => {
             key={i}
             channelId={e._id}
             selected={selected}
+            friendId={myId === e.sender ? e.receiver : e.sender}
             channelName={e.userInfo.username}
             setSelected={setSelected}
             imageUrl={`/assets/avatars/${e.userInfo.avatar || '1'}.png`}

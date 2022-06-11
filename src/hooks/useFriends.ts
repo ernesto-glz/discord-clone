@@ -8,7 +8,7 @@ const useFriends = () => {
   const [friends, setFriends] = useState([]);
 
   const getFriends = async () => {
-    const { data } = await callEndpoint(FriendService.getFriends());
+    const { data } = await callEndpoint(FriendService.getFriends(true));
     setFriends(data);
   };
 

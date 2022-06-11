@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserImage } from 'src/components/UserImage';
 import { useAppSelector } from 'src/redux/hooks';
+import { selectFriends } from 'src/redux/states/friend';
 import { selectNotifications } from 'src/redux/states/notification';
+import { isOnline } from 'src/utils/redux';
 import { CloseIcon, Container, NotificationMark } from './styles';
 
 export interface Props {
@@ -11,6 +13,7 @@ export interface Props {
   selected: string;
   imageUrl?: string;
   isGeneric?: boolean;
+  friendId?: string;
   setSelected: React.Dispatch<React.SetStateAction<string>>;
 }
 
@@ -24,11 +27,14 @@ const ChannelButton: React.FC<Props> = ({
   selected,
   imageUrl,
   isGeneric = false,
+  friendId,
   setSelected
 }) => {
+  const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
   const notifications = useAppSelector(selectNotifications);
-  const navigate = useNavigate();
+  const friends = useAppSelector(selectFriends);
+  const friendStatus = useMemo(() => isOnline(friendId!), [friends]);
 
   const goToChannel = () => {
     if (channelId !== selected) {
@@ -48,6 +54,7 @@ const ChannelButton: React.FC<Props> = ({
           isGeneric={isGeneric}
           imageUrl={imageUrl}
           displayStatus={true}
+          isOnline={friendStatus}
         />
         <span>{channelName}</span>
       </div>

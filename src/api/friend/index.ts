@@ -28,5 +28,8 @@ export const acceptFriendRequest = (
     controller: controller.signal
   });
 
-export const getFriends = (controller: AbortController) =>
-  client.get('/friend/my-friends', { signal: controller.signal });
+export const getFriends = (controller: AbortController, extraInfo: boolean) => {
+  return client.get(`/friend/my-friends?extraInfo=${extraInfo}`, {
+    signal: controller.signal
+  });
+};

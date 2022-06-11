@@ -1,34 +1,29 @@
 import { useEffect, useState } from 'react';
-import { getFriends, getPendingRequests } from 'src/api/friend';
+import { getPendingRequests } from 'src/api/friend';
 import { getAllRooms } from 'src/api/room';
 import { setNotifCount } from 'src/redux/states/notification';
 import { RoomService } from 'src/services/room.service';
 import { loadAbort } from 'src/utils/load-abort-axios';
-import { selectFriends, setFriends } from 'src/redux/states/friend';
+import { getAllFriends, isLoadingFriends } from 'src/redux/states/friend';
 import useFetchAndLoad from './useFetchAndLoad';
 import { selectUsername } from 'src/redux/states/user';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
+import { useSocket } from 'src/contexts/socket.context';
 
 const useFirstLoad = (channelId?: string) => {
   const [isLoading, setIsLoading] = useState(true);
   const [initialRooms, setInitialRooms] = useState([]);
   const myUsername = useAppSelector(selectUsername);
-  const friends = useAppSelector(selectFriends);
+  const loadingFriends = useAppSelector(isLoadingFriends);
   const { callEndpoint } = useFetchAndLoad();
   const [channelName, setChannelName] = useState(null);
   const dispatch = useAppDispatch();
+  const socket = useSocket();
 
   const fetchFriends = async () => {
-    const { data } = await getFriends(loadAbort());
-    if (data?.length) {
-      const myFriends = data.map((friend: any) => {
-        if (friend.from.username === myUsername) {
-          return { userId: friend.to._id, status: 'offline' };
-        } else {
-          return { userId: friend.from._id, status: 'offline' };
-        }
-      });
-      dispatch(setFriends(myFriends));
+    if (loadingFriends === 'idle') {
+      await dispatch(getAllFriends());
+      socket.emit('get-friends-status');
     }
   };
 
@@ -46,6 +41,7 @@ const useFirstLoad = (channelId?: string) => {
     const controller = loadAbort();
     const rooms = await getAllRooms(controller);
     await fetchNotifications();
+    await fetchFriends();
 
     setInitialRooms(rooms.data);
 
@@ -72,10 +68,6 @@ const useFirstLoad = (channelId?: string) => {
   useEffect(() => {
     fetchAllInformation();
   }, []);
-
-  useEffect(() => {
-    fetchFriends();
-  }, [initialRooms]);
 
   useEffect(() => {
     fetchChannelInfo();

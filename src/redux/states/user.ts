@@ -9,6 +9,7 @@ import {
 import { RootState } from '../store';
 
 export interface UserState {
+  _id: string | null;
   username: string | null;
   email: string | null;
   shortId: string | null;
@@ -21,6 +22,7 @@ interface LoginPayload {
 }
 
 export const userEmptyState: UserState = {
+  _id: null,
   username: null,
   email: null,
   shortId: null,
@@ -49,5 +51,6 @@ export const selectUser = (state: RootState) => state.user;
 export const selectUsername = (state: RootState) => state.user.username;
 export const selectAvatar = (state: RootState) => state.user.avatar;
 export const selectEmail = (state: RootState) => state.user.email;
+export const selectUserId = (state: RootState) => state.user._id;
 export const { logIn, logOut } = userSlice.actions;
 export default userSlice.reducer;

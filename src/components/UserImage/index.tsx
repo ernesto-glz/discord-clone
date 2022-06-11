@@ -3,7 +3,6 @@ import { FriendImage } from '../Images';
 import {
   AvatarImage,
   AvatarImageContainer,
-  GenericSvg,
   StatusOffline,
   UserStatus
 } from './styles';
@@ -12,6 +11,7 @@ interface Props {
   imageUrl?: string;
   isGeneric: boolean;
   displayStatus?: boolean;
+  isOnline?: boolean;
 }
 
 export interface UserStatusProps {
@@ -21,10 +21,9 @@ export interface UserStatusProps {
 export const UserImage: React.FC<Props> = ({
   imageUrl,
   isGeneric = false,
-  displayStatus
+  displayStatus,
+  isOnline = false
 }) => {
-  const isOnline = true;
-
   if (isGeneric) {
     return <FriendImage width="24" height="32" fill="currentColor" />;
   }

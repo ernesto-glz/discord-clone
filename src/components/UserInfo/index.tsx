@@ -30,6 +30,7 @@ const UserInfo: React.FC = () => {
           imageUrl={`/assets/avatars/${user.avatar || '1'}.png`}
           isGeneric={false}
           displayStatus={true}
+          isOnline={true}
         />
         <UserData>
           <strong>{user.username}</strong>
