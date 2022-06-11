@@ -36,7 +36,7 @@ const ChannelData: React.FC<Props> = ({ channelId, channelName }) => {
       messagesEnd.scrollIntoView();
     };
     scrollToBottom();
-  }, [messagesEnd, messages]);
+  }, [messagesEnd, messages, channelId]);
 
   const getAllMessages = async () => {
     setIsLoading(true);
@@ -47,7 +47,7 @@ const ChannelData: React.FC<Props> = ({ channelId, channelName }) => {
     if (data?.docs?.length) {
       let lastMessage: any = null;
 
-      const messagesFound = data.docs.reverse().map((message: any) => {
+      const messagesFound = data.docs.map((message: any) => {
         let result: any;
 
         if (
@@ -119,8 +119,8 @@ const ChannelData: React.FC<Props> = ({ channelId, channelName }) => {
                 stackMessage={msg.stackMessage}
               />
             ))}
-            <div className="lastMessage" ref={(el) => (messagesEnd = el)} />
           </MessagesContainer>
+          <div className="lastMessage" ref={(el) => (messagesEnd = el)} />
         </Messages>
       ) : (
         <LoaderContainer>

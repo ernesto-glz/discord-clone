@@ -18,7 +18,7 @@ client.interceptors.request.use((config) => {
 client.interceptors.response.use(
   (response) => response,
   async (err) => {
-    if (err.response.status === 401) {
+    if (err.message !== 'canceled' && err.response.status === 401) {
       store.dispatch(logOut());
     }
     return Promise.reject(err);
