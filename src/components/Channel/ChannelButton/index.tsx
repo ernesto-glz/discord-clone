@@ -1,9 +1,10 @@
 import React, { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserImage } from 'src/components/UserImage';
-import { useAppSelector } from 'src/redux/hooks';
+import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import { selectFriends } from 'src/redux/states/friend';
 import { selectNotifications } from 'src/redux/states/notification';
+import { pageSwitched } from 'src/redux/states/ui';
 import { isOnline } from 'src/utils/redux';
 import { CloseIcon, Container, NotificationMark } from './styles';
 
@@ -14,7 +15,6 @@ export interface Props {
   imageUrl?: string;
   isGeneric?: boolean;
   friendId?: string;
-  setSelected: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export interface CloseIconProps {
@@ -27,9 +27,9 @@ const ChannelButton: React.FC<Props> = ({
   selected,
   imageUrl,
   isGeneric = false,
-  friendId,
-  setSelected
+  friendId
 }) => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
   const notifications = useAppSelector(selectNotifications);
@@ -38,7 +38,7 @@ const ChannelButton: React.FC<Props> = ({
 
   const goToChannel = () => {
     if (channelId !== selected) {
-      setSelected(channelId);
+      dispatch(pageSwitched(channelId));
       navigate(`/channels/@me${channelId && `/${channelId}`}`);
     }
   };

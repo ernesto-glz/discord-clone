@@ -20,9 +20,7 @@ export const FriendItemActions: React.FC<Props> = ({ userId }: Props) => {
     );
 
     if (data) {
-      socket.emit('notify-dm-chat', data);
-      socket.emit('new-room', data.sender, data._id);
-      socket.emit('new-room', data.receiver, data._id);
+      socket.emit('NEW_DM_CHAT', data);
       navigate(`/channels/@me/${data._id}`, { replace: true });
     }
   };

@@ -7,6 +7,7 @@ import { selectUsername } from 'src/redux/states/user';
 import { setFriendOffline, setFriendOnline } from 'src/redux/states/friend';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import { hasListenedToSocket, listenedToSocket } from 'src/redux/states/meta';
+import { fetchDMChannels } from 'src/redux/states/channels';
 
 interface Props {
   children: React.ReactNode;
@@ -41,6 +42,7 @@ export const SocketListeners: React.FC<Props> = ({ children }) => {
     ws.on('FRIEND_DISCONNECTED', (userId: string) =>
       dispatch(setFriendOffline(userId))
     );
+    ws.on('NEW_DM_CHAT', () => dispatch(fetchDMChannels()));
 
     dispatch(listenedToSocket());
   }, [isLoggedIn, hasListened]);

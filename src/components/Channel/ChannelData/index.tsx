@@ -3,6 +3,13 @@ import { LoaderContainer } from 'src/components/Friends/styles';
 import { DiscordLoadingDots } from 'src/components/LoadingSpinner';
 import { useWS } from 'src/contexts/ws.context';
 import useFetchAndLoad from 'src/hooks/useFetchAndLoad';
+import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
+import {
+  addMessage,
+  fetchMessages,
+  isLoadingMessages,
+  selectMessages
+} from 'src/redux/states/messages';
 import { MessageService } from 'src/services/message.service';
 import { compareDates, dateFormatted } from 'src/utils/date';
 import { useChatInputValue } from '../../../hooks/useChatInputValue';
@@ -25,11 +32,18 @@ interface Props {
 
 const ChannelData: React.FC<Props> = ({ channelId, channelName }) => {
   const { value: currentMessage, onChange, setValue } = useChatInputValue('');
-  const [messages, setMessages] = useState<any>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const messages = useAppSelector(selectMessages);
+  const isLoading = useAppSelector(isLoadingMessages);
+  const dispatch = useAppDispatch();
   const { callEndpoint } = useFetchAndLoad();
   const ws = useWS();
   let messagesEnd: any;
+
+  useEffect(() => {
+    if (isLoading === 'idle') {
+      dispatch(fetchMessages(channelId));
+    }
+  }, [channelId]);
 
   useEffect(() => {
     const scrollToBottom = () => {
@@ -38,58 +52,15 @@ const ChannelData: React.FC<Props> = ({ channelId, channelName }) => {
     scrollToBottom();
   }, [messagesEnd, messages, channelId]);
 
-  const getAllMessages = async () => {
-    setMessages([]);
-    setIsLoading(true);
-    const { data } = await callEndpoint(
-      MessageService.getAllMessages(channelId)
-    );
-
-    if (data?.docs?.length) {
-      let lastMessage: any = null;
-
-      const messagesFound = data.docs.reverse().map((message: any) => {
-        let result: any;
-
-        if (
-          lastMessage &&
-          lastMessage.sender._id === message.sender._id &&
-          compareDates(lastMessage.createdAt, message.createdAt)
-        ) {
-          result = { ...message, stackMessage: true };
-        } else {
-          result = { ...message };
-        }
-
-        lastMessage = message;
-        return result;
-      });
-      setMessages(messagesFound);
-    }
-    setIsLoading(false);
-  };
-
   useEffect(() => {
-    getAllMessages();
-  }, [channelId]);
-
-  useEffect(() => {
-    ws.on('message', (msg) => {
-      setMessages((msgs: any) => {
-        const lastMessage = msgs[msgs.length - 1];
-        if (
-          lastMessage &&
-          lastMessage.sender._id === msg.sender._id &&
-          compareDates(lastMessage.createdAt, msg.createdAt)
-        ) {
-          return [...msgs, { ...msg, stackMessage: true }];
-        }
-        return [...msgs, { ...msg }];
-      });
+    ws.on('MESSAGE_CREATE', (newMessage, id) => {
+      console.log(channelId, id);
+      if (channelId !== id) return;
+      dispatch(addMessage(newMessage));
     });
 
     return () => {
-      ws.off('message');
+      ws.off('MESSAGE_CREATE');
     };
   }, [ws]);
 
@@ -104,13 +75,13 @@ const ChannelData: React.FC<Props> = ({ channelId, channelName }) => {
       MessageService.createMessage(messageData)
     );
 
-    ws.emit('message', data);
+    ws.emit('MESSAGE_CREATE', data);
     setValue('');
   };
 
   return (
     <Container>
-      {!isLoading ? (
+      {isLoading !== 'loading' ? (
         <Messages>
           <MessagesContainer>
             {messages.map((msg: any, i: number) => (
@@ -122,8 +93,8 @@ const ChannelData: React.FC<Props> = ({ channelId, channelName }) => {
                 stackMessage={msg.stackMessage}
               />
             ))}
+            <div className="lastMessage" ref={(el) => (messagesEnd = el)} />
           </MessagesContainer>
-          <div className="lastMessage" ref={(el) => (messagesEnd = el)} />
         </Messages>
       ) : (
         <LoaderContainer>

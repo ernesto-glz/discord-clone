@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import ChannelData from 'src/components/Channel/ChannelData';
 import ChannelInfo from 'src/components/Channel/ChannelInfo';
 import ChannelList from 'src/components/Channel/ChannelList';
@@ -9,29 +9,30 @@ import { Loading } from 'src/components/Loading';
 import RightPanel from 'src/components/RightPanel';
 import ServerName from 'src/components/Server/ServerName';
 import useFirstLoad from 'src/hooks/useFirstLoad';
+import { selectActiveChannel } from 'src/redux/states/ui';
 
 export const Me: React.FC = () => {
   const [page, setPage] = useState<Pages>('Online');
-  const { channelId } = useParams();
-  const { initialRooms, isLoading, channelName } = useFirstLoad(channelId);
+  const { isLoading, channelName } = useFirstLoad();
+  const activeChannel = useSelector(selectActiveChannel);
 
   return (
     <React.Fragment>
       <Loading loading={isLoading} />
       <ServerName />
       <ChannelInfo
-        channelId={channelId}
+        channelId={activeChannel}
         setPage={setPage}
         page={page}
         channelName={channelName}
       />
-      <ChannelList channelId={channelId} initialRooms={initialRooms} />
-      {channelId ? (
-        <ChannelData channelId={channelId} channelName={channelName} />
+      <ChannelList />
+      {activeChannel ? (
+        <ChannelData channelId={activeChannel} channelName={channelName} />
       ) : (
         <FriendsPage page={page} />
       )}
-      {!channelId && <RightPanel />}
+      {!activeChannel && <RightPanel />}
     </React.Fragment>
   );
 };

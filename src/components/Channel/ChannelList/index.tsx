@@ -1,23 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { useRooms } from 'src/hooks/useRooms';
+import React, { useEffect } from 'react';
 import { useAppSelector } from 'src/redux/hooks';
+import { selectDMChannels } from 'src/redux/states/channels';
+import { selectActiveChannel } from 'src/redux/states/ui';
 import { selectUserId } from 'src/redux/states/user';
 import ChannelButton from '../ChannelButton';
 import { Container, Category, AddCategoryIcon } from './styles';
 
-interface Props {
-  channelId: string | undefined;
-  initialRooms: string[];
-}
-
-const ChannelList: React.FC<Props> = ({ channelId, initialRooms }) => {
-  const [selected, setSelected] = useState(channelId || '');
-  const { rooms } = useRooms(initialRooms);
+const ChannelList: React.FC = () => {
+  const channels = useAppSelector(selectDMChannels);
+  const activeChannel = useAppSelector(selectActiveChannel);
   const myId = useAppSelector(selectUserId);
-
-  useEffect(() => {
-    setSelected(channelId || '');
-  }, [channelId]);
 
   return (
     <Container>
@@ -25,8 +17,7 @@ const ChannelList: React.FC<Props> = ({ channelId, initialRooms }) => {
         channelName="Friends"
         isGeneric={true}
         channelId=""
-        selected={selected}
-        setSelected={setSelected}
+        selected={activeChannel}
       />
 
       <Category>
@@ -34,15 +25,14 @@ const ChannelList: React.FC<Props> = ({ channelId, initialRooms }) => {
         <AddCategoryIcon />
       </Category>
 
-      {rooms?.length > 0 &&
-        rooms.map((e: any, i: number) => (
+      {channels?.length > 0 &&
+        channels.map((e: any, i: number) => (
           <ChannelButton
             key={i}
             channelId={e._id}
-            selected={selected}
+            selected={activeChannel}
             friendId={myId === e.sender ? e.receiver : e.sender}
             channelName={e.userInfo.username}
-            setSelected={setSelected}
             imageUrl={`/assets/avatars/${e.userInfo.avatar || '1'}.png`}
           />
         ))}

@@ -11,8 +11,8 @@ export const getOrCreateRoom = (
   return client.post('/room/create-room', data, { signal: controller.signal });
 };
 
-export const getAllRooms = (controller: AbortController) => {
-  return client.get('/room/get-all', { signal: controller.signal });
+export const getDMChannels = () => {
+  return client.get('/room/get-all');
 };
 
 export const getRoomById = (controller: AbortController, roomId: string) => {

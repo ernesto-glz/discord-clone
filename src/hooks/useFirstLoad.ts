@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { getPendingRequests } from 'src/api/friend';
-import { getAllRooms } from 'src/api/room';
 import { setNotifCount } from 'src/redux/states/notification';
 import { RoomService } from 'src/services/room.service';
 import { loadAbort } from 'src/utils/load-abort-axios';
@@ -9,21 +8,24 @@ import useFetchAndLoad from './useFetchAndLoad';
 import { selectUsername } from 'src/redux/states/user';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import { useWS } from 'src/contexts/ws.context';
+import { fetchDMChannels } from 'src/redux/states/channels';
+import { pageSwitched } from 'src/redux/states/ui';
+import { useParams } from 'react-router-dom';
 
-const useFirstLoad = (channelId?: string) => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [initialRooms, setInitialRooms] = useState([]);
-  const myUsername = useAppSelector(selectUsername);
-  const loadingFriends = useAppSelector(isLoadingFriends);
-  const { callEndpoint } = useFetchAndLoad();
-  const [channelName, setChannelName] = useState(null);
-  const dispatch = useAppDispatch();
+const useFirstLoad = () => {
   const socket = useWS();
+  const { callEndpoint } = useFetchAndLoad();
+  const [isLoading, setIsLoading] = useState(true);
+  const [channelName, setChannelName] = useState(null);
+  const loadingFriends = useAppSelector(isLoadingFriends);
+  const myUsername = useAppSelector(selectUsername);
+  const dispatch = useAppDispatch();
+  const { channelId } = useParams();
 
   const fetchFriends = async () => {
     if (loadingFriends === 'idle') {
       await dispatch(getAllFriends());
-      socket.emit('get-friends-status');
+      socket.emit('GET_FRIENDS_STATUS');
     }
   };
 
@@ -38,12 +40,9 @@ const useFirstLoad = (channelId?: string) => {
   };
 
   const fetchAllInformation = async () => {
-    const controller = loadAbort();
-    const rooms = await getAllRooms(controller);
     await fetchNotifications();
     await fetchFriends();
-
-    setInitialRooms(rooms.data);
+    await dispatch(fetchDMChannels());
 
     // just for simulation
     setTimeout(() => {
@@ -53,6 +52,7 @@ const useFirstLoad = (channelId?: string) => {
 
   const fetchChannelInfo = async () => {
     if (channelId) {
+      dispatch(pageSwitched(channelId));
       const { data: channelInfo } = await callEndpoint(
         RoomService.getRoomById(channelId)
       );
@@ -75,7 +75,6 @@ const useFirstLoad = (channelId?: string) => {
 
   return {
     isLoading,
-    initialRooms,
     channelName
   };
 };
