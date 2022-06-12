@@ -16,25 +16,28 @@ const useFriends = (onlyActive = false) => {
   const getFriends = async () => {
     const { data } = await callEndpoint(FriendService.getFriends(true));
 
-    if (data?.length) {
-      const withOnlineFriends = data.map((friend: any) => {
-        const fromId = friend.from._id;
-        const toId = friend.to._id;
-        return {
-          ...friend,
-          online: myId === fromId ? isOnline(toId) : isOnline(fromId)
-        };
-      });
-
-      if (onlyActive) {
-        setFriends(
-          withOnlineFriends.filter((friend: any) => friend.online === true)
-        );
-        return;
-      }
-
-      setFriends(withOnlineFriends);
+    if (!data?.length) {
+      setFriends([]);
+      return;
     }
+
+    const withOnlineFriends = data.map((friend: any) => {
+      const fromId = friend.from._id;
+      const toId = friend.to._id;
+      return {
+        ...friend,
+        online: myId === fromId ? isOnline(toId) : isOnline(fromId)
+      };
+    });
+
+    if (onlyActive) {
+      setFriends(
+        withOnlineFriends.filter((friend: any) => friend.online === true)
+      );
+      return;
+    }
+
+    setFriends(withOnlineFriends);
   };
 
   useEffect(() => {

@@ -13,9 +13,9 @@ export const ws = io(
     autoConnect: false
   }
 );
-const SocketContext = React.createContext(ws);
+const WSContext = React.createContext(ws);
 
-export const useWS = () => useContext(SocketContext);
+export const useWS = () => useContext(WSContext);
 
 type Props = { children: React.ReactNode };
 
@@ -32,5 +32,5 @@ export const WSProvider: React.FC<Props> = ({ children }) => {
     }
   }, [isLoggedIn]);
 
-  return <SocketContext.Provider value={ws}>{children}</SocketContext.Provider>;
+  return <WSContext.Provider value={ws}>{children}</WSContext.Provider>;
 };
