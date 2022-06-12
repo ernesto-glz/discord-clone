@@ -1,5 +1,5 @@
 import mongoose, { model, Schema } from 'mongoose';
-import { FriendStatus } from 'config/constants/friend-status';
+import { FriendStatus } from 'config/constants/status';
 import paginate from 'mongoose-paginate-v2';
 import { FriendDocument } from 'interfaces/Friend';
 

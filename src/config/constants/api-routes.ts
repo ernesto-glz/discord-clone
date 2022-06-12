@@ -33,5 +33,6 @@ export const RoomRoutes = {
 };
 
 export const UserRoutes = {
-  GET_USER: '/:userId'
+  GET_USER: '/:userId',
+  GET_SELF_USER: '/'
 };

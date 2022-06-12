@@ -6,6 +6,8 @@ export interface User {
   email: string;
   password: string;
   shortId: string;
+  status: 'ONLINE' | 'OFFLINE';
+  friends: string[];
 }
 
 export interface UserDto {

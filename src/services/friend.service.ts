@@ -1,4 +1,4 @@
-import { FriendStatus } from 'config/constants/friend-status';
+import { FriendStatus } from 'config/constants/status';
 import { ApiError } from 'errors/ApiError';
 import { CreateFriendRequest } from 'interfaces/Friend';
 import { FriendRepository } from 'repositories/friend.repository';
@@ -67,16 +67,22 @@ export class FriendService {
   }
 
   static async acceptFriendRequest(requestId: string, userId: string) {
-    const requestExists = await this.friendRepository.findOne({
+    const request = await this.friendRepository.findOne({
       _id: requestId,
       to: userId
     });
 
-    if (!requestExists) {
+    if (!request) {
       throw new ApiError(400, ApiResponses.REQUEST_NOT_FOUND);
     }
 
-    return await this.friendRepository.acceptFriendRequest(requestId);
+    const updated = await this.friendRepository.acceptFriendRequest(requestId);
+    if (!updated) throw new ApiError(500, ApiResponses.SOMETHING_WRONG);
+    return await this.friendRepository.findOneAndPopulate(
+      { _id: request._id },
+      'from',
+      'to'
+    );
   }
 
   static async getFriends(userId: string, extraInfo: boolean) {
@@ -93,9 +99,9 @@ export class FriendService {
     if (!extraInfo) {
       return friends.map((entity: any) => {
         if (entity.from._id.toString() === userId.toString()) {
-          return { userId: entity.to._id };
+          return entity.to;
         }
-        return { userId: entity.from._id };
+        return entity.from;
       });
     }
 

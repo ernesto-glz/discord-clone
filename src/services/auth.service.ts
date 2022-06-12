@@ -3,6 +3,7 @@ import { ApiError } from 'errors/ApiError';
 import { UserRepository } from 'repositories/user.repository';
 import { generateShortId } from 'utils';
 import { ApiResponses } from 'config/constants/api-responses';
+import { UserStatus } from 'config/constants/status';
 
 export class AuthService {
   private static userRepository = new UserRepository();
@@ -23,7 +24,7 @@ export class AuthService {
       throw new ApiError(401, ApiResponses.INVALID_CREDENTIALS);
     }
 
-    return userFound.toObject();
+    return userFound;
   }
 
   public static async signUp(
@@ -43,7 +44,8 @@ export class AuthService {
       username,
       password: hashedPassword,
       email,
-      shortId: generateShortId()
+      shortId: generateShortId(),
+      status: UserStatus.ONLINE
     });
   }
 }

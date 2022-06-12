@@ -1,3 +1,4 @@
+import { UserStatus } from 'config/constants/status';
 import { UserDocument } from 'interfaces/User';
 import mongoose from 'mongoose';
 import { Schema, model } from 'mongoose';
@@ -32,6 +33,11 @@ const userSchema = new Schema(
       type: String,
       default: Math.floor(Math.random() * 5),
       select: true
+    },
+    status: {
+      type: String,
+      enum: Object.values(UserStatus),
+      required: true
     }
   },
   { timestamps: true, versionKey: false }

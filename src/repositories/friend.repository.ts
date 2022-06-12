@@ -1,4 +1,4 @@
-import { FriendStatus } from 'config/constants/friend-status';
+import { FriendStatus } from 'config/constants/status';
 import { FriendDocument } from 'interfaces/Friend';
 import { Friend } from 'models/friend.model';
 import { Repository } from './Base';

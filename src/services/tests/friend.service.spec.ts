@@ -3,7 +3,7 @@ import { UserRepository } from 'repositories/user.repository';
 import { UserDocument } from 'interfaces/User';
 import { FriendRepository } from 'repositories/friend.repository';
 import { FriendDocument } from 'interfaces/Friend';
-import { FriendStatus } from 'config/constants/friend-status';
+import { FriendStatus } from 'config/constants/status';
 import { ApiResponses } from 'config/constants/api-responses';
 import { catchError } from 'utils';
 import { ApiError } from 'errors/ApiError';
