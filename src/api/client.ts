@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { logOut } from 'src/redux/states/user';
-import store from 'src/redux/store';
+import store from 'src/redux/configure-store';
 import { getJwt, getUser } from 'src/utils/user';
 
 const client = axios.create({

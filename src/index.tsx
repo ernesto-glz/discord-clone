@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import App from './App';
 import { WSProvider } from './contexts/ws.context';
-import store from './redux/store';
+import store from './redux/configure-store';
 import reportWebVitals from './reportWebVitals';
 import GlobalStyles from './styled-components/GlobalStyles';
 

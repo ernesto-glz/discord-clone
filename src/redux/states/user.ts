@@ -6,7 +6,7 @@ import {
   setJwt,
   setUserInStorage
 } from 'src/utils/user';
-import { RootState } from '../store';
+import { RootState } from '../configure-store';
 
 export interface UserState {
   _id: string | null;

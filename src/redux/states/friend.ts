@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getFriends } from 'src/api/friend';
 import { loadAbort } from 'src/utils/load-abort-axios';
-import { RootState } from '../store';
+import { RootState } from '../configure-store';
 
 export interface FriendStatus {
   userId: string;

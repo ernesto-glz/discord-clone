@@ -33,12 +33,12 @@ export const SocketListeners: React.FC<Props> = ({ children }) => {
   useEffect(() => {
     if (hasListened) return;
 
-    ws.on('notify-new-fr', fetchNotifications);
-    ws.on('notify-update-fr', fetchNotifications);
-    ws.on('friend-connected', (userId: string) =>
+    ws.on('NEW_FR', fetchNotifications);
+    ws.on('UPDATE_fR', fetchNotifications);
+    ws.on('FRIEND_CONNECTED', (userId: string) =>
       dispatch(setFriendOnline(userId))
     );
-    ws.on('friend-disconnected', (userId: string) =>
+    ws.on('FRIEND_DISCONNECTED', (userId: string) =>
       dispatch(setFriendOffline(userId))
     );
 

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { RootState } from '../store';
+import { RootState } from '../configure-store';
 
 export const metaSlice = createSlice({
   name: 'meta',
