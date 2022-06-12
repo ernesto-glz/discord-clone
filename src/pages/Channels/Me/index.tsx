@@ -18,7 +18,7 @@ export const Me: React.FC = () => {
 
   return (
     <React.Fragment>
-      <Loading loading={isLoading} />
+      <Loading loading={!isLoading} />
       <ServerName />
       <ChannelInfo setPage={setPage} page={page} />
       <ChannelList />

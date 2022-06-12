@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { getPendingRequests } from 'src/api/friend';
 import { setNotifCount } from 'src/redux/states/notification';
 import { loadAbort } from 'src/utils/load-abort-axios';
@@ -11,10 +11,11 @@ import {
 } from 'src/redux/states/channels';
 import { pageSwitched } from 'src/redux/states/ui';
 import { useParams } from 'react-router-dom';
+import { fetchedEntities, hasFetchedEntities } from 'src/redux/states/meta';
 
 const useFirstLoad = () => {
   const ws = useWS();
-  const [isLoading, setIsLoading] = useState(true);
+  const isLoading = useAppSelector(hasFetchedEntities);
   const loadingFriends = useAppSelector(isLoadingFriends);
   const loadingDMChannels = useAppSelector(isLoadingDMChannels);
   const dispatch = useAppDispatch();
@@ -42,7 +43,7 @@ const useFirstLoad = () => {
 
     // just for simulation
     setTimeout(() => {
-      setIsLoading(false);
+      dispatch(fetchedEntities());
     }, 2000);
   };
 
