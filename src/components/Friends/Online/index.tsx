@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { DiscordLoadingDots } from 'src/components/LoadingSpinner';
-import useFriends from 'src/hooks/useFriends';
+import { useAppSelector } from 'src/redux/hooks';
+import { isLoadingFriends, selectFriends } from 'src/redux/states/friend';
 import { FriendItem } from '../All/friend-item';
 import {
   Container,
@@ -13,14 +14,21 @@ import {
 } from '../styles';
 
 export const OnlineFriends = () => {
-  const { friends, isLoading } = useFriends(true);
+  const friends = useAppSelector(selectFriends);
+  const isLoading = useAppSelector(isLoadingFriends);
   const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    !isLoading && setIsMounted(true);
+  const friendsOnline = useMemo(() => {
+    const onLineFriends = friends.map((friend) => {
+      if (friend.status === 'ONLINE') return friend;
+    });
+    return onLineFriends;
   }, [friends]);
 
-  if (isLoading) {
+  useEffect(() => {
+    isLoading !== 'loading' && setIsMounted(true);
+  }, [friends]);
+
+  if (isLoading === 'loading') {
     return (
       <LoaderContainer>
         <DiscordLoadingDots />
@@ -28,16 +36,19 @@ export const OnlineFriends = () => {
     );
   }
 
-  if (friends?.length) {
+  if (friendsOnline?.length) {
     return (
       <FlexColumnContainer>
         <RequestsHeader>
           <h2>ONLINE - {friends.length}</h2>
         </RequestsHeader>
         <RequestsBody>
-          {friends.map((friend, i) => (
-            <FriendItem key={i} data={friend} />
-          ))}
+          {friends.map(
+            (friend, i) =>
+              friend.status === 'ONLINE' && (
+                <FriendItem key={i} friend={friend} />
+              )
+          )}
         </RequestsBody>
       </FlexColumnContainer>
     );

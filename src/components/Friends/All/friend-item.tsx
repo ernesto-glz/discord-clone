@@ -1,22 +1,20 @@
 import React, { useMemo } from 'react';
 import { UserImage } from 'src/components/UserImage';
 import { Profile, UserData } from 'src/components/UserInfo/styles';
+import { User } from 'src/models/user.model';
 import { useAppSelector } from 'src/redux/hooks';
 import { selectFriends } from 'src/redux/states/friend';
-import { selectUsername } from 'src/redux/states/user';
 import { isOnline } from 'src/utils/redux';
 import { FriendRequest } from '../styles';
 import { FriendItemActions } from './friend-actions';
 
 interface Props {
-  data: any;
+  friend: User;
 }
 
-export const FriendItem: React.FC<Props> = ({ data }) => {
-  const myUsername = useAppSelector(selectUsername);
-  const userInfo = myUsername === data.to.username ? data.from : data.to;
+export const FriendItem: React.FC<Props> = ({ friend }) => {
   const friends = useAppSelector(selectFriends);
-  const friendStatus = useMemo(() => isOnline(userInfo._id), [friends]);
+  const friendStatus = useMemo(() => isOnline(friend._id), [friends]);
 
   return (
     <FriendRequest>
@@ -26,17 +24,17 @@ export const FriendItem: React.FC<Props> = ({ data }) => {
             isGeneric={false}
             displayStatus={true}
             isOnline={friendStatus}
-            imageUrl={`/assets/avatars/${userInfo.avatar}.png`}
+            imageUrl={`/assets/avatars/${friend.avatar}.png`}
           />
           <UserData>
-            <strong>{userInfo.username}</strong>
+            <strong>{friend.username}</strong>
             <span className="userStatus">
-              {data.online ? 'Online' : 'Offline'}
+              {friend.status === 'ONLINE' ? 'Online' : 'Offline'}
             </span>
           </UserData>
         </Profile>
       </div>
-      <FriendItemActions userId={userInfo._id} />
+      <FriendItemActions userId={friend._id} />
     </FriendRequest>
   );
 };

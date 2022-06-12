@@ -1,8 +1,9 @@
 import React from 'react';
 import { useWS } from 'src/contexts/ws.context';
 import useFetchAndLoad from 'src/hooks/useFetchAndLoad';
+import { User } from 'src/models/user.model';
 import { useAppSelector } from 'src/redux/hooks';
-import { selectUsername } from 'src/redux/states/user';
+import { selectUserId } from 'src/redux/states/user';
 import { FriendService } from 'src/services/friend.service';
 import {
   AcceptIcon,
@@ -14,7 +15,7 @@ import { RequestType } from './friend-request';
 
 interface Props {
   requestId: string;
-  requestUser: string;
+  requestUser: User;
   type: RequestType;
 }
 
@@ -24,7 +25,7 @@ export const RequestActionsItem: React.FC<Props> = ({
   type
 }) => {
   const { callEndpoint } = useFetchAndLoad();
-  const username = useAppSelector(selectUsername);
+  const myId = useAppSelector(selectUserId);
   const ws = useWS();
 
   const handleDenyOrCancelRequest = async () => {
@@ -32,8 +33,8 @@ export const RequestActionsItem: React.FC<Props> = ({
       FriendService.deleteFriendRequest(requestId)
     );
     if (data) {
-      ws.emit('UPDATE_FR', username);
-      ws.emit('UPDATE_FR', requestUser);
+      ws.emit('DENIED_FR', myId);
+      ws.emit('DENIED_FR', requestUser._id);
     }
   };
 
@@ -42,8 +43,7 @@ export const RequestActionsItem: React.FC<Props> = ({
       FriendService.acceptFriendRequest(requestId)
     );
     if (data) {
-      ws.emit('UPDATE_FR', username);
-      ws.emit('UPDATE_FR', requestUser);
+      ws.emit('ACCEPTED_FR', data);
     }
   };
 

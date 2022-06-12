@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import useFriends from 'src/hooks/useFriends';
 import {
   Container,
   FlexColumnContainer,
@@ -11,16 +10,19 @@ import {
 } from '../styles';
 import { FriendItem } from './friend-item';
 import { DiscordLoadingDots } from 'src/components/LoadingSpinner';
+import { useAppSelector } from 'src/redux/hooks';
+import { isLoadingFriends, selectFriends } from 'src/redux/states/friend';
 
 export const AllFriends: React.FC = () => {
-  const { friends, isLoading } = useFriends();
+  const friends = useAppSelector(selectFriends);
+  const isLoading = useAppSelector(isLoadingFriends);
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    !isLoading && setIsMounted(true);
+    isLoading !== 'loading' && setIsMounted(true);
   }, [friends]);
 
-  if (isLoading) {
+  if (isLoading === 'loading') {
     return (
       <LoaderContainer>
         <DiscordLoadingDots />
@@ -36,7 +38,7 @@ export const AllFriends: React.FC = () => {
         </RequestsHeader>
         <RequestsBody>
           {friends.map((friend, i) => (
-            <FriendItem key={i} data={friend} />
+            <FriendItem key={i} friend={friend} />
           ))}
         </RequestsBody>
       </FlexColumnContainer>

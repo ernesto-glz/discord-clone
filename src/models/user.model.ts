@@ -11,8 +11,10 @@ export interface UserCredentials {
 }
 
 export interface User {
+  _id: string;
   username: string;
   email: string;
   token: string;
   avatar?: string;
+  status: 'ONLINE' | 'OFFLINE';
 }

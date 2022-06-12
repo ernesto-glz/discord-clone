@@ -1,15 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getFriends } from 'src/api/friend';
+import { User } from 'src/models/user.model';
 import { loadAbort } from 'src/utils/load-abort-axios';
 import { RootState } from '../configure-store';
 
-export interface FriendStatus {
-  userId: string;
-  status: 'online' | 'offline';
-}
-
 export interface FriendState {
-  entities: FriendStatus[];
+  entities: User[];
   loading: 'idle' | 'loading' | 'failed';
 }
 
@@ -22,9 +18,7 @@ export const getAllFriends = createAsyncThunk(
   'friend/getAllFriends',
   async () => {
     const response = await getFriends(loadAbort(), false);
-    return response.data.map((entity: FriendStatus) => {
-      return { userId: entity.userId, status: 'offline' };
-    });
+    return response.data;
   }
 );
 
@@ -32,19 +26,26 @@ export const friendSlice = createSlice({
   name: 'friend',
   initialState,
   reducers: {
+    addFriend: (state, action) => {
+      const alreadyExists = state.entities.find(
+        (friend) => friend._id === action.payload._id
+      );
+      if (alreadyExists) return;
+      state.entities.push(action.payload);
+    },
     setFriendOnline: (state, action) => {
-      const newState = state.entities.map((entity): FriendStatus => {
-        if (entity.userId === action.payload) {
-          return { userId: entity.userId, status: 'online' };
+      const newState = state.entities.map((entity): User => {
+        if (entity._id === action.payload) {
+          return { ...entity, status: 'ONLINE' };
         }
         return entity;
       });
       state.entities = newState;
     },
     setFriendOffline: (state, action) => {
-      const newState = state.entities.map((entity): FriendStatus => {
-        if (entity.userId === action.payload) {
-          return { userId: entity.userId, status: 'offline' };
+      const newState = state.entities.map((entity): User => {
+        if (entity._id === action.payload) {
+          return { ...entity, status: 'OFFLINE' };
         }
         return entity;
       });
@@ -68,5 +69,6 @@ export const friendSlice = createSlice({
 
 export const selectFriends = (state: RootState) => state.friends.entities;
 export const isLoadingFriends = (state: RootState) => state.friends.loading;
-export const { setFriendOnline, setFriendOffline } = friendSlice.actions;
+export const { addFriend, setFriendOnline, setFriendOffline } =
+  friendSlice.actions;
 export default friendSlice.reducer;
