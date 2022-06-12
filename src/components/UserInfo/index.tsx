@@ -17,7 +17,7 @@ import {
 const UserInfo: React.FC = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
-  const socket = useWS();
+  const ws = useWS();
 
   const handleLogout = () => {
     dispatch(logOut());
@@ -40,7 +40,7 @@ const UserInfo: React.FC = () => {
 
       <Icons>
         <MicIcon />
-        <HeadphoneIcon onClick={() => socket.emit('sockets')} />
+        <HeadphoneIcon onClick={() => ws.emit('sockets')} />
         <SettingsIcon onClick={handleLogout} />
       </Icons>
     </Container>

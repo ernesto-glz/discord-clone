@@ -25,15 +25,15 @@ export const RequestActionsItem: React.FC<Props> = ({
 }) => {
   const { callEndpoint } = useFetchAndLoad();
   const username = useAppSelector(selectUsername);
-  const socket = useWS();
+  const ws = useWS();
 
   const handleDenyOrCancelRequest = async () => {
     const { data } = await callEndpoint(
       FriendService.deleteFriendRequest(requestId)
     );
     if (data) {
-      socket.emit('notify-update-fr', username);
-      socket.emit('notify-update-fr', requestUser);
+      ws.emit('UPDATE_FR', username);
+      ws.emit('UPDATE_FR', requestUser);
     }
   };
 
@@ -42,8 +42,8 @@ export const RequestActionsItem: React.FC<Props> = ({
       FriendService.acceptFriendRequest(requestId)
     );
     if (data) {
-      socket.emit('notify-update-fr', username);
-      socket.emit('notify-update-fr', requestUser);
+      ws.emit('UPDATE_FR', username);
+      ws.emit('UPDATE_FR', requestUser);
     }
   };
 

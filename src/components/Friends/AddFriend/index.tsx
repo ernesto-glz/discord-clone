@@ -31,7 +31,7 @@ export const AddFriend: React.FC = () => {
   const [focused, setFocused] = useState(false);
   const userToAdd = useInputValue('');
   const { callEndpoint } = useFetchAndLoad();
-  const socket = useWS();
+  const ws = useWS();
 
   const handleAddFriend = async (e: FormEvent) => {
     e.preventDefault();
@@ -69,7 +69,7 @@ export const AddFriend: React.FC = () => {
           message: `Friend request sent to ${userToAdd.value}`,
           type: 'Success'
         });
-        socket.emit('notify-new-fr', dataToSend.toUsername);
+        ws.emit('NEW_FR', dataToSend.toUsername);
       }
     } catch (err: any) {
       setResponseMessage({

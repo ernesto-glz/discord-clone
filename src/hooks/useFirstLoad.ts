@@ -13,7 +13,7 @@ import { pageSwitched } from 'src/redux/states/ui';
 import { useParams } from 'react-router-dom';
 
 const useFirstLoad = () => {
-  const socket = useWS();
+  const ws = useWS();
   const { callEndpoint } = useFetchAndLoad();
   const [isLoading, setIsLoading] = useState(true);
   const [channelName, setChannelName] = useState(null);
@@ -25,7 +25,7 @@ const useFirstLoad = () => {
   const fetchFriends = async () => {
     if (loadingFriends === 'idle') {
       await dispatch(getAllFriends());
-      socket.emit('GET_FRIENDS_STATUS');
+      ws.emit('GET_FRIENDS_STATUS');
     }
   };
 

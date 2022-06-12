@@ -30,11 +30,11 @@ export const PendingRequests: React.FC = () => {
   }, [isLoading]);
 
   useEffect(() => {
-    ws.on('notify-update-fr', () => {
+    ws.on('UPDATE_FR', () => {
       fetchAllRequests();
       dispatch(setNotifCount(pendingRequests?.length || 0));
     });
-    ws.on('notify-new-fr', () => {
+    ws.on('NEW_FR', () => {
       fetchAllRequests();
       dispatch(setNotifCount(pendingRequests?.length || 0));
     });

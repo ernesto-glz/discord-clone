@@ -11,7 +11,7 @@ interface Props {
 
 export const FriendItemActions: React.FC<Props> = ({ userId }: Props) => {
   const { callEndpoint } = useFetchAndLoad();
-  const socket = useWS();
+  const ws = useWS();
   const navigate = useNavigate();
 
   const createRoomWithFriend = async () => {
@@ -20,7 +20,7 @@ export const FriendItemActions: React.FC<Props> = ({ userId }: Props) => {
     );
 
     if (data) {
-      socket.emit('NEW_DM_CHAT', data);
+      ws.emit('NEW_DM_CHAT', data);
       navigate(`/channels/@me/${data._id}`, { replace: true });
     }
   };

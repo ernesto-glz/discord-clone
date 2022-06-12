@@ -13,7 +13,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-export const SocketListeners: React.FC<Props> = ({ children }) => {
+export const WSListeners: React.FC<Props> = ({ children }) => {
   const dispatch = useAppDispatch();
   const isLoggedIn = useAppSelector(selectUsername);
   const hasListened = useAppSelector(hasListenedToSocket);

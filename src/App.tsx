@@ -3,7 +3,7 @@ import { ProtectedRoute } from './components/ProtectedRoute';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { Layout } from './components/Layout';
-import { SocketListeners } from './components/socket-listener';
+import { WSListeners } from './components/socket-listener';
 import { Channels } from './pages/Channels';
 import { Me } from './pages/Channels/Me';
 import './styles/fonts.css';
@@ -12,7 +12,7 @@ import './styles/animations.css';
 function App() {
   return (
     <div className="App">
-      <SocketListeners>
+      <WSListeners>
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Navigate to="/channels/@me" />} />
@@ -28,7 +28,7 @@ function App() {
             <Route path="*" element={<h1>404 - Not Found</h1>} />
           </Routes>
         </BrowserRouter>
-      </SocketListeners>
+      </WSListeners>
     </div>
   );
 }
