@@ -18,9 +18,9 @@ export const OnlineFriends = () => {
   const isLoading = useAppSelector(isLoadingFriends);
   const [isMounted, setIsMounted] = useState(false);
   const friendsOnline = useMemo(() => {
-    const onLineFriends = friends.map((friend) => {
-      if (friend.status === 'ONLINE') return friend;
-    });
+    const onLineFriends = friends.filter(
+      (friend) => friend.status === 'ONLINE'
+    );
     return onLineFriends;
   }, [friends]);
 
@@ -40,7 +40,7 @@ export const OnlineFriends = () => {
     return (
       <FlexColumnContainer>
         <RequestsHeader>
-          <h2>ONLINE - {friends.length}</h2>
+          <h2>ONLINE - {friendsOnline.length}</h2>
         </RequestsHeader>
         <RequestsBody>
           {friends.map(
