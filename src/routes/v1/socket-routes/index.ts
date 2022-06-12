@@ -62,17 +62,17 @@ io.use(socketAuth).on('connection', async (socket) => {
     });
   });
 
-  socket.on('NEW_DM_CHAT', (room) => {
-    userRooms.push(room);
+  socket.on('NEW_DM_CHAT', (channel) => {
+    userRooms.push(channel);
     clients.sockets.forEach((socketData) => {
       const socketUserId = socketData.handshake.auth._id.toString();
-      if (socketUserId === room.sender.toString()) {
+      if (socketUserId === channel.sender.toString()) {
         io.to(socketData.id).emit('NEW_DM_CHAT');
-        socketData.join(room._id.toString());
+        socketData.join(channel._id.toString());
       }
-      if (socketUserId === room.receiver.toString()) {
+      if (socketUserId === channel.receiver.toString()) {
         io.to(socketData.id).emit('NEW_DM_CHAT');
-        socketData.join(room._id.toString());
+        socketData.join(channel._id.toString());
       }
     });
   });
