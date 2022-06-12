@@ -28,7 +28,7 @@ export const Me: React.FC = () => {
       />
       <ChannelList />
       {activeChannel ? (
-        <ChannelData channelId={activeChannel} channelName={channelName} />
+        <ChannelData channelName={channelName} />
       ) : (
         <FriendsPage page={page} />
       )}

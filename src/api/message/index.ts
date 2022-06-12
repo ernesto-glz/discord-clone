@@ -6,15 +6,9 @@ export const createMessage = (
   controller: AbortController
 ) => client.post('/message/create', data, { signal: controller.signal });
 
-export const getAllMessages = (
-  roomId: string,
-  controller: AbortController,
-  page?: number
-) => {
+export const getAllMessages = (roomId: string, page?: number) => {
   if (page) {
-    return client.get(`/message/get/${roomId}?page=${page}`, {
-      signal: controller.signal
-    });
+    return client.get(`/message/get/${roomId}?page=${page}`);
   }
-  return client.get(`/message/get/${roomId}`, { signal: controller.signal });
+  return client.get(`/message/get/${roomId}`);
 };

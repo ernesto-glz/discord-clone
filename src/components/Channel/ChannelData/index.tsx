@@ -1,20 +1,20 @@
-import React, { useEffect, useState, FormEvent } from 'react';
+import React, { useEffect, FormEvent } from 'react';
 import { LoaderContainer } from 'src/components/Friends/styles';
 import { DiscordLoadingDots } from 'src/components/LoadingSpinner';
 import { useWS } from 'src/contexts/ws.context';
 import useFetchAndLoad from 'src/hooks/useFetchAndLoad';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
+import { selectActiveChannel } from 'src/redux/states/ui';
+import { MessageService } from 'src/services/message.service';
+import { dateFormatted } from 'src/utils/date';
+import { useChatInputValue } from 'src/hooks/useChatInputValue';
+import ChannelMessage from '../ChannelMessage';
 import {
   addMessage,
   fetchMessages,
   isLoadingMessages,
   selectMessages
 } from 'src/redux/states/messages';
-import { MessageService } from 'src/services/message.service';
-import { compareDates, dateFormatted } from 'src/utils/date';
-import { useChatInputValue } from '../../../hooks/useChatInputValue';
-import ChannelMessage from '../ChannelMessage';
-
 import {
   Container,
   Messages,
@@ -26,48 +26,47 @@ import {
 } from './styles';
 
 interface Props {
-  channelId: string;
   channelName: string | null;
 }
 
-const ChannelData: React.FC<Props> = ({ channelId, channelName }) => {
+const ChannelData: React.FC<Props> = ({ channelName }) => {
   const { value: currentMessage, onChange, setValue } = useChatInputValue('');
   const messages = useAppSelector(selectMessages);
   const isLoading = useAppSelector(isLoadingMessages);
   const dispatch = useAppDispatch();
   const { callEndpoint } = useFetchAndLoad();
+  const activeChannel = useAppSelector(selectActiveChannel);
   const ws = useWS();
   let messagesEnd: any;
 
   useEffect(() => {
     if (isLoading === 'idle') {
-      dispatch(fetchMessages(channelId));
+      dispatch(fetchMessages(activeChannel));
     }
-  }, [channelId]);
+  }, [activeChannel]);
 
   useEffect(() => {
     const scrollToBottom = () => {
       messagesEnd.scrollIntoView();
     };
     scrollToBottom();
-  }, [messagesEnd, messages, channelId]);
+  }, [messagesEnd, messages, activeChannel]);
 
   useEffect(() => {
     ws.on('MESSAGE_CREATE', (newMessage, id) => {
-      console.log(channelId, id);
-      if (channelId !== id) return;
+      if (activeChannel !== id) return;
       dispatch(addMessage(newMessage));
     });
 
     return () => {
       ws.off('MESSAGE_CREATE');
     };
-  }, [ws]);
+  }, [ws, activeChannel]);
 
   const handleSendMessage = async (e: FormEvent) => {
     e.preventDefault();
     const messageData = {
-      roomId: channelId,
+      roomId: activeChannel,
       content: currentMessage
     };
 

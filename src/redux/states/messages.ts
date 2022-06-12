@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getAllMessages } from 'src/api/message';
 import { compareDates } from 'src/utils/date';
-import { loadAbort } from 'src/utils/load-abort-axios';
 import { RootState } from '../configure-store';
 
 export interface MessageState {
@@ -17,7 +16,7 @@ const initialState: MessageState = {
 export const fetchMessages = createAsyncThunk(
   'messages/fetchMessages',
   async (roomId: string) => {
-    const { data } = await getAllMessages(roomId, loadAbort());
+    const { data } = await getAllMessages(roomId);
 
     if (data?.docs?.length) {
       let lastMessage: any = null;
