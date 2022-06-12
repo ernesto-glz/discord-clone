@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import { useAppSelector } from 'src/redux/hooks';
 import { selectDMChannels } from 'src/redux/states/channels';
 import { selectActiveChannel } from 'src/redux/states/ui';

@@ -15,6 +15,6 @@ export const getDMChannels = () => {
   return client.get('/room/get-all');
 };
 
-export const getRoomById = (controller: AbortController, roomId: string) => {
-  return client.get(`/room/${roomId}`, { signal: controller.signal });
+export const getChannelById = (roomId: string) => {
+  return client.get(`/room/${roomId}`);
 };

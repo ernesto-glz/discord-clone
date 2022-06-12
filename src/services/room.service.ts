@@ -1,4 +1,4 @@
-import { CreateRoom, getOrCreateRoom, getRoomById } from 'src/api/room';
+import { CreateRoom, getOrCreateRoom } from 'src/api/room';
 import { loadAbort } from 'src/utils/load-abort-axios';
 
 export class RoomService {
@@ -6,14 +6,6 @@ export class RoomService {
     const controller = loadAbort();
     return {
       call: getOrCreateRoom(controller, data),
-      controller
-    };
-  }
-
-  static getRoomById(roomId: string) {
-    const controller = loadAbort();
-    return {
-      call: getRoomById(controller, roomId),
       controller
     };
   }

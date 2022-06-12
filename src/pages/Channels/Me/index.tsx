@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
 import ChannelData from 'src/components/Channel/ChannelData';
 import ChannelInfo from 'src/components/Channel/ChannelInfo';
 import ChannelList from 'src/components/Channel/ChannelList';
@@ -9,29 +8,21 @@ import { Loading } from 'src/components/Loading';
 import RightPanel from 'src/components/RightPanel';
 import ServerName from 'src/components/Server/ServerName';
 import useFirstLoad from 'src/hooks/useFirstLoad';
+import { useAppSelector } from 'src/redux/hooks';
 import { selectActiveChannel } from 'src/redux/states/ui';
 
 export const Me: React.FC = () => {
   const [page, setPage] = useState<Pages>('Online');
-  const { isLoading, channelName } = useFirstLoad();
-  const activeChannel = useSelector(selectActiveChannel);
+  const { isLoading } = useFirstLoad();
+  const activeChannel = useAppSelector(selectActiveChannel);
 
   return (
     <React.Fragment>
       <Loading loading={isLoading} />
       <ServerName />
-      <ChannelInfo
-        channelId={activeChannel}
-        setPage={setPage}
-        page={page}
-        channelName={channelName}
-      />
+      <ChannelInfo setPage={setPage} page={page} />
       <ChannelList />
-      {activeChannel ? (
-        <ChannelData channelName={channelName} />
-      ) : (
-        <FriendsPage page={page} />
-      )}
+      {activeChannel ? <ChannelData /> : <FriendsPage page={page} />}
       {!activeChannel && <RightPanel />}
     </React.Fragment>
   );

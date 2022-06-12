@@ -24,18 +24,16 @@ import {
   InputIcon,
   MessagesContainer
 } from './styles';
+import { selectChannelName } from 'src/redux/states/channels';
 
-interface Props {
-  channelName: string | null;
-}
-
-const ChannelData: React.FC<Props> = ({ channelName }) => {
+const ChannelData: React.FC = () => {
   const { value: currentMessage, onChange, setValue } = useChatInputValue('');
   const messages = useAppSelector(selectMessages);
   const isLoading = useAppSelector(isLoadingMessages);
   const dispatch = useAppDispatch();
   const { callEndpoint } = useFetchAndLoad();
   const activeChannel = useAppSelector(selectActiveChannel);
+  const channelName = useAppSelector(selectChannelName);
   const ws = useWS();
   let messagesEnd: any;
 

@@ -2,7 +2,9 @@ import React from 'react';
 import { FriendImage } from 'src/components/Images';
 import { Pages } from 'src/components/Layout';
 import { useAppSelector } from 'src/redux/hooks';
+import { selectChannelName } from 'src/redux/states/channels';
 import { selectNotifications } from 'src/redux/states/notification';
+import { selectActiveChannel } from 'src/redux/states/ui';
 import {
   Container,
   Title,
@@ -16,28 +18,23 @@ import {
 } from './styles';
 
 interface Props {
-  channelId: string | undefined;
-  setPage: React.Dispatch<React.SetStateAction<Pages>>;
   page: string;
-  channelName: string | null;
+  setPage: React.Dispatch<React.SetStateAction<Pages>>;
 }
 
 export interface AddFriendProps {
   active: boolean;
 }
 
-const ChannelInfo: React.FC<Props> = ({
-  channelId,
-  setPage,
-  page,
-  channelName
-}) => {
+const ChannelInfo: React.FC<Props> = ({ page, setPage }) => {
   const notifications = useAppSelector(selectNotifications);
+  const activeChannel = useAppSelector(selectActiveChannel);
+  const channelName = useAppSelector(selectChannelName);
 
   return (
     <Container>
       <div className="channel-info">
-        {channelId ? (
+        {activeChannel ? (
           <>
             <AIcon />
             <Title>{channelName || 'Undetermined'}</Title>
