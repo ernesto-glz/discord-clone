@@ -14,12 +14,15 @@ io.use(socketAuth).on('connection', async (socket) => {
     false
   );
 
-  if (userRooms?.length) {
-    userRooms.forEach((room) => {
-      socket.join(room._id.toString());
-    });
-  }
+  const joinAllChannels = () => {
+    if (userRooms?.length) {
+      userRooms.forEach((room) => {
+        socket.join(room._id.toString());
+      });
+    }
+  };
 
+  joinAllChannels();
   const friends = await FriendService.getFriends(me._id, false);
 
   const findFriendAndEmit = (
@@ -39,7 +42,7 @@ io.use(socketAuth).on('connection', async (socket) => {
     }
   };
 
-  socket.on('get-friends-status', () => {
+  socket.on('GET_FRIENDS_STATUS', () => {
     findFriendAndEmit('FRIEND_CONNECTED');
   });
 
@@ -59,36 +62,23 @@ io.use(socketAuth).on('connection', async (socket) => {
     });
   });
 
-  socket.on('notify-dm-chat', (room) => {
-    clients.sockets.forEach((data) => {
-      if (
-        data.handshake.auth._id.toString() === room.sender.toString() &&
-        data.connected
-      ) {
-        io.to(data.id).emit('notify-dm-chat');
+  socket.on('NEW_DM_CHAT', (room) => {
+    userRooms.push(room);
+    clients.sockets.forEach((socketData) => {
+      const socketUserId = socketData.handshake.auth._id.toString();
+      if (socketUserId === room.sender.toString()) {
+        io.to(socketData.id).emit('NEW_DM_CHAT');
+        socketData.join(room._id.toString());
       }
-      if (
-        data.handshake.auth._id.toString() === room.receiver.toString() &&
-        data.connected
-      ) {
-        io.to(data.id).emit('notify-dm-chat');
+      if (socketUserId === room.receiver.toString()) {
+        io.to(socketData.id).emit('NEW_DM_CHAT');
+        socketData.join(room._id.toString());
       }
     });
   });
 
-  socket.on('new-room', (userId, room) => {
-    clients.sockets.forEach((data) => {
-      if (
-        data.handshake.auth._id.toString() === userId.toString() &&
-        data.connected
-      ) {
-        data.join(room.toString());
-      }
-    });
-  });
-
-  socket.on('message', (data) => {
-    io.to(data.roomId).emit('message', data);
+  socket.on('MESSAGE_CREATE', (data) => {
+    io.to(data.roomId).emit('MESSAGE_CREATE', data, data.roomId);
   });
 
   socket.on('disconnect', () => {
