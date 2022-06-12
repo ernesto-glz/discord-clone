@@ -42,6 +42,10 @@ export const UserData = styled.div`
     -moz-user-select: text;
     -webkit-user-select: text;
   }
+  > .userStatus {
+    color: #ffffff99;
+    font-size: 14px;
+  }
 `;
 
 export const Icons = styled.div`

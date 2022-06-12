@@ -1,5 +1,5 @@
 import React, { FormEvent, useState } from 'react';
-import { useSocket } from 'src/contexts/socket.context';
+import { useWS } from 'src/contexts/ws.context';
 import useFetchAndLoad from 'src/hooks/useFetchAndLoad';
 import { useInputValue } from 'src/hooks/useInputValue';
 import { FriendService } from 'src/services/friend.service';
@@ -31,7 +31,7 @@ export const AddFriend: React.FC = () => {
   const [focused, setFocused] = useState(false);
   const userToAdd = useInputValue('');
   const { callEndpoint } = useFetchAndLoad();
-  const socket = useSocket();
+  const socket = useWS();
 
   const handleAddFriend = async (e: FormEvent) => {
     e.preventDefault();

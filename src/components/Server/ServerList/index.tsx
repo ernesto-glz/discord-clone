@@ -6,6 +6,8 @@ const ServerList: React.FC = () => (
   <Container>
     <ServerButton isHome />
     <Separator />
+    <ServerButton isAddButton />
+    <ServerButton isExploreButton />
     {/* <ServerButton />
       <ServerButton hasNotifications />
       <ServerButton mentions={3} />

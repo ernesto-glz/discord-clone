@@ -64,7 +64,13 @@ export const Button = styled.button<Props>`
   &.active,
   &:hover {
     border-radius: 16px;
-    background-color: ${(props) =>
-      props.isHome ? 'var(--brand-experiment)' : 'var(--discord)'};
+    background-color: ${(props) => {
+      if (props.isAddButton || props.isExploreButton)
+        return 'hsl(139,calc(var(--saturation-factor,1) * 47.3%),43.9%)';
+      return props.isHome ? 'var(--brand-experiment)' : 'var(--discord)';
+    }};
+    .fillWhite {
+      fill: #fff;
+    }
   }
 `;

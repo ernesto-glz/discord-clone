@@ -5,7 +5,7 @@ import { selectUsername } from 'src/redux/states/user';
 import { getJwt } from 'src/utils/user';
 
 const token = getJwt();
-export const socket = io(
+export const ws = io(
   `${process.env.REACT_APP_API_URL || 'http://localhost:4000'}`,
   {
     secure: true,
@@ -13,26 +13,24 @@ export const socket = io(
     autoConnect: false
   }
 );
-const SocketContext = React.createContext(socket);
+const SocketContext = React.createContext(ws);
 
-export const useSocket = () => useContext(SocketContext);
+export const useWS = () => useContext(SocketContext);
 
 type Props = { children: React.ReactNode };
 
-export const SocketProvider: React.FC<Props> = ({ children }) => {
+export const WSProvider: React.FC<Props> = ({ children }) => {
   const isLoggedIn = useAppSelector(selectUsername);
 
   useEffect(() => {
-    if (isLoggedIn && !socket.connected) {
-      socket.connect();
+    if (isLoggedIn && !ws.connected) {
+      ws.connect();
     }
 
-    if (!isLoggedIn && socket.connected) {
-      socket.disconnect();
+    if (!isLoggedIn && ws.connected) {
+      ws.disconnect();
     }
   }, [isLoggedIn]);
 
-  return (
-    <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>
-  );
+  return <SocketContext.Provider value={ws}>{children}</SocketContext.Provider>;
 };

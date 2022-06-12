@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSocket } from 'src/contexts/socket.context';
+import { useWS } from 'src/contexts/ws.context';
 import useFetchAndLoad from 'src/hooks/useFetchAndLoad';
 import { useAppSelector } from 'src/redux/hooks';
 import { selectUsername } from 'src/redux/states/user';
@@ -25,7 +25,7 @@ export const RequestActionsItem: React.FC<Props> = ({
 }) => {
   const { callEndpoint } = useFetchAndLoad();
   const username = useAppSelector(selectUsername);
-  const socket = useSocket();
+  const socket = useWS();
 
   const handleDenyOrCancelRequest = async () => {
     const { data } = await callEndpoint(

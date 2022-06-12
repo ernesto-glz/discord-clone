@@ -8,7 +8,7 @@ import { getAllFriends, isLoadingFriends } from 'src/redux/states/friend';
 import useFetchAndLoad from './useFetchAndLoad';
 import { selectUsername } from 'src/redux/states/user';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
-import { useSocket } from 'src/contexts/socket.context';
+import { useWS } from 'src/contexts/ws.context';
 
 const useFirstLoad = (channelId?: string) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -18,7 +18,7 @@ const useFirstLoad = (channelId?: string) => {
   const { callEndpoint } = useFetchAndLoad();
   const [channelName, setChannelName] = useState(null);
   const dispatch = useAppDispatch();
-  const socket = useSocket();
+  const socket = useWS();
 
   const fetchFriends = async () => {
     if (loadingFriends === 'idle') {

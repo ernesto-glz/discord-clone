@@ -1,4 +1,4 @@
-export const DidYouKnow = [
+export const DiscordTips = [
   'Use CTRL + / to bring up a list of keyboard shortcuts.',
   'Press SHIFT + ESC to mark an entire server as read.',
   'Hide muted channels in a server by right clicking the server name.',

@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { DiscordLogo } from 'src/components/Logo';
+import {
+  AddServerButton,
+  DiscordLogo,
+  ExploreButton
+} from 'src/components/Logo';
 import { useAppSelector } from 'src/redux/hooks';
 import { selectNotifications } from 'src/redux/states/notification';
 import { Button } from './styles';
@@ -7,6 +11,8 @@ import { Button } from './styles';
 export interface Props {
   selected?: boolean;
   isHome?: boolean;
+  isAddButton?: boolean;
+  isExploreButton?: boolean;
   hasNotifications?: boolean;
   mentions?: number;
 }
@@ -14,6 +20,8 @@ export interface Props {
 const ServerButton: React.FC<Props> = ({
   selected,
   isHome,
+  isAddButton,
+  isExploreButton,
   hasNotifications,
   mentions
 }) => {
@@ -27,11 +35,15 @@ const ServerButton: React.FC<Props> = ({
   return (
     <Button
       isHome={isHome}
+      isAddButton={isAddButton}
+      isExploreButton={isExploreButton}
       hasNotifications={hasNotifications}
       mentions={isHome ? actualNotifications : mentions}
       className={selected ? 'active' : ''}
     >
       {isHome && <DiscordLogo />}
+      {isAddButton && <AddServerButton />}
+      {isExploreButton && <ExploreButton />}
     </Button>
   );
 };

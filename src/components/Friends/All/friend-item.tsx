@@ -30,7 +30,9 @@ export const FriendItem: React.FC<Props> = ({ data }) => {
           />
           <UserData>
             <strong>{userInfo.username}</strong>
-            <span>#{userInfo.shortId}</span>
+            <span className="userStatus">
+              {data.online ? 'Online' : 'Offline'}
+            </span>
           </UserData>
         </Profile>
       </div>

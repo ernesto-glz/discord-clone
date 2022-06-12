@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSocket } from 'src/contexts/socket.context';
+import { useWS } from 'src/contexts/ws.context';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import { logOut, selectUser } from 'src/redux/states/user';
 import { UserImage } from '../UserImage';
@@ -17,7 +17,7 @@ import {
 const UserInfo: React.FC = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
-  const socket = useSocket();
+  const socket = useWS();
 
   const handleLogout = () => {
     dispatch(logOut());

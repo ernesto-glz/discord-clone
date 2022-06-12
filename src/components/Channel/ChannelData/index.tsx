@@ -1,7 +1,7 @@
 import React, { useEffect, useState, FormEvent } from 'react';
 import { LoaderContainer } from 'src/components/Friends/styles';
 import { DiscordLoadingDots } from 'src/components/LoadingSpinner';
-import { useSocket } from 'src/contexts/socket.context';
+import { useWS } from 'src/contexts/ws.context';
 import useFetchAndLoad from 'src/hooks/useFetchAndLoad';
 import { MessageService } from 'src/services/message.service';
 import { compareDates, dateFormatted } from 'src/utils/date';
@@ -28,7 +28,7 @@ const ChannelData: React.FC<Props> = ({ channelId, channelName }) => {
   const [messages, setMessages] = useState<any>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { callEndpoint } = useFetchAndLoad();
-  const socket = useSocket();
+  const ws = useWS();
   let messagesEnd: any;
 
   useEffect(() => {
@@ -39,6 +39,7 @@ const ChannelData: React.FC<Props> = ({ channelId, channelName }) => {
   }, [messagesEnd, messages, channelId]);
 
   const getAllMessages = async () => {
+    setMessages([]);
     setIsLoading(true);
     const { data } = await callEndpoint(
       MessageService.getAllMessages(channelId)
@@ -70,8 +71,10 @@ const ChannelData: React.FC<Props> = ({ channelId, channelName }) => {
 
   useEffect(() => {
     getAllMessages();
+  }, [channelId]);
 
-    socket.on('message', (msg) => {
+  useEffect(() => {
+    ws.on('message', (msg) => {
       setMessages((msgs: any) => {
         const lastMessage = msgs[msgs.length - 1];
         if (
@@ -86,9 +89,9 @@ const ChannelData: React.FC<Props> = ({ channelId, channelName }) => {
     });
 
     return () => {
-      socket.off('message');
+      ws.off('message');
     };
-  }, [socket, channelId]);
+  }, [ws]);
 
   const handleSendMessage = async (e: FormEvent) => {
     e.preventDefault();
@@ -101,7 +104,7 @@ const ChannelData: React.FC<Props> = ({ channelId, channelName }) => {
       MessageService.createMessage(messageData)
     );
 
-    socket.emit('message', data);
+    ws.emit('message', data);
     setValue('');
   };
 

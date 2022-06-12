@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useSocket } from 'src/contexts/socket.context';
+import { useWS } from 'src/contexts/ws.context';
 import useFriendRequests from 'src/hooks/useFriendRequests';
 import { PendingRequest } from 'src/models/friend.model';
 import { setNotifCount } from 'src/redux/states/notification';
@@ -20,7 +20,7 @@ export const PendingRequests: React.FC = () => {
   const [isMounted, setIsMounted] = useState(false);
   const { isLoading, outgoingRequests, pendingRequests, fetchAllRequests } =
     useFriendRequests();
-  const socket = useSocket();
+  const ws = useWS();
   const dispatch = useAppDispatch();
   const totalRequests =
     pendingRequests?.length || 0 + outgoingRequests?.length || 0;
@@ -30,16 +30,14 @@ export const PendingRequests: React.FC = () => {
   }, [isLoading]);
 
   useEffect(() => {
-    if (socket) {
-      socket.on('notify-update-fr', () => {
-        fetchAllRequests();
-        dispatch(setNotifCount(pendingRequests?.length || 0));
-      });
-      socket.on('notify-new-fr', () => {
-        fetchAllRequests();
-        dispatch(setNotifCount(pendingRequests?.length || 0));
-      });
-    }
+    ws.on('notify-update-fr', () => {
+      fetchAllRequests();
+      dispatch(setNotifCount(pendingRequests?.length || 0));
+    });
+    ws.on('notify-new-fr', () => {
+      fetchAllRequests();
+      dispatch(setNotifCount(pendingRequests?.length || 0));
+    });
   }, []);
 
   if (isLoading) {

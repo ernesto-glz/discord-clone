@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useSocket } from 'src/contexts/socket.context';
+import { useWS } from 'src/contexts/ws.context';
 import { RoomService } from 'src/services/room.service';
 import useFetchAndLoad from './useFetchAndLoad';
 
 export const useRooms = (initialRooms: any) => {
   const [rooms, setRooms] = useState(initialRooms);
   const { callEndpoint } = useFetchAndLoad();
-  const socket = useSocket();
+  const ws = useWS();
 
   const getRooms = async () => {
     const { data } = await callEndpoint(RoomService.getAllRooms());
@@ -18,12 +18,12 @@ export const useRooms = (initialRooms: any) => {
   }, [initialRooms]);
 
   useEffect(() => {
-    socket.on('notify-dm-chat', () => {
+    ws.on('notify-dm-chat', () => {
       getRooms();
     });
 
     return () => {
-      socket.off('notify-dm-chat');
+      ws.off('notify-dm-chat');
     };
   }, []);
 

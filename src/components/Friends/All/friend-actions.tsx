@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSocket } from 'src/contexts/socket.context';
+import { useWS } from 'src/contexts/ws.context';
 import useFetchAndLoad from 'src/hooks/useFetchAndLoad';
 import { RoomService } from 'src/services/room.service';
 import { ActionButton, DotsIcon, MessageIcon, RequestActions } from '../styles';
@@ -11,7 +11,7 @@ interface Props {
 
 export const FriendItemActions: React.FC<Props> = ({ userId }: Props) => {
   const { callEndpoint } = useFetchAndLoad();
-  const socket = useSocket();
+  const socket = useWS();
   const navigate = useNavigate();
 
   const createRoomWithFriend = async () => {

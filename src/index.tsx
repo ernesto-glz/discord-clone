@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import App from './App';
-import { SocketProvider } from './contexts/socket.context';
+import { WSProvider } from './contexts/ws.context';
 import store from './redux/store';
 import reportWebVitals from './reportWebVitals';
 import GlobalStyles from './styled-components/GlobalStyles';
@@ -14,9 +14,9 @@ root.render(
   <React.StrictMode>
     <GlobalStyles />
     <Provider store={store}>
-      <SocketProvider>
+      <WSProvider>
         <App />
-      </SocketProvider>
+      </WSProvider>
     </Provider>
   </React.StrictMode>
 );

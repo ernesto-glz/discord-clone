@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { DidYouKnow } from 'src/utils/discord-tips';
+import { DiscordTips } from 'src/utils/discord-tips';
 import { Container, LoadingSpinner } from './styles';
 
 interface Props {
@@ -8,7 +8,7 @@ interface Props {
 
 export const Loading: React.FC<Props> = ({ loading }) => {
   const randomTip = useMemo(
-    () => Math.floor(Math.random() * DidYouKnow.length),
+    () => Math.floor(Math.random() * DiscordTips.length),
     []
   );
   return (
@@ -18,7 +18,7 @@ export const Loading: React.FC<Props> = ({ loading }) => {
         <source src="/assets/loading-spinner.mp4" type="video/mp4" />
       </LoadingSpinner>
       <h4>Did you know</h4>
-      <p>{DidYouKnow[randomTip]}</p>
+      <p>{DiscordTips[randomTip]}</p>
     </Container>
   );
 };

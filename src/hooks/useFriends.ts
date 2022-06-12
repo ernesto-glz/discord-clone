@@ -16,7 +16,7 @@ const useFriends = (onlyActive = false) => {
   const getFriends = async () => {
     const { data } = await callEndpoint(FriendService.getFriends(true));
 
-    if (onlyActive && data?.length) {
+    if (data?.length) {
       const withOnlineFriends = data.map((friend: any) => {
         const fromId = friend.from._id;
         const toId = friend.to._id;
@@ -25,13 +25,16 @@ const useFriends = (onlyActive = false) => {
           online: myId === fromId ? isOnline(toId) : isOnline(fromId)
         };
       });
-      setFriends(
-        withOnlineFriends.filter((friend: any) => friend.online === true)
-      );
-      return;
-    }
 
-    setFriends(data);
+      if (onlyActive) {
+        setFriends(
+          withOnlineFriends.filter((friend: any) => friend.online === true)
+        );
+        return;
+      }
+
+      setFriends(withOnlineFriends);
+    }
   };
 
   useEffect(() => {
