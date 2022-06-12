@@ -23,7 +23,7 @@ io.use(socketAuth).on('connection', async (socket) => {
   const friends = await FriendService.getFriends(me._id, false);
 
   const findFriendAndEmit = (
-    action: 'friend-connected' | 'friend-disconnected'
+    action: 'FRIEND_CONNECTED' | 'FRIEND_DISCONNECTED'
   ) => {
     if (friends?.length) {
       friends.forEach((friend: any) => {
@@ -40,21 +40,21 @@ io.use(socketAuth).on('connection', async (socket) => {
   };
 
   socket.on('get-friends-status', () => {
-    findFriendAndEmit('friend-connected');
+    findFriendAndEmit('FRIEND_CONNECTED');
   });
 
-  socket.on('notify-new-fr', (username: string) => {
+  socket.on('NEW_FR', (username: string) => {
     clients.sockets.forEach((data) => {
       if (data.handshake.auth.username === username && data.connected) {
-        io.to(data.id).emit('notify-new-fr');
+        io.to(data.id).emit('NEW_FR');
       }
     });
   });
 
-  socket.on('notify-update-fr', (username: string) => {
+  socket.on('UPDATE_FR', (username: string) => {
     clients.sockets.forEach((data) => {
       if (data.handshake.auth.username === username && data.connected) {
-        io.to(data.id).emit('notify-update-fr');
+        io.to(data.id).emit('UPDATE_FR');
       }
     });
   });
@@ -92,7 +92,7 @@ io.use(socketAuth).on('connection', async (socket) => {
   });
 
   socket.on('disconnect', () => {
-    findFriendAndEmit('friend-disconnected');
+    findFriendAndEmit('FRIEND_DISCONNECTED');
   });
 });
 
