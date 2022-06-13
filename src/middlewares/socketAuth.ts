@@ -50,7 +50,7 @@ export const socketAuth = async (socket: SocketIo, next: SocketIoNext) => {
     next();
   } catch (error) {
     if (error) {
-      return next(new Error(ApiResponses.SOMETHING_WRONG));
+      return next(new Error(ApiResponses.USER_NOT_FOUND));
     }
   }
 };

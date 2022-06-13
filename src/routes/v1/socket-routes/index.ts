@@ -98,8 +98,12 @@ io.use(socketAuth).on('connection', async (socket) => {
   });
 
   socket.on('disconnect', async () => {
-    await UserService.setUserStatus(me._id, 'OFFLINE');
-    findFriendAndEmit('FRIEND_DISCONNECTED');
+    try {
+      await UserService.setUserStatus(me._id, 'OFFLINE');
+      findFriendAndEmit('FRIEND_DISCONNECTED');
+    } catch (error: any) {
+      console.log(`[WS] - [disconnect] -> ${error?.message}`);
+    }
   });
 });
 
