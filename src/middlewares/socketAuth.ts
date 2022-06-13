@@ -1,14 +1,15 @@
 import { verify } from 'jsonwebtoken';
 import { Socket } from 'socket.io';
 import { ExtendedError } from 'socket.io/dist/namespace';
-import { UserRepository } from 'repositories/user.repository';
 import { ApiErrors } from 'config/constants/api-errors';
 import { ApiResponses } from 'config/constants/api-responses';
+import { FriendService } from 'services/friend.service';
+import { RoomService } from 'services/room.service';
+import { UserService } from 'services/user.service';
 
 type SocketIo = Socket;
 type SocketIoNext = (err?: ExtendedError | undefined) => void;
 
-const userRepository = new UserRepository();
 export const socketAuth = async (socket: SocketIo, next: SocketIoNext) => {
   const { token } = socket.handshake.query;
   if (!token) return next(new Error(ApiResponses.INVALID_TOKEN));
@@ -34,12 +35,22 @@ export const socketAuth = async (socket: SocketIo, next: SocketIoNext) => {
     }
   }
 
-  const user = await userRepository.findById(decoded._id);
+  try {
+    const user = await UserService.getUser(decoded._id);
+    const channels = await RoomService.getAllRooms(decoded._id, false);
+    const friends = await FriendService.getFriends(decoded._id, false);
 
-  if (!user) {
-    return next(new Error(ApiResponses.USER_NOT_FOUND));
+    if (!user) {
+      return next(new Error(ApiResponses.USER_NOT_FOUND));
+    }
+
+    socket.data.user = JSON.parse(JSON.stringify(user));
+    socket.data.channels = channels ? JSON.parse(JSON.stringify(channels)) : [];
+    socket.data.friends = friends ? JSON.parse(JSON.stringify(friends)) : [];
+    next();
+  } catch (error) {
+    if (error) {
+      return next(new Error(ApiResponses.SOMETHING_WRONG));
+    }
   }
-
-  socket.handshake.auth = { ...user?.toObject() };
-  next();
 };
