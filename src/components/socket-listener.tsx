@@ -7,6 +7,8 @@ import { actions as requests } from 'src/redux/states/requests';
 import { ws } from 'src/contexts/ws.context';
 import store from 'src/redux/configure-store';
 import fetchEntities from 'src/redux/actions/fetch-entities';
+import { logOut } from 'src/redux/states/user';
+import { AuthErrors } from 'src/config/constants';
 
 interface Props {
   children: React.ReactNode;
@@ -18,6 +20,11 @@ export const WSListeners: React.FC<Props> = ({ children }) => {
   useEffect(() => {
     if (store.getState().meta.hasListenedToSocket) return;
 
+    ws.on('connect_error', (error) => {
+      if (Object.values(AuthErrors).indexOf(error.message) > -1) {
+        dispatch(logOut());
+      }
+    });
     ws.on('READY', () => {
       dispatch(fetchEntities());
     });
