@@ -18,17 +18,25 @@ export class FriendRepository extends Repository<FriendDocument> {
   }
 
   async getPendingRequests(to: string) {
-    return await this.find({
-      to,
-      friend_status: FriendStatus.PENDING
-    });
+    return await this.findAndPopulate(
+      {
+        to,
+        friend_status: FriendStatus.PENDING
+      },
+      'from',
+      'to'
+    );
   }
 
   async getOutgoingRequests(from: string) {
-    return await this.find({
-      from,
-      friend_status: FriendStatus.PENDING
-    });
+    return await this.findAndPopulate(
+      {
+        from,
+        friend_status: FriendStatus.PENDING
+      },
+      'from',
+      'to'
+    );
   }
 
   async getFriends(userId: string) {

@@ -49,39 +49,49 @@ io.use(socketAuth).on('connection', async (socket) => {
     findFriendAndEmit('FRIEND_CONNECTED');
   });
 
-  socket.on('NEW_FR', (username: string) => {
-    clients.sockets.forEach((data) => {
-      if (data.handshake.auth.username === username) {
-        io.to(data.id).emit('NEW_FR');
+  socket.on('NEW_FR', (request) => {
+    clients.sockets.forEach((socketData) => {
+      if (socketData.handshake.auth._id.toString() === request.from._id) {
+        io.to(socketData.id).emit('NEW_FR', request, 'OUTGOING');
+      }
+      if (socketData.handshake.auth._id.toString() === request.to._id) {
+        io.to(socketData.id).emit('NEW_FR', request, 'INCOMING');
       }
     });
   });
 
-  socket.on('DENIED_FR', (userId: string) => {
-    clients.sockets.forEach((data) => {
-      if (data.handshake.auth._id === userId) {
-        io.to(data.id).emit('UPDATE_FR');
+  socket.on('DENIED_FR', (request) => {
+    clients.sockets.forEach((socketData) => {
+      if (socketData.handshake.auth._id.toString() === request.from) {
+        io.to(socketData.id).emit('DENIED_FR', request, 'OUTGOING');
+      }
+      if (socketData.handshake.auth._id.toString() === request.to) {
+        io.to(socketData.id).emit('DENIED_FR', request, 'INCOMING');
       }
     });
   });
 
   socket.on('ACCEPTED_FR', async (request: any) => {
-    try {
-      const fromId = request.from._id.toString();
-      const toId = request.to._id.toString();
-      clients.sockets.forEach((socketData) => {
-        if (socketData.handshake.auth._id.toString() === fromId) {
-          io.to(socketData.id).emit('UPDATE_FR');
-          io.to(socketData.id).emit('NEW_FRIEND', request.to);
-        }
-        if (socketData.handshake.auth._id.toString() === toId) {
-          io.to(socketData.id).emit('UPDATE_FR');
-          io.to(socketData.id).emit('NEW_FRIEND', request.from);
-        }
-      });
-    } catch (error: any) {
-      console.log(error?.message || error);
-    }
+    const fromId = request.from._id.toString();
+    const toId = request.to._id.toString();
+    clients.sockets.forEach((socketData) => {
+      if (socketData.handshake.auth._id.toString() === fromId) {
+        io.to(socketData.id).emit(
+          'NEW_FRIEND',
+          request.to,
+          request._id,
+          'OUTGOING'
+        );
+      }
+      if (socketData.handshake.auth._id.toString() === toId) {
+        io.to(socketData.id).emit(
+          'NEW_FRIEND',
+          request.from,
+          request._id,
+          'INCOMING'
+        );
+      }
+    });
   });
 
   socket.on('NEW_DM_CHAT', (channel) => {

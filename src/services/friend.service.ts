@@ -39,10 +39,16 @@ export class FriendService {
       throw new ApiError(400, ApiResponses.REQUEST_ALREADY_EXISTS);
     }
 
-    return await this.friendRepository.create({
+    const created = await this.friendRepository.create({
       from,
       to: userFound._id
     });
+
+    return await this.friendRepository.findOneAndPopulate(
+      { _id: created._id },
+      'from',
+      'to'
+    );
   }
 
   static async getPendingRequests(userId: string) {
