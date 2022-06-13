@@ -111,7 +111,7 @@ export const AddFriend: React.FC = () => {
         </form>
       </FriendHeader>
       <Container>
-        <WampusImage src="/assets/add_friend.svg" alt="add friend" />
+        <WampusImage src="/assets/wampus_king.svg" alt="add friend" />
         <WampusMessage>
           Wumpus is waiting on friends. You don’t have to though!
         </WampusMessage>

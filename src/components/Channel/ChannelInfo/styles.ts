@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { FileTray, HelpCircle } from '@styled-icons/ionicons-solid';
 import { Hashtag } from '@styled-icons/heroicons-outline';
 import { AlternateEmail } from '@styled-icons/material';
-import { AddFriendProps } from '.';
+import { AddFriendProps, MenuButtonProps } from '.';
 
 export const Container = styled.div`
   grid-area: CI;
@@ -98,8 +98,9 @@ export const AddFriendBtn = styled.button<AddFriendProps>`
   cursor: pointer;
 `;
 
-export const MenuButton = styled.button`
-  background-color: transparent;
+export const MenuButton = styled.button<MenuButtonProps>`
+  background-color: ${(props) =>
+    props.isActive ? 'var(--background-modifier-selected)' : 'transparent'};
   color: hsl(0, calc(var(--saturation-factor, 1) * 0%), 100%);
   min-width: 40px;
   border-radius: 4px;

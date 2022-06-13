@@ -3,7 +3,7 @@ import { QRBorder, QRContainer, QRDescription, QRTitle } from './styles';
 export const QRCode = () => (
   <QRContainer>
     <QRBorder>
-      <img alt="Qr code" src="/assets/qr-code-icon.png" loading="lazy" />
+      <img alt="Qr code" src="/assets/qr_code.png" loading="lazy" />
     </QRBorder>
     <QRTitle>Log in with QR Code</QRTitle>
     <QRDescription>

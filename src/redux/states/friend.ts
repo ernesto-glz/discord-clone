@@ -65,6 +65,5 @@ export const friendSlice = createSlice({
 
 export const selectFriends = (state: RootState) => state.friends.entities;
 export const isLoadingFriends = (state: RootState) => state.friends.loading;
-export const { addFriend, setFriendOnline, setFriendOffline } =
-  friendSlice.actions;
+export const actions = friendSlice.actions;
 export default friendSlice.reducer;

@@ -1,6 +1,6 @@
 import React from 'react';
-import { ws } from 'src/contexts/ws.context';
 import useFetchAndLoad from 'src/hooks/useFetchAndLoad';
+import { ws } from 'src/contexts/ws.context';
 import { User } from 'src/models/user.model';
 import { FriendService } from 'src/services/friend.service';
 import {
@@ -24,7 +24,6 @@ export const RequestActionsItem: React.FC<Props> = ({ requestId, type }) => {
     const { data } = await callEndpoint(
       FriendService.deleteFriendRequest(requestId)
     );
-    console.log(data);
     if (data) {
       ws.emit('DENIED_FR', data);
     }

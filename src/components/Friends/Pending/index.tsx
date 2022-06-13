@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { FriendRequest } from 'src/models/friend.model';
 import { RequestItem } from './friend-request';
-import { DiscordLoadingDots } from 'src/components/LoadingSpinner';
 import { useAppSelector } from 'src/redux/hooks';
 import { selectIncoming, selectOutgoing } from 'src/redux/states/requests';
 import {
   Container,
   FlexColumnContainer,
-  LoaderContainer,
   RequestsBody,
   RequestsHeader,
   WampusImage,
@@ -15,33 +13,11 @@ import {
 } from '../styles';
 
 export const PendingRequests: React.FC = () => {
-  const [isMounted, setIsMounted] = useState(false);
   const incomingRequests = useAppSelector(selectIncoming);
   const outgoingRequests = useAppSelector(selectOutgoing);
-  const loadingIncoming = useAppSelector(
-    (state) => state.requests.incoming.loading
-  );
-  const loadingOutgoing = useAppSelector(
-    (state) => state.requests.outgoing.loading
-  );
-  const totalRequests =
-    incomingRequests?.length || 0 + outgoingRequests?.length || 0;
-  const isLoading =
-    loadingIncoming === 'loading' || loadingOutgoing === 'loading';
+  const totalRequests = incomingRequests.length + outgoingRequests.length;
 
-  useEffect(() => {
-    !isLoading && setIsMounted(true);
-  }, [isLoading]);
-
-  if (isLoading) {
-    return (
-      <LoaderContainer>
-        <DiscordLoadingDots />
-      </LoaderContainer>
-    );
-  }
-
-  if (incomingRequests?.length || outgoingRequests?.length) {
+  if (incomingRequests.length || outgoingRequests.length) {
     return (
       <FlexColumnContainer>
         <RequestsHeader>
@@ -60,19 +36,11 @@ export const PendingRequests: React.FC = () => {
   }
 
   return (
-    <React.Fragment>
-      {isMounted ? (
-        <Container>
-          <WampusImage src="/assets/pending_request.svg" alt="add friend" />
-          <WampusMessage>
-            There are no pending friend requests. Here&apos;s Wampus for now.
-          </WampusMessage>
-        </Container>
-      ) : (
-        <LoaderContainer>
-          <DiscordLoadingDots />
-        </LoaderContainer>
-      )}
-    </React.Fragment>
+    <Container>
+      <WampusImage src="/assets/wampus_only.svg" alt="add friend" />
+      <WampusMessage>
+        There are no pending friend requests. Here&apos;s Wampus for now.
+      </WampusMessage>
+    </Container>
   );
 };

@@ -16,7 +16,7 @@ const ChannelList: React.FC = () => {
         channelName="Friends"
         isGeneric={true}
         channelId=""
-        selected={activeChannel}
+        selected={activeChannel || ''}
       />
 
       <Category>

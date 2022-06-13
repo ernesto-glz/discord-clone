@@ -1,22 +1,27 @@
-import { Outlet, useParams } from 'react-router-dom';
 import React from 'react';
-import { GridContainer } from './styles';
 import ServerList from '../Server/ServerList';
 import UserInfo from '../UserInfo';
+import PageWrapper from 'src/pages/page-wrapper';
+import { Outlet } from 'react-router-dom';
+import { GridContainer } from './styles';
+import { useSelector } from 'react-redux';
+import { selectActiveChannel } from 'src/redux/states/ui';
 
 export interface GridProps {
-  channelId: string | boolean | undefined | null;
+  channelId: string;
 }
 export type Pages = 'Online' | 'All' | 'Pending' | 'AddFriend';
 
 export const Layout: React.FC = () => {
-  const { channelId } = useParams();
+  const channelId = useSelector(selectActiveChannel);
 
   return (
-    <GridContainer channelId={channelId}>
-      <ServerList />
-      <UserInfo />
-      <Outlet />
-    </GridContainer>
+    <PageWrapper>
+      <GridContainer channelId={channelId}>
+        <ServerList />
+        <UserInfo />
+        <Outlet />
+      </GridContainer>
+    </PageWrapper>
   );
 };

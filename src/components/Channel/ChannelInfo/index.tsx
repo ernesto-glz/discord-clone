@@ -22,6 +22,10 @@ interface Props {
   setPage: React.Dispatch<React.SetStateAction<Pages>>;
 }
 
+export interface MenuButtonProps {
+  isActive: boolean;
+}
+
 export interface AddFriendProps {
   active: boolean;
 }
@@ -30,6 +34,7 @@ const ChannelInfo: React.FC<Props> = ({ page, setPage }) => {
   const notifications = useAppSelector(selectNotifications);
   const activeChannel = useAppSelector(selectActiveChannel);
   const channelName = useAppSelector(selectChannelName);
+  const isActivePage = (i: string) => page === i;
 
   return (
     <Container>
@@ -44,9 +49,22 @@ const ChannelInfo: React.FC<Props> = ({ page, setPage }) => {
             <FriendImage width="24" height="32" fill="var(--gray)" />
             <Title>Friends</Title>
             <Separator />
-            <MenuButton onClick={() => setPage('Online')}>Online</MenuButton>
-            <MenuButton onClick={() => setPage('All')}>All</MenuButton>
-            <MenuButton onClick={() => setPage('Pending')}>
+            <MenuButton
+              isActive={isActivePage('Online')}
+              onClick={() => setPage('Online')}
+            >
+              Online
+            </MenuButton>
+            <MenuButton
+              isActive={isActivePage('All')}
+              onClick={() => setPage('All')}
+            >
+              All
+            </MenuButton>
+            <MenuButton
+              isActive={isActivePage('Pending')}
+              onClick={() => setPage('Pending')}
+            >
               Pending
               {notifications > 0 && (
                 <NotificationMark>{notifications}</NotificationMark>

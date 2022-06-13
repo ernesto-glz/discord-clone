@@ -7,13 +7,13 @@ import { Pages } from 'src/components/Layout';
 import { Loading } from 'src/components/Loading';
 import RightPanel from 'src/components/RightPanel';
 import ServerName from 'src/components/Server/ServerName';
-import useFirstLoad from 'src/hooks/useFirstLoad';
 import { useAppSelector } from 'src/redux/hooks';
+import { hasFetchedEntities } from 'src/redux/states/meta';
 import { selectActiveChannel } from 'src/redux/states/ui';
 
 export const Me: React.FC = () => {
   const [page, setPage] = useState<Pages>('Online');
-  const { isLoading } = useFirstLoad();
+  const isLoading = useAppSelector(hasFetchedEntities);
   const activeChannel = useAppSelector(selectActiveChannel);
 
   return (

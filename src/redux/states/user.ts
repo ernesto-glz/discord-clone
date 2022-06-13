@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ws } from 'src/contexts/ws.context';
 import {
   getUserFromStorage,
   removeJwt,
@@ -39,12 +38,10 @@ export const userSlice = createSlice({
       setJwt(action.payload.jwt);
       setUserInStorage(action.payload.user);
       state = action.payload.user;
-      ws.connect();
     },
     logOut: (state) => {
       removeJwt();
       removeUserFromStorage();
-      ws.disconnect();
       return userEmptyState;
     }
   }

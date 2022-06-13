@@ -1,40 +1,24 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { DiscordLoadingDots } from 'src/components/LoadingSpinner';
+import React, { useMemo } from 'react';
 import { useAppSelector } from 'src/redux/hooks';
-import { isLoadingFriends, selectFriends } from 'src/redux/states/friend';
+import { selectFriends } from 'src/redux/states/friend';
 import { FriendItem } from '../All/friend-item';
 import {
   Container,
   FlexColumnContainer,
-  LoaderContainer,
   RequestsBody,
   RequestsHeader,
   WampusImage,
   WampusMessage
 } from '../styles';
 
-export const OnlineFriends = () => {
+export const OnlineFriends: React.FC = () => {
   const friends = useAppSelector(selectFriends);
-  const isLoading = useAppSelector(isLoadingFriends);
-  const [isMounted, setIsMounted] = useState(false);
   const friendsOnline = useMemo(() => {
     const onLineFriends = friends.filter(
       (friend) => friend.status === 'ONLINE'
     );
     return onLineFriends;
   }, [friends]);
-
-  useEffect(() => {
-    isLoading !== 'loading' && setIsMounted(true);
-  }, [friends]);
-
-  if (isLoading === 'loading') {
-    return (
-      <LoaderContainer>
-        <DiscordLoadingDots />
-      </LoaderContainer>
-    );
-  }
 
   if (friendsOnline?.length) {
     return (
@@ -55,19 +39,9 @@ export const OnlineFriends = () => {
   }
 
   return (
-    <React.Fragment>
-      {isMounted ? (
-        <Container>
-          <WampusImage src="/assets/no_online_friends.svg" alt="noOnline" />
-          <WampusMessage>
-            No one&apos;s around to play with Wumpus.
-          </WampusMessage>
-        </Container>
-      ) : (
-        <LoaderContainer>
-          <DiscordLoadingDots />
-        </LoaderContainer>
-      )}
-    </React.Fragment>
+    <Container>
+      <WampusImage src="/assets/wampus_sleeping.svg" alt="noOnline" />
+      <WampusMessage>No one&apos;s around to play with Wumpus.</WampusMessage>
+    </Container>
   );
 };

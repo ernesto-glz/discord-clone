@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { getOutgoingRequests, getPendingRequests } from 'src/api/friend';
 import { FriendRequest } from 'src/models/friend.model';
 import { loadAbort } from 'src/utils/load-abort-axios';
@@ -14,6 +14,17 @@ export interface FriendRequests {
     loading: 'idle' | 'loading' | 'failed';
   };
 }
+
+export interface CreateReqPayload {
+  request: FriendRequest;
+  type: 'INCOMING' | 'OUTGOING';
+}
+
+export interface RemoveReqPayload {
+  requestId: string;
+  type: 'INCOMING' | 'OUTGOING';
+}
+
 export const initialState: FriendRequests = {
   incoming: {
     entities: [],
@@ -45,20 +56,20 @@ export const slice = createSlice({
   name: 'requests',
   initialState,
   reducers: {
-    addIncomingRequest: (requests, action) => {
-      requests.incoming.entities.push(action.payload);
+    addRequest: (requests, { payload }: PayloadAction<CreateReqPayload>) => {
+      payload.type === 'INCOMING'
+        ? requests.incoming.entities.push(payload.request)
+        : requests.outgoing.entities.push(payload.request);
     },
-    addOutGoingRequest: (requests, action) => {
-      requests.outgoing.entities.push(action.payload);
-    },
-    removeIncomingRequest: (requests, action) => {
-      requests.incoming.entities = requests.incoming.entities.filter(
-        (request) => request._id !== action.payload
-      );
-    },
-    removeOutgoingRequest: (requests, action) => {
+    removeRequest: (requests, { payload }: PayloadAction<RemoveReqPayload>) => {
+      if (payload.type === 'INCOMING') {
+        requests.incoming.entities = requests.incoming.entities.filter(
+          (request) => request._id !== payload.requestId
+        );
+        return;
+      }
       requests.outgoing.entities = requests.outgoing.entities.filter(
-        (request) => request._id !== action.payload
+        (request) => request._id !== payload.requestId
       );
     }
   },
@@ -94,10 +105,5 @@ export const selectIncoming = (state: RootState) => {
 export const selectOutgoing = (state: RootState) => {
   return state.requests.outgoing.entities;
 };
-export const {
-  addIncomingRequest,
-  addOutGoingRequest,
-  removeIncomingRequest,
-  removeOutgoingRequest
-} = slice.actions;
+export const actions = slice.actions;
 export default slice.reducer;
