@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { io } from 'socket.io-client';
 import { useAppSelector } from 'src/redux/hooks';
 import { selectUsername } from 'src/redux/states/user';
@@ -20,7 +20,6 @@ export const ws = io(
 ws.io.on('open', () => console.log('Connected to WS Server'));
 
 const WSContext = React.createContext(ws);
-export const useWS = () => useContext(WSContext);
 
 export const WSProvider: React.FC<Props> = ({ children }) => {
   const isLoggedIn = useAppSelector(selectUsername);

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useWS } from 'src/contexts/ws.context';
-import useFriendRequests from 'src/hooks/useFriendRequests';
-import { PendingRequest } from 'src/models/friend.model';
-import { setNotifCount } from 'src/redux/states/notification';
+import { FriendRequest } from 'src/models/friend.model';
+import { RequestItem } from './friend-request';
+import { DiscordLoadingDots } from 'src/components/LoadingSpinner';
+import { useAppSelector } from 'src/redux/hooks';
+import { selectIncoming, selectOutgoing } from 'src/redux/states/requests';
 import {
   Container,
   FlexColumnContainer,
@@ -12,33 +13,25 @@ import {
   WampusImage,
   WampusMessage
 } from '../styles';
-import { RequestItem } from './friend-request';
-import { DiscordLoadingDots } from 'src/components/LoadingSpinner';
-import { useAppDispatch } from 'src/redux/hooks';
 
 export const PendingRequests: React.FC = () => {
   const [isMounted, setIsMounted] = useState(false);
-  const { isLoading, outgoingRequests, pendingRequests, fetchAllRequests } =
-    useFriendRequests();
-  const ws = useWS();
-  const dispatch = useAppDispatch();
+  const incomingRequests = useAppSelector(selectIncoming);
+  const outgoingRequests = useAppSelector(selectOutgoing);
+  const loadingIncoming = useAppSelector(
+    (state) => state.requests.incoming.loading
+  );
+  const loadingOutgoing = useAppSelector(
+    (state) => state.requests.outgoing.loading
+  );
   const totalRequests =
-    pendingRequests?.length || 0 + outgoingRequests?.length || 0;
+    incomingRequests?.length || 0 + outgoingRequests?.length || 0;
+  const isLoading =
+    loadingIncoming === 'loading' || loadingOutgoing === 'loading';
 
   useEffect(() => {
     !isLoading && setIsMounted(true);
   }, [isLoading]);
-
-  useEffect(() => {
-    ws.on('UPDATE_FR', () => {
-      fetchAllRequests();
-      dispatch(setNotifCount(pendingRequests?.length || 0));
-    });
-    ws.on('NEW_FR', () => {
-      fetchAllRequests();
-      dispatch(setNotifCount(pendingRequests?.length || 0));
-    });
-  }, []);
 
   if (isLoading) {
     return (
@@ -48,17 +41,17 @@ export const PendingRequests: React.FC = () => {
     );
   }
 
-  if (pendingRequests?.length || outgoingRequests?.length) {
+  if (incomingRequests?.length || outgoingRequests?.length) {
     return (
       <FlexColumnContainer>
         <RequestsHeader>
           <h2>PENDING - {totalRequests}</h2>
         </RequestsHeader>
         <RequestsBody>
-          {pendingRequests?.map((request: PendingRequest, i) => (
+          {incomingRequests?.map((request: FriendRequest, i) => (
             <RequestItem request={request} key={i} type="Incoming" />
           ))}
-          {outgoingRequests?.map((request: PendingRequest, i) => (
+          {outgoingRequests?.map((request: FriendRequest, i) => (
             <RequestItem request={request} key={i} type="Outgoing" />
           ))}
         </RequestsBody>

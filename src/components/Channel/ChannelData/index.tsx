@@ -1,7 +1,6 @@
 import React, { useEffect, FormEvent } from 'react';
 import { LoaderContainer } from 'src/components/Friends/styles';
 import { DiscordLoadingDots } from 'src/components/LoadingSpinner';
-import { useWS } from 'src/contexts/ws.context';
 import useFetchAndLoad from 'src/hooks/useFetchAndLoad';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import { selectActiveChannel } from 'src/redux/states/ui';
@@ -25,6 +24,7 @@ import {
   MessagesContainer
 } from './styles';
 import { selectChannelName } from 'src/redux/states/channels';
+import { ws } from 'src/contexts/ws.context';
 
 const ChannelData: React.FC = () => {
   const { value: currentMessage, onChange, setValue } = useChatInputValue('');
@@ -34,7 +34,6 @@ const ChannelData: React.FC = () => {
   const { callEndpoint } = useFetchAndLoad();
   const activeChannel = useAppSelector(selectActiveChannel);
   const channelName = useAppSelector(selectChannelName);
-  const ws = useWS();
   let messagesEnd: any;
 
   useEffect(() => {

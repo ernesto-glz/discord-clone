@@ -1,5 +1,5 @@
 import React, { FormEvent, useState } from 'react';
-import { useWS } from 'src/contexts/ws.context';
+import { ws } from 'src/contexts/ws.context';
 import useFetchAndLoad from 'src/hooks/useFetchAndLoad';
 import { useInputValue } from 'src/hooks/useInputValue';
 import { FriendService } from 'src/services/friend.service';
@@ -31,7 +31,6 @@ export const AddFriend: React.FC = () => {
   const [focused, setFocused] = useState(false);
   const userToAdd = useInputValue('');
   const { callEndpoint } = useFetchAndLoad();
-  const ws = useWS();
 
   const handleAddFriend = async (e: FormEvent) => {
     e.preventDefault();
@@ -69,7 +68,7 @@ export const AddFriend: React.FC = () => {
           message: `Friend request sent to ${userToAdd.value}`,
           type: 'Success'
         });
-        ws.emit('NEW_FR', dataToSend.toUsername);
+        ws.emit('NEW_FR', data);
       }
     } catch (err: any) {
       setResponseMessage({

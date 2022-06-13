@@ -1,9 +1,7 @@
 import React from 'react';
-import { useWS } from 'src/contexts/ws.context';
+import { ws } from 'src/contexts/ws.context';
 import useFetchAndLoad from 'src/hooks/useFetchAndLoad';
 import { User } from 'src/models/user.model';
-import { useAppSelector } from 'src/redux/hooks';
-import { selectUserId } from 'src/redux/states/user';
 import { FriendService } from 'src/services/friend.service';
 import {
   AcceptIcon,
@@ -19,22 +17,16 @@ interface Props {
   type: RequestType;
 }
 
-export const RequestActionsItem: React.FC<Props> = ({
-  requestId,
-  requestUser,
-  type
-}) => {
+export const RequestActionsItem: React.FC<Props> = ({ requestId, type }) => {
   const { callEndpoint } = useFetchAndLoad();
-  const myId = useAppSelector(selectUserId);
-  const ws = useWS();
 
   const handleDenyOrCancelRequest = async () => {
     const { data } = await callEndpoint(
       FriendService.deleteFriendRequest(requestId)
     );
+    console.log(data);
     if (data) {
-      ws.emit('DENIED_FR', myId);
-      ws.emit('DENIED_FR', requestUser._id);
+      ws.emit('DENIED_FR', data);
     }
   };
 

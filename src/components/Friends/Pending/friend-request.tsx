@@ -1,32 +1,32 @@
 import React, { useMemo } from 'react';
 import { UserImage } from 'src/components/UserImage';
 import { Profile, UserData } from 'src/components/UserInfo/styles';
-import { PendingRequest } from 'src/models/friend.model';
-import { FriendRequest } from '../styles';
+import { FriendRequest } from 'src/models/friend.model';
+import { FriendRequest as FriendRequestContainer } from '../styles';
 import { RequestActionsItem } from './request-actions';
 
 export type RequestType = 'Incoming' | 'Outgoing';
 
 interface Props {
-  request: PendingRequest;
+  request: FriendRequest;
   type: RequestType;
 }
 
 export const RequestItem: React.FC<Props> = ({ request, type }) => {
-  const user = useMemo(
-    () => (type === 'Outgoing' ? request.toUser : request.fromUser),
+  const requestUser = useMemo(
+    () => (type === 'Outgoing' ? request.to : request.from),
     [request]
   );
   return (
-    <FriendRequest>
+    <FriendRequestContainer>
       <div>
         <Profile>
           <UserImage
-            imageUrl={`/assets/avatars/${user.avatar}.png`}
+            imageUrl={`/assets/avatars/${requestUser.avatar}.png`}
             isGeneric={false}
           />
           <UserData>
-            <strong>{user.username}</strong>
+            <strong>{requestUser.username}</strong>
             <span>
               {type === 'Outgoing'
                 ? 'Outgoing Friend Request'
@@ -36,10 +36,10 @@ export const RequestItem: React.FC<Props> = ({ request, type }) => {
         </Profile>
       </div>
       <RequestActionsItem
-        requestUser={user}
+        requestUser={requestUser}
         requestId={request._id}
         type={type}
       />
-    </FriendRequest>
+    </FriendRequestContainer>
   );
 };

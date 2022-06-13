@@ -4,7 +4,6 @@ import { setNotifCount } from 'src/redux/states/notification';
 import { loadAbort } from 'src/utils/load-abort-axios';
 import { getAllFriends, isLoadingFriends } from 'src/redux/states/friend';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
-import { useWS } from 'src/contexts/ws.context';
 import {
   fetchDMChannels,
   isLoadingDMChannels
@@ -12,12 +11,19 @@ import {
 import { pageSwitched } from 'src/redux/states/ui';
 import { useParams } from 'react-router-dom';
 import { fetchedEntities, hasFetchedEntities } from 'src/redux/states/meta';
+import { getIncoming, getOutgoing } from 'src/redux/states/requests';
+import { ws } from 'src/contexts/ws.context';
 
 const useFirstLoad = () => {
-  const ws = useWS();
   const isLoading = useAppSelector(hasFetchedEntities);
   const loadingFriends = useAppSelector(isLoadingFriends);
   const loadingDMChannels = useAppSelector(isLoadingDMChannels);
+  const loadingIncomingRQ = useAppSelector(
+    (state) => state.requests.incoming.loading
+  );
+  const loadingOutgoingRQ = useAppSelector(
+    (state) => state.requests.outgoing.loading
+  );
   const dispatch = useAppDispatch();
   const { channelId } = useParams();
 
@@ -39,6 +45,12 @@ const useFirstLoad = () => {
     }
     if (loadingDMChannels === 'idle') {
       await dispatch(fetchDMChannels());
+    }
+    if (loadingIncomingRQ === 'idle') {
+      await dispatch(getIncoming());
+    }
+    if (loadingOutgoingRQ === 'idle') {
+      await dispatch(getOutgoing());
     }
 
     // just for simulation

@@ -27,10 +27,6 @@ export const friendSlice = createSlice({
   initialState,
   reducers: {
     addFriend: (state, action) => {
-      const alreadyExists = state.entities.find(
-        (friend) => friend._id === action.payload._id
-      );
-      if (alreadyExists) return;
       state.entities.push(action.payload);
     },
     setFriendOnline: (state, action) => {

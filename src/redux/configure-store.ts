@@ -6,6 +6,7 @@ import metaReducer from './states/meta';
 import channelReducer from './states/channels';
 import messageReducer from './states/messages';
 import uiReducer from './states/ui';
+import requestsReducer from './states/requests';
 
 const store = configureStore({
   reducer: {
@@ -15,7 +16,8 @@ const store = configureStore({
     meta: metaReducer,
     channels: channelReducer,
     messages: messageReducer,
-    ui: uiReducer
+    ui: uiReducer,
+    requests: requestsReducer
   }
 });
 
