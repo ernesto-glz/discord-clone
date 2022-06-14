@@ -12,8 +12,8 @@ import './styles/animations.css';
 function App() {
   return (
     <div className="App">
-      <WSListeners>
-        <BrowserRouter>
+      <BrowserRouter>
+        <WSListeners>
           <Routes>
             <Route path="/" element={<Navigate to="/channels/@me" />} />
             <Route path="/login" element={<Login />} />
@@ -27,8 +27,8 @@ function App() {
             </Route>
             <Route path="*" element={<h1>404 - Not Found</h1>} />
           </Routes>
-        </BrowserRouter>
-      </WSListeners>
+        </WSListeners>
+      </BrowserRouter>
     </div>
   );
 }

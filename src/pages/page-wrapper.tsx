@@ -13,14 +13,10 @@ const PageWrapper: React.FC<PageWrapperProps> = (props) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(pageSwitched(channelId));
+    dispatch(pageSwitched(channelId ?? ''));
   }, [channelId]);
 
-  return (
-    <React.Fragment>
-      {props.children}
-    </React.Fragment>
-  );
+  return <React.Fragment>{props.children}</React.Fragment>;
 };
 
 export default PageWrapper;

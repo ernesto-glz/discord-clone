@@ -15,8 +15,8 @@ const initialState: MessageState = {
 
 export const fetchMessages = createAsyncThunk(
   'messages/fetchMessages',
-  async (roomId: string) => {
-    const { data } = await getAllMessages(roomId);
+  async (channelId: string) => {
+    const { data } = await getAllMessages(channelId);
 
     if (data?.docs?.length) {
       let lastMessage: any = null;

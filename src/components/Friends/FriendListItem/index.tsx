@@ -6,7 +6,7 @@ import { useAppSelector } from 'src/redux/hooks';
 import { selectFriends } from 'src/redux/states/friend';
 import { isOnline } from 'src/utils/redux';
 import { FriendRequest } from '../styles';
-import { FriendItemActions } from './friend-actions';
+import { FriendItemActions } from './actions';
 
 interface Props {
   friend: User;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { FriendItem } from './friend-item';
+import { FriendItem } from '../FriendListItem';
 import { useAppSelector } from 'src/redux/hooks';
 import { selectFriends } from 'src/redux/states/friend';
 import {

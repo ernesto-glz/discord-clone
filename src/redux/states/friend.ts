@@ -29,23 +29,9 @@ export const friendSlice = createSlice({
     addFriend: (state, action) => {
       state.entities.push(action.payload);
     },
-    setFriendOnline: (state, action) => {
-      const newState = state.entities.map((entity): User => {
-        if (entity._id === action.payload) {
-          return { ...entity, status: 'ONLINE' };
-        }
-        return entity;
-      });
-      state.entities = newState;
-    },
-    setFriendOffline: (state, action) => {
-      const newState = state.entities.map((entity): User => {
-        if (entity._id === action.payload) {
-          return { ...entity, status: 'OFFLINE' };
-        }
-        return entity;
-      });
-      state.entities = newState;
+    updatePresence: (state, { payload }) => {
+      const user = state.entities.find((e) => e._id === payload.userId);
+      if (user) Object.assign(user, payload.user);
     }
   },
   extraReducers: (builder) => {

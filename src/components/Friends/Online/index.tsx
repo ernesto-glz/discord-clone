@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useAppSelector } from 'src/redux/hooks';
 import { selectFriends } from 'src/redux/states/friend';
-import { FriendItem } from '../All/friend-item';
+import { FriendItem } from '../FriendListItem';
 import {
   Container,
   FlexColumnContainer,

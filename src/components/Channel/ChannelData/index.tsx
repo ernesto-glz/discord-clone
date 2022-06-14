@@ -63,7 +63,7 @@ const ChannelData: React.FC = () => {
   const handleSendMessage = async (e: FormEvent) => {
     e.preventDefault();
     const messageData = {
-      roomId: activeChannel,
+      channelId: activeChannel,
       content: currentMessage
     };
 

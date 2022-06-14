@@ -5,3 +5,7 @@ export const isOnline = (friendId: string) => {
   const friend = friends.find((entity) => entity._id === friendId);
   return friend?.status === 'ONLINE' ? true : false;
 };
+
+export const notInArray = (arr: any[]) => (old: any) => {
+  return !arr.some((e) => e.id === old.id);
+};

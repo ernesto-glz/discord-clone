@@ -1,4 +1,4 @@
 export interface CreateMessage {
-  roomId: string;
+  channelId: string;
   content: string;
 }
