@@ -3,11 +3,11 @@ import http from 'http';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import helmet from 'helmet';
-import v1 from './routes/v1/rest-routes';
+import v1 from './routes/v1';
 import mongoSanitize from 'express-mongo-sanitize';
-import socketIo_v1 from './routes/v1/socket-routes';
 import { apiErrorHandler } from './middlewares/ApiErrorHandler';
 import { ApiError } from './errors/ApiError';
+import { WebSocket } from './ws/websocket';
 
 dotenv.config();
 
@@ -40,7 +40,7 @@ export class Server {
   async listen(): Promise<void> {
     return new Promise((resolve) => {
       this.httpServer = http.createServer(this.express);
-      socketIo_v1.attach(this.httpServer, { cors: { origin: '*' } });
+      new WebSocket(this.httpServer);
       this.httpServer.listen(this.port, () => {
         console.log(
           ` Server is running at http://localhost:${

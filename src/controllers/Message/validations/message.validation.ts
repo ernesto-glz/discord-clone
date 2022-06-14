@@ -4,8 +4,8 @@ import { validateResult } from 'utils/validate';
 import { MessageValidation } from 'config/constants/validation-errors';
 
 export const validateCreateMessage = [
-  check('roomId').custom((value) => {
-    if (!value) throw new Error(MessageValidation.ROOM_ID_REQUIRED);
+  check('channelId').custom((value) => {
+    if (!value) throw new Error(MessageValidation.CHANNEL_ID_REQUIRED);
     return true;
   }),
   check('content').custom((value) => {

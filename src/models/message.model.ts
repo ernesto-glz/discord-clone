@@ -9,9 +9,9 @@ const messageSchema = new Schema(
       ref: 'User',
       required: true
     },
-    roomId: {
+    channelId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Room',
+      ref: 'Channel',
       required: true
     },
     content: {

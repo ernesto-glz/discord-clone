@@ -42,6 +42,6 @@ export const AuthGuard = async (
     throw new ApiError(401, ApiResponses.USER_NOT_FOUND);
   }
 
-  res.locals.user = { ...user.toObject() };
+  res.locals.user = JSON.parse(JSON.stringify(user));
   next();
 };

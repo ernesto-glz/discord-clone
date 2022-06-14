@@ -3,9 +3,9 @@ import { Socket } from 'socket.io';
 import { ExtendedError } from 'socket.io/dist/namespace';
 import { ApiErrors } from 'config/constants/api-errors';
 import { ApiResponses } from 'config/constants/api-responses';
-import { FriendService } from 'services/friend.service';
-import { RoomService } from 'services/room.service';
+import { ChannelService } from 'services/channel.service';
 import { UserService } from 'services/user.service';
+import { FriendService } from 'services/friend.service';
 
 type SocketIo = Socket;
 type SocketIoNext = (err?: ExtendedError | undefined) => void;
@@ -37,7 +37,7 @@ export const socketAuth = async (socket: SocketIo, next: SocketIoNext) => {
 
   try {
     const user = await UserService.getUser(decoded._id);
-    const channels = await RoomService.getAllRooms(decoded._id, false);
+    const channels = await ChannelService.getAll(decoded._id);
     const friends = await FriendService.getFriends(decoded._id, false);
 
     if (!user) {

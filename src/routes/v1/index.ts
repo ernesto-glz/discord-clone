@@ -1,6 +1,6 @@
 import authRoutes from 'controllers/Auth/auth.route';
 import userRoutes from 'controllers/User/user.route';
-import roomRoutes from 'controllers/Room/room.route';
+import channelRoutes from 'controllers/Channel/channel.route';
 import friendRoutes from 'controllers/Friend/friend.route';
 import messageRoutes from 'controllers/Message/message.route';
 import { AuthGuard } from 'shared/auth.guard';
@@ -11,7 +11,7 @@ const router = AsyncRouter();
 
 router.use(ApiRoutes.AUTH, authRoutes);
 router.use(ApiRoutes.USER, AuthGuard, userRoutes);
-router.use(ApiRoutes.ROOM, AuthGuard, roomRoutes);
+router.use(ApiRoutes.CHANNEL, AuthGuard, channelRoutes);
 router.use(ApiRoutes.FRIEND, AuthGuard, friendRoutes);
 router.use(ApiRoutes.MESSAGE, AuthGuard, messageRoutes);
 

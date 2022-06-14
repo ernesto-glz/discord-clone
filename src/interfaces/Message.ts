@@ -2,7 +2,7 @@ import { Document } from 'mongoose';
 
 export interface Message {
   sender: string;
-  roomId: string;
+  channelId: string;
   content: string;
   createdAt?: string;
   updatedAt?: string;

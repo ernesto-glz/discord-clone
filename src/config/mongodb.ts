@@ -12,8 +12,8 @@ export function dbConnect() {
         if (error) {
           reject(error);
         }
-        console.log('> Connected with db');
-        resolve('> Connected with db');
+        console.log('> Connected to database');
+        resolve(1);
       }
     );
   });

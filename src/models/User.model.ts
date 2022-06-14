@@ -34,6 +34,9 @@ const userSchema = new Schema(
       default: Math.floor(Math.random() * 5),
       select: true
     },
+    guildIds: {
+      type: [String]
+    },
     status: {
       type: String,
       enum: Object.values(UserStatus),

@@ -1,7 +1,7 @@
 export const ApiRoutes = {
   AUTH: '/auth',
   USER: '/user',
-  ROOM: '/room',
+  CHANNEL: '/channel',
   FRIEND: '/friend',
   MESSAGE: '/message'
 };
@@ -21,15 +21,15 @@ export const FriendRoutes = {
 };
 
 export const MessageRoutes = {
-  GET_MESSAGES: '/get/:roomId',
+  GET_MESSAGES: '/get/:channelId',
   CREATE_MESSAGE: '/create'
 };
 
-export const RoomRoutes = {
-  CREATE_ROOM: '/create-room',
-  GET_ROOMS: '/get-all',
-  DELETE_ROOM: '/:roomId',
-  GET_ROOM_BY_ID: '/:roomId'
+export const ChannelRoutes = {
+  CREATE_CHANNEL: '/create',
+  GET_CHANNELS: '/get',
+  DELETE_CHANNEL: '/:channelId',
+  GET_CHANNEL_BY_ID: '/:channelId'
 };
 
 export const UserRoutes = {

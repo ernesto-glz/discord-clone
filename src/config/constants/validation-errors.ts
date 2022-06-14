@@ -12,10 +12,11 @@ export const FriendValidation = {
 };
 
 export const MessageValidation = {
-  ROOM_ID_REQUIRED: 'RoomId is required',
+  CHANNEL_ID_REQUIRED: 'ChannelId is required',
   MESSAGE_CONTENT_REQUIRED: 'Message content is required'
 };
 
-export const RoomValidation = {
-  INVALID_RECEIVER_ID: 'Invalid receiverId'
+export const ChannelValidation = {
+  INVALID_GUILD_ID: 'Invalid guildId',
+  INVALID_USER_ID: 'Invalid userId'
 };

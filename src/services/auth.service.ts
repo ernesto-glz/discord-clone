@@ -45,6 +45,7 @@ export class AuthService {
       password: hashedPassword,
       email,
       shortId: generateShortId(),
+      guildIds: ['DM'],
       status: UserStatus.ONLINE
     });
   }
