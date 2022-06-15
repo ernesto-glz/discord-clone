@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "es2016",
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "sourceMap": false,
+    "noEmit": false,
+    "strict": true,
+    "allowJs": true,
+    "outDir": "dist",
+    "baseUrl": "src"
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.*.ts",
+    "src/app.ts, src/config/*.ts"
+  ]
+}

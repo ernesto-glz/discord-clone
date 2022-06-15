@@ -6,3 +6,4 @@
 *.ico binary
 *.mp4 binary
 *.webm binary
+* text eol=lf
