@@ -31,13 +31,14 @@ export const Button = styled.button<Props>`
   &::before {
     content: '';
     width: 9px;
-    height: 9px;
+    height: ${(props) => (props.selected ? '40px' : '9px')};
     position: absolute;
     left: -17px;
-    top: calc(50% - 4.5px);
+    top: ${(props) => (props.selected ? 'calc(20% - 4.5px)' : 'calc(50% - 4.5px)')} ;
     background-color: var(--white);
-    border-radius: 50%;
-    display: ${(props) => (props.hasNotifications ? 'inline' : 'none')};
+    border-radius: ${(props) => props.selected ? '20%' : '50%'} ;
+    display: ${(props) =>
+      props.hasNotifications || props.selected ? 'inline' : 'none'};
   }
 
   &::after {
@@ -61,7 +62,20 @@ export const Button = styled.button<Props>`
 
   transition: border-radius 0.2s, background-color 0.2s;
 
-  &.active,
+  ${(props) =>
+    props.selected &&
+    `
+    border-radius: 16px;
+    background-color: ${() => {
+      if (props.isAddButton || props.isExploreButton)
+        return 'hsl(139,calc(var(--saturation-factor,1) * 47.3%),43.9%)';
+      return props.isHome ? 'var(--brand-experiment)' : 'var(--discord)';
+    }};
+    .fillWhite {
+      fill: #fff;
+    }
+  `}
+
   &:hover {
     border-radius: 16px;
     background-color: ${(props) => {

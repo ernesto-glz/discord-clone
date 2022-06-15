@@ -13,7 +13,10 @@ export const FriendItemActions: React.FC<Props> = ({ userId }: Props) => {
   return (
     <RequestActions>
       <ActionButton
-        onClick={() => dispatch(addChannel({ userId, guildId: 'DM' }))}
+        onClick={(e) => {
+          e.stopPropagation();
+          dispatch(addChannel({ userId, guildId: 'DM' }));
+        }}
       >
         <MessageIcon className="message" />
       </ActionButton>

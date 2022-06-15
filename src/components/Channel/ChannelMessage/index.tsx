@@ -43,6 +43,7 @@ const ChannelMessage: React.FC<Props> = ({
       <UserImage
         imageUrl={`/assets/avatars/${author.avatar}.png`}
         isGeneric={false}
+        customSize={40}
       />
       <Message>
         <Header>

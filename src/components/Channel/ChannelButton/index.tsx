@@ -14,6 +14,7 @@ export interface Props {
   imageUrl?: string;
   isGeneric?: boolean;
   friendId?: string;
+  genericImage?: 'FRIEND' | 'NITRO';
 }
 
 export interface CloseIconProps {
@@ -26,7 +27,8 @@ const ChannelButton: React.FC<Props> = ({
   selected,
   imageUrl,
   isGeneric = false,
-  friendId
+  friendId,
+  genericImage
 }) => {
   const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
@@ -35,7 +37,7 @@ const ChannelButton: React.FC<Props> = ({
   const friendStatus = useMemo(() => isOnline(friendId!), [friends]);
 
   const goToChannel = () => {
-    if (channelId !== selected) {
+    if (channelId !== selected && channelId !== 'not') {
       navigate(`/channels/@me${channelId && `/${channelId}`}`);
     }
   };
@@ -49,6 +51,7 @@ const ChannelButton: React.FC<Props> = ({
       <div onClick={goToChannel}>
         <UserImage
           isGeneric={isGeneric}
+          genericImage={genericImage}
           imageUrl={imageUrl}
           displayStatus={true}
           isOnline={friendStatus}

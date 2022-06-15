@@ -25,10 +25,14 @@ export const WampusMessage = styled.div`
 `;
 
 export const FlexColumnContainer = styled.div`
+  grid-area: CD;
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100%;
+  padding-right: 6px;
+  max-height: calc(100vh - 46px);
+  padding-bottom: 8px;
 `;
 
 export const FriendHeader = styled.header`
@@ -134,39 +138,44 @@ export const RequestsBody = styled.div`
   display: flex;
   flex-direction: column;
   > div {
-    width: 95%;
-    margin: 0px 30px;
+    cursor: pointer;
+    margin-left: 30px;
+    margin-right: 20px;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 18px;
+    padding: 0px 10px;
     border-top: 1px solid var(--background-modifier-accent);
     &:hover {
-      border-radius: 10px;
-      background-color: var(--background-modifier-hover);
+      background: var(--background-modifier-hover);
+      -webkit-box-shadow: none;
+      box-shadow: none;
+      border-radius: 8px;
+      border-color: transparent;
     }
   }
   ::-webkit-scrollbar {
-    width: 4px;
+    width: 8px;
+    background-color: var(--secondary);
+    border-radius: 10px;
   }
+
   ::-webkit-scrollbar-thumb {
     background-color: var(--tertiary);
-    border-radius: 4px;
-  }
-  ::-webkit-scrollbar-track {
-    background-color: var(--secondary);
+    border-radius: 10px;
   }
 `;
 
 export const FriendRequest = styled.div`
-  height: 62px;
+  min-height: 62px;
+`;
+
+export const ItemBody = styled.div`
   display: flex;
-  flex-direction: row;
-  margin-right: 20px;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 20px;
-  overflow: hidden;
-  padding: 0px 10px;
-  width: 100%;
-  cursor: pointer;
+  height: 62px;
+  flex-grow: 1;
   align-items: center;
+  justify-content: center;
   justify-content: space-between;
 `;
 
@@ -225,5 +234,5 @@ export const LoaderContainer = styled.div`
   height: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
-;`;
+  align-items: center; ;
+`;

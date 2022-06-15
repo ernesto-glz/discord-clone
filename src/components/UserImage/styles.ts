@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { UserStatusProps } from '.';
+import { UserStatusProps, AvatarImageProps } from '.';
 
-export const AvatarImage = styled.img`
+export const AvatarImage = styled.img<AvatarImageProps>`
   display: block;
   object-fit: cover;
   pointer-events: none;
@@ -9,7 +9,7 @@ export const AvatarImage = styled.img`
   height: 100%;
   grid-area: 1/1;
   border-radius: 50%;
-  width: 38px;
+  width: ${({ customSize }) => (customSize ? `${customSize}px` : '32px')};
 `;
 
 export const GenericSvg = styled.svg`

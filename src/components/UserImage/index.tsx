@@ -1,5 +1,5 @@
 import React from 'react';
-import { FriendImage } from '../Images';
+import { FriendImage, NitroImage } from '../Images';
 import {
   AvatarImage,
   AvatarImageContainer,
@@ -12,6 +12,12 @@ interface Props {
   isGeneric: boolean;
   displayStatus?: boolean;
   isOnline?: boolean;
+  customSize?: number;
+  genericImage?: 'FRIEND' | 'NITRO';
+}
+
+export interface AvatarImageProps {
+  customSize?: number;
 }
 
 export interface UserStatusProps {
@@ -22,10 +28,16 @@ export const UserImage: React.FC<Props> = ({
   imageUrl,
   isGeneric = false,
   displayStatus,
-  isOnline = false
+  isOnline = false,
+  customSize,
+  genericImage
 }) => {
-  if (isGeneric) {
+  if (isGeneric && genericImage === 'FRIEND') {
     return <FriendImage width="24" height="32" fill="currentColor" />;
+  }
+
+  if (isGeneric && genericImage === 'NITRO') {
+    return <NitroImage width="24" height="32" fill="currentColor" />;
   }
 
   return (
@@ -34,6 +46,7 @@ export const UserImage: React.FC<Props> = ({
         src={`${imageUrl || '/assets/discord-blue-icon.png'} `}
         alt="avatar"
         aria-hidden="true"
+        customSize={customSize}
       />
 
       {displayStatus && (

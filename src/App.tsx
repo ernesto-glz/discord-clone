@@ -20,9 +20,8 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route element={<ProtectedRoute />}>
               <Route element={<Layout />}>
-                <Route path="/channels/:channelId" element={<Channels />} />
                 <Route path="/channels/@me" element={<Me />} />
-                <Route path="/channels/@me/:channelId" element={<Me />} />
+                <Route path="/channels/:guildId/:channelId" element={<Me />} />
               </Route>
             </Route>
             <Route path="*" element={<h1>404 - Not Found</h1>} />

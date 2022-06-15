@@ -1,14 +1,23 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../configure-store';
+
+export interface UIState {
+  activeChannel: string;
+  activeGuild: string;
+}
+
+export interface PageSwitch {
+  channel: string;
+  guild: string;
+}
 
 export const slice = createSlice({
   name: 'ui',
-  initialState: {
-    activeChannel: ''
-  },
+  initialState: {} as UIState,
   reducers: {
-    pageSwitched: (state, action) => {
-      state.activeChannel = action.payload;
+    pageSwitched: (state, { payload }: PayloadAction<PageSwitch>) => {
+      state.activeChannel = payload.channel;
+      state.activeGuild = payload.guild;
     }
   }
 });

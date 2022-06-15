@@ -56,10 +56,10 @@ export const InputWrapper = styled.div`
 export const Input = styled.input`
   flex: 1;
   height: 44px;
-  color: var(--white);
+  color: var(--text-normal);
   background-color: transparent;
   position: relative;
-
+  font-size: 16px;
   &::placeholder {
     color: var(--gray);
   }

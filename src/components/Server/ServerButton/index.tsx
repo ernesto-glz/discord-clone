@@ -39,7 +39,7 @@ const ServerButton: React.FC<Props> = ({
       isExploreButton={isExploreButton}
       hasNotifications={hasNotifications}
       mentions={isHome ? actualNotifications : mentions}
-      className={selected ? 'active' : ''}
+      selected={selected}
     >
       {isHome && <DiscordLogo />}
       {isAddButton && <AddServerButton />}

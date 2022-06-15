@@ -8,7 +8,7 @@ export const Container = styled.div`
   align-items: center;
   cursor: pointer;
   margin-bottom: 4px;
-  padding: 0px 3px;
+  padding: 1px 10px;
   border-radius: 5px;
   background-color: transparent;
   transition: background-color 0.2s;

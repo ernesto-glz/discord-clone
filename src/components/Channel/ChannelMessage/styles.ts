@@ -38,7 +38,7 @@ export const Message = styled.div<MessageProps>`
   -moz-user-select: text;
   -webkit-user-select: text;
   &.stackMessage {
-    margin-left: 55px;
+    margin-left: 57px;
   }
 `;
 
@@ -69,7 +69,7 @@ export const Header = styled.div`
 export const Content = styled.div`
   text-align: left;
   font-size: 16px;
-  color: var(--white);
+  color: var(--text-normal);
 `;
 
 export const Mention = styled.span`

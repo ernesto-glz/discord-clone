@@ -14,6 +14,15 @@ const ChannelList: React.FC = () => {
         channelName="Friends"
         isGeneric={true}
         channelId=""
+        genericImage="FRIEND"
+        selected={activeChannel}
+      />
+
+      <ChannelButton
+        channelName="Nitro"
+        isGeneric={true}
+        channelId="not"
+        genericImage="NITRO"
         selected={activeChannel}
       />
 

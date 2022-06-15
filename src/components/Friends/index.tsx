@@ -1,8 +1,7 @@
 import React from 'react';
 import { Pages } from '../Layout';
 import { AddFriend } from './AddFriend';
-import { AllFriends } from './All';
-import { OnlineFriends } from './Online';
+import { MyFriends } from './friends';
 import { PendingRequests } from './Pending';
 
 interface Props {
@@ -11,15 +10,15 @@ interface Props {
 
 const FriendsPage: React.FC<Props> = ({ page }) => {
   if (page === 'Online') {
-    return <OnlineFriends />;
+    return <MyFriends justOnline />;
+  }
+
+  if (page === 'All') {
+    return <MyFriends />;
   }
 
   if (page === 'Pending') {
     return <PendingRequests />;
-  }
-
-  if (page === 'All') {
-    return <AllFriends />;
   }
 
   return <AddFriend />;

@@ -9,12 +9,14 @@ export type PageWrapperProps = React.DetailedHTMLProps<
 > & { pageTitle?: string };
 
 const PageWrapper: React.FC<PageWrapperProps> = (props) => {
-  const { channelId } = useParams();
+  const { channelId, guildId } = useParams();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(pageSwitched(channelId ?? ''));
-  }, [channelId]);
+    dispatch(
+      pageSwitched({ channel: channelId ?? '', guild: guildId ?? '@me' })
+    );
+  }, [channelId, guildId]);
 
   return <React.Fragment>{props.children}</React.Fragment>;
 };
