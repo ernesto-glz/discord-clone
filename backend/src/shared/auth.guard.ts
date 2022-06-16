@@ -17,6 +17,7 @@ export const AuthGuard = async (
   let decoded: any;
 
   if (!process.env.JWT_SECRET_KEY) {
+    console.log(ApiErrors.NO_JWT_SECRET_KEY)
     throw new Error(ApiErrors.NO_JWT_SECRET_KEY);
   }
 

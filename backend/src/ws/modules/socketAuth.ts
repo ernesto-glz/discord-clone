@@ -16,6 +16,7 @@ export const socketAuth = async (socket: SocketIo, next: SocketIoNext) => {
   let decoded: any;
 
   if (!process.env.JWT_SECRET_KEY) {
+    console.log(ApiErrors.NO_JWT_SECRET_KEY)
     return next(new Error(ApiErrors.NO_JWT_SECRET_KEY));
   }
 

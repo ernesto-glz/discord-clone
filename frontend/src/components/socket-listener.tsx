@@ -27,7 +27,9 @@ export const WSListeners: React.FC<Props> = ({ children }) => {
     ws.on('connect_error', (error) => {
       if (Object.values(AuthErrors).indexOf(error.message) > -1) {
         dispatch(logOut());
+        return;
       }
+      console.log(error);
     });
     ws.on('READY', () => {
       dispatch(fetchEntities());
