@@ -39,6 +39,7 @@ export class MessageService {
     const message = await (
       await this.messageRepository.create(data)
     ).populate('sender');
-    return { ...message.toObject() };
+    const channel = await this.channelRepository.findById(message.channelId);
+    return { ...message.toObject(), guildId: channel?.guildId };
   }
 }

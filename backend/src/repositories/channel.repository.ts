@@ -1,3 +1,4 @@
+import { ChannelTypes } from 'config/constants/status';
 import { ChannelDocument } from 'interfaces/Channel';
 import { Channel } from 'models/Channel';
 import { Repository } from './Base';
@@ -7,9 +8,15 @@ export class ChannelRepository extends Repository<ChannelDocument> {
     super(Channel);
   }
 
-  async checkExistence(guildId: string, userId: string) {
+  async checkDMExistance(myId: string, userId: string) {
     return await this.findOneAndPopulate(
-      { guildId, userIds: userId },
+      {
+        $or: [
+          { $and: [{ 'userIds.0': myId }, { 'userIds.1': userId }] },
+          { $and: [{ 'userIds.0': userId }, { 'userIds.1': myId }] }
+        ],
+        type: ChannelTypes.DM_CHANNEL
+      },
       'userIds'
     );
   }

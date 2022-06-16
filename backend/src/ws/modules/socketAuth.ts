@@ -16,7 +16,7 @@ export const socketAuth = async (socket: SocketIo, next: SocketIoNext) => {
   let decoded: any;
 
   if (!process.env.JWT_SECRET_KEY) {
-    console.log(ApiErrors.NO_JWT_SECRET_KEY)
+    console.log(ApiErrors.NO_JWT_SECRET_KEY);
     return next(new Error(ApiErrors.NO_JWT_SECRET_KEY));
   }
 
@@ -38,7 +38,6 @@ export const socketAuth = async (socket: SocketIo, next: SocketIoNext) => {
 
   try {
     const user = await UserService.getUser(decoded._id);
-    const channels = await ChannelService.getAll(decoded._id);
     const friends = await FriendService.getFriends(decoded._id, false);
 
     if (!user) {
@@ -46,7 +45,6 @@ export const socketAuth = async (socket: SocketIo, next: SocketIoNext) => {
     }
 
     socket.data.user = JSON.parse(JSON.stringify(user));
-    socket.data.channels = channels ? JSON.parse(JSON.stringify(channels)) : [];
     socket.data.friends = friends ? JSON.parse(JSON.stringify(friends)) : [];
     next();
   } catch (error) {

@@ -1,7 +1,7 @@
 import { AddChannel } from 'src/redux/states/channels';
 import client from '../client';
 
-export const getOrCreateChannel = (data: AddChannel) => {
+export const getOrCreateDMChannel = (data: AddChannel) => {
   return client.post('/channel/create', data);
 };
 

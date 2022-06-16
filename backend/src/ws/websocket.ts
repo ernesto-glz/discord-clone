@@ -3,6 +3,7 @@ import { Server as HttpServer } from 'http';
 import { socketAuth } from './modules/socketAuth';
 import { UserService } from 'services/user.service';
 import { Server as SocketServer } from 'socket.io';
+import { User } from 'interfaces/User';
 
 export class WebSocket {
   public io: SocketServer;
@@ -19,14 +20,11 @@ export class WebSocket {
 
     this.io.on('connection', async (client) => {
       const clients = this.io.sockets;
-      const me = client.data.user;
-      const userChannels = client.data.channels;
+      const me: User = client.data.user;
 
       this.io.to(client.id).emit('READY');
 
-      userChannels.forEach((channel: Channel) => {
-        client.join(channel._id);
-      });
+      client.join(me.guildIds);
 
       await UserService.setUserStatus(me._id, 'ONLINE');
       client.broadcast.emit('PRESENCE_UPDATE', {
@@ -82,14 +80,14 @@ export class WebSocket {
       client.on('CHANNEL_CREATE', (channel) => {
         clients.sockets.forEach((socketData) => {
           const socketUserId = socketData.data.user._id;
-          if (socketUserId === channel.userIds[0]._id) {
-            socketData.join(channel._id);
-            this.io.to(socketData.id).emit('CHANNEL_CREATE', { channel });
-          } else if (socketUserId === channel.userIds[1]._id) {
-            socketData.join(channel._id);
-            this.io.to(socketData.id).emit('CHANNEL_CREATE', { channel });
+          if (
+            socketUserId === channel.userIds[0]._id ||
+            socketUserId === channel.userIds[1]._id
+          ) {
+            socketData.join(channel.guildId);
           }
         });
+        this.io.to(channel.guildId).emit('CHANNEL_CREATE', { channel });
       });
 
       client.on('CHANNEL_GO', ({ channel, userId }) => {
@@ -102,7 +100,7 @@ export class WebSocket {
       });
 
       client.on('MESSAGE_CREATE', (data) => {
-        this.io.to(data.channelId).emit('MESSAGE_CREATE', data, data.channelId);
+        this.io.to(data.guildId).emit('MESSAGE_CREATE', data, data.channelId);
       });
 
       client.on('disconnect', async () => {

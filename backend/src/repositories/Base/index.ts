@@ -40,6 +40,17 @@ export abstract class Repository<T> {
     return !!result.modifiedCount;
   }
 
+  async updateMany(
+    entityFilterQuery: FilterQuery<T>,
+    updateEntityData: UpdateQuery<T>
+  ) {
+    const result = await this.entityModel.updateMany(
+      entityFilterQuery,
+      updateEntityData
+    );
+    return !!result.modifiedCount;
+  }
+
   async findOneAndSelect(entityFilterQuery: FilterQuery<T>, value: string) {
     return this.entityModel.findOne(entityFilterQuery).select(value);
   }

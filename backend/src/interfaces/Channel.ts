@@ -2,9 +2,9 @@ import { Document } from 'mongoose';
 
 export interface Channel {
   _id: string;
-  sender: string;
-  receiver: string;
+  guildId: string;
   createdBy: string;
+  userIds: string[];
 }
 
 export interface CreateChannel {
@@ -13,7 +13,6 @@ export interface CreateChannel {
 }
 
 export interface CreateDMChannel {
-  guildId: string;
   myId: string;
   userId: string;
 }

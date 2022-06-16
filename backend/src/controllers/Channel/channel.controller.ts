@@ -4,9 +4,8 @@ import { ChannelService } from 'services/channel.service';
 export class ChannelController {
   static async createDM(req: Request, res: Response) {
     const user = res.locals.user;
-    const { userId, guildId } = req.body;
-    const channel = await ChannelService.createDM({
-      guildId: guildId,
+    const { userId } = req.body;
+  const channel = await ChannelService.createDM({
       myId: user._id,
       userId
     });

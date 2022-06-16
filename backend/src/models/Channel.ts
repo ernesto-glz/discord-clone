@@ -1,3 +1,4 @@
+import { ChannelTypes } from 'config/constants/status';
 import { ChannelDocument } from 'interfaces/Channel';
 import mongoose, { Schema, model } from 'mongoose';
 import paginate from 'mongoose-paginate-v2';
@@ -20,6 +21,11 @@ const schema = new Schema(
     },
     position: {
       type: Number
+    },
+    type: {
+      type: String,
+      enum: Object.values(ChannelTypes),
+      required: true
     },
     userIds: {
       type: [String],

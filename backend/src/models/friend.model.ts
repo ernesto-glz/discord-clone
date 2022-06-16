@@ -6,12 +6,12 @@ import { FriendDocument } from 'interfaces/Friend';
 const friendSchema = new Schema(
   {
     from: {
-      type: mongoose.SchemaTypes.ObjectId,
+      type: String,
       ref: 'User',
       required: true
     },
     to: {
-      type: mongoose.SchemaTypes.ObjectId,
+      type: String,
       ref: 'User',
       required: true
     },

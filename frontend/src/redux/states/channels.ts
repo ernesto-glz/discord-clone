@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getOrCreateChannel, getChannels } from 'src/api/channel';
+import { getOrCreateDMChannel, getChannels } from 'src/api/channel';
 import { ws } from 'src/contexts/ws.context';
 import { User } from 'src/models/user.model';
 import { notInArray } from 'src/utils/redux';
@@ -11,6 +11,7 @@ export interface Channel {
   guildId: string;
   userIds: User[];
   dmUser?: User;
+  type: 'DM_CHANNEL' | 'GUILD_CHANNEL';
 }
 
 export interface AddChannel {
@@ -26,7 +27,7 @@ export const slice = createSlice({
       channels,
       { payload }: PayloadAction<{ channel: Channel; myId?: string }>
     ) => {
-      if (payload.channel.guildId !== 'DM') {
+      if (payload.channel.type !== 'DM_CHANNEL') {
         return channels.concat(payload.channel);
       }
       const { channel: c, myId } = payload;
@@ -55,7 +56,7 @@ export const fetchChannels = createAsyncThunk(
     if (!data?.length) return data;
 
     const withDMChannels = data.map((c: Channel) => {
-      if (c.guildId === 'DM') {
+      if (c.type === 'DM_CHANNEL') {
         const dmUser = c.userIds[0]._id === myId ? c.userIds[1] : c.userIds[0];
         return { ...c, name: dmUser.username, dmUser };
       }
@@ -70,7 +71,7 @@ export const addChannel = createAsyncThunk(
   'channel/add',
   async (data: AddChannel) => {
     const myId = store.getState().user._id;
-    const result = await getOrCreateChannel(data);
+    const result = await getOrCreateDMChannel(data);
     if (result.data.alreadyExists)
       ws.emit('CHANNEL_GO', { channel: result.data.channel, userId: myId });
     else ws.emit('CHANNEL_CREATE', result.data.channel);
@@ -78,7 +79,7 @@ export const addChannel = createAsyncThunk(
 );
 
 export const selectDMChannels = (state: RootState) => {
-  return state.channels.filter((channel) => channel.guildId === 'DM');
+  return state.channels.filter((channel) => channel.type === 'DM_CHANNEL');
 };
 export const selectChannelName = (state: RootState) => {
   const foundChannel = state.channels.find(

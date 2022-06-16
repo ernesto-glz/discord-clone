@@ -40,7 +40,7 @@ export const WSListeners: React.FC<Props> = ({ children }) => {
     ws.on('CHANNEL_CREATE', (args) => {
       const { user } = state();
 
-      if (args.channel.guildId === 'DM') {
+      if (args.channel.type === 'DM_CHANNEL') {
         dispatch(channels.created({ ...args, myId: user._id }));
       } else {
         dispatch(channels.created(args));
