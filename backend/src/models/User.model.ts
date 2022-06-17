@@ -41,9 +41,15 @@ const userSchema = new Schema(
       type: String,
       enum: Object.values(UserStatus),
       required: true
+    },
+    hiddenDMChannels: {
+      type: [String],
+      select: false,
+      ref: 'Channel',
+      default: []
     }
   },
-  { timestamps: true, versionKey: false }
+  { versionKey: false }
 );
 
 userSchema.plugin(paginate);

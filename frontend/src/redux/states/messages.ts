@@ -85,5 +85,5 @@ export const selectMessages = (state: RootState) => {
 export const isLoadingMessages = (state: RootState) => {
   return state.messages.loading;
 };
-export const { addMessage } = messageSlice.actions;
+export const actions = messageSlice.actions;
 export default messageSlice.reducer;

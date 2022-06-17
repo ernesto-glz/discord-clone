@@ -54,47 +54,51 @@ export class WebSocket {
         });
       });
 
-      client.on('ACCEPTED_FR', async (request: any) => {
-        const initData = { requestId: request._id };
-        clients.sockets.forEach(({ data: socketData, id: socketId }) => {
-          if (socketData.user._id === request.from._id) {
-            socketData.friends.push(request.to);
+      client.on('ACCEPTED_FR', async ({ request, channel }) => {
+        const initData = { requestId: request._id, channel };
+
+        clients.sockets.forEach((ws) => {
+          if (ws.data.user._id === request.from._id) {
+            ws.data.friends.push(request.to);
             const finalData = {
               ...initData,
               user: request.to,
               type: 'OUTGOING'
             };
-            this.io.to(socketId).emit('NEW_FRIEND', finalData);
-          } else if (socketData.user._id === request.to._id) {
-            socketData.friends.push(request.from);
+            ws.join(channel.guildId);
+            this.io.to(ws.id).emit('NEW_FRIEND', finalData);
+          } else if (ws.data.user._id === request.to._id) {
+            ws.data.friends.push(request.from);
             const finalData = {
               ...initData,
               user: request.from,
               type: 'INCOMING'
             };
-            this.io.to(socketId).emit('NEW_FRIEND', finalData);
+            ws.join(channel.guildId);
+            this.io.to(ws.id).emit('NEW_FRIEND', finalData);
           }
         });
       });
 
-      client.on('CHANNEL_CREATE', (channel) => {
-        clients.sockets.forEach((socketData) => {
-          const socketUserId = socketData.data.user._id;
-          if (
-            socketUserId === channel.userIds[0]._id ||
-            socketUserId === channel.userIds[1]._id
-          ) {
-            socketData.join(channel.guildId);
-          }
-        });
-        this.io.to(channel.guildId).emit('CHANNEL_CREATE', { channel });
-      });
+      // client.on('CHANNEL_CREATE', (channel) => {
+      //   clients.sockets.forEach((socketData) => {
+      //     const socketUserId = socketData.data.user._id;
+      //     if (
+      //       socketUserId === channel.userIds[0]._id ||
+      //       socketUserId === channel.userIds[1]._id
+      //     ) {
+      //       socketData.join(channel.guildId);
+      //     }
+      //   });
+      //   this.io.to(channel.guildId).emit('CHANNEL_CREATE', { channel });
+      // });
 
-      client.on('CHANNEL_GO', ({ channel, userId }) => {
-        clients.sockets.forEach((socketData) => {
-          const socketUserId = socketData.data.user._id;
+      client.on('DISPLAY_CHANNEL', async ({ channel, userId }) => {
+        await UserService.deleteFromHiddenDMS(channel._id, userId);
+        clients.sockets.forEach((ws) => {
+          const socketUserId = ws.data.user._id;
           if (socketUserId === userId) {
-            this.io.to(socketData.id).emit('CHANNEL_GO', channel._id);
+            this.io.to(ws.id).emit('DISPLAY_CHANNEL', channel._id);
           }
         });
       });

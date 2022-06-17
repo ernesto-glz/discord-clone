@@ -8,7 +8,7 @@ export class ChannelRepository extends Repository<ChannelDocument> {
     super(Channel);
   }
 
-  async checkDMExistance(myId: string, userId: string) {
+  async checkIfExistsDM(myId: string, userId: string) {
     return await this.findOneAndPopulate(
       {
         $or: [

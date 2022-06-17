@@ -7,6 +7,7 @@ import { Container, Category, AddCategoryIcon } from './styles';
 const ChannelList: React.FC = () => {
   const channels = useAppSelector(selectDMChannels);
   const activeChannel = useAppSelector(selectActiveChannel);
+  const hiddenChannels = useAppSelector((s) => s.user.hiddenDMChannels);
 
   return (
     <Container>
@@ -31,17 +32,21 @@ const ChannelList: React.FC = () => {
         <AddCategoryIcon />
       </Category>
 
-      {channels?.length > 0 &&
-        channels.map((c, i: number) => (
-          <ChannelButton
-            key={i}
-            channelId={c._id}
-            selected={activeChannel}
-            friendId={c.dmUser!._id}
-            channelName={c.name}
-            imageUrl={`/assets/avatars/${c.dmUser!.avatar}.png`}
-          />
-        ))}
+      {channels.length > 0 &&
+        channels.map((c, i: number) => {
+          if (!hiddenChannels!.includes(c._id)) {
+            return (
+              <ChannelButton
+                key={i}
+                channelId={c._id}
+                selected={activeChannel}
+                friendId={c.dmUser!._id}
+                channelName={c.name}
+                imageUrl={`/assets/avatars/${c.dmUser!.avatar}.png`}
+              />
+            );
+          }
+        })}
     </Container>
   );
 };

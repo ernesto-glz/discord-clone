@@ -9,7 +9,7 @@ const schema = new Schema(
       type: String
     },
     createdBy: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
       ref: 'User',
       required: true
     },

@@ -8,6 +8,7 @@ export interface User {
   shortId: string;
   status: 'ONLINE' | 'OFFLINE';
   guildIds: string[];
+  hiddenDMChannels: string[];
 }
 
 export interface UserDto {

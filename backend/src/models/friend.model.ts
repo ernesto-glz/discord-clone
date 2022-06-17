@@ -21,10 +21,7 @@ const friendSchema = new Schema(
       default: FriendStatus.PENDING
     }
   },
-  {
-    timestamps: true,
-    versionKey: false
-  }
+  { versionKey: false }
 );
 
 friendSchema.plugin(paginate);

@@ -5,12 +5,12 @@ import paginate from 'mongoose-paginate-v2';
 const messageSchema = new Schema(
   {
     sender: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
       ref: 'User',
       required: true
     },
     channelId: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
       ref: 'Channel',
       required: true
     },

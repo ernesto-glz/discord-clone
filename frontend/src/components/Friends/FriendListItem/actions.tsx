@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAppDispatch } from 'src/redux/hooks';
-import { addChannel } from 'src/redux/states/channels';
+import { displayChannel } from 'src/redux/states/channels';
 import { ActionButton, DotsIcon, MessageIcon, RequestActions } from '../styles';
 
 interface Props {
@@ -15,7 +15,7 @@ export const FriendItemActions: React.FC<Props> = ({ userId }: Props) => {
       <ActionButton
         onClick={(e) => {
           e.stopPropagation();
-          dispatch(addChannel({ userId, guildId: 'DM' }));
+          dispatch(displayChannel({ userId }));
         }}
       >
         <MessageIcon className="message" />

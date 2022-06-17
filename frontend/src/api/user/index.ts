@@ -1,4 +1,5 @@
 import client from '../client';
 
-export const getUserInfo = (userId: string, controller: AbortController) =>
-  client.get(`/user/${userId}`, { signal: controller.signal });
+export const getUserInfo = (userId: string, controller: AbortController) => {
+  return client.get(`/user/${userId}`, { signal: controller.signal });
+};

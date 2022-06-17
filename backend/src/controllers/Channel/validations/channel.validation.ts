@@ -4,12 +4,8 @@ import { NextFunction, Request, Response } from 'express';
 import { validateResult } from 'utils/validate';
 
 export const validateCreateChannel = [
-  check('guildId').custom((value) => {
+  check('userId').custom((value) => {
     if (!value) throw new Error(ChannelValidation.INVALID_GUILD_ID);
-    return true;
-  }),
-  check('guildId').custom((value) => {
-    if (!value) throw new Error(ChannelValidation.INVALID_USER_ID);
     return true;
   }),
   (req: Request, res: Response, next: NextFunction) => {

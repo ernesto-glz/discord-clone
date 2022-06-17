@@ -24,7 +24,14 @@ export class AuthService {
       throw new ApiError(401, ApiResponses.INVALID_CREDENTIALS);
     }
 
-    return userFound;
+    const result = await this.userRepository.findOneAndSelect(
+      { email },
+      '+hiddenDMChannels'
+    );
+
+    if (!result) throw new ApiError(500, ApiResponses.SOMETHING_WRONG);
+
+    return result;
   }
 
   public static async signUp(
@@ -40,7 +47,7 @@ export class AuthService {
 
     const hashedPassword = await Auth.hashPassword(password);
 
-    return await this.userRepository.create({
+    await this.userRepository.create({
       username,
       password: hashedPassword,
       email,
@@ -48,5 +55,14 @@ export class AuthService {
       guildIds: [],
       status: UserStatus.ONLINE
     });
+
+    const result = await this.userRepository.findOneAndSelect(
+      { email },
+      '+hiddenDMChannels'
+    );
+
+    if (!result) throw new ApiError(500, ApiResponses.SOMETHING_WRONG);
+
+    return result;
   }
 }

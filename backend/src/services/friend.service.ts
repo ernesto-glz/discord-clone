@@ -4,6 +4,7 @@ import { CreateFriendRequest } from 'interfaces/Friend';
 import { FriendRepository } from 'repositories/friend.repository';
 import { UserRepository } from 'repositories/user.repository';
 import { ApiResponses } from 'config/constants/api-responses';
+import { ChannelService } from './channel.service';
 
 export class FriendService {
   private static userRepository = new UserRepository();
@@ -84,11 +85,19 @@ export class FriendService {
 
     const updated = await this.friendRepository.acceptFriendRequest(requestId);
     if (!updated) throw new ApiError(500, ApiResponses.SOMETHING_WRONG);
-    return await this.friendRepository.findOneAndPopulate(
+
+    const result = await ChannelService.createDM({
+      myId: request.from,
+      userId: request.to
+    });
+
+    const populated = await this.friendRepository.findOneAndPopulate(
       { _id: request._id },
       'from',
       'to'
     );
+
+    return { request: populated, channel: result.channel };
   }
 
   static async getFriends(userId: string, extraInfo: boolean) {

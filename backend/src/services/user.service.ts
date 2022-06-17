@@ -21,4 +21,15 @@ export class UserService {
     if (!user) throw new ApiError(400, ApiResponses.USER_NOT_FOUND);
     return await this.userRepository.updateOne({ _id: userId }, { status });
   };
+
+  public static deleteFromHiddenDMS = async (
+    channelId: string,
+    userId: string
+  ) => {
+    const result = await this.userRepository.updateOne(
+      { _id: userId },
+      { $pull: { hiddenDMChannels: channelId } }
+    );
+    return result;
+  };
 }

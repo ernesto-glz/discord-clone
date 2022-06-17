@@ -14,9 +14,8 @@ export interface Channel {
   type: 'DM_CHANNEL' | 'GUILD_CHANNEL';
 }
 
-export interface AddChannel {
+export interface DisplayChannel {
   userId: string;
-  guildId: string | 'DM';
 }
 
 export const slice = createSlice({
@@ -67,14 +66,12 @@ export const fetchChannels = createAsyncThunk(
   }
 );
 
-export const addChannel = createAsyncThunk(
+export const displayChannel = createAsyncThunk(
   'channel/add',
-  async (data: AddChannel) => {
+  async (data: DisplayChannel) => {
     const myId = store.getState().user._id;
     const result = await getOrCreateDMChannel(data);
-    if (result.data.alreadyExists)
-      ws.emit('CHANNEL_GO', { channel: result.data.channel, userId: myId });
-    else ws.emit('CHANNEL_CREATE', result.data.channel);
+    ws.emit('DISPLAY_CHANNEL', { channel: result.data.channel, userId: myId });
   }
 );
 

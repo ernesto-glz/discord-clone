@@ -14,6 +14,8 @@ export interface UserState {
   email: string | null;
   shortId: string | null;
   avatar: string | null;
+  guildIds: string[] | null;
+  hiddenDMChannels?: string[] | null;
 }
 
 interface LoginPayload {
@@ -26,7 +28,9 @@ export const userEmptyState: UserState = {
   username: null,
   email: null,
   shortId: null,
-  avatar: null
+  avatar: null,
+  guildIds: [],
+  hiddenDMChannels: []
 };
 const actualUser: UserState = getUserFromStorage();
 
@@ -34,15 +38,19 @@ export const userSlice = createSlice({
   name: 'user',
   initialState: actualUser || userEmptyState,
   reducers: {
-    logIn: (state, action: PayloadAction<LoginPayload>) => {
+    logIn: (user, action: PayloadAction<LoginPayload>) => {
       setJwt(action.payload.jwt);
       setUserInStorage(action.payload.user);
-      state = action.payload.user;
+      user = action.payload.user;
     },
-    logOut: (state) => {
+    logOut: () => {
       removeJwt();
       removeUserFromStorage();
       return userEmptyState;
+    },
+    updated: (user, { payload }) => {
+      Object.assign(user, payload);
+      setUserInStorage(user);
     }
   }
 });
@@ -53,4 +61,5 @@ export const selectAvatar = (state: RootState) => state.user.avatar;
 export const selectEmail = (state: RootState) => state.user.email;
 export const selectUserId = (state: RootState) => state.user._id;
 export const { logIn, logOut } = userSlice.actions;
+export const actions = userSlice.actions;
 export default userSlice.reducer;

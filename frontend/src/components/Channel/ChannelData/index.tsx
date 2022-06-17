@@ -9,7 +9,6 @@ import { dateFormatted } from 'src/utils/date';
 import { useChatInputValue } from 'src/hooks/useChatInputValue';
 import ChannelMessage from '../ChannelMessage';
 import {
-  addMessage,
   fetchMessages,
   isLoadingMessages,
   selectMessages
@@ -48,17 +47,6 @@ const ChannelData: React.FC = () => {
     };
     scrollToBottom();
   }, [messagesEnd, messages, activeChannel]);
-
-  useEffect(() => {
-    ws.on('MESSAGE_CREATE', (newMessage, id) => {
-      if (activeChannel !== id) return;
-      dispatch(addMessage(newMessage));
-    });
-
-    return () => {
-      ws.off('MESSAGE_CREATE');
-    };
-  }, [ws, activeChannel]);
 
   const handleSendMessage = async (e: FormEvent) => {
     e.preventDefault();

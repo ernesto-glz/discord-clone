@@ -13,7 +13,7 @@ export class ChannelService {
   static async createDM({ myId, userId }: CreateDMChannel) {
     const guildId = v4();
 
-    const channel = await this.channelRepository.checkDMExistance(myId, userId);
+    const channel = await this.channelRepository.checkIfExistsDM(myId, userId);
     if (channel) return { channel, alreadyExists: true };
 
     const created = await this.channelRepository.create({
@@ -34,7 +34,7 @@ export class ChannelService {
       {
         $or: [{ _id: myId }, { _id: userId }]
       },
-      { $push: { guildIds: guildId } }
+      { $push: { guildIds: guildId, hiddenDMChannels: created._id } }
     );
 
     return { channel: fetched, alreadyExists: false };

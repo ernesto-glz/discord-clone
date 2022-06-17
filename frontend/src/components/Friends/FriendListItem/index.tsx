@@ -3,7 +3,7 @@ import { UserImage } from 'src/components/UserImage';
 import { Profile, UserData } from 'src/components/UserInfo/styles';
 import { User } from 'src/models/user.model';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
-import { addChannel } from 'src/redux/states/channels';
+import { displayChannel } from 'src/redux/states/channels';
 import { selectFriends } from 'src/redux/states/friend';
 import { isOnline } from 'src/utils/redux';
 import { FriendRequest, ItemBody } from '../styles';
@@ -20,9 +20,7 @@ export const FriendItem: React.FC<Props> = ({ friend }) => {
 
   return (
     <FriendRequest
-      onClick={() =>
-        dispatch(addChannel({ userId: friend._id, guildId: 'DM' }))
-      }
+      onClick={() => dispatch(displayChannel({ userId: friend._id }))}
     >
       <ItemBody>
         <div>
