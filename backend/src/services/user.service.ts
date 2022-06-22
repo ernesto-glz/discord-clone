@@ -1,6 +1,7 @@
 import { ApiError } from 'errors/ApiError';
 import { UserRepository } from 'repositories/user.repository';
 import { ApiResponses } from 'config/constants/api-responses';
+import { Message } from 'interfaces/Message';
 
 export class UserService {
   private static userRepository = new UserRepository();
@@ -31,5 +32,23 @@ export class UserService {
       { $pull: { hiddenDMChannels: channelId } }
     );
     return result;
+  };
+
+  public static setInHiddenDMS = async (userId: string, channelId: string) => {
+    const result = await this.userRepository.updateOne(
+      { _id: userId },
+      { $push: { hiddenDMChannels: channelId } }
+    );
+    return result;
+  };
+
+  public static markAsRead = async (userId: string, message: Message) => {
+    const user = await this.userRepository.findById(userId);
+    if (!user) throw new ApiError(400, ApiResponses.USER_NOT_FOUND);
+    if (user.lastReadMessageIds) {
+      user.lastReadMessageIds[message.channelId] = message._id;
+      user.markModified('lastReadMessageIds');
+    }
+    await user.save();
   };
 }

@@ -37,10 +37,14 @@ const userSchema = new Schema(
     guildIds: {
       type: [String]
     },
+    lastReadMessageIds: {
+      type: Object,
+      default: {}
+    },
     status: {
       type: String,
       enum: Object.values(UserStatus),
-      required: true
+      default: 'OFFLINE'
     },
     hiddenDMChannels: {
       type: [String],

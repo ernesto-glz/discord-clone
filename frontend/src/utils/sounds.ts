@@ -7,5 +7,7 @@ const urls = {
 
 export const playSound = (sound: Sound) => {
   const audio = new Audio(urls[sound]);
-  audio.play();
+  try {
+    audio.play();
+  } catch {}
 };

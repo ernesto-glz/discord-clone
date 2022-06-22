@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { Message } from 'interfaces/Message';
 import { MessageService } from 'services/message.service';
 
 export class MessageController {
@@ -27,7 +28,7 @@ export class MessageController {
       sender: user._id,
       content,
       channelId
-    });
+    } as Message);
 
     res.status(200).send(newMessage);
   }

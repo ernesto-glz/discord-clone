@@ -4,8 +4,6 @@ import {
   DiscordLogo,
   ExploreButton
 } from 'src/components/Logo';
-import { useAppSelector } from 'src/redux/hooks';
-import { selectNotifications } from 'src/redux/states/notification';
 import { Button } from './styles';
 
 export interface Props {
@@ -25,20 +23,13 @@ const ServerButton: React.FC<Props> = ({
   hasNotifications,
   mentions
 }) => {
-  const notifications = useAppSelector(selectNotifications);
-  const [actualNotifications, setActualNotifications] = useState(0);
-
-  useEffect(() => {
-    setActualNotifications(notifications);
-  }, [notifications]);
-
   return (
     <Button
       isHome={isHome}
       isAddButton={isAddButton}
       isExploreButton={isExploreButton}
       hasNotifications={hasNotifications}
-      mentions={isHome ? actualNotifications : mentions}
+      mentions={isHome ? 99 : mentions}
       selected={selected}
     >
       {isHome && <DiscordLogo />}

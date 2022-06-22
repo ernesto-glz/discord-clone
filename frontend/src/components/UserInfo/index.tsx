@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
-import { logOut, selectUser } from 'src/redux/states/user';
+import { logOut } from 'src/redux/states/user';
 import { UserImage } from '../UserImage';
 
 import {
@@ -15,7 +15,7 @@ import {
 
 const UserInfo: React.FC = () => {
   const dispatch = useAppDispatch();
-  const user = useAppSelector(selectUser);
+  const user = useAppSelector((s) => s.user);
 
   const handleLogout = () => {
     dispatch(logOut());

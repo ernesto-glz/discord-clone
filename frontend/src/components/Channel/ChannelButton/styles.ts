@@ -80,8 +80,8 @@ export const NotificationMark = styled.div`
   align-items: center;
   margin-right: 5px;
   > .notification {
-    width: 15px;
-    height: 15px;
+    width: 18px;
+    height: 17px;
     border-radius: 50%;
     background-color: var(--notification);
     font-size: 13px;

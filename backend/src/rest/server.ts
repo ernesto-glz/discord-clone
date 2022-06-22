@@ -1,23 +1,18 @@
 import express, { json, urlencoded } from 'express';
 import http from 'http';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import helmet from 'helmet';
 import v1 from './routes/v1';
 import mongoSanitize from 'express-mongo-sanitize';
-import { apiErrorHandler } from './middlewares/ApiErrorHandler';
-import { ApiError } from './errors/ApiError';
-import { WebSocket } from './ws/websocket';
-
-dotenv.config();
+import { apiErrorHandler } from '../middlewares/ApiErrorHandler';
+import { ApiError } from '../errors/ApiError';
 
 export class Server {
   private readonly express: express.Express;
-  private readonly port: string;
+  private readonly port = process.env.PORT || 4000;
   private httpServer?: http.Server;
 
-  constructor(port: string) {
-    this.port = port;
+  constructor() {
     this.express = express();
     this.express.use(json());
     this.express.use(cors());
@@ -35,20 +30,14 @@ export class Server {
       next(new ApiError(404, 'Not found'));
     });
     this.express.use(apiErrorHandler);
-  }
 
-  async listen(): Promise<void> {
-    return new Promise((resolve) => {
-      this.httpServer = http.createServer(this.express);
-      new WebSocket(this.httpServer);
-      this.httpServer.listen(this.port, () => {
-        console.log(
-          ` Server is running at http://localhost:${
-            this.port
-          } in ${this.express.get('env')} mode`
-        );
-        resolve();
-      });
+    // listen
+    this.httpServer = http.createServer(this.express);
+    this.httpServer.listen(this.port, () => {
+      deps.webSocket.io.attach(this.httpServer!);
+      console.log(
+        `API is running on port ${this.port} in ${this.express.get('env')} mode`
+      );
     });
   }
 

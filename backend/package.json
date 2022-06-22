@@ -1,22 +1,22 @@
 {
-  "name": "chat-app-sockets",
+  "name": "discord-clone-backend",
   "version": "1.0.0",
   "description": "Chat App made with socket.io",
   "author": "Ernesto Gonzalez <kik0swd@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "start": "cross-env NODE_ENV=production NODE_PATH=dist node dist/start.js",
     "dev": "cross-env NODE_ENV=development NODE_PATH=src ts-node-dev src/start.ts",
     "lint": "eslint src --ext .ts",
     "lint:fix": "eslint src --ext .ts --fix",
     "prettier": "prettier --check **/*.ts",
     "prettier:fix": "prettier --write **/*.ts",
     "build": "tsc -p tsconfig.prod.json",
-    "start": "cross-env NODE_ENV=production NODE_PATH=dist node dist/start.js",
     "test": "cross-env NODE_ENV=test jest --silent --maxWorkers=1",
-    "test:watch": "npm test -- --watch",
-    "docker:dev": "docker compose -f docker-compose.yml up"
+    "test:watch": "npm test -- --watch"
   },
   "dependencies": {
+    "@discord/types": "file:../types",
     "bcrypt": "5.0.1",
     "cross-env": "7.0.3",
     "dotenv": "16.0.0",
@@ -35,9 +35,11 @@
   },
   "devDependencies": {
     "@types/bcrypt": "5.0.0",
+    "@types/dotenv": "^8.2.0",
     "@types/express": "4.17.13",
     "@types/jest": "27.5.1",
     "@types/jsonwebtoken": "8.5.8",
+    "@types/node": "^18.0.0",
     "@types/supertest": "2.0.12",
     "@types/uuid": "8.3.4",
     "@typescript-eslint/eslint-plugin": "5.22.0",

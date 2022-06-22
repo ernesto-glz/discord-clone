@@ -3,7 +3,6 @@ import { FriendImage } from 'src/components/Images';
 import { Pages } from 'src/components/Layout';
 import { useAppSelector } from 'src/redux/hooks';
 import { selectChannelName } from 'src/redux/states/channels';
-import { selectNotifications } from 'src/redux/states/notification';
 import { selectActiveChannel } from 'src/redux/states/ui';
 import {
   Container,
@@ -31,7 +30,7 @@ export interface AddFriendProps {
 }
 
 const ChannelInfo: React.FC<Props> = ({ page, setPage }) => {
-  const notifications = useAppSelector(selectNotifications);
+  const notifications = 99;
   const activeChannel = useAppSelector(selectActiveChannel);
   const channelName = useAppSelector(selectChannelName);
   const isActivePage = (i: string) => page === i;

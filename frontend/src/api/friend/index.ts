@@ -4,10 +4,7 @@ import client from '../client';
 export const createFriendRequest = (
   data: CreateFriendRequest,
   controller: AbortController
-) =>
-  client.post('/friend/create-request', data, {
-    signal: controller.signal
-  });
+) => client.post('/friend/create-request', data, { signal: controller.signal });
 
 export const getPendingRequests = (controller: AbortController) =>
   client.get('/friend/pending-requests', { signal: controller.signal });

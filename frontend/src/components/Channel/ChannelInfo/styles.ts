@@ -118,8 +118,8 @@ export const MenuButton = styled.button<MenuButtonProps>`
 `;
 
 export const NotificationMark = styled.div`
-  width: 15px;
-  height: 15px;
+  width: 17px;
+  height: 17px;
   border-radius: 50%;
   margin-left: 7px;
   background-color: var(--notification);

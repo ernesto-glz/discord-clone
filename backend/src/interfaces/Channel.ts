@@ -5,6 +5,7 @@ export interface Channel {
   guildId: string;
   createdBy: string;
   userIds: string[];
+  lastMessageId: string;
 }
 
 export interface CreateChannel {

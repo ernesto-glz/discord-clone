@@ -11,6 +11,7 @@ export interface Channel {
   guildId: string;
   userIds: User[];
   dmUser?: User;
+  lastMessageId?: string;
   type: 'DM_CHANNEL' | 'GUILD_CHANNEL';
 }
 

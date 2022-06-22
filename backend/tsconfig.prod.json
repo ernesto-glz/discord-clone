@@ -1,4 +1,9 @@
 {
+  "ts-node": {
+    "transpileOnly": true,
+    "files": true
+  },
+  "files": ["types/global.d.ts"],
   "compilerOptions": {
     "target": "es2016",
     "module": "commonjs",
@@ -11,12 +16,6 @@
     "outDir": "dist",
     "baseUrl": "src"
   },
-  "exclude": [
-    "node_modules"
-  ],
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.*.ts",
-    "src/app.ts, src/config/*.ts"
-  ]
+  "exclude": ["node_modules", "jest.config.ts"],
+  "include": ["src", "**/*.ts", "types"]
 }

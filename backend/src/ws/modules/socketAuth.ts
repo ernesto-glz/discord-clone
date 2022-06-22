@@ -3,7 +3,6 @@ import { Socket } from 'socket.io';
 import { ExtendedError } from 'socket.io/dist/namespace';
 import { ApiErrors } from 'config/constants/api-errors';
 import { ApiResponses } from 'config/constants/api-responses';
-import { ChannelService } from 'services/channel.service';
 import { UserService } from 'services/user.service';
 import { FriendService } from 'services/friend.service';
 
@@ -11,7 +10,7 @@ type SocketIo = Socket;
 type SocketIoNext = (err?: ExtendedError | undefined) => void;
 
 export const socketAuth = async (socket: SocketIo, next: SocketIoNext) => {
-  const { token } = socket.handshake.query;
+  const { token } = socket.handshake.auth;
   if (!token) return next(new Error(ApiResponses.INVALID_TOKEN));
   let decoded: any;
 
@@ -46,6 +45,8 @@ export const socketAuth = async (socket: SocketIo, next: SocketIoNext) => {
 
     socket.data.user = JSON.parse(JSON.stringify(user));
     socket.data.friends = friends ? JSON.parse(JSON.stringify(friends)) : [];
+
+    deps.webSocket.sessions.set(socket.id, user._id.toString());
     next();
   } catch (error) {
     if (error) {

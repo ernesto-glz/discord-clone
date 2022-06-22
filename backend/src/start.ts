@@ -1,16 +1,9 @@
-import { BackendApp } from './BackendApp';
+import { connect } from 'mongoose';
+import { config } from 'dotenv';
+import './modules/deps';
 
-try {
-  new BackendApp().start();
-} catch (error: any) {
-  console.log({
-    code: error.code,
-    message: error.message
-  });
-  process.exit(1);
-}
+config();
 
-process.on('uncaughtException', (err) => {
-  console.log('uncaughtException', err);
-  process.exit(1);
-});
+connect(process.env.MONGO_URI)
+  .then(() => console.log(`Connected to database ${process.env.MONGO_URI}`))
+  .catch((error) => console.log(error.message ?? 'Unable to connect to db'));

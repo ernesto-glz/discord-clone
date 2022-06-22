@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   getUserFromStorage,
   removeJwt,
@@ -6,7 +6,6 @@ import {
   setJwt,
   setUserInStorage
 } from 'src/utils/user';
-import { RootState } from '../configure-store';
 
 export interface UserState {
   _id: string | null;
@@ -16,6 +15,7 @@ export interface UserState {
   avatar: string | null;
   guildIds: string[] | null;
   hiddenDMChannels?: string[] | null;
+  lastReadMessageIds: { [k: string]: string };
 }
 
 interface LoginPayload {
@@ -30,11 +30,12 @@ export const userEmptyState: UserState = {
   shortId: null,
   avatar: null,
   guildIds: [],
-  hiddenDMChannels: []
+  hiddenDMChannels: [],
+  lastReadMessageIds: {}
 };
 const actualUser: UserState = getUserFromStorage();
 
-export const userSlice = createSlice({
+export const slice = createSlice({
   name: 'user',
   initialState: actualUser || userEmptyState,
   reducers: {
@@ -55,11 +56,6 @@ export const userSlice = createSlice({
   }
 });
 
-export const selectUser = (state: RootState) => state.user;
-export const selectUsername = (state: RootState) => state.user.username;
-export const selectAvatar = (state: RootState) => state.user.avatar;
-export const selectEmail = (state: RootState) => state.user.email;
-export const selectUserId = (state: RootState) => state.user._id;
-export const { logIn, logOut } = userSlice.actions;
-export const actions = userSlice.actions;
-export default userSlice.reducer;
+export const { logIn, logOut } = slice.actions;
+export const actions = slice.actions;
+export default slice.reducer;

@@ -1,9 +1,9 @@
 import React, { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserImage } from 'src/components/UserImage';
+import { ws } from 'src/contexts/ws.context';
 import { useAppSelector } from 'src/redux/hooks';
 import { selectFriends } from 'src/redux/states/friend';
-import { selectNotifications } from 'src/redux/states/notification';
 import { isOnline } from 'src/utils/redux';
 import { CloseIcon, Container, NotificationMark } from './styles';
 
@@ -32,8 +32,9 @@ const ChannelButton: React.FC<Props> = ({
 }) => {
   const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
-  const notifications = useAppSelector(selectNotifications);
+  const notifications = 99;
   const friends = useAppSelector(selectFriends);
+  const userId = useAppSelector((s) => s.user._id);
   const friendStatus = useMemo(() => isOnline(friendId!), [friends]);
 
   const goToChannel = () => {
@@ -65,7 +66,7 @@ const ChannelButton: React.FC<Props> = ({
         </NotificationMark>
       )}
       <CloseIcon
-        // onClick={() => console.log('deleting channel')}
+        onClick={() => ws.emit('HIDE_CHANNEL', { userId, channelId })}
         isVisible={isVisible}
       />
     </Container>

@@ -9,6 +9,7 @@ export interface User {
   status: 'ONLINE' | 'OFFLINE';
   guildIds: string[];
   hiddenDMChannels: string[];
+  lastReadMessageIds: any;
 }
 
 export interface UserDto {
