@@ -1,17 +1,12 @@
 import { FriendStatus } from 'config/constants/status';
 import { ApiError } from 'errors/ApiError';
 import { CreateFriendRequest } from 'interfaces/Friend';
-import { FriendRepository } from 'repositories/friend.repository';
-import { UserRepository } from 'repositories/user.repository';
 import { ApiResponses } from 'config/constants/api-responses';
 import { ChannelService } from './channel.service';
 
 export class FriendService {
-  private static userRepository = new UserRepository();
-  private static friendRepository = new FriendRepository();
-
   static async createFriendRequest({ from, toUsername, toShortId }: CreateFriendRequest) {
-    const userFound = await this.userRepository.findOne({
+    const userFound = await deps.users.findOne({
       username: toUsername,
       shortId: toShortId
     });
@@ -24,7 +19,7 @@ export class FriendService {
       throw new ApiError(400, ApiResponses.ERROR_CREATE_REQUEST);
     }
 
-    const alreadyRequest = await this.friendRepository.checkExistence(from, userFound._id);
+    const alreadyRequest = await deps.friends.checkExistence(from, userFound._id);
 
     if (alreadyRequest) {
       if (alreadyRequest.friend_status === FriendStatus.FRIEND) {
@@ -33,46 +28,42 @@ export class FriendService {
       throw new ApiError(400, ApiResponses.REQUEST_ALREADY_EXISTS);
     }
 
-    const created = await this.friendRepository.create({
+    const created = await deps.friends.create({
       from,
       to: userFound._id
     });
 
-    return await this.friendRepository.findOneAndPopulate({ _id: created._id }, 'from', 'to');
+    return await deps.friends.findOneAndPopulate({ _id: created._id }, 'from', 'to');
   }
 
   static async getPendingRequests(userId: string) {
-    return await this.friendRepository.getPendingRequests(userId);
+    return await deps.friends.getPendingRequests(userId);
   }
 
   static async getOutgoingRequests(userId: string) {
-    return await this.friendRepository.getOutgoingRequests(userId);
+    return await deps.friends.getOutgoingRequests(userId);
   }
 
   static async deleteFriendRequest(requestId: string, userId: string) {
-    const requestExists = await this.friendRepository.findOne({
+    const requestExists = await deps.friends.findOne({
       _id: requestId,
       $or: [{ to: userId }, { from: userId }]
     });
 
-    if (!requestExists) {
-      throw new ApiError(400, ApiResponses.REQUEST_NOT_FOUND);
-    }
+    if (!requestExists) throw new ApiError(400, ApiResponses.REQUEST_NOT_FOUND);
 
-    return await this.friendRepository.findByIdAndDelete(requestId);
+    return await deps.friends.findByIdAndDelete(requestId);
   }
 
   static async acceptFriendRequest(requestId: string, userId: string) {
-    const request = await this.friendRepository.findOne({
+    const request = await deps.friends.findOne({
       _id: requestId,
       to: userId
     });
 
-    if (!request) {
-      throw new ApiError(400, ApiResponses.REQUEST_NOT_FOUND);
-    }
+    if (!request) throw new ApiError(400, ApiResponses.REQUEST_NOT_FOUND);
 
-    const updated = await this.friendRepository.acceptFriendRequest(requestId);
+    const updated = await deps.friends.acceptFriendRequest(requestId);
     if (!updated) throw new ApiError(500, ApiResponses.SOMETHING_WRONG);
 
     const result = await ChannelService.createDM({
@@ -80,25 +71,17 @@ export class FriendService {
       userId: request.to
     });
 
-    const populated = await this.friendRepository.findOneAndPopulate(
-      { _id: request._id },
-      'from',
-      'to'
-    );
+    const populated = await deps.friends.findOneAndPopulate({ _id: request._id }, 'from', 'to');
 
     return { request: populated, channel: result.channel };
   }
 
   static async getFriends(userId: string, extraInfo: boolean) {
-    const friends = await this.friendRepository.getFriends(userId);
+    const friends = await deps.friends.getFriends(userId);
 
-    if (!friends) {
-      throw new ApiError(400, ApiResponses.NO_FRIENDS);
-    }
+    if (!friends) throw new ApiError(400, ApiResponses.NO_FRIENDS);
 
-    if (!friends.length) {
-      return friends;
-    }
+    if (!friends.length) return friends;
 
     if (!extraInfo) {
       return friends.map((entity: any) => {

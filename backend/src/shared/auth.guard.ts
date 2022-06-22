@@ -1,11 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
 import { verify } from 'jsonwebtoken';
-import { UserRepository } from 'repositories/user.repository';
 import { ApiError } from 'errors/ApiError';
 import { ApiResponses } from 'config/constants/api-responses';
 import { ApiErrors } from 'config/constants/api-errors';
 
-const userRepository = new UserRepository();
 export const AuthGuard = async (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization;
   if (!authHeader) throw new ApiError(401, ApiResponses.UNAUTHORIZED);
@@ -33,7 +31,7 @@ export const AuthGuard = async (req: Request, res: Response, next: NextFunction)
     }
   }
 
-  const user = await userRepository.findOne({ _id: decoded._id });
+  const user = await deps.users.findOne({ _id: decoded._id });
 
   if (!user) {
     throw new ApiError(401, ApiResponses.USER_NOT_FOUND);

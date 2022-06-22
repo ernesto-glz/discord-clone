@@ -1,23 +1,13 @@
 import { ApiError } from 'errors/ApiError';
 import { Message } from 'interfaces/Message';
-import { MessageRepository } from 'repositories/message.repository';
-import { ChannelRepository } from 'repositories/channel.repository';
 import { ApiResponses } from 'config/constants/api-responses';
 import { User } from 'models/User.model';
 import { Channel } from 'models/Channel';
 import { UserService } from './user.service';
 
 export class MessageService {
-  private static messageRepository = new MessageRepository();
-  private static channelRepository = new ChannelRepository();
-
-  static async getAllPaginated(
-    channelId: string,
-    userId: string,
-    limit: number,
-    selectedPage: number
-  ) {
-    const channel = await this.channelRepository.findOne({
+  static async getAllPaginated(channelId: string, userId: string, limit: number, selectedPage: number) {
+    const channel = await deps.channels.findOne({
       _id: channelId,
       $or: [{ sender: userId }, { receiver: userId }]
     });
@@ -26,7 +16,7 @@ export class MessageService {
       throw new ApiError(400, ApiResponses.NO_MESSAGES_FOUND);
     }
 
-    const messages = await this.messageRepository.paginate(
+    const messages = await deps.messages.paginate(
       { channelId },
       { limit, page: selectedPage, sort: { _id: 'desc' }, populate: 'sender' }
     );
@@ -46,7 +36,7 @@ export class MessageService {
   static async create(data: Message) {
     const { channelId, sender } = data;
 
-    const message = await (await this.messageRepository.create(data)).populate('sender');
+    const message = await (await deps.messages.create(data)).populate('sender');
     const channel = await Channel.findById(channelId);
     const user = await User.findOne({ _id: sender });
 

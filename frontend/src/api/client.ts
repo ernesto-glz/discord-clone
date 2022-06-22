@@ -4,7 +4,7 @@ import store from 'src/redux/configure-store';
 import { getJwt, getUser } from 'src/utils/user';
 
 const client = axios.create({
-  baseURL: `${process.env.REACT_APP_API_URL}/${process.env.REACT_APP_API_VERSION}`
+  baseURL: `${process.env.REACT_APP_API_URL}/v${process.env.REACT_APP_API_VERSION}`
 });
 
 client.interceptors.request.use((config) => {
