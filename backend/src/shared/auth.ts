@@ -5,7 +5,7 @@ import { UserDto } from 'interfaces/User';
 import { ApiErrors } from 'config/constants/api-errors';
 
 export class Auth {
-  private static saltRounds = 99;
+  private static saltRounds = 10;
 
   static async hashPassword(password: string) {
     return await hash(password, this.saltRounds);

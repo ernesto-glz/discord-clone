@@ -36,7 +36,7 @@ export const WSListeners: React.FC<Props> = ({ children }) => {
       }
       console.log(error);
     });
-    ws.on('READY', () => {
+    ws.on('READY', (args) => {
       dispatch(fetchEntities());
       dispatch(initPings());
     });
@@ -61,13 +61,13 @@ export const WSListeners: React.FC<Props> = ({ children }) => {
       }
       dispatch(messages.addMessage(newMessage));
     });
-    ws.on('DISPLAY_CHANNEL', (channelId) => {
+    ws.on('CHANNEL_DISPLAY', (channelId) => {
       const { hiddenDMChannels } = state().user;
       const filtered = hiddenDMChannels!.filter((cId) => cId !== channelId);
       dispatch(selfUser.updated({ hiddenDMChannels: filtered }));
       navigate(`/channels/@me/${channelId}`, { replace: true });
     });
-    ws.on('HIDE_CHANNEL', (channelId) => {
+    ws.on('CHANNEL_HIDE', (channelId) => {
       const { hiddenDMChannels } = state().user;
       dispatch(
         selfUser.updated({
@@ -88,11 +88,11 @@ export const WSListeners: React.FC<Props> = ({ children }) => {
       );
       dispatch(channels.created({ channel, myId: _id! }));
     });
-    ws.on('DENIED_FR', (request, type) => {
-      dispatch(requests.removeRequest({ requestId: request._id, type }));
-    });
-    ws.on('NEW_FRIEND_REQUEST', (request, type) => {
+    ws.on('FRIEND_REQUEST_CREATE', ({ request, type }) => {
       dispatch(requests.addRequest({ request, type }));
+    });
+    ws.on('FRIEND_REQUEST_REMOVE', ({ request, type }) => {
+      dispatch(requests.removeRequest({ requestId: request._id, type }));
     });
 
     dispatch(listenedToSocket());

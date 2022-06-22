@@ -34,7 +34,6 @@ const ChannelButton: React.FC<Props> = ({
   const [isVisible, setIsVisible] = useState(false);
   const notifications = 99;
   const friends = useAppSelector(selectFriends);
-  const userId = useAppSelector((s) => s.user._id);
   const friendStatus = useMemo(() => isOnline(friendId!), [friends]);
 
   const goToChannel = () => {
@@ -66,7 +65,7 @@ const ChannelButton: React.FC<Props> = ({
         </NotificationMark>
       )}
       <CloseIcon
-        onClick={() => ws.emit('HIDE_CHANNEL', { userId, channelId })}
+        onClick={() => ws.emit('CHANNEL_HIDE', { channelId })}
         isVisible={isVisible}
       />
     </Container>

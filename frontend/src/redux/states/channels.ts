@@ -70,9 +70,8 @@ export const fetchChannels = createAsyncThunk(
 export const displayChannel = createAsyncThunk(
   'channel/add',
   async (data: DisplayChannel) => {
-    const myId = store.getState().user._id;
     const result = await getOrCreateDMChannel(data);
-    ws.emit('DISPLAY_CHANNEL', { channel: result.data.channel, userId: myId });
+    ws.emit('CHANNEL_DISPLAY', { channelId: result.data.channel._id });
   }
 );
 

@@ -3,7 +3,6 @@ import { ApiError } from 'errors/ApiError';
 import { UserRepository } from 'repositories/user.repository';
 import { generateShortId } from 'utils';
 import { ApiResponses } from 'config/constants/api-responses';
-import { UserStatus } from 'config/constants/status';
 
 export class AuthService {
   private static userRepository = new UserRepository();
@@ -15,9 +14,7 @@ export class AuthService {
       throw new ApiError(401, ApiResponses.INVALID_CREDENTIALS);
     }
 
-    const isAuthorized = await Auth.checkCredentials(password, userFound.password);
-
-    if (!isAuthorized) {
+    if (!(await Auth.checkCredentials(password, userFound.password))) {
       throw new ApiError(401, ApiResponses.INVALID_CREDENTIALS);
     }
 
@@ -42,8 +39,7 @@ export class AuthService {
       password: hashedPassword,
       email,
       shortId: generateShortId(),
-      guildIds: [],
-      status: UserStatus.ONLINE
+      guildIds: []
     });
 
     const result = await this.userRepository.findOneAndSelect({ email }, '+hiddenDMChannels');

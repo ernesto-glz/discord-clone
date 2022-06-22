@@ -68,7 +68,7 @@ export const AddFriend: React.FC = () => {
           message: `Friend request sent to ${userToAdd.value}`,
           type: 'Success'
         });
-        ws.emit('NEW_FRIEND_REQUEST', data);
+        ws.emit('FRIEND_REQUEST_CREATE', { request: data });
       }
     } catch (err: any) {
       setResponseMessage({

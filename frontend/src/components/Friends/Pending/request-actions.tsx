@@ -25,7 +25,7 @@ export const RequestActionsItem: React.FC<Props> = ({ requestId, type }) => {
       FriendService.deleteFriendRequest(requestId)
     );
     if (data) {
-      ws.emit('DENIED_FR', data);
+      ws.emit('FRIEND_REQUEST_REMOVE', { request: data});
     }
   };
 
@@ -34,7 +34,7 @@ export const RequestActionsItem: React.FC<Props> = ({ requestId, type }) => {
       FriendService.acceptFriendRequest(requestId)
     );
     if (data) {
-      ws.emit('ACCEPTED_FR', data);
+      ws.emit('FRIEND_REQUEST_ACCEPT', data);
     }
   };
 

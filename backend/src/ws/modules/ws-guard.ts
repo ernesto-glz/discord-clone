@@ -9,7 +9,7 @@ import { FriendService } from 'services/friend.service';
 type SocketIo = Socket;
 type SocketIoNext = (err?: ExtendedError | undefined) => void;
 
-export const socketAuth = async (socket: SocketIo, next: SocketIoNext) => {
+export const WSGuard = async (socket: SocketIo, next: SocketIoNext) => {
   const { token } = socket.handshake.auth;
   if (!token) return next(new Error(ApiResponses.INVALID_TOKEN));
   let decoded: any;

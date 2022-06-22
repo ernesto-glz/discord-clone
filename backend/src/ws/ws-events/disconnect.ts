@@ -13,7 +13,6 @@ export default class implements WSEvent<'disconnect'> {
     if (!user) return;
 
     user.status = 'OFFLINE';
-    user.markModified('status');
     await user.save();
 
     return [
