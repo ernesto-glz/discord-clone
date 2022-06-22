@@ -1,11 +1,10 @@
-version: '3.9'
+version: "3.9"
 services:
   database:
     hostname: database
     container_name: database
     image: mongo
-    ports:
-      - '27017:27017'
+    ports: [27017:27017]
     tty: true
     command: mongod --quiet --logpath /dev/null
 
@@ -15,14 +14,13 @@ services:
     image: discord_dev
     build:
       context: .
-      dockerfile: .docker/development/Dockerfile
+      dockerfile: ./Dockerfile.dev
     environment:
       - PORT=4000
-      - MONGO_URI=mongodb://database:27017
+      - MONGO_URI=mongodb://database:27017/discord-clone
       - JWT_SECRET_KEY=development
     volumes:
-      - ./backend:/app
-      - /app/node_modules
-    ports:
-      - '4000:4000'
+      - ./backend:/app/backend
+      - /app/backend/node_modules
+    ports: [4000:4000]
     tty: true

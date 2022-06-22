@@ -1,0 +1,11 @@
+FROM node:16
+
+RUN mkdir -p /app
+WORKDIR /app
+
+COPY . .
+
+EXPOSE 4000
+
+RUN cd ./backend && yarn install
+CMD ["yarn", "backend:dev"]
