@@ -10,11 +10,7 @@ export class FriendService {
   private static userRepository = new UserRepository();
   private static friendRepository = new FriendRepository();
 
-  static async createFriendRequest({
-    from,
-    toUsername,
-    toShortId
-  }: CreateFriendRequest) {
+  static async createFriendRequest({ from, toUsername, toShortId }: CreateFriendRequest) {
     const userFound = await this.userRepository.findOne({
       username: toUsername,
       shortId: toShortId
@@ -28,10 +24,7 @@ export class FriendService {
       throw new ApiError(400, ApiResponses.ERROR_CREATE_REQUEST);
     }
 
-    const alreadyRequest = await this.friendRepository.checkExistence(
-      from,
-      userFound._id
-    );
+    const alreadyRequest = await this.friendRepository.checkExistence(from, userFound._id);
 
     if (alreadyRequest) {
       if (alreadyRequest.friend_status === FriendStatus.FRIEND) {
@@ -45,11 +38,7 @@ export class FriendService {
       to: userFound._id
     });
 
-    return await this.friendRepository.findOneAndPopulate(
-      { _id: created._id },
-      'from',
-      'to'
-    );
+    return await this.friendRepository.findOneAndPopulate({ _id: created._id }, 'from', 'to');
   }
 
   static async getPendingRequests(userId: string) {

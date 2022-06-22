@@ -51,9 +51,6 @@ export class FriendRepository extends Repository<FriendDocument> {
   }
 
   async acceptFriendRequest(requestId: string) {
-    return await this.updateOne(
-      { _id: requestId },
-      { friend_status: FriendStatus.FRIEND }
-    );
+    return await this.updateOne({ _id: requestId }, { friend_status: FriendStatus.FRIEND });
   }
 }

@@ -12,8 +12,6 @@ export class SessionManager extends Map<string, string> {
   }
 
   public getClientIdFromUserId(userId: string) {
-    return Array.from(this.entries()).find(
-      ([, value]) => value === userId
-    )?.[0];
+    return Array.from(this.entries()).find(([, value]) => value === userId)?.[0];
   }
 }

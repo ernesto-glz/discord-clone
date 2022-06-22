@@ -9,8 +9,7 @@ export const validateCreateMessage = [
     return true;
   }),
   check('content').custom((value) => {
-    if (!value)
-      throw new Error(Validations['Message']['MESSAGE_CONTENT_REQUIRED']);
+    if (!value) throw new Error(Validations['Message']['MESSAGE_CONTENT_REQUIRED']);
     return true;
   }),
   (req: Request, res: Response, next: NextFunction) => {

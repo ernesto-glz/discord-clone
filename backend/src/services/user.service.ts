@@ -14,19 +14,13 @@ export class UserService {
     return foundUser;
   }
 
-  public static setUserStatus = async (
-    userId: string,
-    status: 'ONLINE' | 'OFFLINE'
-  ) => {
+  public static setUserStatus = async (userId: string, status: 'ONLINE' | 'OFFLINE') => {
     const user = await this.userRepository.findById(userId);
     if (!user) throw new ApiError(400, ApiResponses.USER_NOT_FOUND);
     return await this.userRepository.updateOne({ _id: userId }, { status });
   };
 
-  public static deleteFromHiddenDMS = async (
-    channelId: string,
-    userId: string
-  ) => {
+  public static deleteFromHiddenDMS = async (channelId: string, userId: string) => {
     const result = await this.userRepository.updateOne(
       { _id: userId },
       { $pull: { hiddenDMChannels: channelId } }

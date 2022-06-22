@@ -110,8 +110,7 @@ export class WebSocket {
 
       client.on('HIDE_CHANNEL', async ({ userId, channelId }) => {
         clients.sockets.forEach((ws) => {
-          if (ws.data.user._id === userId)
-            this.io.to(ws.id).emit('HIDE_CHANNEL', channelId);
+          if (ws.data.user._id === userId) this.io.to(ws.id).emit('HIDE_CHANNEL', channelId);
         });
         UserService.setInHiddenDMS(userId, channelId);
       });

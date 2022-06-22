@@ -15,30 +15,20 @@ export class AuthService {
       throw new ApiError(401, ApiResponses.INVALID_CREDENTIALS);
     }
 
-    const isAuthorized = await Auth.checkCredentials(
-      password,
-      userFound.password
-    );
+    const isAuthorized = await Auth.checkCredentials(password, userFound.password);
 
     if (!isAuthorized) {
       throw new ApiError(401, ApiResponses.INVALID_CREDENTIALS);
     }
 
-    const result = await this.userRepository.findOneAndSelect(
-      { email },
-      '+hiddenDMChannels'
-    );
+    const result = await this.userRepository.findOneAndSelect({ email }, '+hiddenDMChannels');
 
     if (!result) throw new ApiError(500, ApiResponses.SOMETHING_WRONG);
 
     return result;
   }
 
-  public static async signUp(
-    username: string,
-    password: string,
-    email: string
-  ) {
+  public static async signUp(username: string, password: string, email: string) {
     const userExists = await this.userRepository.findOne({ email });
 
     if (userExists) {
@@ -56,10 +46,7 @@ export class AuthService {
       status: UserStatus.ONLINE
     });
 
-    const result = await this.userRepository.findOneAndSelect(
-      { email },
-      '+hiddenDMChannels'
-    );
+    const result = await this.userRepository.findOneAndSelect({ email }, '+hiddenDMChannels');
 
     if (!result) throw new ApiError(500, ApiResponses.SOMETHING_WRONG);
 

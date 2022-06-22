@@ -46,14 +46,11 @@ export class MessageService {
   static async create(data: Message) {
     const { channelId, sender } = data;
 
-    const message = await (
-      await this.messageRepository.create(data)
-    ).populate('sender');
+    const message = await (await this.messageRepository.create(data)).populate('sender');
     const channel = await Channel.findById(channelId);
     const user = await User.findOne({ _id: sender });
 
-    if (!channel || !user)
-      throw new ApiError(500, ApiResponses.SOMETHING_WRONG);
+    if (!channel || !user) throw new ApiError(500, ApiResponses.SOMETHING_WRONG);
 
     user.lastReadMessageIds[channelId] = message._id.toString();
     channel.lastMessageId = message._id.toString();

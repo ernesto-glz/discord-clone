@@ -49,10 +49,7 @@ export class FriendController {
       throw new ApiError(400, ApiResponses.QS_EXTRA_INFO_REQUIRED);
     }
 
-    const result = await FriendService.getFriends(
-      user._id,
-      extraInfo === 'true' ? true : false
-    );
+    const result = await FriendService.getFriends(user._id, extraInfo === 'true' ? true : false);
     res.status(200).send(result);
   }
 }

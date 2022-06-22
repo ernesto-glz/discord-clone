@@ -6,11 +6,7 @@ import { ApiResponses } from 'config/constants/api-responses';
 import { ApiErrors } from 'config/constants/api-errors';
 
 const userRepository = new UserRepository();
-export const AuthGuard = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const AuthGuard = async (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization;
   if (!authHeader) throw new ApiError(401, ApiResponses.UNAUTHORIZED);
   const token = authHeader.split(' ')[1];

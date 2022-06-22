@@ -1,7 +1,4 @@
-import {
-  validateLogin,
-  validateRegister
-} from 'controllers/Auth/validations/auth.validation';
+import { validateLogin, validateRegister } from 'controllers/Auth/validations/auth.validation';
 import { AuthController } from './auth.controller';
 import { AsyncRouter } from 'express-async-router';
 import { AuthRoutes } from '../../config/constants/api-routes';

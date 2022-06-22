@@ -38,7 +38,7 @@ const schema = new Schema(
 
 schema.plugin(paginate);
 
-export const Channel = model<
-  ChannelDocument,
-  mongoose.PaginateModel<ChannelDocument>
->('Channel', schema);
+export const Channel = model<ChannelDocument, mongoose.PaginateModel<ChannelDocument>>(
+  'Channel',
+  schema
+);

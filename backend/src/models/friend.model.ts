@@ -26,7 +26,7 @@ const friendSchema = new Schema(
 
 friendSchema.plugin(paginate);
 
-export const Friend = model<
-  FriendDocument,
-  mongoose.PaginateModel<FriendDocument>
->('Friend', friendSchema);
+export const Friend = model<FriendDocument, mongoose.PaginateModel<FriendDocument>>(
+  'Friend',
+  friendSchema
+);

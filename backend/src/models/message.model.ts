@@ -23,7 +23,7 @@ const messageSchema = new Schema(
 
 messageSchema.plugin(paginate);
 
-export const Message = model<
-  MessageDocument,
-  mongoose.PaginateModel<MessageDocument>
->('Message', messageSchema);
+export const Message = model<MessageDocument, mongoose.PaginateModel<MessageDocument>>(
+  'Message',
+  messageSchema
+);

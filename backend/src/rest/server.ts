@@ -35,9 +35,7 @@ export class Server {
     this.httpServer = http.createServer(this.express);
     this.httpServer.listen(this.port, () => {
       deps.webSocket.io.attach(this.httpServer!);
-      console.log(
-        `API is running on port ${this.port} in ${this.express.get('env')} mode`
-      );
+      console.log(`API is running on port ${this.port} in ${this.express.get('env')} mode`);
     });
   }
 

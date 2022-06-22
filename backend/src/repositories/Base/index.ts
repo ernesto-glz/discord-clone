@@ -1,9 +1,7 @@
 import mongoose, { FilterQuery, Model, UpdateQuery } from 'mongoose';
 
 export abstract class Repository<T> {
-  protected constructor(
-    protected readonly entityModel: Model<T> & mongoose.PaginateModel<T>
-  ) {}
+  protected constructor(protected readonly entityModel: Model<T> & mongoose.PaginateModel<T>) {}
 
   async findOne(
     entityFilterQuery: FilterQuery<T>,
@@ -33,21 +31,12 @@ export abstract class Repository<T> {
     entityFilterQuery: FilterQuery<T>,
     updateEntityData: UpdateQuery<T>
   ): Promise<boolean> {
-    const result = await this.entityModel.updateOne(
-      entityFilterQuery,
-      updateEntityData
-    );
+    const result = await this.entityModel.updateOne(entityFilterQuery, updateEntityData);
     return !!result.modifiedCount;
   }
 
-  async updateMany(
-    entityFilterQuery: FilterQuery<T>,
-    updateEntityData: UpdateQuery<T>
-  ) {
-    const result = await this.entityModel.updateMany(
-      entityFilterQuery,
-      updateEntityData
-    );
+  async updateMany(entityFilterQuery: FilterQuery<T>, updateEntityData: UpdateQuery<T>) {
+    const result = await this.entityModel.updateMany(entityFilterQuery, updateEntityData);
     return !!result.modifiedCount;
   }
 
