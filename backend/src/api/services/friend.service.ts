@@ -1,12 +1,12 @@
 import { FriendStatus } from 'config/constants/status';
-import { ApiError } from 'errors/ApiError';
+import { ApiError } from 'api/errors/ApiError';
 import { CreateFriendRequest } from 'interfaces/Friend';
 import { ApiResponses } from 'config/constants/api-responses';
 import { ChannelService } from './channel.service';
 
 export class FriendService {
   static async createFriendRequest({ from, toUsername, toShortId }: CreateFriendRequest) {
-    const userFound = await deps.users.findOne({
+    const userFound = await app.users.findOne({
       username: toUsername,
       shortId: toShortId
     });
@@ -19,7 +19,7 @@ export class FriendService {
       throw new ApiError(400, ApiResponses.ERROR_CREATE_REQUEST);
     }
 
-    const alreadyRequest = await deps.friends.checkExistence(from, userFound._id);
+    const alreadyRequest = await app.friends.checkExistence(from, userFound._id);
 
     if (alreadyRequest) {
       if (alreadyRequest.friend_status === FriendStatus.FRIEND) {
@@ -28,42 +28,42 @@ export class FriendService {
       throw new ApiError(400, ApiResponses.REQUEST_ALREADY_EXISTS);
     }
 
-    const created = await deps.friends.create({
+    const created = await app.friends.create({
       from,
       to: userFound._id
     });
 
-    return await deps.friends.findOneAndPopulate({ _id: created._id }, 'from', 'to');
+    return await app.friends.findOneAndPopulate({ _id: created._id }, 'from', 'to');
   }
 
   static async getPendingRequests(userId: string) {
-    return await deps.friends.getPendingRequests(userId);
+    return await app.friends.getPendingRequests(userId);
   }
 
   static async getOutgoingRequests(userId: string) {
-    return await deps.friends.getOutgoingRequests(userId);
+    return await app.friends.getOutgoingRequests(userId);
   }
 
   static async deleteFriendRequest(requestId: string, userId: string) {
-    const requestExists = await deps.friends.findOne({
+    const requestExists = await app.friends.findOne({
       _id: requestId,
       $or: [{ to: userId }, { from: userId }]
     });
 
     if (!requestExists) throw new ApiError(400, ApiResponses.REQUEST_NOT_FOUND);
 
-    return await deps.friends.findByIdAndDelete(requestId);
+    return await app.friends.findByIdAndDelete(requestId);
   }
 
   static async acceptFriendRequest(requestId: string, userId: string) {
-    const request = await deps.friends.findOne({
+    const request = await app.friends.findOne({
       _id: requestId,
       to: userId
     });
 
     if (!request) throw new ApiError(400, ApiResponses.REQUEST_NOT_FOUND);
 
-    const updated = await deps.friends.acceptFriendRequest(requestId);
+    const updated = await app.friends.acceptFriendRequest(requestId);
     if (!updated) throw new ApiError(500, ApiResponses.SOMETHING_WRONG);
 
     const result = await ChannelService.createDM({
@@ -71,13 +71,13 @@ export class FriendService {
       userId: request.to
     });
 
-    const populated = await deps.friends.findOneAndPopulate({ _id: request._id }, 'from', 'to');
+    const populated = await app.friends.findOneAndPopulate({ _id: request._id }, 'from', 'to');
 
     return { request: populated, channel: result.channel };
   }
 
   static async getFriends(userId: string, extraInfo: boolean) {
-    const friends = await deps.friends.getFriends(userId);
+    const friends = await app.friends.getFriends(userId);
 
     if (!friends) throw new ApiError(400, ApiResponses.NO_FRIENDS);
 

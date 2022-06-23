@@ -6,7 +6,7 @@ export default class implements WSEvent<'READY'> {
   public on = 'READY' as const;
 
   public async invoke(ws: WebSocket, client: Socket): Promise<any> {
-    const user = await deps.users.findById(client.data.user._id);
+    const user = await app.users.findById(client.data.user._id);
     if (!user) return 'User not found';
     client.join(user.guildIds);
 

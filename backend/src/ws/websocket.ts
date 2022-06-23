@@ -9,7 +9,7 @@ import { WSAction, WSEvent } from './ws-events/ws-event';
 export class WebSocket {
   public io: SocketServer;
   public sessions = new SessionManager();
-  public events = new Map<keyof WS.To, WSEvent<keyof WS.To>>();
+  public events = new Map<keyof WS.Events, WSEvent<keyof WS.Events>>();
 
   public get connectedUserIds() {
     return Array.from(this.sessions.values());
@@ -53,13 +53,13 @@ export class WebSocket {
     });
   }
 
-  public handle(action: WSAction<keyof WS.From>) {
+  public handle(action: WSAction<keyof WS.Events>) {
     this.io.to(action.to).emit(action.emit, action.send);
   }
 
   public to(...rooms: string[]) {
     return this.io.to(rooms) as {
-      emit: <K extends keyof WS.From>(name: K, args: WS.From[K]) => any;
+      emit: <K extends keyof WS.Events>(name: K, args: WS.Events[K]) => any;
     };
   }
 }

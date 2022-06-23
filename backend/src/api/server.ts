@@ -4,8 +4,8 @@ import cors from 'cors';
 import helmet from 'helmet';
 import v1 from './routes/v1';
 import mongoSanitize from 'express-mongo-sanitize';
-import { apiErrorHandler } from '../middlewares/ApiErrorHandler';
-import { ApiError } from '../errors/ApiError';
+import { apiErrorHandler } from './middleware/ApiErrorHandler';
+import { ApiError } from './errors/ApiError';
 
 export class Server {
   private readonly express: express.Express;
@@ -34,7 +34,7 @@ export class Server {
     // listen
     this.httpServer = http.createServer(this.express);
     this.httpServer.listen(this.port, () => {
-      deps.webSocket.io.attach(this.httpServer!);
+      app.webSocket.io.attach(this.httpServer!);
       console.log(`API is running on port ${this.port} in ${this.express.get('env')} mode`);
     });
   }

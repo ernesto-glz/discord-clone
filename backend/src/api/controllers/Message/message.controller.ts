@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { Message } from 'interfaces/Message';
-import { MessageService } from 'services/message.service';
+import { MessageService } from 'api/services/message.service';
 
 export class MessageController {
   static async getAllInChannel(req: Request, res: Response) {

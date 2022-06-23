@@ -8,7 +8,7 @@ export default class implements WSEvent<'CHANNEL_DISPLAY'> {
 
   public async invoke(ws: WebSocket, client: Socket, { channelId }: WS.Params.ChannelHide): Promise<any> {
     const userId = ws.sessions.userId(client) ?? '';
-    await deps.users.updateOne({ _id: userId }, { $pull: { hiddenDMChannels: channelId } });
+    await app.users.updateOne({ _id: userId }, { $pull: { hiddenDMChannels: channelId } });
 
     return [
       {

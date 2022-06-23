@@ -3,8 +3,8 @@ import { Socket } from 'socket.io';
 import { ExtendedError } from 'socket.io/dist/namespace';
 import { ApiErrors } from 'config/constants/api-errors';
 import { ApiResponses } from 'config/constants/api-responses';
-import { UserService } from 'services/user.service';
-import { FriendService } from 'services/friend.service';
+import { UserService } from 'api/services/user.service';
+import { FriendService } from 'api/services/friend.service';
 
 type SocketIo = Socket;
 type SocketIoNext = (err?: ExtendedError | undefined) => void;
@@ -46,7 +46,7 @@ export const WSGuard = async (socket: SocketIo, next: SocketIoNext) => {
     socket.data.user = JSON.parse(JSON.stringify(user));
     socket.data.friends = friends ? JSON.parse(JSON.stringify(friends)) : [];
 
-    deps.webSocket.sessions.set(socket.id, user._id.toString());
+    app.webSocket.sessions.set(socket.id, user._id.toString());
     next();
   } catch (error) {
     if (error) {

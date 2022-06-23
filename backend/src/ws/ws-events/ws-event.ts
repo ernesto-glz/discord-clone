@@ -2,19 +2,13 @@ import { WS } from '@discord/types';
 import { Socket } from 'socket.io';
 import { WebSocket } from '../websocket';
 
-type OnWS = WS.To & WS.On;
-
-export interface WSEvent<K extends keyof OnWS> {
-  on: K;
-  invoke: (
-    ws: WebSocket,
-    client: Socket,
-    params: OnWS[K]
-  ) => Promise<(WSAction<keyof WS.From> | undefined)[]>;
+export interface WSEvent<T extends keyof WS.Events> {
+  on: T;
+  invoke: (ws: WebSocket, client: Socket, params: WS.Events[T]) => Promise<(WSAction<keyof WS.Events> | undefined)[]>;
 }
 
-export interface WSAction<K extends keyof WS.From> {
-  emit: K;
+export interface WSAction<T extends keyof WS.Events> {
+  emit: T;
   to: string[];
-  send: WS.From[K];
+  send: WS.Events[T];
 }

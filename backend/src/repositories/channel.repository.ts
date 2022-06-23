@@ -1,6 +1,6 @@
 import { ChannelTypes } from 'config/constants/status';
 import { ChannelDocument } from 'interfaces/Channel';
-import { Channel } from 'models/Channel';
+import { Channel } from 'models/channel';
 import { Repository } from './Base';
 
 export class ChannelRepository extends Repository<ChannelDocument> {

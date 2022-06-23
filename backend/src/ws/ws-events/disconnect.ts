@@ -7,7 +7,7 @@ export default class implements WSEvent<'disconnect'> {
 
   public async invoke(ws: WebSocket, client: Socket): Promise<any> {
     const userId = ws.sessions.get(client.id);
-    const user = await deps.users.findById(userId);
+    const user = await app.users.findById(userId);
     ws.sessions.delete(client.id);
 
     if (!user) return;

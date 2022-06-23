@@ -1,13 +1,11 @@
-import { ApiError } from 'errors/ApiError';
+import { ApiError } from 'api/errors/ApiError';
 import { Message } from 'interfaces/Message';
 import { ApiResponses } from 'config/constants/api-responses';
-import { User } from 'models/User.model';
-import { Channel } from 'models/Channel';
 import { UserService } from './user.service';
 
 export class MessageService {
   static async getAllPaginated(channelId: string, userId: string, limit: number, selectedPage: number) {
-    const channel = await deps.channels.findOne({
+    const channel = await app.channels.findOne({
       _id: channelId,
       $or: [{ sender: userId }, { receiver: userId }]
     });
@@ -16,7 +14,7 @@ export class MessageService {
       throw new ApiError(400, ApiResponses.NO_MESSAGES_FOUND);
     }
 
-    const messages = await deps.messages.paginate(
+    const messages = await app.messages.paginate(
       { channelId },
       { limit, page: selectedPage, sort: { _id: 'desc' }, populate: 'sender' }
     );
@@ -36,9 +34,9 @@ export class MessageService {
   static async create(data: Message) {
     const { channelId, sender } = data;
 
-    const message = await (await deps.messages.create(data)).populate('sender');
-    const channel = await Channel.findById(channelId);
-    const user = await User.findOne({ _id: sender });
+    const message = await (await app.messages.create(data)).populate('sender');
+    const channel = await app.channels.findById(channelId);
+    const user = await app.users.findOne({ _id: sender });
 
     if (!channel || !user) throw new ApiError(500, ApiResponses.SOMETHING_WRONG);
 

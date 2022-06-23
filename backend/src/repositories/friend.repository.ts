@@ -1,6 +1,6 @@
 import { FriendStatus } from 'config/constants/status';
 import { FriendDocument } from 'interfaces/Friend';
-import { Friend } from 'models/friend.model';
+import { Friend } from 'models/friend';
 import { Repository } from './Base';
 
 export class FriendRepository extends Repository<FriendDocument> {

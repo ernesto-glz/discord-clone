@@ -1,10 +1,5 @@
 export declare namespace WS {
-  export interface From {
-    /** Called when a user goes online or offline. */
-    PRESENCE_UPDATE: Args.PresenceUpdate;
-    error: object;
-  }
-  export interface To {
+  export interface Events {
     READY: any;
     PRESENCE_UPDATE: Args.PresenceUpdate;
     FRIEND_REQUEST_ACCEPT: any;
@@ -12,9 +7,8 @@ export declare namespace WS {
     FRIEND_REQUEST_REMOVE: any;
     CHANNEL_HIDE: Params.ChannelHide;
     CHANNEL_DISPLAY: Params.ChannelDisplay;
-  }
-  export interface On {
     disconnect: any;
+    error: object;
   }
 
   export namespace Params {

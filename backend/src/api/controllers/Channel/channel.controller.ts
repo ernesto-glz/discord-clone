@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { ChannelService } from 'services/channel.service';
+import { ChannelService } from 'api/services/channel.service';
 
 export class ChannelController {
   static async createDM(req: Request, res: Response) {

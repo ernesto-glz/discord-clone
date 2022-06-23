@@ -2,10 +2,10 @@ import { ChannelRepository } from 'repositories/channel.repository';
 import { FriendRepository } from 'repositories/friend.repository';
 import { MessageRepository } from 'repositories/message.repository';
 import { UserRepository } from 'repositories/user.repository';
-import { Server } from '../rest/server';
+import { Server } from '../api/server';
 import { WebSocket } from '../ws/websocket';
 
-export interface Deps {
+export interface App {
   rest: Server;
   webSocket: WebSocket;
   users: UserRepository;
@@ -14,7 +14,7 @@ export interface Deps {
   messages: MessageRepository;
 }
 
-export const deps: Deps = {
+export const app: App = {
   rest: new Server(),
   webSocket: new WebSocket(),
   users: new UserRepository(),
@@ -23,4 +23,4 @@ export const deps: Deps = {
   messages: new MessageRepository()
 };
 
-global['deps'] = deps;
+global['app'] = app;

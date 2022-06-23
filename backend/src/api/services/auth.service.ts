@@ -1,11 +1,11 @@
 import { Auth } from 'shared/auth';
-import { ApiError } from 'errors/ApiError';
+import { ApiError } from 'api/errors/ApiError';
 import { generateShortId } from 'utils';
 import { ApiResponses } from 'config/constants/api-responses';
 
 export class AuthService {
   public static async signIn(email: string, password: string) {
-    const userFound = await deps.users.findWithPassword(email);
+    const userFound = await app.users.findWithPassword(email);
 
     if (!userFound) {
       throw new ApiError(401, ApiResponses.INVALID_CREDENTIALS);
@@ -14,17 +14,17 @@ export class AuthService {
     if (!(await Auth.checkCredentials(password, userFound.password)))
       throw new ApiError(401, ApiResponses.INVALID_CREDENTIALS);
 
-    return await deps.users.findOneAndSelect({ email }, '+hiddenDMChannels');
+    return await app.users.findOneAndSelect({ email }, '+hiddenDMChannels');
   }
 
   public static async signUp(username: string, password: string, email: string) {
-    const userExists = await deps.users.findOne({ email });
+    const userExists = await app.users.findOne({ email });
 
     if (userExists) throw new ApiError(409, ApiResponses.EMAIL_ALREADY_USED);
 
     const hashedPassword = await Auth.hashPassword(password);
 
-    await deps.users.create({
+    await app.users.create({
       username,
       password: hashedPassword,
       email,
@@ -32,6 +32,6 @@ export class AuthService {
       guildIds: []
     });
 
-    return await deps.users.findOneAndSelect({ email }, '+hiddenDMChannels');
+    return await app.users.findOneAndSelect({ email }, '+hiddenDMChannels');
   }
 }

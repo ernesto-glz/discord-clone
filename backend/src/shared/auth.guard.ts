@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { verify } from 'jsonwebtoken';
-import { ApiError } from 'errors/ApiError';
+import { ApiError } from 'api/errors/ApiError';
 import { ApiResponses } from 'config/constants/api-responses';
 import { ApiErrors } from 'config/constants/api-errors';
 
@@ -31,7 +31,7 @@ export const AuthGuard = async (req: Request, res: Response, next: NextFunction)
     }
   }
 
-  const user = await deps.users.findOne({ _id: decoded._id });
+  const user = await app.users.findOne({ _id: decoded._id });
 
   if (!user) {
     throw new ApiError(401, ApiResponses.USER_NOT_FOUND);

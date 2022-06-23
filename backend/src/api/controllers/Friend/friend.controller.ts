@@ -1,7 +1,7 @@
 import { ApiResponses } from 'config/constants/api-responses';
-import { ApiError } from 'errors/ApiError';
+import { ApiError } from 'api/errors/ApiError';
 import { Request, Response } from 'express';
-import { FriendService } from 'services/friend.service';
+import { FriendService } from 'api/services/friend.service';
 
 export class FriendController {
   static async createFriendRequest(req: Request, res: Response) {
