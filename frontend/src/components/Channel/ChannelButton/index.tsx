@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserImage } from 'src/components/UserImage';
-import { ws } from 'src/contexts/ws.context';
+import { ws } from 'src/ws/websocket';
 import { useAppSelector } from 'src/redux/hooks';
 import { selectFriends } from 'src/redux/states/friend';
 import { isOnline } from 'src/utils/redux';

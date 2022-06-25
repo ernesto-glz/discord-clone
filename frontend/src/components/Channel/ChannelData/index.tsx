@@ -23,7 +23,7 @@ import {
   MessagesContainer
 } from './styles';
 import { selectChannelName } from 'src/redux/states/channels';
-import { ws } from 'src/contexts/ws.context';
+import { ws } from 'src/ws/websocket';
 
 const ChannelData: React.FC = () => {
   const { value: currentMessage, onChange, setValue } = useChatInputValue('');

@@ -18,21 +18,3 @@ export const ws = io(
   }
 );
 ws.io.on('open', () => console.log('Connected to WS Server'));
-
-const WSContext = React.createContext(ws);
-
-export const WSProvider: React.FC<Props> = ({ children }) => {
-  const isLoggedIn = useAppSelector((s) => s.user.username);
-
-  useEffect(() => {
-    if (isLoggedIn && !ws.connected) {
-      ws.connect();
-    }
-
-    if (!isLoggedIn && ws.connected) {
-      ws.disconnect();
-    }
-  }, [isLoggedIn]);
-
-  return <WSContext.Provider value={ws}>{children}</WSContext.Provider>;
-};

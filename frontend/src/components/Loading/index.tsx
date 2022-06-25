@@ -1,12 +1,22 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
+import { ws } from 'src/ws/websocket';
+import { useAppSelector } from 'src/redux/hooks';
 import { DiscordTips } from 'src/utils/discord-tips';
 import { Container, LoadingSpinner } from './styles';
 
 export const Loading: React.FC = () => {
+  const isLoggedIn = useAppSelector((s) => s.user.username);
   const randomTip = useMemo(
     () => Math.floor(Math.random() * DiscordTips.length),
     []
   );
+
+  useEffect(() => {
+    if (isLoggedIn && !ws.connected) {
+      ws.connect();
+    }
+  }, [isLoggedIn]);
+
   return (
     <Container isVisible={true}>
       <LoadingSpinner autoPlay muted loop>

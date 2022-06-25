@@ -1,4 +1,5 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { ws } from 'src/ws/websocket';
 import {
   getUserFromStorage,
   removeJwt,
@@ -47,6 +48,7 @@ export const slice = createSlice({
     logOut: () => {
       removeJwt();
       removeUserFromStorage();
+      ws.disconnect();
       return userEmptyState;
     },
     updated: (user, { payload }) => {

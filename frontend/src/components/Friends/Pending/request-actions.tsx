@@ -1,6 +1,6 @@
 import React from 'react';
 import useFetchAndLoad from 'src/hooks/useFetchAndLoad';
-import { ws } from 'src/contexts/ws.context';
+import { ws } from 'src/ws/websocket';
 import { User } from 'src/models/user.model';
 import { FriendService } from 'src/services/friend.service';
 import {

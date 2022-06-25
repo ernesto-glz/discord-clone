@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { getOrCreateDMChannel, getChannels } from 'src/api/channel';
-import { ws } from 'src/contexts/ws.context';
+import { ws } from 'src/ws/websocket';
 import { User } from 'src/models/user.model';
 import { notInArray } from 'src/utils/redux';
 import store, { RootState } from '../configure-store';

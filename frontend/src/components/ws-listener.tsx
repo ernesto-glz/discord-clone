@@ -6,7 +6,7 @@ import { actions as channels } from 'src/redux/states/channels';
 import { actions as friends } from 'src/redux/states/friend';
 import { actions as requests } from 'src/redux/states/requests';
 import { actions as messages } from 'src/redux/states/messages';
-import { ws } from 'src/contexts/ws.context';
+import { ws } from 'src/ws/websocket';
 import store from 'src/redux/configure-store';
 import fetchEntities from 'src/redux/actions/fetch-entities';
 import { logOut } from 'src/redux/states/user';

@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { Provider } from 'react-redux';
 import App from './App';
-import { WSProvider } from './contexts/ws.context';
+import { Provider } from 'react-redux';
 import store from './redux/configure-store';
 import reportWebVitals from './reportWebVitals';
 import GlobalStyles from './styled-components/GlobalStyles';
@@ -14,9 +13,7 @@ root.render(
   <React.StrictMode>
     <GlobalStyles />
     <Provider store={store}>
-      <WSProvider>
-        <App />
-      </WSProvider>
+      <App />
     </Provider>
   </React.StrictMode>
 );

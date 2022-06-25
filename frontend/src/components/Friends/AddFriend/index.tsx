@@ -1,5 +1,5 @@
 import React, { FormEvent, useState } from 'react';
-import { ws } from 'src/contexts/ws.context';
+import { ws } from 'src/ws/websocket';
 import useFetchAndLoad from 'src/hooks/useFetchAndLoad';
 import { useInputValue } from 'src/hooks/useInputValue';
 import { FriendService } from 'src/services/friend.service';
