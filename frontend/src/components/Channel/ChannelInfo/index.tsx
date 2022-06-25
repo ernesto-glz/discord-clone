@@ -1,6 +1,6 @@
 import React from 'react';
 import { FriendImage } from 'src/components/Images';
-import { Pages } from 'src/components/Layout';
+import { Pages } from 'src/pages/Channels/Me';
 import { useAppSelector } from 'src/redux/hooks';
 import { selectChannelName } from 'src/redux/states/channels';
 import { selectActiveChannel } from 'src/redux/states/ui';
@@ -49,20 +49,20 @@ const ChannelInfo: React.FC<Props> = ({ page, setPage }) => {
             <Title>Friends</Title>
             <Separator />
             <MenuButton
-              isActive={isActivePage('Online')}
-              onClick={() => setPage('Online')}
+              isActive={isActivePage('ONLINE')}
+              onClick={() => setPage('ONLINE')}
             >
               Online
             </MenuButton>
             <MenuButton
-              isActive={isActivePage('All')}
-              onClick={() => setPage('All')}
+              isActive={isActivePage('ALL')}
+              onClick={() => setPage('ALL')}
             >
               All
             </MenuButton>
             <MenuButton
-              isActive={isActivePage('Pending')}
-              onClick={() => setPage('Pending')}
+              isActive={isActivePage('PENDING')}
+              onClick={() => setPage('PENDING')}
             >
               Pending
               {notifications > 0 && (
@@ -71,7 +71,7 @@ const ChannelInfo: React.FC<Props> = ({ page, setPage }) => {
             </MenuButton>
             <AddFriendBtn
               active={page === 'AddFriend'}
-              onClick={() => setPage('AddFriend')}
+              onClick={() => setPage('ADD')}
             >
               Add Friend
             </AddFriendBtn>

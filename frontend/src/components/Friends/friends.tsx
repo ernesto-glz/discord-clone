@@ -5,8 +5,8 @@ import { selectFriends } from 'src/redux/states/friend';
 import {
   Container,
   FlexColumnContainer,
-  RequestsBody,
-  RequestsHeader,
+  ListHeader,
+  ListBody,
   WampusImage,
   WampusMessage
 } from './styles';
@@ -27,13 +27,13 @@ export const MyFriends: React.FC<Props> = (props) => {
   if (props.justOnline ? friendsOnline.length : friends.length) {
     return (
       <FlexColumnContainer>
-        <RequestsHeader>
+        <ListHeader>
           <h2>
             {props.justOnline ? 'ONLINE' : 'ALL FRIENDS'} -{' '}
             {props.justOnline ? friendsOnline.length : friends.length}
           </h2>
-        </RequestsHeader>
-        <RequestsBody>
+        </ListHeader>
+        <ListBody>
           {friends.map((friend, i) => {
             if (props.justOnline) {
               return (
@@ -44,7 +44,7 @@ export const MyFriends: React.FC<Props> = (props) => {
             }
             return <FriendItem key={i} friend={friend} />;
           })}
-        </RequestsBody>
+        </ListBody>
       </FlexColumnContainer>
     );
   }

@@ -1,8 +1,8 @@
 import { ApiError } from 'api/errors/ApiError';
-import { CreateDMChannel } from 'interfaces/Channel';
+import { ChannelDocument, CreateDMChannel } from 'interfaces/Channel';
 import { ApiResponses } from 'config/constants/api-responses';
 import { ChannelTypes } from 'config/constants/status';
-import { generateSnowflake } from 'utils';
+import { flattenUser, generateSnowflake } from 'utils';
 
 export class ChannelService {
   static async createDM({ myId, userId }: CreateDMChannel) {
@@ -44,6 +44,16 @@ export class ChannelService {
       'userIds'
     );
     if (!foundChannels) throw new ApiError(400, ApiResponses.NO_CHANNELS_FOUND);
+
+    if (foundChannels.length) {
+      return foundChannels.map((c) => {
+        const channelUsers = c.userIds.map((u: any) => {
+          return flattenUser(u);
+        });
+        return { ...c.toObject(), userIds: channelUsers } as unknown as ChannelDocument;
+      });
+    }
+
     return foundChannels;
   }
 

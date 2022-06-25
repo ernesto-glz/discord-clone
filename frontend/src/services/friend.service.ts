@@ -49,12 +49,4 @@ export class FriendService {
       controller
     };
   }
-
-  static getFriends(extraInfo: boolean) {
-    const controller = loadAbort();
-    return {
-      call: getFriends(controller, extraInfo),
-      controller
-    };
-  }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pages } from '../Layout';
+import { Pages } from 'src/pages/Channels/Me';
 import { AddFriend } from './AddFriend';
 import { MyFriends } from './friends';
 import { PendingRequests } from './Pending';
@@ -9,15 +9,15 @@ interface Props {
 }
 
 const FriendsPage: React.FC<Props> = ({ page }) => {
-  if (page === 'Online') {
+  if (page === 'ONLINE') {
     return <MyFriends justOnline />;
   }
 
-  if (page === 'All') {
+  if (page === 'ALL') {
     return <MyFriends />;
   }
 
-  if (page === 'Pending') {
+  if (page === 'PENDING') {
     return <PendingRequests />;
   }
 

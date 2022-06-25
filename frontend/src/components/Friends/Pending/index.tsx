@@ -6,8 +6,8 @@ import { selectIncoming, selectOutgoing } from 'src/redux/states/requests';
 import {
   Container,
   FlexColumnContainer,
-  RequestsBody,
-  RequestsHeader,
+  ListBody,
+  ListHeader,
   WampusImage,
   WampusMessage
 } from '../styles';
@@ -20,17 +20,17 @@ export const PendingRequests: React.FC = () => {
   if (incomingRequests.length || outgoingRequests.length) {
     return (
       <FlexColumnContainer>
-        <RequestsHeader>
+        <ListHeader>
           <h2>PENDING - {totalRequests}</h2>
-        </RequestsHeader>
-        <RequestsBody>
+        </ListHeader>
+        <ListBody>
           {incomingRequests?.map((request: FriendRequest, i) => (
             <RequestItem request={request} key={i} type="Incoming" />
           ))}
           {outgoingRequests?.map((request: FriendRequest, i) => (
             <RequestItem request={request} key={i} type="Outgoing" />
           ))}
-        </RequestsBody>
+        </ListBody>
       </FlexColumnContainer>
     );
   }

@@ -5,12 +5,13 @@ import ChannelList from 'src/components/Channel/ChannelList';
 import ServerName from 'src/components/Server/ServerName';
 import FriendsPage from 'src/components/Friends';
 import RightPanel from 'src/components/RightPanel';
-import { Pages } from 'src/components/Layout';
 import { useAppSelector } from 'src/redux/hooks';
 import { selectActiveChannel } from 'src/redux/states/ui';
 
+export type Pages = 'ONLINE' | 'ALL' | 'PENDING' | 'ADD';
+
 export const Me: React.FC = () => {
-  const [page, setPage] = useState<Pages>('Online');
+  const [page, setPage] = useState<Pages>('ONLINE');
   const activeChannel = useAppSelector(selectActiveChannel);
 
   return (

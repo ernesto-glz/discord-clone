@@ -1,4 +1,5 @@
 import cluster from 'cluster';
+import { User, UserDocument } from 'interfaces/User';
 
 let inc = 0;
 let lastSnowflake: string;
@@ -38,4 +39,12 @@ export function snowflakeToDate(snowflake: string) {
 
 export function toFourDigits(discriminator: string | number) {
   return discriminator.toLocaleString('en-US', { minimumIntegerDigits: 4, useGrouping: false });
+}
+
+export function flattenUser(user: UserDocument): User {
+  const finalUser = { ...user.toObject() } as any;
+  delete finalUser.guildIds;
+  delete finalUser.hiddenDMChannels;
+  delete finalUser.lastReadMessageIds;
+  return finalUser as User;
 }

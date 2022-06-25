@@ -10,7 +10,6 @@ import { selectActiveChannel } from 'src/redux/states/ui';
 export interface GridProps {
   channelId: string;
 }
-export type Pages = 'Online' | 'All' | 'Pending' | 'AddFriend';
 
 export const Layout: React.FC = () => {
   const channelId = useSelector(selectActiveChannel);

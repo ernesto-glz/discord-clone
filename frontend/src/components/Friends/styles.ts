@@ -120,7 +120,7 @@ export const InputHeader = styled.input`
   line-height: 20px;
 `;
 
-export const RequestsHeader = styled.div`
+export const ListHeader = styled.div`
   width: 100%;
   > h2 {
     margin: 16px 20px 8px 30px;
@@ -131,7 +131,7 @@ export const RequestsHeader = styled.div`
   }
 `;
 
-export const RequestsBody = styled.div`
+export const ListBody = styled.div`
   overflow: hidden scroll;
   margin-top: 8px;
   height: 100%;

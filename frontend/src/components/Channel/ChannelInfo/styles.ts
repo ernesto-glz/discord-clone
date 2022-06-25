@@ -33,6 +33,7 @@ export const Title = styled.h1`
   font-size: 16px;
   font-weight: bold;
   color: var(--white);
+  letter-spacing: .02em;
 `;
 
 export const Separator = styled.div`

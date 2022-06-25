@@ -1,11 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getFriends } from 'src/api/friend';
-import { User } from 'src/models/user.model';
-import { loadAbort } from 'src/utils/load-abort-axios';
+import { FriendUser } from 'src/models/user.model';
 import { RootState } from '../configure-store';
 
 export interface FriendState {
-  entities: User[];
+  entities: FriendUser[];
   loading: 'idle' | 'loading' | 'failed';
 }
 
@@ -17,7 +16,7 @@ const initialState: FriendState = {
 export const getAllFriends = createAsyncThunk(
   'friend/getAllFriends',
   async () => {
-    const response = await getFriends(loadAbort(), false);
+    const response = await getFriends({ extraInfo: false });
     return response.data;
   }
 );

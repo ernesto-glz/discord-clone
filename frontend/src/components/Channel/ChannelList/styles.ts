@@ -20,6 +20,7 @@ export const Category = styled.div`
     text-transform: uppercase;
     font-size: 12px;
     font-weight: 600;
+    letter-spacing: .02em;
     color: var(--gray);
   }
 `;

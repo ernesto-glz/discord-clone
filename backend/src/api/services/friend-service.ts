@@ -82,10 +82,12 @@ export class FriendService {
 
     if (!extraInfo) {
       return friends.map((entity: any) => {
-        if (entity.from._id.toString() === userId.toString()) {
-          return entity.to;
+        if (entity.from._id === userId) {
+          const status = app.webSocket.sessions.isOnline(entity.to._id) === true ? 'ONLINE' : 'OFFLINE';
+          return { ...entity.to, status };
         }
-        return entity.from;
+        const status = app.webSocket.sessions.isOnline(entity.from._id) === true ? 'ONLINE' : 'OFFLINE';
+        return { ...entity.from, status };
       });
     }
 
