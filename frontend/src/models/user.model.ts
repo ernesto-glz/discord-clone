@@ -15,6 +15,7 @@ export interface User {
   username: string;
   email: string;
   token: string;
+  discriminator: string;
   avatar?: string;
   status: 'ONLINE' | 'OFFLINE';
 }

@@ -28,16 +28,28 @@ export const UserData = styled.div`
   display: flex;
   flex-direction: column;
   > strong {
-    font-size: 13px;
-    color: var(--white);
+    font-size: 16px;
+    color: var(--header-primary);
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
     display: block;
     user-select: text;
     -moz-user-select: text;
     -webkit-user-select: text;
+    margin-bottom: 2px;
+    > span {
+      color: var(--header-secondary);
+      font-size: 15px;
+      line-height: 16px;
+      font-weight: 300;
+      color: #ffffffb3;
+    }
   }
   > span {
-    color: var(--gray);
-    font-size: 13px;
+    color: var(--header-secondary);
+    font-size: 12px;
+    line-height: 13px;
     user-select: text;
     -moz-user-select: text;
     -webkit-user-select: text;

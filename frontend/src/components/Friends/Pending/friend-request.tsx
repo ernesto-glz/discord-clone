@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { UserImage } from 'src/components/UserImage';
 import { Profile, UserData } from 'src/components/UserInfo/styles';
 import { FriendRequest } from 'src/models/friend.model';
@@ -17,8 +17,13 @@ export const RequestItem: React.FC<Props> = ({ request, type }) => {
     () => (type === 'Outgoing' ? request.to : request.from),
     [request]
   );
+  const [showDiscriminator, setShowDiscriminator] = useState(false);
+
   return (
-    <FriendRequestContainer>
+    <FriendRequestContainer
+      onMouseOver={() => setShowDiscriminator(true)}
+      onMouseLeave={() => setShowDiscriminator(false)}
+    >
       <ItemBody>
         <div>
           <Profile>
@@ -27,7 +32,10 @@ export const RequestItem: React.FC<Props> = ({ request, type }) => {
               isGeneric={false}
             />
             <UserData>
-              <strong>{requestUser.username}</strong>
+              <strong>
+                {requestUser.username}
+                <span>{showDiscriminator && `#${requestUser.discriminator}`}</span>
+              </strong>
               <span>
                 {type === 'Outgoing'
                   ? 'Outgoing Friend Request'

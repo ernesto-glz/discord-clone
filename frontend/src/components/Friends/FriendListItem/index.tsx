@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { UserImage } from 'src/components/UserImage';
 import { Profile, UserData } from 'src/components/UserInfo/styles';
 import { User } from 'src/models/user.model';
@@ -16,10 +16,13 @@ interface Props {
 export const FriendItem: React.FC<Props> = ({ friend }) => {
   const friends = useAppSelector(selectFriends);
   const friendStatus = useMemo(() => isOnline(friend._id), [friends]);
+  const [showDiscriminator, setShowDiscriminator] = useState(false);
   const dispatch = useAppDispatch();
 
   return (
     <FriendRequest
+      onMouseOver={() => setShowDiscriminator(true)}
+      onMouseLeave={() => setShowDiscriminator(false)}
       onClick={() => dispatch(displayChannel({ userId: friend._id }))}
     >
       <ItemBody>
@@ -32,7 +35,11 @@ export const FriendItem: React.FC<Props> = ({ friend }) => {
               imageUrl={`/assets/avatars/${friend.avatar}.png`}
             />
             <UserData>
-              <strong>{friend.username}</strong>
+              <strong>
+                {friend.username}
+                <span>{showDiscriminator && `#${friend.discriminator}`}</span>
+              </strong>
+
               <span className="userStatus">
                 {friend.status === 'ONLINE' ? 'Online' : 'Offline'}
               </span>

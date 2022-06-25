@@ -2,3 +2,8 @@
   font-family: Whitney;
   src: url(/public/fonts/whitneybook.otf);
 }
+
+@font-face {
+  font-family: Whitney;
+  src: url(/public/fonts/whitneymedium.otf);
+}

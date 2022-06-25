@@ -32,7 +32,7 @@ const ChannelButton: React.FC<Props> = ({
 }) => {
   const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
-  const notifications = 99;
+  const notifications = 0;
   const friends = useAppSelector(selectFriends);
   const friendStatus = useMemo(() => isOnline(friendId!), [friends]);
 

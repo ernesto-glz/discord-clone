@@ -30,7 +30,7 @@ export interface AddFriendProps {
 }
 
 const ChannelInfo: React.FC<Props> = ({ page, setPage }) => {
-  const notifications = 99;
+  const notifications = 0;
   const activeChannel = useAppSelector(selectActiveChannel);
   const channelName = useAppSelector(selectChannelName);
   const isActivePage = (i: string) => page === i;

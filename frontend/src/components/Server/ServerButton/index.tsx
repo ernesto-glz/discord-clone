@@ -29,7 +29,7 @@ const ServerButton: React.FC<Props> = ({
       isAddButton={isAddButton}
       isExploreButton={isExploreButton}
       hasNotifications={hasNotifications}
-      mentions={isHome ? 99 : mentions}
+      mentions={isHome ? 0 : mentions}
       selected={selected}
     >
       {isHome && <DiscordLogo />}
