@@ -5,12 +5,12 @@ export const ApiRoutes = {
   },
   USER: {
     GET_USER: '/user/:userId',
-    GET_SELF_USER: '/user'
+    GET_SELF: '/user'
   },
   CHANNEL: {
-    CREATE_CHANNEL: '/channel/create',
+    CREATE: '/channel/create',
     GET_CHANNELS: '/channel/get',
-    GET_CHANNEL_BY_ID: '/channel/:channelId'
+    GET_BY_ID: '/channel/:channelId'
   },
   FRIEND: {
     PENDING_REQUESTS: '/friend/pending-requests',

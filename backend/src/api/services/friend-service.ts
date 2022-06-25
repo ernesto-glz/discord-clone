@@ -2,7 +2,7 @@ import { FriendStatus } from 'config/constants/status';
 import { ApiError } from 'api/errors/ApiError';
 import { CreateRequest } from 'interfaces/Friend';
 import { ApiResponses } from 'config/constants/api-responses';
-import { ChannelService } from './channel.service';
+import { ChannelService } from './channel-service';
 import { generateSnowflake } from 'utils';
 
 export class FriendService {

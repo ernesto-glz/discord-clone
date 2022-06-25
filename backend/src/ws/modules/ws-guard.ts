@@ -3,8 +3,8 @@ import { Socket } from 'socket.io';
 import { ExtendedError } from 'socket.io/dist/namespace';
 import { ApiErrors } from 'config/constants/api-errors';
 import { ApiResponses } from 'config/constants/api-responses';
-import { UserService } from 'api/services/user.service';
-import { FriendService } from 'api/services/friend.service';
+import { UserService } from 'api/services/user-service';
+import { FriendService } from 'api/services/friend-service';
 
 type SocketIo = Socket;
 type SocketIoNext = (err?: ExtendedError | undefined) => void;

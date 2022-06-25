@@ -1,7 +1,7 @@
 import { ApiError } from 'api/errors/ApiError';
 import { Message } from 'interfaces/Message';
 import { ApiResponses } from 'config/constants/api-responses';
-import { UserService } from './user.service';
+import { UserService } from './user-service';
 import { generateSnowflake } from 'utils';
 
 export class MessageService {
