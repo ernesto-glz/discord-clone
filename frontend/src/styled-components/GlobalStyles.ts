@@ -74,7 +74,10 @@ export default createGlobalStyle`
     --background-modifier-selected: rgba(79,84,92,0.6);
     --background-modifier-hover: rgba(79,84,92,0.4);
     --info-danger-foreground: hsl(359,calc(var(--saturation-factor, 1)*82.6%),59.4%);
-
+    --background-message-hover: rgba(4,4,5,0.07);
     --saturation-factor: 1;
+    --background-floating: #18191c;
+    --elevation-high: 0 8px 16px rgba(0,0,0,0.24);
+    --interactive-normal: #b9bbbe;
   }
 `;

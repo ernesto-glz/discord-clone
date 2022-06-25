@@ -13,16 +13,13 @@ export class FriendService {
     });
 
     if (!userFound) throw new ApiError(400, ApiResponses['ERROR_CREATE_REQUEST']);
-    else if (userFound._id.toString() === from.toString())
-      throw new ApiError(400, ApiResponses['ERROR_CREATE_REQUEST']);
+    else if (userFound._id === from) throw new ApiError(400, ApiResponses['ERROR_CREATE_REQUEST']);
 
     const alreadyRequest = await app.friends.checkExistence(from, userFound._id);
 
-    if (alreadyRequest?.friend_status === FriendStatus['FRIEND']) {
+    if (alreadyRequest?.friend_status === FriendStatus['FRIEND'])
       throw new ApiError(400, ApiResponses['ALREADY_FRIENDS']);
-    } else if (alreadyRequest) {
-      throw new ApiError(400, ApiResponses['REQUEST_ALREADY_EXISTS']);
-    }
+    else if (alreadyRequest) throw new ApiError(400, ApiResponses['REQUEST_ALREADY_EXISTS']);
 
     const created = await app.friends.create({
       _id: generateSnowflake(),

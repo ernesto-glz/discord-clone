@@ -69,13 +69,7 @@ const ChannelData: React.FC = () => {
         <Messages>
           <MessagesContainer>
             {messages.map((msg: any, i: number) => (
-              <ChannelMessage
-                key={i}
-                author={msg.sender}
-                date={dateFormatted(msg.createdAt)}
-                content={msg.content}
-                stackMessage={msg.stackMessage}
-              />
+              <ChannelMessage key={i} message={msg} />
             ))}
             <div className="lastMessage" ref={(el) => (messagesEnd = el)} />
           </MessagesContainer>

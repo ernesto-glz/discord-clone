@@ -1,10 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getAllMessages } from 'src/api/message';
+import { Message } from 'src/models/message.model';
 import { compareDates } from 'src/utils/date';
 import { RootState } from '../configure-store';
 
 export interface MessageState {
-  entities: object[];
+  entities: Message[];
   loading: 'idle' | 'loading' | 'failed';
 }
 
@@ -19,24 +20,21 @@ export const fetchMessages = createAsyncThunk(
     const { data } = await getAllMessages(channelId);
 
     if (data?.docs?.length) {
-      let lastMessage: any = null;
+      const messagesFound = data.docs
+        .reverse()
+        .map((message: Message, index: number) => {
+          const prev = data.docs[index - 1];
 
-      const messagesFound = data.docs.reverse().map((message: any) => {
-        let result: any;
+          if (
+            prev &&
+            prev.sender === message.sender &&
+            compareDates(prev.createdAt, message.createdAt)
+          ) {
+            return { ...message, stackMessage: true };
+          }
 
-        if (
-          lastMessage &&
-          lastMessage.sender._id === message.sender._id &&
-          compareDates(lastMessage.createdAt, message.createdAt)
-        ) {
-          result = { ...message, stackMessage: true };
-        } else {
-          result = { ...message };
-        }
-
-        lastMessage = message;
-        return result;
-      });
+          return { ...message };
+        });
 
       return messagesFound;
     }
@@ -51,14 +49,16 @@ export const messageSlice = createSlice({
   reducers: {
     addMessage: (state, action) => {
       const messages = state.entities;
-      let newMessage = action.payload;
-      const lastMessage: any = messages[messages.length - 1];
+      const prev = messages[messages.length - 1];
+      const newMessage = action.payload;
+
       if (
-        lastMessage &&
-        lastMessage.sender._id === newMessage.sender._id &&
-        compareDates(lastMessage.createdAt, newMessage.createdAt)
+        prev &&
+        prev.sender === newMessage.sender &&
+        compareDates(prev.createdAt, newMessage.createdAt)
       ) {
-        newMessage = { ...newMessage, stackMessage: true };
+        state.entities.push({ ...newMessage, stackMessage: true });
+        return;
       }
 
       state.entities.push(newMessage);

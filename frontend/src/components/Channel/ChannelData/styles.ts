@@ -14,6 +14,7 @@ export const MessagesContainer = styled.section`
   max-height: calc(100vh - 46px - 72px);
   overflow-y: scroll;
   overflow-x: hidden;
+  padding-bottom: 10px;
   display: flex;
   flex-direction: column;
   ::-webkit-scrollbar {

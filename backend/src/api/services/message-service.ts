@@ -17,7 +17,7 @@ export class MessageService {
 
     const messages = await app.messages.paginate(
       { channelId },
-      { limit, page: selectedPage, sort: { _id: 'desc' }, populate: 'sender' }
+      { limit, page: selectedPage, sort: { _id: 'desc' } }
     );
 
     if (!messages.docs.length) {
@@ -25,7 +25,7 @@ export class MessageService {
     }
 
     const lastMessage = messages.docs[0];
-    if (lastMessage._id.toString() === channel.lastMessageId) {
+    if (lastMessage._id === channel.lastMessageId) {
       UserService.markAsRead(userId, lastMessage);
     }
 
@@ -35,19 +35,18 @@ export class MessageService {
   static async create(data: Message) {
     const { channelId, sender } = data;
 
-    const message = await (
-      await app.messages.create({
-        ...data,
-        _id: generateSnowflake()
-      })
-    ).populate('sender');
+    const message = await app.messages.create({
+      ...data,
+      _id: generateSnowflake()
+    });
+
     const channel = await app.channels.findById(channelId);
     const user = await app.users.findOne({ _id: sender });
 
     if (!channel || !user) throw new ApiError(500, ApiResponses.SOMETHING_WRONG);
 
-    user.lastReadMessageIds[channelId] = message._id.toString();
-    channel.lastMessageId = message._id.toString();
+    user.lastReadMessageIds[channelId] = message._id;
+    channel.lastMessageId = message._id;
     user.markModified('lastReadMessageIds');
     channel.markModified('lastMessageId');
     await channel.save();

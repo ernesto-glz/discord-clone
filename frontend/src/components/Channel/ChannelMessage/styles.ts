@@ -1,17 +1,30 @@
 import styled from 'styled-components';
-import { MessageProps } from '.';
 
 export const Container = styled.div`
   display: flex;
-  align-items: center;
-  padding: 4px 16px;
+  align-items: flex-start;
   margin-right: 4px;
   background-color: transparent;
+  /* height: auto; */
   & + div {
     margin-top: 13px;
   }
+  &.normal {
+    margin-top: 1.0625rem;
+    padding: 2px 16px;
+  }
   &.stackMessage {
-    margin-top: 0px;
+    margin-top: 1px;
+    align-items: center;
+    padding: 1px 16px;
+  }
+  &:hover {
+    background-color: var(--background-message-hover);
+  }
+  > .messageDate {
+    color: var(--gray);
+    font-size: 11px;
+    width: 40px;
   }
 `;
 
@@ -25,8 +38,7 @@ export const Avatar = styled.div`
   }
 `;
 
-export const Message = styled.div<MessageProps>`
-  min-height: ${(props) => (props.stackMessage ? '15px' : '40px')};
+export const Message = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -68,7 +80,11 @@ export const Header = styled.div`
 
 export const Content = styled.div`
   text-align: left;
-  font-size: 16px;
+  font-size: 1rem;
+  line-height: 1.375rem;
+  white-space: break-spaces;
+  word-wrap: break-word;
+  font-weight: 300;
   color: var(--text-normal);
 `;
 

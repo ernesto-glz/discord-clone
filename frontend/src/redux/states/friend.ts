@@ -1,4 +1,8 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import {
+  createSlice,
+  createAsyncThunk,
+  createSelector
+} from '@reduxjs/toolkit';
 import { getFriends } from 'src/api/friend';
 import { FriendUser } from 'src/models/user.model';
 import { RootState } from '../configure-store';
@@ -50,5 +54,16 @@ export const friendSlice = createSlice({
 
 export const selectFriends = (state: RootState) => state.friends.entities;
 export const isLoadingFriends = (state: RootState) => state.friends.loading;
+export const getFriend = (userId: string) => {
+  return createSelector(
+    (state: RootState) => state.friends.entities,
+    (friends) => friends.find((e) => e._id === userId) ?? {
+      avatar: 'unknown',
+      username: 'Unknown',
+      discriminator: '0000'
+    }
+  );
+};
+
 export const actions = friendSlice.actions;
 export default friendSlice.reducer;

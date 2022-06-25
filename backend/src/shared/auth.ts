@@ -16,7 +16,7 @@ export class Auth {
   }
 
   static createToken(user: UserDto, statusCode: number, res: Response) {
-    const payload = { _id: user._id.toString() };
+    const payload = { _id: user._id };
 
     if (!process.env.JWT_SECRET_KEY) {
       console.log(ApiErrors.NO_JWT_SECRET_KEY);

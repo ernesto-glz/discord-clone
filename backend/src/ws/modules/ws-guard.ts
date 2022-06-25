@@ -46,7 +46,7 @@ export const WSGuard = async (socket: SocketIo, next: SocketIoNext) => {
     socket.data.user = JSON.parse(JSON.stringify(user));
     socket.data.friends = friends ? JSON.parse(JSON.stringify(friends)) : [];
 
-    app.webSocket.sessions.set(socket.id, user._id.toString());
+    app.webSocket.sessions.set(socket.id, user._id);
     next();
   } catch (error) {
     if (error) {

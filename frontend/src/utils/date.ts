@@ -46,6 +46,11 @@ export const dateFormatted = (date: string) => {
   return actual.toDateString();
 };
 
+export const getTime = (date: string) => {
+  const actual = new Date(date);
+  return formatAMPM(actual);
+};
+
 export const compareDates = (date1: string, date2: string) => {
   const newDate1 = new Date(date1);
   const newDate2 = new Date(date2);
