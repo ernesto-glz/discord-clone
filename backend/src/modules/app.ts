@@ -1,7 +1,7 @@
-import { ChannelRepository } from 'repositories/channel.repository';
-import { FriendRepository } from 'repositories/friend.repository';
-import { MessageRepository } from 'repositories/message.repository';
-import { UserRepository } from 'repositories/user.repository';
+import { ChannelRepository } from 'repositories/channel-repository';
+import { FriendRepository } from 'repositories/friend-repository';
+import { MessageRepository } from 'repositories/message-repository';
+import { UserRepository } from 'repositories/user-repository';
 import { Server } from '../api/server';
 import { WebSocket } from '../ws/websocket';
 

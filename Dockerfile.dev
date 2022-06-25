@@ -1,4 +1,4 @@
-FROM node:16
+FROM node:16-alpine
 
 RUN mkdir -p /app
 WORKDIR /app
@@ -7,5 +7,6 @@ COPY . .
 
 EXPOSE 4000
 
-RUN cd ./backend && yarn install
+RUN cd ./backend
+
 CMD ["yarn", "backend:dev"]

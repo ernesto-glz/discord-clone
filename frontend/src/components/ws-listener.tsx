@@ -48,7 +48,7 @@ export const WSListeners: React.FC<Props> = ({ children }) => {
       const { _id: myId, hiddenDMChannels } = state().user;
       const channelInfo = state().channels.find((c) => c._id === id);
       if (
-        channelInfo!.type === 'DM_CHANNEL' &&
+        channelInfo!.type === 'DM' &&
         newMessage.sender._id !== myId
       ) {
         if (hiddenDMChannels!.includes(id)) {

@@ -1,34 +1,31 @@
 import { FriendStatus } from 'config/constants/status';
 import { ApiError } from 'api/errors/ApiError';
-import { CreateFriendRequest } from 'interfaces/Friend';
+import { CreateRequest } from 'interfaces/Friend';
 import { ApiResponses } from 'config/constants/api-responses';
 import { ChannelService } from './channel.service';
+import { generateSnowflake } from 'utils';
 
 export class FriendService {
-  static async createFriendRequest({ from, toUsername, toShortId }: CreateFriendRequest) {
+  static async createRequest({ from, username, discriminator }: CreateRequest) {
     const userFound = await app.users.findOne({
-      username: toUsername,
-      shortId: toShortId
+      discriminator,
+      username
     });
 
-    if (!userFound) {
-      throw new ApiError(400, ApiResponses.ERROR_CREATE_REQUEST);
-    }
-
-    if (userFound._id.toString() === from.toString()) {
-      throw new ApiError(400, ApiResponses.ERROR_CREATE_REQUEST);
-    }
+    if (!userFound) throw new ApiError(400, ApiResponses['ERROR_CREATE_REQUEST']);
+    else if (userFound._id.toString() === from.toString())
+      throw new ApiError(400, ApiResponses['ERROR_CREATE_REQUEST']);
 
     const alreadyRequest = await app.friends.checkExistence(from, userFound._id);
 
-    if (alreadyRequest) {
-      if (alreadyRequest.friend_status === FriendStatus.FRIEND) {
-        throw new ApiError(400, ApiResponses.ALREADY_FRIENDS);
-      }
-      throw new ApiError(400, ApiResponses.REQUEST_ALREADY_EXISTS);
+    if (alreadyRequest?.friend_status === FriendStatus['FRIEND']) {
+      throw new ApiError(400, ApiResponses['ALREADY_FRIENDS']);
+    } else if (alreadyRequest) {
+      throw new ApiError(400, ApiResponses['REQUEST_ALREADY_EXISTS']);
     }
 
     const created = await app.friends.create({
+      _id: generateSnowflake(),
       from,
       to: userFound._id
     });
@@ -50,7 +47,7 @@ export class FriendService {
       $or: [{ to: userId }, { from: userId }]
     });
 
-    if (!requestExists) throw new ApiError(400, ApiResponses.REQUEST_NOT_FOUND);
+    if (!requestExists) throw new ApiError(400, ApiResponses['REQUEST_NOT_FOUND']);
 
     return await app.friends.findByIdAndDelete(requestId);
   }
@@ -61,10 +58,10 @@ export class FriendService {
       to: userId
     });
 
-    if (!request) throw new ApiError(400, ApiResponses.REQUEST_NOT_FOUND);
+    if (!request) throw new ApiError(400, ApiResponses['REQUEST_NOT_FOUND']);
 
     const updated = await app.friends.acceptFriendRequest(requestId);
-    if (!updated) throw new ApiError(500, ApiResponses.SOMETHING_WRONG);
+    if (!updated) throw new ApiError(500, ApiResponses['SOMETHING_WRONG']);
 
     const result = await ChannelService.createDM({
       myId: request.from,

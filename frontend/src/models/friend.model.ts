@@ -1,8 +1,8 @@
 import { User } from './user.model';
 
 export interface CreateFriendRequest {
-  toUsername: string;
-  toShortId: string;
+  username: string;
+  discriminator: string;
 }
 
 export interface PendingRequest {

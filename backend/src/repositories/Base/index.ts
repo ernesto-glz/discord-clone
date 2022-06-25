@@ -84,4 +84,8 @@ export abstract class Repository<T> {
 
     return this.entityModel.findOne(entityFilterQuery).populate(populateItem);
   }
+
+  async countDocuments(entityFilterQuery: FilterQuery<T>) {
+    return this.entityModel.countDocuments(entityFilterQuery);
+  }
 }

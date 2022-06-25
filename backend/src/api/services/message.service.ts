@@ -2,9 +2,10 @@ import { ApiError } from 'api/errors/ApiError';
 import { Message } from 'interfaces/Message';
 import { ApiResponses } from 'config/constants/api-responses';
 import { UserService } from './user.service';
+import { generateSnowflake } from 'utils';
 
 export class MessageService {
-  static async getAllPaginated(channelId: string, userId: string, limit: number, selectedPage: number) {
+  static async getPaginated(channelId: string, userId: string, limit: number, selectedPage: number) {
     const channel = await app.channels.findOne({
       _id: channelId,
       $or: [{ sender: userId }, { receiver: userId }]
@@ -34,7 +35,12 @@ export class MessageService {
   static async create(data: Message) {
     const { channelId, sender } = data;
 
-    const message = await (await app.messages.create(data)).populate('sender');
+    const message = await (
+      await app.messages.create({
+        ...data,
+        _id: generateSnowflake()
+      })
+    ).populate('sender');
     const channel = await app.channels.findById(channelId);
     const user = await app.users.findOne({ _id: sender });
 

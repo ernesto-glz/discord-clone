@@ -14,5 +14,6 @@ export const ApiResponses = {
   REQUEST_ALREADY_EXISTS: 'Friend request already exists!',
   CHANNEL_NOT_FOUND: 'Channel not found',
   NO_FRIENDS: 'This user has no friends',
-  QS_EXTRA_INFO_REQUIRED: 'The query param extraInfo is required'
+  QS_EXTRA_INFO_REQUIRED: 'The query param extraInfo is required',
+  DISCRIM_OUT_OF_RANGE: 'Too many users have this username'
 };

@@ -5,7 +5,7 @@ export interface User {
   username: string;
   email: string;
   password: string;
-  shortId: string;
+  discriminator: string;
   status: 'ONLINE' | 'OFFLINE';
   guildIds: string[];
   hiddenDMChannels: string[];

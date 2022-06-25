@@ -1,9 +1,9 @@
 import { Document } from 'mongoose';
 
-export interface CreateFriendRequest {
+export interface CreateRequest {
   from: string;
-  toUsername: string;
-  toShortId: string;
+  username: string;
+  discriminator: string;
 }
 
 export interface FriendRequest {

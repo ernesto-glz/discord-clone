@@ -54,8 +54,8 @@ export const AddFriend: React.FC = () => {
     }
 
     const dataToSend = {
-      toUsername: splitted[0],
-      toShortId: splitted[1]
+      username: splitted[0],
+      discriminator: splitted[1]
     };
 
     try {

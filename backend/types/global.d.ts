@@ -1,4 +1,4 @@
-import { App } from '../src/modules/deps';
+import { App } from '../src/modules/app';
 
 declare global {
   // eslint-disable-next-line no-var

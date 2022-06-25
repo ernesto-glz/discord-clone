@@ -11,7 +11,7 @@ export interface UserState {
   _id: string | null;
   username: string | null;
   email: string | null;
-  shortId: string | null;
+  discriminator: string | null;
   avatar: string | null;
   guildIds: string[] | null;
   hiddenDMChannels?: string[] | null;
@@ -27,7 +27,7 @@ export const userEmptyState: UserState = {
   _id: null,
   username: null,
   email: null,
-  shortId: null,
+  discriminator: null,
   avatar: null,
   guildIds: [],
   hiddenDMChannels: [],

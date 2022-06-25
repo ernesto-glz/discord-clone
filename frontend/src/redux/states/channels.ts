@@ -12,7 +12,7 @@ export interface Channel {
   userIds: User[];
   dmUser?: User;
   lastMessageId?: string;
-  type: 'DM_CHANNEL' | 'GUILD_CHANNEL';
+  type: 'DM' | 'GUILD_TEXT' | 'GUILD_VOICE';
 }
 
 export interface DisplayChannel {
@@ -27,7 +27,7 @@ export const slice = createSlice({
       channels,
       { payload }: PayloadAction<{ channel: Channel; myId?: string }>
     ) => {
-      if (payload.channel.type !== 'DM_CHANNEL') {
+      if (payload.channel.type !== 'DM') {
         return channels.concat(payload.channel);
       }
       const { channel: c, myId } = payload;
@@ -56,7 +56,7 @@ export const fetchChannels = createAsyncThunk(
     if (!data?.length) return data;
 
     const withDMChannels = data.map((c: Channel) => {
-      if (c.type === 'DM_CHANNEL') {
+      if (c.type === 'DM') {
         const dmUser = c.userIds[0]._id === myId ? c.userIds[1] : c.userIds[0];
         return { ...c, name: dmUser.username, dmUser };
       }
@@ -76,7 +76,7 @@ export const displayChannel = createAsyncThunk(
 );
 
 export const selectDMChannels = (state: RootState) => {
-  return state.channels.filter((channel) => channel.type === 'DM_CHANNEL');
+  return state.channels.filter((channel) => channel.type === 'DM');
 };
 export const selectChannelName = (state: RootState) => {
   const foundChannel = state.channels.find(

@@ -15,7 +15,7 @@ export class ChannelRepository extends Repository<ChannelDocument> {
           { $and: [{ 'userIds.0': myId }, { 'userIds.1': userId }] },
           { $and: [{ 'userIds.0': userId }, { 'userIds.1': myId }] }
         ],
-        type: ChannelTypes.DM_CHANNEL
+        type: ChannelTypes.DM
       },
       'userIds'
     );

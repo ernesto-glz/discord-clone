@@ -28,10 +28,8 @@
     "http-status": "1.5.2",
     "jsonwebtoken": "8.5.1",
     "mongoose": "6.3.1",
-    "mongoose-paginate-v2": "^1.6.3",
-    "short-unique-id": "4.4.4",
-    "socket.io": "4.5.0",
-    "uuid": "^8.3.2"
+    "mongoose-paginate-v2": "1.6.3",
+    "socket.io": "4.5.0"
   },
   "devDependencies": {
     "@types/bcrypt": "5.0.0",
@@ -41,7 +39,6 @@
     "@types/jsonwebtoken": "8.5.8",
     "@types/node": "^18.0.0",
     "@types/supertest": "2.0.12",
-    "@types/uuid": "8.3.4",
     "@typescript-eslint/eslint-plugin": "5.22.0",
     "@typescript-eslint/parser": "5.22.0",
     "eslint": "8.14.0",

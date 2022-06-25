@@ -32,7 +32,7 @@ const UserInfo: React.FC = () => {
         />
         <UserData>
           <strong>{user.username}</strong>
-          <span>#{user.shortId}</span>
+          <span>#{user.discriminator}</span>
         </UserData>
       </Profile>
 

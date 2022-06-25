@@ -9,6 +9,7 @@ export const UserStatus = {
 };
 
 export const ChannelTypes = {
-  DM_CHANNEL: 'DM_CHANNEL',
-  GUILD_CHANNEL: 'GUILD_CHANNEL'
+  DM: 'DM',
+  GUILD_TEXT: 'GUILD_TEXT',
+  GUILD_VOICE: 'GUILD_VOICE'
 };

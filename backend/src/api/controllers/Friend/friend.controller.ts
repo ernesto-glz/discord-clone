@@ -4,13 +4,13 @@ import { Request, Response } from 'express';
 import { FriendService } from 'api/services/friend.service';
 
 export class FriendController {
-  static async createFriendRequest(req: Request, res: Response) {
-    const { toUsername, toShortId } = req.body;
+  static async createRequest(req: Request, res: Response) {
+    const { username, discriminator } = req.body;
     const { user } = res.locals;
-    const friendRequest = await FriendService.createFriendRequest({
+    const friendRequest = await FriendService.createRequest({
       from: user._id,
-      toUsername,
-      toShortId
+      discriminator,
+      username
     });
     res.status(201).send(friendRequest);
   }

@@ -59,7 +59,7 @@ export class WebSocket {
 
   public to(...rooms: string[]) {
     return this.io.to(rooms) as {
-      emit: <K extends keyof WS.Events>(name: K, args: WS.Events[K]) => any;
+      emit: <T extends keyof WS.Events>(name: T, args: WS.Events[T]) => any;
     };
   }
 }

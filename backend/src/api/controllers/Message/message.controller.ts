@@ -11,12 +11,7 @@ export class MessageController {
     const perPage = limit ? parseInt(limit.toString(), 10) : 30;
     const selectedPage = page ? parseInt(page.toString()) : 1;
 
-    const messages = await MessageService.getAllPaginated(
-      channelId,
-      user._id,
-      perPage,
-      selectedPage
-    );
+    const messages = await MessageService.getPaginated(channelId, user._id, perPage, selectedPage);
     res.status(200).send(messages);
   }
 

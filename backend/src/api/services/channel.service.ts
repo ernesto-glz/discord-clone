@@ -1,21 +1,22 @@
 import { ApiError } from 'api/errors/ApiError';
 import { CreateDMChannel } from 'interfaces/Channel';
 import { ApiResponses } from 'config/constants/api-responses';
-import { v4 } from 'uuid';
 import { ChannelTypes } from 'config/constants/status';
+import { generateSnowflake } from 'utils';
 
 export class ChannelService {
   static async createDM({ myId, userId }: CreateDMChannel) {
-    const guildId = v4();
+    const guildId = generateSnowflake();
 
     const channel = await app.channels.checkIfExistsDM(myId, userId);
     if (channel) return { channel, alreadyExists: true };
 
     const created = await app.channels.create({
+      _id: generateSnowflake(),
       guildId,
       userIds: [myId, userId],
       createdBy: myId,
-      type: ChannelTypes.DM_CHANNEL
+      type: ChannelTypes.DM
     });
 
     const fetched = await app.channels.findOneAndPopulate(

@@ -16,8 +16,7 @@ export class UserService {
   };
 
   public static setInHiddenDMS = async (userId: string, channelId: string) => {
-    const result = await app.users.updateOne({ _id: userId }, { $push: { hiddenDMChannels: channelId } });
-    return result;
+    return await app.users.updateOne({ _id: userId }, { $push: { hiddenDMChannels: channelId } });
   };
 
   public static markAsRead = async (userId: string, message: Message) => {
