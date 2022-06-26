@@ -25,7 +25,7 @@ const UserInfo: React.FC = () => {
     <Container>
       <Profile>
         <UserImage
-          imageUrl={`/assets/avatars/${user.avatar || '1'}.png`}
+          imageUrl={`${process.env.REACT_APP_API_ROOT}/assets/avatars/${user.avatar}.png`}
           isGeneric={false}
           displayStatus={true}
           isOnline={true}

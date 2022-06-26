@@ -30,7 +30,7 @@ export const UserData = styled.div`
   > strong {
     font-size: 16px;
     color: var(--header-primary);
-    font-weight: 600;
+    font-weight: 300;
     overflow: hidden;
     text-overflow: ellipsis;
     display: block;

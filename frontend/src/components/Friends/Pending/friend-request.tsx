@@ -28,13 +28,15 @@ export const RequestItem: React.FC<Props> = ({ request, type }) => {
         <div>
           <Profile>
             <UserImage
-              imageUrl={`/assets/avatars/${requestUser.avatar}.png`}
+              imageUrl={`${process.env.REACT_APP_API_ROOT}/assets/avatars/${requestUser.avatar}.png`}
               isGeneric={false}
             />
             <UserData>
               <strong>
                 {requestUser.username}
-                <span>{showDiscriminator && `#${requestUser.discriminator}`}</span>
+                <span>
+                  {showDiscriminator && `#${requestUser.discriminator}`}
+                </span>
               </strong>
               <span>
                 {type === 'Outgoing'

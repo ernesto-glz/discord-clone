@@ -5,10 +5,12 @@ export default createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    text-rendering: optimizeLegibility;
   }
   html, body, #root {
     height: 100%;
     background-color: var(--background-primary);
+    text-rendering: optimizeLegibility;
   }
   *, button, input {
     border: 0;

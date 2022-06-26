@@ -6,6 +6,7 @@ import v1 from './routes/v1/index-routes';
 import mongoSanitize from 'express-mongo-sanitize';
 import { apiErrorHandler } from './middleware/ApiErrorHandler';
 import { ApiError } from './errors/ApiError';
+import { join } from 'path';
 
 export class Server {
   private readonly express: express.Express;
@@ -23,6 +24,7 @@ export class Server {
     this.express.use(helmet.frameguard({ action: 'deny' }));
     this.express.use(mongoSanitize());
     this.express.use('/v1', v1);
+    this.express.use('/assets', express.static(join(__dirname, '../assets')));
     this.express.use('/', () => {
       throw new ApiError(400, 'Invalid API version number');
     });

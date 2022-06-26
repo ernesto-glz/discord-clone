@@ -50,7 +50,7 @@ const ChannelMessage: React.FC<Props> = ({ message }) => {
         className="normal"
       >
         <UserImage
-          imageUrl={`/assets/avatars/${author.avatar}.png`}
+          imageUrl={`${process.env.REACT_APP_API_ROOT}/assets/avatars/${author.avatar}.png`}
           isGeneric={false}
           customSize={40}
         />

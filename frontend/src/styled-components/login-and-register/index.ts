@@ -83,7 +83,6 @@ export const ErrorMessage = styled.span`
   font-weight: 500;
   font-style: italic;
   text-transform: none;
-  font-weight: bold;
   margin-left: 4px;
 `;
 

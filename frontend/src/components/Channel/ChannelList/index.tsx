@@ -42,7 +42,9 @@ const ChannelList: React.FC = () => {
                 selected={activeChannel}
                 friendId={c.dmUser!._id}
                 channelName={c.name}
-                imageUrl={`/assets/avatars/${c.dmUser!.avatar}.png`}
+                imageUrl={`${process.env.REACT_APP_API_ROOT}/assets/avatars/${
+                  c.dmUser!.avatar
+                }.png`}
               />
             );
           }

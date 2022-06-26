@@ -5,16 +5,16 @@ export const Container = styled.div`
   align-items: flex-start;
   margin-right: 4px;
   background-color: transparent;
-  /* height: auto; */
   & + div {
     margin-top: 13px;
   }
   &.normal {
     margin-top: 1.0625rem;
     padding: 2px 16px;
+    margin-bottom: 1px;
   }
   &.stackMessage {
-    margin-top: 1px;
+    margin-bottom: 3px;
     align-items: center;
     padding: 1px 16px;
   }
@@ -58,7 +58,8 @@ export const Header = styled.div`
   display: flex;
   align-items: center;
   > strong {
-    color: var(--white);
+    color: #FFFFFF;
+    font-weight: 600;
     font-size: 16px;
   }
   > span {

@@ -32,7 +32,7 @@ export const FriendItem: React.FC<Props> = ({ friend }) => {
               isGeneric={false}
               displayStatus={true}
               isOnline={friendStatus}
-              imageUrl={`/assets/avatars/${friend.avatar}.png`}
+              imageUrl={`${process.env.REACT_APP_API_ROOT}/assets/avatars/${friend.avatar}.png`}
             />
             <UserData>
               <strong>

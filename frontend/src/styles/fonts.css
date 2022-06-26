@@ -1,9 +1,13 @@
 @font-face {
-  font-family: Whitney;
-  src: url(/public/fonts/whitneybook.otf);
+  font-family: 'Whitney';
+  font-style: normal;
+  font-weight: bold;
+  src: url(/public/fonts/Whitney-Semibold.ttf);
 }
 
 @font-face {
-  font-family: Whitney;
-  src: url(/public/fonts/whitneymedium.otf);
+  font-family: 'Whitney';
+  font-style: normal;
+  font-weight: normal;
+  src: url(/public/fonts/Whitney-Medium.woff);
 }

@@ -43,7 +43,7 @@ export const UserImage: React.FC<Props> = ({
   return (
     <AvatarImageContainer>
       <AvatarImage
-        src={`${imageUrl || '/assets/discord-blue-icon.png'} `}
+        src={imageUrl}
         alt="avatar"
         aria-hidden="true"
         customSize={customSize}
