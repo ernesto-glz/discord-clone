@@ -17,6 +17,51 @@ export default createGlobalStyle`
     outline: 0;
     font-family: 'Whitney';
   }
+  a {
+    color: var(--text-link);
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  pre {
+    box-sizing: border-box;
+    max-width: 90%;
+    border-radius: 4px;
+    padding: 0;
+    font-family:  var(--font-family-code);
+    font-size: 0.75rem;
+    line-height: 1rem;
+    margin-top: 10px;
+  }
+  code {
+    padding: 0.2em;
+    margin: -0.2em 0;
+    border-radius: 3px;
+    font-size: 85%;
+    font-family: var(--font-family-code);
+    text-indent: 0;
+    border: none;
+    white-space: pre-wrap;
+    background: var(--secondary);
+    color: var(--text-normal);
+  }
+  pre > code {
+    font-size: 0.875rem;
+    line-height: 1.125rem;
+    text-indent: 0;
+    width: 100%;
+    white-space: pre-wrap;
+    scrollbar-width: thin;
+    scrollbar-color: var(--background-tertiary) var(--background-secondary);
+    background: var(--secondary);
+    border: 1px solid var(--background-tertiary);
+    display: block;
+    overflow-x: auto;
+    padding: 0.5em;
+    border-radius: 4px;
+    color: var(--header-secondary);
+  }
   .App {
     background-color: var(--background-primary);
     min-height: 100vh;
@@ -56,7 +101,7 @@ export default createGlobalStyle`
     --background-inactive: #72767c;
     --background-primary: #36393f;
     --background-mobile-primary: #36393f;
-    --text-normal: #dcddde;
+    --text-normal: #DCDDDE;
     --input-background: #202225;
     --brand-experiment: hsl(
       235,
@@ -81,5 +126,7 @@ export default createGlobalStyle`
     --background-floating: #18191c;
     --elevation-high: 0 8px 16px rgba(0,0,0,0.24);
     --interactive-normal: #b9bbbe;
+
+    --font-family-code: Consolas,Andale Mono WT,Andale Mono, Monaco,Courier New,Courier,monospace;
   }
 `;

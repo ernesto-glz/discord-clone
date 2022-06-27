@@ -50,4 +50,5 @@ export const StatusOffline = styled.div`
 
 export const AvatarImageContainer = styled.div`
   position: relative;
+  cursor: pointer;
 `;

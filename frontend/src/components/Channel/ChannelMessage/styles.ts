@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { ContentProps } from '.';
 
 export const Container = styled.div`
   display: flex;
@@ -16,7 +17,7 @@ export const Container = styled.div`
   &.stackMessage {
     margin-bottom: 3px;
     align-items: center;
-    padding: 1px 16px;
+    padding: 2px 0px;
   }
   &:hover {
     background-color: var(--background-message-hover);
@@ -24,7 +25,8 @@ export const Container = styled.div`
   > .messageDate {
     color: var(--gray);
     font-size: 11px;
-    width: 40px;
+    width: 56px;
+    padding-left: 12px;
   }
 `;
 
@@ -58,7 +60,7 @@ export const Header = styled.div`
   display: flex;
   align-items: center;
   > strong {
-    color: #FFFFFF;
+    color: #ffffff;
     font-weight: 600;
     font-size: 16px;
   }
@@ -79,7 +81,7 @@ export const Header = styled.div`
   }
 `;
 
-export const Content = styled.div`
+export const Content = styled.div<ContentProps>`
   text-align: left;
   font-size: 1rem;
   line-height: 1.375rem;
@@ -87,6 +89,7 @@ export const Content = styled.div`
   word-wrap: break-word;
   font-weight: 300;
   color: var(--text-normal);
+  margin-top: ${(props) => `${props.mt}px` ?? '0px'};
 `;
 
 export const Mention = styled.span`

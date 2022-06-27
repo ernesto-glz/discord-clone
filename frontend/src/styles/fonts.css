@@ -11,3 +11,10 @@
   font-weight: normal;
   src: url(/public/fonts/Whitney-Medium.woff);
 }
+
+@font-face {
+  font-family: 'Whitney';
+  font-style: italic;
+  font-weight: normal;
+  src: url(/public/fonts/Whitney-Italic.woff);
+}
