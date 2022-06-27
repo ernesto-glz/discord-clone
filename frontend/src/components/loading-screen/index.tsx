@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo } from 'react';
 import { ws } from 'src/ws/websocket';
 import { useAppSelector } from 'src/redux/hooks';
-import { DiscordTips } from 'src/utils/discord-tips';
 import { Container, LoadingSpinner } from './styles';
+import { DiscordTips } from 'src/config/constants';
 
 export const LoadingScreen: React.FC = () => {
   const isLoggedIn = useAppSelector((s) => s.user.username);
