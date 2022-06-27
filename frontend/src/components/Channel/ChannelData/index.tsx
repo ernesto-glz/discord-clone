@@ -1,36 +1,22 @@
-import React, { useEffect, FormEvent } from 'react';
+import React, { useEffect } from 'react';
 import { LoaderContainer } from 'src/components/Friends/styles';
 import { DiscordLoadingDots } from 'src/components/LoadingSpinner';
-import useFetchAndLoad from 'src/hooks/useFetchAndLoad';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import { selectActiveChannel } from 'src/redux/states/ui';
-import { MessageService } from 'src/services/message.service';
-import { dateFormatted } from 'src/utils/date';
-import { useChatInputValue } from 'src/hooks/useChatInputValue';
 import ChannelMessage from '../ChannelMessage';
 import {
   fetchMessages,
   isLoadingMessages,
   selectMessages
 } from 'src/redux/states/messages';
-import {
-  Container,
-  Messages,
-  InputContainer,
-  InputWrapper,
-  Input,
-  InputIcon,
-  MessagesContainer
-} from './styles';
+import { Container, Messages, MessagesContainer } from './styles';
 import { selectChannelName } from 'src/redux/states/channels';
-import { ws } from 'src/ws/websocket';
+import { MessageInput } from '../channel-input';
 
 const ChannelData: React.FC = () => {
-  const { value: currentMessage, onChange, setValue } = useChatInputValue('');
   const messages = useAppSelector(selectMessages);
   const isLoading = useAppSelector(isLoadingMessages);
   const dispatch = useAppDispatch();
-  const { callEndpoint } = useFetchAndLoad();
   const activeChannel = useAppSelector(selectActiveChannel);
   const channelName = useAppSelector(selectChannelName);
   let messagesEnd: any;
@@ -47,21 +33,6 @@ const ChannelData: React.FC = () => {
     };
     scrollToBottom();
   }, [messagesEnd, messages, activeChannel]);
-
-  const handleSendMessage = async (e: FormEvent) => {
-    e.preventDefault();
-    const messageData = {
-      channelId: activeChannel,
-      content: currentMessage
-    };
-
-    const { data } = await callEndpoint(
-      MessageService.createMessage(messageData)
-    );
-
-    ws.emit('MESSAGE_CREATE', data);
-    setValue('');
-  };
 
   return (
     <Container>
@@ -80,20 +51,10 @@ const ChannelData: React.FC = () => {
           <div className="lastMessage" ref={(el) => (messagesEnd = el)} />
         </LoaderContainer>
       )}
-
-      <form onSubmit={handleSendMessage}>
-        <InputContainer>
-          <InputWrapper>
-            <Input
-              value={currentMessage}
-              onChange={onChange}
-              type="text"
-              placeholder={`Message @${channelName || 'Undetermined'}`}
-            />
-            <InputIcon />
-          </InputWrapper>
-        </InputContainer>
-      </form>
+      <MessageInput
+        activeChannel={activeChannel}
+        placeholder={`Message @${channelName}`}
+      />
     </Container>
   );
 };
