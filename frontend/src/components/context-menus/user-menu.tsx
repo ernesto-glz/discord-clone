@@ -1,6 +1,6 @@
 import React from 'react';
-import { IdImage } from '../Images';
 import { FriendUser, User } from 'src/models/user.model';
+import { CopyIdImage } from '../Images/tiny-icons/copy-id-image';
 import { CtxBody, CtxItem, MessageLink, MyCtxMenu, Separator } from './styles';
 
 interface Props {
@@ -30,7 +30,7 @@ const UserMenu: React.FC<Props> = ({ user }) => {
           {/* @ts-expect-error */}
           <CtxItem key={user._id} onClick={() => copyInClipboard(user._id)}>
             <p className="childLeft">Copy ID</p>
-            <IdImage className="childRight" />
+            <CopyIdImage className="childRight" />
           </CtxItem>
         </div>
       </CtxBody>

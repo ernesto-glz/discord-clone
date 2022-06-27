@@ -1,8 +1,8 @@
 import React from 'react';
-import { Pages } from 'src/pages/Channels/Me';
-import { AddFriend } from './AddFriend';
+import { Pages } from 'src/pages/channels/me';
+import { AddFriend } from './add-friend';
 import { MyFriends } from './friends';
-import { PendingRequests } from './Pending';
+import { PendingRequests } from './friend-request';
 
 interface Props {
   page: Pages;

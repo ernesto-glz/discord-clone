@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Close, Check } from '@styled-icons/material';
 import { Message } from '@styled-icons/boxicons-solid';
 import { DotsVerticalRounded } from '@styled-icons/boxicons-regular';
-import { AddInputProps } from './AddFriend';
+import { AddInputProps } from './add-friend';
 
 export const Container = styled.div`
   grid-area: CD;

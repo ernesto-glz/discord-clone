@@ -1,12 +1,11 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { ProtectedRoute } from './components/ProtectedRoute';
-import { Login } from './pages/Login';
-import { Register } from './pages/Register';
-import { Layout } from './components/Layout';
+import { PrivateRoute } from './components/private-route';
+import { Login } from './pages/login';
+import { Register } from './pages/register';
 import { WSListeners } from './components/ws-listener';
-import { Me } from './pages/Channels/Me';
-import './styles/fonts.css';
-import './styles/animations.css';
+import { Me } from './pages/channels/me';
+import './styles/dots-loading-animation.css';
+import './styles/whitney-fonts.css';
 
 function App() {
   return (
@@ -17,11 +16,9 @@ function App() {
             <Route path="/" element={<Navigate to="/channels/@me" />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route element={<ProtectedRoute />}>
-              <Route element={<Layout />}>
-                <Route path="/channels/@me" element={<Me />} />
-                <Route path="/channels/:guildId/:channelId" element={<Me />} />
-              </Route>
+            <Route element={<PrivateRoute />}>
+              <Route path="/channels/@me" element={<Me />} />
+              <Route path="/channels/:guildId/:channelId" element={<Me />} />
             </Route>
             <Route path="*" element={<h1>404 - Not Found</h1>} />
           </Routes>

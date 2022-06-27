@@ -1,5 +1,5 @@
-import { InputTitleProps } from 'src/pages/Login';
-import { GeneralFormProps } from 'src/pages/Register';
+import { InputTitleProps } from 'src/pages/login';
+import { GeneralFormProps } from 'src/pages/register';
 import styled from 'styled-components';
 
 export const GeneralContainer = styled.div`

@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { FriendItem } from './FriendListItem';
+import { FriendItem } from './friend-list-item';
 import { useAppSelector } from 'src/redux/hooks';
 import { selectFriends } from 'src/redux/states/friend';
 import {
@@ -53,14 +53,14 @@ export const MyFriends: React.FC<Props> = (props) => {
     <React.Fragment>
       {props.justOnline ? (
         <Container>
-          <WampusImage src="/assets/wampus_sleeping.svg" alt="noOnline" />
+          <WampusImage src="/assets/wampus/wampus_sleeping.svg" alt="noOnline" />
           <WampusMessage>
             No one&apos;s around to play with Wumpus.
           </WampusMessage>
         </Container>
       ) : (
         <Container>
-          <WampusImage src="/assets/wampus_king.svg" alt="noOnline" />
+          <WampusImage src="/assets/wampus/wampus_king.svg" alt="noOnline" />
           <WampusMessage>No friends, only Wampus.</WampusMessage>
         </Container>
       )}

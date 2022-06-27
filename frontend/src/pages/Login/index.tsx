@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import React, { useEffect } from 'react';
 import { Button } from 'src/styled-components/button.styled';
 import { getJwt } from 'src/utils/user';
-import { AuthInput } from 'src/components/Auth/Input';
-import { QRCode } from 'src/components/Auth/QR';
+import { AuthInput } from 'src/components/auth/input';
+import { QRCode } from 'src/components/auth/qr-code';
 import {
   GeneralContainer,
   ForgotButton,

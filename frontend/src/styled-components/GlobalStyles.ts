@@ -126,7 +126,6 @@ export default createGlobalStyle`
     --background-floating: #18191c;
     --elevation-high: 0 8px 16px rgba(0,0,0,0.24);
     --interactive-normal: #b9bbbe;
-
     --font-family-code: Consolas,Andale Mono WT,Andale Mono, Monaco,Courier New,Courier,monospace;
   }
 `;

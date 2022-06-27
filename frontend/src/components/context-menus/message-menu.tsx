@@ -1,8 +1,8 @@
 import React from 'react';
 import { Message } from 'src/models/message.model';
 import { useAppSelector } from 'src/redux/hooks';
+import { CopyIdImage } from '../Images/tiny-icons/copy-id-image';
 import { CtxBody, CtxItem, MessageLink, MyCtxMenu, Separator } from './styles';
-import { IdImage } from '../Images';
 
 interface Props {
   message: Message;
@@ -36,7 +36,7 @@ const MessageMenu: React.FC<Props> = ({ message }) => {
             onClick={() => copyInClipboard(message._id)}
           >
             <p className="childLeft">Copy ID</p>
-            <IdImage className="childRight" />
+            <CopyIdImage className="childRight" />
           </CtxItem>
         </div>
       </CtxBody>

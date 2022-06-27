@@ -79,9 +79,6 @@ export const messageSlice = createSlice({
   }
 });
 
-export const selectMessages = (state: RootState) => {
-  return state.messages.entities;
-};
 export const isLoadingMessages = (state: RootState) => {
   return state.messages.loading;
 };

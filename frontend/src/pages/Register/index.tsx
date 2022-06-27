@@ -13,7 +13,7 @@ import { useInputValue } from 'src/hooks/useInputValue';
 import useRegister from 'src/hooks/useRegister';
 import { Button } from 'src/styled-components/button.styled';
 import { getJwt } from 'src/utils/user';
-import { AuthInput } from 'src/components/Auth/Input';
+import { AuthInput } from 'src/components/auth/input';
 
 export interface GeneralFormProps {
   isRegisterPage: boolean;

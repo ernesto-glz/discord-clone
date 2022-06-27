@@ -1,8 +1,8 @@
 type Sound = 'STARTUP_JAPANESE' | 'NEW_MESSAGE';
 
 const urls = {
-  NEW_MESSAGE: '/songs/message_notification.mp3',
-  STARTUP_JAPANESE: '/songs/startup_japanese.mp3'
+  NEW_MESSAGE: '/assets/songs/message_notification.mp3',
+  STARTUP_JAPANESE: '/assets/songs/startup_japanese.mp3'
 };
 
 export const playSound = (sound: Sound) => {

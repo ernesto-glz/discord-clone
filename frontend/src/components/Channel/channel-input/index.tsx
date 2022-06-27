@@ -7,7 +7,7 @@ import {
   InputWrapper,
   Input,
   InputIcon
-} from '../ChannelData/styles';
+} from '../channel-data/styles';
 import striptags from 'striptags';
 import { ws } from 'src/ws/websocket';
 
