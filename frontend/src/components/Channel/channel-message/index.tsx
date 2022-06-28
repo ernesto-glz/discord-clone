@@ -34,7 +34,7 @@ const ChannelMessage: React.FC<Props> = ({ message }) => {
   if (message.stackMessage) {
     return (
       // @ts-expect-error
-      <ContextMenuTrigger id={message._id}>
+      <ContextMenuTrigger holdToDisplay={-1} id={message._id}>
         <Container
           onMouseOver={() => setFocused(true)}
           onMouseLeave={() => setFocused(false)}
@@ -57,14 +57,14 @@ const ChannelMessage: React.FC<Props> = ({ message }) => {
 
   return (
     // @ts-expect-error
-    <ContextMenuTrigger id={message._id}>
+    <ContextMenuTrigger holdToDisplay={-1} id={message._id}>
       <Container
         onMouseOver={() => setFocused(true)}
         onMouseLeave={() => setFocused(false)}
         className="normal"
       >
         {/*  @ts-expect-error */}
-        <ContextMenuTrigger id={(author as FriendUser)._id}>
+        <ContextMenuTrigger holdToDisplay={-1} id={(author as FriendUser)._id}>
           <UserImage
             imageUrl={`${process.env.REACT_APP_API_ROOT}/assets/avatars/${author.avatar}.png`}
             isGeneric={false}
