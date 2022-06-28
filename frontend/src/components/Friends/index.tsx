@@ -1,27 +1,24 @@
 import React from 'react';
-import { Pages } from 'src/pages/channels/me';
 import { AddFriend } from './add-friend';
 import { MyFriends } from './friends';
 import { PendingRequests } from './friend-request';
+import { Pages } from 'src/pages/guild-page';
 
 interface Props {
   page: Pages;
 }
 
 const FriendsPage: React.FC<Props> = ({ page }) => {
-  if (page === 'ONLINE') {
-    return <MyFriends justOnline />;
+  switch (page) {
+    case 'ONLINE':
+      return <MyFriends justOnline />;
+    case 'ALL':
+      return <MyFriends />;
+    case 'PENDING':
+      return <PendingRequests />;
+    default:
+      return <AddFriend />;
   }
-
-  if (page === 'ALL') {
-    return <MyFriends />;
-  }
-
-  if (page === 'PENDING') {
-    return <PendingRequests />;
-  }
-
-  return <AddFriend />;
 };
 
 export default FriendsPage;

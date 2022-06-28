@@ -51,9 +51,9 @@ export const getTime = (date: string) => {
   return formatAMPM(actual);
 };
 
-export const compareDates = (date1: string, date2: string) => {
-  const newDate1 = new Date(date1);
-  const newDate2 = new Date(date2);
+export const compareDates = (prevDate: string, newDate: string) => {
+  const newDate1 = new Date(prevDate);
+  const newDate2 = new Date(newDate);
   return (
     `${newDate1.getDay()} ${newDate1.getHours()} ${newDate1.getMinutes()}` ===
     `${newDate2.getDay()} ${newDate2.getHours()} ${newDate2.getMinutes()}`

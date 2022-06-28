@@ -16,21 +16,18 @@ const PageWrapper: React.FC<PageWrapperProps> = (props) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    document.title = props.pageTitle ?? 'Discord Clone';
     dispatch(
       pageSwitched({ channel: channelId ?? '', guild: guildId ?? '@me' })
     );
   }, [channelId, guildId]);
-
-  useEffect(() => {
-    document.title = props.pageTitle ?? 'Discord Clone';
-  }, []);
 
   return (
     <React.Fragment>
       <AppGridContainer channelId={channelId ?? ''}>
         <ServerList />
         <UserInfo />
-        <Outlet />
+        {props.children}
       </AppGridContainer>
     </React.Fragment>
   );

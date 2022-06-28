@@ -1,10 +1,5 @@
-import React from 'react';
 import { io } from 'socket.io-client';
 import { getJwt } from 'src/utils/user';
-
-interface Props {
-  children: React.ReactNode;
-}
 
 const token = getJwt();
 export const ws = io(

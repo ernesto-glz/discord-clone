@@ -24,16 +24,14 @@ export const fetchMessages = createAsyncThunk(
         .reverse()
         .map((message: Message, index: number) => {
           const prev = data.docs[index - 1];
+          const { sender } = message;
 
-          if (
-            prev &&
-            prev.sender === message.sender &&
-            compareDates(prev.createdAt, message.createdAt)
-          ) {
-            return { ...message, stackMessage: true };
-          }
+          if (!prev || prev.sender !== sender) return { ...message };
 
-          return { ...message };
+          return {
+            ...message,
+            stackMessage: compareDates(prev.createdAt, message.createdAt)
+          };
         });
 
       return messagesFound;
@@ -47,21 +45,20 @@ export const messageSlice = createSlice({
   name: 'messages',
   initialState,
   reducers: {
-    addMessage: (state, action) => {
-      const messages = state.entities;
-      const prev = messages[messages.length - 1];
-      const newMessage = action.payload;
+    addMessage: (state, { payload }) => {
+      const message = payload;
+      const prev = state.entities[state.entities.length - 1];
+      const { sender } = message;
 
-      if (
-        prev &&
-        prev.sender === newMessage.sender &&
-        compareDates(prev.createdAt, newMessage.createdAt)
-      ) {
-        state.entities.push({ ...newMessage, stackMessage: true });
+      if (!prev || prev.sender !== sender) {
+        state.entities.push({ ...message });
         return;
       }
 
-      state.entities.push(newMessage);
+      state.entities.push({
+        ...message,
+        stackMessage: compareDates(prev.createdAt, message.createdAt)
+      });
     }
   },
   extraReducers: (builder) => {

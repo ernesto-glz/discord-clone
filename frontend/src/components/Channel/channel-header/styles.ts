@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { FileTray, HelpCircle } from '@styled-icons/ionicons-solid';
 import { Hashtag } from '@styled-icons/heroicons-outline';
 import { AlternateEmail } from '@styled-icons/material';
-import { AddFriendProps, MenuButtonProps } from '.';
+import { AddFriendProps, MenuButtonProps } from '../../friends/friend-header';
 
 export const Container = styled.div`
   grid-area: CI;
@@ -14,6 +14,7 @@ export const Container = styled.div`
   div.channel-info {
     flex: 1;
     display: flex;
+    align-items: center;
     align-items: center;
   }
   div.actions {
@@ -33,7 +34,7 @@ export const Title = styled.h1`
   font-size: 16px;
   font-weight: bold;
   color: var(--white);
-  letter-spacing: .02em;
+  letter-spacing: 0.02em;
 `;
 
 export const Separator = styled.div`
@@ -97,6 +98,11 @@ export const AddFriendBtn = styled.button<AddFriendProps>`
   font-size: 16px;
   line-height: 20px;
   cursor: pointer;
+
+  &:hover {
+    ${(props) =>
+      props.active && 'background-color: var(--background-modifier-hover)'}
+  }
 `;
 
 export const MenuButton = styled.button<MenuButtonProps>`

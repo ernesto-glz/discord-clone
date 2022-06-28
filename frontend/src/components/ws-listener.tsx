@@ -47,10 +47,7 @@ export const WSListeners: React.FC<Props> = ({ children }) => {
       const { activeChannel } = state().ui;
       const { _id: myId, hiddenDMChannels } = state().user;
       const channelInfo = state().channels.find((c) => c._id === id);
-      if (
-        channelInfo!.type === 'DM' &&
-        newMessage.sender._id !== myId
-      ) {
+      if (channelInfo!.type === 'DM' && newMessage.sender !== myId) {
         if (hiddenDMChannels!.includes(id)) {
           const filtered = hiddenDMChannels!.filter((cId) => cId !== id);
           dispatch(selfUser.updated({ hiddenDMChannels: filtered }));

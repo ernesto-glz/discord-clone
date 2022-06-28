@@ -3,7 +3,7 @@ import { PrivateRoute } from './components/private-route';
 import { Login } from './pages/login';
 import { Register } from './pages/register';
 import { WSListeners } from './components/ws-listener';
-import { Me } from './pages/channels/me';
+import { GuildPage } from './pages/guild-page';
 import './styles/dots-loading-animation.css';
 import './styles/whitney-fonts.css';
 
@@ -17,8 +17,8 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route element={<PrivateRoute />}>
-              <Route path="/channels/@me" element={<Me />} />
-              <Route path="/channels/:guildId/:channelId" element={<Me />} />
+              <Route path="/channels/:guildId" element={<GuildPage />} />
+              <Route path="/channels/:guildId/:channelId" element={<GuildPage />} />
             </Route>
             <Route path="*" element={<h1>404 - Not Found</h1>} />
           </Routes>

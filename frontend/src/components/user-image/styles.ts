@@ -20,7 +20,7 @@ export const UserStatus = styled.div<UserStatusProps>`
   border-radius: 50%;
   position: absolute;
   display: flex;
-  bottom: -0.5px;
+  bottom: -4px;
   right: -1px;
   width: 16px;
   height: 16px;
