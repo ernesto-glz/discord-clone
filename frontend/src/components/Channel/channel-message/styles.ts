@@ -27,6 +27,7 @@ export const Container = styled.div`
     font-size: 11px;
     width: 56px;
     padding-left: 12px;
+    white-space: nowrap;
   }
 `;
 

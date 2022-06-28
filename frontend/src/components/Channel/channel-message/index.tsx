@@ -4,12 +4,12 @@ import { ContextMenuTrigger } from 'react-contextmenu';
 import { Message as IMessage } from 'src/models/message.model';
 import { dateFormatted, getTime } from 'src/utils/date';
 import MessageMenu from 'src/components/context-menus/message-menu';
-import { Container, Message, Header, Content } from './styles';
 import { useAppSelector } from 'src/redux/hooks';
 import { getFriend } from 'src/redux/states/friend';
 import { FriendUser } from 'src/models/user.model';
 import UserMenu from 'src/components/context-menus/user-menu';
 import { FormatService } from 'src/services/format-service';
+import { Container, Message, Header, Content } from './styles';
 
 export interface Props {
   message: IMessage;
