@@ -10,6 +10,7 @@ export const AvatarImage = styled.img<AvatarImageProps>`
   grid-area: 1/1;
   border-radius: 50%;
   width: ${({ customSize }) => (customSize ? `${customSize}px` : '32px')};
+  ${(props) => (props.customHeight ? `height: ${props.customHeight}px` : '')}
 `;
 
 export const GenericSvg = styled.svg`

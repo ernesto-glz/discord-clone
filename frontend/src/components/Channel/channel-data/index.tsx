@@ -6,14 +6,16 @@ import { selectActiveChannel } from 'src/redux/states/ui';
 import ChannelMessage from '../channel-message';
 import { fetchMessages, isLoadingMessages } from 'src/redux/states/messages';
 import { Container, Messages, MessagesContainer } from './styles';
-import { selectChannelName } from 'src/redux/states/channels';
+import { selectChannel } from 'src/redux/states/channels';
 import { MessageInput } from '../channel-input';
+import { ChannelWelcome } from '../channel-welcome';
+import { MessageDivider } from 'src/components/message-divider';
 
 const ChannelData: React.FC = () => {
   const messages = useAppSelector((s) => s.messages.entities);
   const isLoading = useAppSelector(isLoadingMessages);
   const activeChannel = useAppSelector(selectActiveChannel);
-  const channelName = useAppSelector(selectChannelName);
+  const channel = useAppSelector(selectChannel(activeChannel));
   const dispatch = useAppDispatch();
   let messagesEnd: any;
 
@@ -33,14 +35,25 @@ const ChannelData: React.FC = () => {
   return (
     <Container>
       {isLoading !== 'loading' ? (
-        <Messages>
+        <section>
           <MessagesContainer>
-            {messages.map((msg: any, i: number) => (
-              <ChannelMessage key={i} message={msg} />
-            ))}
-            <div className="lastMessage" ref={(el) => (messagesEnd = el)} />
+            <Messages>
+              <ChannelWelcome
+                imageUrl={`${process.env.REACT_APP_API_ROOT}/assets/avatars/${
+                  channel.dmUser!.avatar
+                }.png`}
+                username={channel.name}
+              />
+              {messages.length > 0 && (
+                <MessageDivider date={messages[0].updatedAt!} />
+              )}
+              {messages.map((msg: any, i: number) => (
+                <ChannelMessage key={i} message={msg} />
+              ))}
+              <div className="lastMessage" ref={(el) => (messagesEnd = el)} />
+            </Messages>
           </MessagesContainer>
-        </Messages>
+        </section>
       ) : (
         <LoaderContainer>
           <DiscordLoadingDots />
@@ -49,7 +62,7 @@ const ChannelData: React.FC = () => {
       )}
       <MessageInput
         activeChannel={activeChannel}
-        placeholder={`Message @${channelName}`}
+        placeholder={`Message @${channel.name}`}
       />
     </Container>
   );

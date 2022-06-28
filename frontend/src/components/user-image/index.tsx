@@ -19,6 +19,7 @@ interface Props {
 
 export interface AvatarImageProps {
   customSize?: number;
+  customHeight?: number;
 }
 
 export interface UserStatusProps {

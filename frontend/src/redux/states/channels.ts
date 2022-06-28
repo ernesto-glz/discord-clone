@@ -1,4 +1,9 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {
+  createAsyncThunk,
+  createSelector,
+  createSlice,
+  PayloadAction
+} from '@reduxjs/toolkit';
 import { getOrCreateDMChannel, getChannels } from 'src/api/channel';
 import { ws } from 'src/ws/websocket';
 import { User } from 'src/models/user.model';
@@ -83,4 +88,16 @@ export const selectChannelName = (state: RootState) => {
     (channel) => channel._id === store.getState().ui.activeChannel
   );
   return foundChannel?.name;
+};
+export const selectChannel = (channelId: string) => {
+  return createSelector(
+    (state: RootState) => state.channels,
+    (channels) =>
+      channels.find((e) => e._id === channelId) ??
+      ({
+        _id: 'Unknown',
+        name: 'Unknown',
+        dmUser: { avatar: 'unknown' }
+      } as Channel)
+  );
 };

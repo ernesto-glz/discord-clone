@@ -51,6 +51,13 @@ export const getTime = (date: string) => {
   return formatAMPM(actual);
 };
 
+export const getDate = (dateStr: string) => {
+  const aux = new Date(dateStr);
+  return `${aux.toLocaleString('en-us', {
+    month: 'long'
+  })} ${aux.getDay()}, ${aux.getFullYear()}`;
+};
+
 export const compareDates = (prevDate: string, newDate: string) => {
   const newDate1 = new Date(prevDate);
   const newDate2 = new Date(newDate);

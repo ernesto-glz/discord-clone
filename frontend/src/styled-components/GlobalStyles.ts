@@ -73,6 +73,7 @@ export default createGlobalStyle`
     user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none;
+    overflow: hidden;
   }
   :root {
     --primary: #36393f;
@@ -127,5 +128,6 @@ export default createGlobalStyle`
     --elevation-high: 0 8px 16px rgba(0,0,0,0.24);
     --interactive-normal: #b9bbbe;
     --font-family-code: Consolas,Andale Mono WT,Andale Mono, Monaco,Courier New,Courier,monospace;
+    --text-muted: #a3a6aa;
   }
 `;
