@@ -7,7 +7,9 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: space-between;
   background-color: var(--primary);
+  box-sizing: border-box;
   position: relative;
+  max-height: calc(100vh - 46px);
   > section {
     height: 100%;
     overflow-y: scroll;
