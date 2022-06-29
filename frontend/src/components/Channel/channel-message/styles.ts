@@ -6,6 +6,7 @@ export const Container = styled.div`
   align-items: flex-start;
   margin-right: 4px;
   background-color: transparent;
+  border-radius: 4px;
   & + div {
     margin-top: 13px;
   }
@@ -16,7 +17,7 @@ export const Container = styled.div`
   }
   &.stackMessage {
     margin-bottom: 3px;
-    align-items: center;
+    align-items: flex-start;
     padding: 2px 0px;
   }
   &:hover {
@@ -27,6 +28,7 @@ export const Container = styled.div`
     font-size: 11px;
     width: 56px;
     padding-left: 12px;
+    padding-top: 4px;
     white-space: nowrap;
   }
 `;

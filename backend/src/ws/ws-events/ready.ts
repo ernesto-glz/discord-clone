@@ -8,8 +8,8 @@ export default class implements WSEvent<'READY'> {
   public async invoke(ws: WebSocket, client: Socket): Promise<any> {
     const user = await app.users.findById(client.data.user._id);
     if (!user) return 'User not found';
-    client.join(user.guildIds);
 
+    await app.rooms.joinGuildRooms(user, client);
     user.status = 'ONLINE';
     await user.save();
 

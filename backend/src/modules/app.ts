@@ -2,6 +2,7 @@ import { ChannelRepository } from 'repositories/channel-repository';
 import { FriendRepository } from 'repositories/friend-repository';
 import { MessageRepository } from 'repositories/message-repository';
 import { UserRepository } from 'repositories/user-repository';
+import { WSRooms } from '../ws/modules/ws-rooms';
 import { Server } from '../api/server';
 import { WebSocket } from '../ws/websocket';
 
@@ -12,6 +13,7 @@ export interface App {
   channels: ChannelRepository;
   friends: FriendRepository;
   messages: MessageRepository;
+  rooms: WSRooms;
 }
 
 export const app: App = {
@@ -20,7 +22,8 @@ export const app: App = {
   users: new UserRepository(),
   channels: new ChannelRepository(),
   friends: new FriendRepository(),
-  messages: new MessageRepository()
+  messages: new MessageRepository(),
+  rooms: new WSRooms()
 };
 
 global['app'] = app;

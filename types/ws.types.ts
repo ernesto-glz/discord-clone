@@ -7,6 +7,9 @@ export declare namespace WS {
     FRIEND_REQUEST_REMOVE: any;
     CHANNEL_HIDE: Params.ChannelHide;
     CHANNEL_DISPLAY: Params.ChannelDisplay;
+    MESSAGE_CREATE: Params.MessageCreate;
+    TYPING_START: Params.Typing;
+    TYPING_STOP: Params.Typing;
     disconnect: any;
     error: object;
   }
@@ -16,6 +19,16 @@ export declare namespace WS {
       channelId: string;
     }
     export interface ChannelDisplay {
+      channelId: string;
+    }
+    export interface MessageCreate {
+      _id: string;
+      sender: string;
+      channelId: string;
+      guildId: string;
+      content: string;
+    }
+    export interface Typing {
       channelId: string;
     }
   }

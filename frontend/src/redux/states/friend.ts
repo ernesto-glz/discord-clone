@@ -54,16 +54,17 @@ export const friendSlice = createSlice({
 
 export const selectFriends = (state: RootState) => state.friends.entities;
 export const isLoadingFriends = (state: RootState) => state.friends.loading;
-export const getFriend = (userId: string) => {
-  return createSelector(
+export const getFriend = (userId: string) =>
+  createSelector(
     (state: RootState) => state.friends.entities,
-    (friends) => friends.find((e) => e._id === userId) ?? {
-      avatar: 'unknown',
-      username: 'Unknown',
-      discriminator: '0000'
-    }
+    (friends) =>
+      friends.find((e) => e._id === userId) ??
+      ({
+        avatar: 'unknown',
+        username: 'Unknown',
+        discriminator: '0000'
+      } as FriendUser)
   );
-};
 
 export const actions = friendSlice.actions;
 export default friendSlice.reducer;

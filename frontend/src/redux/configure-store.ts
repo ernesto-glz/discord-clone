@@ -7,6 +7,7 @@ import channelReducer from './states/channels';
 import messageReducer from './states/messages';
 import uiReducer from './states/ui';
 import requestsReducer from './states/requests';
+import typingReducer from './states/typing';
 
 const store = configureStore({
   reducer: {
@@ -17,7 +18,8 @@ const store = configureStore({
     channels: channelReducer,
     messages: messageReducer,
     ui: uiReducer,
-    requests: requestsReducer
+    requests: requestsReducer,
+    typing: typingReducer
   }
 });
 

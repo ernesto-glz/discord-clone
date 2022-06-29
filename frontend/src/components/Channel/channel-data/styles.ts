@@ -1,82 +1,129 @@
 import styled from 'styled-components';
 import { AlternateEmail } from '@styled-icons/material';
 
-export const Container = styled.div`
+export const Container = styled.main`
   grid-area: CD;
+  position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  background-color: var(--primary);
+  flex: 1 1 auto;
   box-sizing: border-box;
-  position: relative;
   max-height: calc(100vh - 46px);
+`;
+
+export const MessagesWrapper = styled.div`
+  min-height: 0;
+  flex: 1 1 auto;
+  overflow: hidden;
   > section {
     height: 100%;
-    overflow-y: scroll;
+    overflow-anchor: none;
     overflow-x: hidden;
-    margin-right: 5px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    flex: 1 1 auto;
-    ::-webkit-scrollbar {
-      width: 8px;
-      background-color: var(--secondary);
-      border-radius: 10px;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background-color: var(--tertiary);
-      border-radius: 10px;
-    }
+    overflow-y: scroll;
   }
 `;
 
-export const MessagesContainer = styled.ol`
-  min-height: 0;
+export const MessagesContainer = styled.div`
+  position: relative;
   min-height: 100%;
-  padding: 5px 0;
-  padding-right: 4px;
   display: flex;
+  overflow-anchor: none;
   flex-direction: column;
   justify-content: flex-end;
+  align-items: stretch;
 `;
 
-export const Messages = styled.div`
-  height: auto;
-  max-height: calc(100vh - 46px - 72px);
-  max-width: 100%;
-  padding-bottom: 10px;
-  box-sizing: border-box;
-  padding-right: 25px;
+export const Messages = styled.ol`
+  min-height: 0;
+  > .lastMessage {
+    height: 30px;
+  }
+`;
+
+export const MessageBoxContainer = styled.div`
+  padding-left: 16px;
+  padding-right: 16px;
+  position: relative;
+  flex-shrink: 0;
+  margin-top: -8px;
 `;
 
 export const InputContainer = styled.div`
-  display: flex;
-  align-items: flex-start;
   width: 100%;
-  height: 72px;
-  padding: 4px 16px;
+  max-height: 24rem;
+  display: flex;
+  align-items: center;
+  background-color: var(--chat-input);
+  border-radius: 7px;
+  margin-bottom: 24px;
+  padding-right: 2px;
+  max-height: 50vh;
 `;
 
 export const InputWrapper = styled.div`
   display: flex;
-  align-items: center;
   width: 100%;
-  padding: 0 16px;
-  background-color: var(--chat-input);
-  border-radius: 7px;
+  line-height: 1.25rem;
+  resize: none;
+  > div {
+    display: flex;
+    width: 100%;
+    padding-left: 16px;
+    overflow-y: scroll !important;
+    overflow-x: hidden !important;
+  }
 `;
 
-export const Input = styled.input`
-  flex: 1;
-  height: 44px;
-  color: var(--text-normal);
-  background-color: transparent;
+export const Wrapper = styled.div`
+  width: 100%;
+  max-height: 50vh;
+`;
+
+export const Input = styled.div`
   position: relative;
+  flex: 1;
+  outline: none;
+  overflow-wrap: break-word;
   font-size: 16px;
-  &::placeholder {
-    color: var(--gray);
+  line-height: 1.25rem;
+  max-height: 50vh;
+  padding-bottom: 11px;
+  padding-top: 12px !important;
+  caret-color: var(--text-normal);
+  text-align: left;
+  word-break: break-word;
+  white-space: break-spaces !important;
+  padding-right: 10px;
+`;
+
+export const TypingAnnounce = styled.div`
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 3px;
+  font-size: 14px;
+  padding-left: 4px;
+  color: var(--text-normal);
+  > strong {
+    color: #fff;
   }
+`;
+
+export const InputLeftSide = styled.div`
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  height: 44px;
+  width: 40px;
+`;
+
+export const InputRightSide = styled.div`
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  height: 44px;
+  margin-right: 4px;
 `;
 
 export const InputIcon = styled(AlternateEmail)`

@@ -48,7 +48,7 @@ export class WebSocket {
         });
 
       client.on('MESSAGE_CREATE', (data) => {
-        this.io.to(data.guildId).emit('MESSAGE_CREATE', data, data.channelId);
+        this.io.to(data.channelId).emit('MESSAGE_CREATE', data, data.channelId);
       });
     });
   }

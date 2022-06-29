@@ -130,4 +130,32 @@ export default createGlobalStyle`
     --font-family-code: Consolas,Andale Mono WT,Andale Mono, Monaco,Courier New,Courier,monospace;
     --text-muted: #a3a6aa;
   }
+  .inputScroller::-webkit-scrollbar {
+    width: 12px !important;
+    height: 12px !important;
+  }
+  .inputScroller::-webkit-scrollbar-track {
+    background-color: transparent !important;
+  }
+  .scrollerBase::-webkit-scrollbar {
+    width: 16px;
+    height: 16px;
+  }
+  .scrollerBase::-webkit-scrollbar-thumb {
+    background-color: var(--tertiary);
+    min-height: 40px;
+    border-radius: 8px;
+  }
+  .scrollerBase::-webkit-scrollbar-track {
+    background-color: var(--secondary);
+    min-height: 40px;
+  }
+  .scrollerBase::-webkit-scrollbar-thumb, ::-webkit-scrollbar-track {
+    border: 4px solid transparent;
+    background-clip: padding-box;
+    border-radius: 8px;
+  }
+  .scroller::-webkit-scrollbar-track {
+    margin-bottom: 8px;
+  }
 `;

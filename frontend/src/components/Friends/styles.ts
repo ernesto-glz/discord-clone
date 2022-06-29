@@ -190,8 +190,6 @@ export const ActionButton = styled.div`
   border-radius: 50%;
   color: var(--interactive-normal);
   background-color: var(--background-secondary);
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   align-items: center;
   justify-content: center;

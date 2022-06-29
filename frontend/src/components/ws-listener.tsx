@@ -6,6 +6,7 @@ import { actions as channels } from 'src/redux/states/channels';
 import { actions as friends } from 'src/redux/states/friend';
 import { actions as requests } from 'src/redux/states/requests';
 import { actions as messages } from 'src/redux/states/messages';
+import { actions as typing } from 'src/redux/states/typing';
 import { ws } from 'src/ws/websocket';
 import store from 'src/redux/configure-store';
 import fetchEntities from 'src/redux/actions/fetch-entities';
@@ -90,6 +91,13 @@ export const WSListeners: React.FC<Props> = ({ children }) => {
     });
     ws.on('FRIEND_REQUEST_REMOVE', ({ request, type }) => {
       dispatch(requests.removeRequest({ requestId: request._id, type }));
+    });
+    ws.on('TYPING_START', (args) => {
+      dispatch(typing.userTyped(args));
+      setTimeout(() => dispatch(typing.userStoppedTyping(args)), 20000);
+    });
+    ws.on('TYPING_STOP', (args) => {
+      dispatch(typing.userStoppedTyping(args));
     });
 
     dispatch(listenedToSocket());

@@ -17,8 +17,6 @@ export const Button = styled.button<Props>`
   cursor: pointer;
 
   > img {
-    width: 100%;
-    height: 100%;
     width: 48px;
     height: 48px;
     border-radius: 50%;

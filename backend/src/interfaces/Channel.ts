@@ -6,6 +6,7 @@ export interface Channel {
   createdBy: string;
   userIds: string[];
   lastMessageId: string;
+  type: 'DM' | 'GUILD_TEXT' | 'GUILD_VOICE';
 }
 
 export interface CreateChannel {
