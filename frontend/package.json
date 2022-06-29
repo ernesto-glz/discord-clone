@@ -22,7 +22,6 @@
     "@styled-icons/ionicons-solid": "10.34.0",
     "@styled-icons/material": "10.34.0",
     "axios": "0.27.2",
-    "moment": "^2.29.3",
     "react": "18.1.0",
     "react-contextmenu": "^2.14.0",
     "react-dom": "18.1.0",

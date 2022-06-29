@@ -10,6 +10,10 @@ const slice = createSlice({
   initialState: [] as TypingState[],
   reducers: {
     userTyped: (typing, { payload }: PayloadAction<TypingState>) => {
+      const alreadyExists = typing.find((e) => {
+        return e.userId === payload.userId && e.channelId === payload.channelId;
+      });
+      if (alreadyExists) return;
       typing.push(payload);
     },
     userStoppedTyping: (typing, { payload }: PayloadAction<TypingState>) => {
@@ -34,20 +38,12 @@ export const getTypersInChannel = (channelId: string) =>
     (typing) => typing.filter((t) => t.channelId === channelId)
   );
 
-let lastTypedAt: Date;
-
 export const startTyping =
   (channelId: string) => (dispatch: any, getState: () => RootState) => {
-    const secsAgo = moment(new Date()).diff(lastTypedAt, 'seconds');
-    if (lastTypedAt && secsAgo < 10) return;
-
-    lastTypedAt = new Date();
-
     ws.emit('TYPING_START', { channelId });
   };
 
 export const stopTyping =
   (channelId: string) => (dispatch: any, getState: () => RootState) => {
-    lastTypedAt = new Date(Date.now() - 20000);
     ws.emit('TYPING_STOP', { channelId });
   };

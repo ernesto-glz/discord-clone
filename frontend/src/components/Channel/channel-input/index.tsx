@@ -44,15 +44,23 @@ export const MessageInput: React.FC<Props> = (props) => {
   const typingUsers = typers.map((t) => user(t.userId)!.username).join(', ');
 
   const onKeyUp = async (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      return;
+    }
     const text = event.currentTarget!.innerText.trim();
 
-    if (text === '') return;
-    else if (event.key === 'Enter' && !event.shiftKey) event.preventDefault();
+    if (text === '') {
+      if (event.key === 'Backspace') dispatch(stopTyping(props.activeChannel));
+      return;
+    }
 
     setContent(text);
 
     dispatch(startTyping(props.activeChannel));
+
     const emptyMessage = content.replaceAll('\n', '');
+
     if (event.key !== 'Enter' || !emptyMessage || event.shiftKey) return;
 
     const messageData = {
