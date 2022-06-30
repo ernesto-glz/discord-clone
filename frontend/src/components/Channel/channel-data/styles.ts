@@ -96,6 +96,33 @@ export const Input = styled.div`
   padding-right: 10px;
 `;
 
+export const Placeholder = styled.div`
+  position: relative;
+  flex: 1;
+  outline: none;
+  overflow-wrap: break-word;
+  font-size: 16px;
+  line-height: 1.25rem;
+  max-height: 50vh;
+  padding-bottom: 11px;
+  padding-top: 12px !important;
+  caret-color: var(--text-normal);
+  text-align: left;
+  word-break: break-word;
+  white-space: break-spaces !important;
+  padding-right: 10px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  color: var(--channel-text-area-placeholder);
+  user-select: none;
+  pointer-events: none;
+  margin-left: 68px;
+`;
+
 export const TypingAnnounce = styled.div`
   position: absolute;
   bottom: 0;

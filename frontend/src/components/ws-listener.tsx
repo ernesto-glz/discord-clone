@@ -46,9 +46,9 @@ export const WSListeners: React.FC<Props> = ({ children }) => {
     });
     ws.on('MESSAGE_CREATE', (newMessage, id) => {
       const { activeChannel } = state().ui;
-      const { _id: myId, hiddenDMChannels } = state().user;
+      const { _id: selfId, hiddenDMChannels } = state().user;
       const channelInfo = state().channels.find((c) => c._id === id);
-      if (channelInfo!.type === 'DM' && newMessage.sender !== myId) {
+      if (channelInfo!.type === 'DM' && newMessage.sender !== selfId) {
         if (hiddenDMChannels!.includes(id)) {
           const filtered = hiddenDMChannels!.filter((cId) => cId !== id);
           dispatch(selfUser.updated({ hiddenDMChannels: filtered }));
@@ -93,8 +93,11 @@ export const WSListeners: React.FC<Props> = ({ children }) => {
       dispatch(requests.removeRequest({ requestId: request._id, type }));
     });
     ws.on('TYPING_START', (args) => {
-      dispatch(typing.userTyped(args));
-      setTimeout(() => dispatch(typing.userStoppedTyping(args)), 20000);
+      const timeout = setTimeout(
+        () => dispatch(typing.userStoppedTyping(args)),
+        20000
+      );
+      dispatch(typing.userTyped({ ...args, timer: timeout }));
     });
     ws.on('TYPING_STOP', (args) => {
       dispatch(typing.userStoppedTyping(args));

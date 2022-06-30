@@ -1,9 +1,13 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import moment from 'moment';
+import { calculateEventDelay } from 'src/utils/date';
 import { ws } from 'src/ws/websocket';
-import { RootState } from '../configure-store';
+import { AppDispatch, RootState } from '../configure-store';
 
-export type TypingState = { userId: string; channelId: string };
+export type TypingState = {
+  userId: string;
+  channelId: string;
+  timer: NodeJS.Timeout;
+};
 
 const slice = createSlice({
   name: 'typing',
@@ -13,7 +17,14 @@ const slice = createSlice({
       const alreadyExists = typing.find((e) => {
         return e.userId === payload.userId && e.channelId === payload.channelId;
       });
-      if (alreadyExists) return;
+
+      if (alreadyExists) {
+        // Clear previous timeout and set new one
+        clearTimeout(alreadyExists.timer);
+        Object.assign(alreadyExists, payload);
+        return;
+      }
+
       typing.push(payload);
     },
     userStoppedTyping: (typing, { payload }: PayloadAction<TypingState>) => {
@@ -38,12 +49,23 @@ export const getTypersInChannel = (channelId: string) =>
     (typing) => typing.filter((t) => t.channelId === channelId)
   );
 
+let lastTypedAt: Date;
+
 export const startTyping =
-  (channelId: string) => (dispatch: any, getState: () => RootState) => {
+  (channelId: string) => (dispatch: AppDispatch, getState: () => RootState) => {
+    // Set Message delay
+    const now = new Date();
+    if (lastTypedAt && !calculateEventDelay(lastTypedAt, now)) return;
+    lastTypedAt = new Date();
+
     ws.emit('TYPING_START', { channelId });
   };
 
 export const stopTyping =
-  (channelId: string) => (dispatch: any, getState: () => RootState) => {
+  (channelId: string) => (dispatch: AppDispatch, getState: () => RootState) => {
+    // Reset message delay
+    const now = new Date();
+    lastTypedAt = new Date(now.getTime() - 50 * 1000);
+
     ws.emit('TYPING_STOP', { channelId });
   };

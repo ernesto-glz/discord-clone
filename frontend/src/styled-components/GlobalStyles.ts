@@ -129,6 +129,7 @@ export default createGlobalStyle`
     --interactive-normal: #b9bbbe;
     --font-family-code: Consolas,Andale Mono WT,Andale Mono, Monaco,Courier New,Courier,monospace;
     --text-muted: #a3a6aa;
+    --channel-text-area-placeholder: #72767d;
   }
   .inputScroller::-webkit-scrollbar {
     width: 12px !important;

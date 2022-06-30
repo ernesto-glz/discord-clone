@@ -66,3 +66,8 @@ export const compareDates = (prevDate: string, newDate: string) => {
     `${newDate2.getDay()} ${newDate2.getHours()} ${newDate2.getMinutes()}`
   );
 };
+
+export function calculateEventDelay(prevDate: Date, newDate: Date) {
+  const difference = newDate.getSeconds() - prevDate.getSeconds();
+  return difference > 15 || newDate.getMinutes() !== prevDate.getMinutes();
+}

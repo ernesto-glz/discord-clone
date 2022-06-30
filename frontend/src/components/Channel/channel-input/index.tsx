@@ -10,19 +10,16 @@ import {
   InputLeftSide,
   MessageBoxContainer,
   InputRightSide,
-  Wrapper
+  Wrapper,
+  Placeholder
 } from '../channel-data/styles';
 import striptags from 'striptags';
 import { ws } from 'src/ws/websocket';
 import { PulseLoader } from 'react-spinners';
-import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
-import {
-  getTypersInChannel,
-  startTyping,
-  stopTyping
-} from 'src/redux/states/typing';
-import { getFriend } from 'src/redux/states/friend';
-import store from 'src/redux/configure-store';
+import { useAppDispatch } from 'src/redux/hooks';
+import { startTyping, stopTyping } from 'src/redux/states/typing';
+import useTypingUsers from 'src/hooks/useTypingUsers';
+import { InputHelper } from './input-helper';
 
 interface Props {
   placeholder: string;
@@ -34,48 +31,38 @@ export const MessageInput: React.FC<Props> = (props) => {
   const [content, setContent] = useState('');
   const messageBoxRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
-
-  const selfUser = useAppSelector((s) => s.user)!;
-  const channel = useAppSelector((s) => s.ui.activeChannel)!;
-  const notSelf = (t: any) => t.userId !== selfUser._id;
-  const typers = useAppSelector(getTypersInChannel(channel)).filter(notSelf);
-
-  const user = (userId: string) => getFriend(userId)(store.getState());
-  const typingUsers = typers.map((t) => user(t.userId)!.username).join(', ');
+  const { typingUsers } = useTypingUsers();
 
   const onKeyUp = async (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === 'Enter' && !event.shiftKey) {
-      event.preventDefault();
-      return;
-    }
     const text = event.currentTarget!.innerText.trim();
+    setContent(text);
 
     if (text === '') {
       if (event.key === 'Backspace') dispatch(stopTyping(props.activeChannel));
       return;
     }
 
-    setContent(text);
-
     dispatch(startTyping(props.activeChannel));
-
     const emptyMessage = content.replaceAll('\n', '');
 
     if (event.key !== 'Enter' || !emptyMessage || event.shiftKey) return;
 
-    const messageData = {
-      channelId: props.activeChannel,
-      content: striptags(content, 'a')
-    };
-
     const { data } = await callEndpoint(
-      MessageService.createMessage(messageData)
+      MessageService.createMessage({
+        channelId: props.activeChannel,
+        content: striptags(content, 'a')
+      })
     );
 
     dispatch(stopTyping(props.activeChannel));
     ws.emit('MESSAGE_CREATE', data);
+
     setContent('');
     messageBoxRef.current!.innerText = '';
+  };
+
+  const onKeyDown = async (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Enter' && !event.shiftKey) event.preventDefault();
   };
 
   return (
@@ -87,15 +74,24 @@ export const MessageInput: React.FC<Props> = (props) => {
               <InputIcon />
             </InputLeftSide>
             <Wrapper>
+              {content.length < 1 && (
+                <Placeholder>{props.placeholder ?? 'Unknown'}</Placeholder>
+              )}
+
               <Input
                 id="messageInput"
                 ref={messageBoxRef}
+                autoCorrect={'off'}
                 role="textbox"
                 onKeyUp={onKeyUp}
+                onKeyDown={onKeyDown}
                 defaultValue={content}
-                placeholder={props.placeholder ?? 'Unknown'}
                 contentEditable={true}
-              />
+                spellCheck={false}
+                suppressContentEditableWarning={true}
+              >
+                <InputHelper />
+              </Input>
             </Wrapper>
             <InputRightSide>
               <InputIcon />
