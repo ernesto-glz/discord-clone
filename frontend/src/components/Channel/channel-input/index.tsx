@@ -5,13 +5,13 @@ import {
   InputContainer,
   InputWrapper,
   Input,
-  InputIcon,
   TypingAnnounce,
   InputLeftSide,
   MessageBoxContainer,
   InputRightSide,
   Wrapper,
-  Placeholder
+  Placeholder,
+  UploadPlusIcon
 } from '../channel-data/styles';
 import striptags from 'striptags';
 import { ws } from 'src/ws/websocket';
@@ -20,10 +20,11 @@ import { useAppDispatch } from 'src/redux/hooks';
 import { startTyping, stopTyping } from 'src/redux/states/typing';
 import useTypingUsers from 'src/hooks/useTypingUsers';
 import { InputHelper } from './input-helper';
+import { Channel } from 'src/redux/states/channels';
 
 interface Props {
   placeholder: string;
-  activeChannel: string;
+  activeChannel: Channel;
 }
 
 export const MessageInput: React.FC<Props> = (props) => {
@@ -38,23 +39,24 @@ export const MessageInput: React.FC<Props> = (props) => {
     setContent(text);
 
     if (text === '') {
-      if (event.key === 'Backspace') dispatch(stopTyping(props.activeChannel));
+      if (event.key === 'Backspace')
+        dispatch(stopTyping(props.activeChannel._id));
       return;
     }
 
-    dispatch(startTyping(props.activeChannel));
+    dispatch(startTyping(props.activeChannel._id));
     const emptyMessage = content.replaceAll('\n', '');
 
     if (event.key !== 'Enter' || !emptyMessage || event.shiftKey) return;
 
     const { data } = await callEndpoint(
       MessageService.createMessage({
-        channelId: props.activeChannel,
+        channelId: props.activeChannel._id,
         content: striptags(content, 'a')
       })
     );
 
-    dispatch(stopTyping(props.activeChannel));
+    dispatch(stopTyping(props.activeChannel._id));
     ws.emit('MESSAGE_CREATE', data);
 
     setContent('');
@@ -71,13 +73,12 @@ export const MessageInput: React.FC<Props> = (props) => {
         <InputWrapper>
           <div className="scrollerBase inputScroller">
             <InputLeftSide>
-              <InputIcon />
+              <UploadPlusIcon />
             </InputLeftSide>
             <Wrapper>
               {content.length < 1 && (
                 <Placeholder>{props.placeholder ?? 'Unknown'}</Placeholder>
               )}
-
               <Input
                 id="messageInput"
                 ref={messageBoxRef}
@@ -93,9 +94,7 @@ export const MessageInput: React.FC<Props> = (props) => {
                 <InputHelper />
               </Input>
             </Wrapper>
-            <InputRightSide>
-              <InputIcon />
-            </InputRightSide>
+            <InputRightSide>{/* <InputIcon /> */}</InputRightSide>
           </div>
         </InputWrapper>
       </InputContainer>

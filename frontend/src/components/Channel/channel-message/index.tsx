@@ -20,12 +20,9 @@ export interface ContentProps {
 }
 
 const ChannelMessage: React.FC<Props> = ({ message }) => {
-  const selfUser = useAppSelector((s) => s.user);
+  // TODO: Change getFriend with global Users state
+  const author = useAppSelector(getFriend(message.sender));
   const [focused, setFocused] = useState(false);
-  const author =
-    message.sender === selfUser._id
-      ? selfUser
-      : useAppSelector(getFriend(message.sender));
 
   const messageHTML = message.content
     ? new FormatService().toHTML(message.content)
@@ -75,7 +72,7 @@ const ChannelMessage: React.FC<Props> = ({ message }) => {
         <Message>
           <Header>
             <strong>{author.username}</strong>
-            <time>{dateFormatted(message.createdAt!) ?? 'Unknown'}</time>
+            <time>{dateFormatted(message.createdAt) ?? 'Unknown'}</time>
           </Header>
           <Content
             mt={2}

@@ -1,83 +1,86 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getAllMessages } from 'src/api/message';
+import {
+  createAsyncThunk,
+  createSelector,
+  createSlice,
+  PayloadAction
+} from '@reduxjs/toolkit';
+import { getMessages } from 'src/api/message';
 import { Message } from 'src/models/message.model';
 import { compareDates } from 'src/utils/date';
-import { RootState } from '../configure-store';
+import { notInArray } from 'src/utils/redux';
+import { AppDispatch, RootState } from '../configure-store';
 
 export interface MessageState {
   entities: Message[];
-  loading: 'idle' | 'loading' | 'failed';
+  totalPages: number | null;
+  page: number | null;
 }
 
 const initialState: MessageState = {
   entities: [],
-  loading: 'idle'
+  totalPages: null,
+  page: null
 };
 
-export const fetchMessages = createAsyncThunk(
-  'messages/fetchMessages',
-  async (channelId: string) => {
-    const { data } = await getAllMessages(channelId);
-
-    if (data?.docs?.length) {
-      const messagesFound = data.docs
-        .reverse()
-        .map((message: Message, index: number) => {
-          const prev = data.docs[index - 1];
-          const { sender } = message;
-
-          if (!prev || prev.sender !== sender) return { ...message };
-
-          return {
-            ...message,
-            stackMessage: compareDates(prev.createdAt, message.createdAt)
-          };
-        });
-
-      return messagesFound;
-    }
-
-    return [];
-  }
-);
+export type FetchMessages = { channelId: string; page?: number };
 
 export const messageSlice = createSlice({
   name: 'messages',
   initialState,
   reducers: {
-    addMessage: (state, { payload }) => {
+    fetched: (messages, { payload }) => {
+      messages.entities.unshift(
+        ...payload.entities.filter(notInArray(messages.entities))
+      );
+      messages.totalPages = payload.totalPages;
+      messages.page = payload.page;
+    },
+    addMessage: (messages, { payload }) => {
       const message = payload;
-      const prev = state.entities[state.entities.length - 1];
+      const prev = messages.entities[messages.entities.length - 1];
       const { sender } = message;
 
       if (!prev || prev.sender !== sender) {
-        state.entities.push({ ...message });
+        messages.entities.push({ ...message });
         return;
       }
 
-      state.entities.push({
+      messages.entities.push({
         ...message,
         stackMessage: compareDates(prev.createdAt, message.createdAt)
       });
     }
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchMessages.pending, (state) => {
-        state.loading = 'loading';
-      })
-      .addCase(fetchMessages.fulfilled, (state, action) => {
-        state.loading = 'idle';
-        state.entities = action.payload;
-      })
-      .addCase(fetchMessages.rejected, (state) => {
-        state.loading = 'failed';
-      });
   }
 });
 
-export const isLoadingMessages = (state: RootState) => {
-  return state.messages.loading;
-};
 export const actions = messageSlice.actions;
 export default messageSlice.reducer;
+
+export const getChannelMessages = (channelId: string) =>
+  createSelector(
+    (state: RootState) => state.messages.entities,
+    (messages) => messages.filter((m) => m.channelId === channelId)
+  );
+
+export const fetchMessages =
+  ({ channelId, page }: FetchMessages) =>
+  async (dispatch: AppDispatch, getState: () => RootState) => {
+    const { data } = await getMessages(channelId, page);
+
+    const messagesFound = data.docs
+      .reverse()
+      .map((message: Message, index: number) => {
+        const prev = data.docs[index - 1];
+        const { sender } = message;
+
+        if (!prev || prev.sender !== sender) return { ...message };
+
+        return {
+          ...message,
+          stackMessage: compareDates(prev.createdAt, message.createdAt)
+        };
+      });
+
+    delete data.docs;
+    dispatch(actions.fetched({ ...data, entities: messagesFound }));
+  };

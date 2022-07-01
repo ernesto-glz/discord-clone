@@ -1,14 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../configure-store';
+import { Channel } from './channels';
 
 export interface UIState {
-  activeChannel: string;
-  activeGuild: string;
+  activeChannel: Channel | null;
+  activeGuild: string | null;
 }
 
 export interface PageSwitch {
-  channel: string;
-  guild: string;
+  channel: Channel | null;
+  guild: string | null;
 }
 
 export const slice = createSlice({
@@ -22,6 +23,6 @@ export const slice = createSlice({
   }
 });
 
-export const selectActiveChannel = (state: RootState) => state.ui.activeChannel;
+export const getActiveChannel = (state: RootState) => state.ui.activeChannel;
 export const { pageSwitched } = slice.actions;
 export default slice.reducer;

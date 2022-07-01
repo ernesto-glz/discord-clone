@@ -1,23 +1,22 @@
 import React from 'react';
 import { useAppSelector } from 'src/redux/hooks';
 import { getFriend } from 'src/redux/states/friend';
-import { Channel, selectChannelName } from 'src/redux/states/channels';
+import { Channel } from 'src/redux/states/channels';
 import { Title, AIcon, Container, FileIcon, HelpIcon } from './styles';
 import { OfflineStatus } from 'src/components/Images/user-status/offline';
 import { OnlineStatus } from 'src/components/Images/user-status/online';
 
 type Props = { channel: Channel };
 
-export const ChannelHeader: React.FC<Props> = (props) => {
-  const channelName = useAppSelector(selectChannelName);
-  const user = useAppSelector(getFriend(props.channel?.dmUser?._id ?? '')) as any;
+export const ChannelHeader: React.FC<Props> = ({ channel }) => {
+  const user = useAppSelector(getFriend(channel?.dmUser?._id ?? ''));
   const isOnline = user?.status === 'ONLINE';
 
   return (
     <Container>
       <div className="channel-info">
         <AIcon />
-        <Title style={{ marginBottom: 3 }}>{channelName ?? 'Unknown'}</Title>
+        <Title style={{ marginBottom: 3 }}>{channel?.name ?? 'Unknown'}</Title>
         {isOnline ? (
           <OnlineStatus styles={{ marginLeft: 6, marginTop: 2 }} />
         ) : (

@@ -6,7 +6,7 @@ import ServerName from 'src/components/server/server-name';
 import FriendsPage from 'src/components/friends';
 import RightPanel from 'src/components/right-pannel';
 import { useAppSelector } from 'src/redux/hooks';
-import { selectActiveChannel } from 'src/redux/states/ui';
+import { getActiveChannel } from 'src/redux/states/ui';
 import { useParams } from 'react-router-dom';
 import PageWrapper from './page-wrapper';
 import { ChannelHeader } from 'src/components/channel/channel-header/channel-header';
@@ -16,7 +16,7 @@ export type Pages = 'ONLINE' | 'ALL' | 'PENDING' | 'ADD';
 export const GuildPage: React.FC = () => {
   const { channelId, guildId } = useParams();
   const [page, setPage] = useState<Pages>('ONLINE');
-  const activeChannel = useAppSelector(selectActiveChannel);
+  const activeChannel = useAppSelector(getActiveChannel);
   const channel = useAppSelector((s) =>
     s.channels.find((c) => c._id === channelId)
   );

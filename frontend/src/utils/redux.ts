@@ -7,5 +7,5 @@ export const isOnline = (friendId: string) => {
 };
 
 export const notInArray = (arr: any[]) => (old: any) => {
-  return !arr.some((e) => e.id === old.id);
+  return !arr.some((e) => e._id === old._id);
 };

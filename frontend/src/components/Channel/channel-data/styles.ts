@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { AlternateEmail } from '@styled-icons/material';
+import { PlusCircleFill } from '@styled-icons/bootstrap';
 
 export const Container = styled.main`
   grid-area: CD;
@@ -153,8 +153,12 @@ export const InputRightSide = styled.div`
   margin-right: 4px;
 `;
 
-export const InputIcon = styled(AlternateEmail)`
-  width: 24px;
-  height: 24px;
-  color: var(--gray);
+export const UploadPlusIcon = styled(PlusCircleFill)`
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  color: var(--interactive-normal);
+  &:hover {
+    color: var(--text-normal);
+  }
 `;

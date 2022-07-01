@@ -6,7 +6,7 @@ export const createMessage = (
   controller: AbortController
 ) => client.post('/message/create', data, { signal: controller.signal });
 
-export const getAllMessages = (channelId: string, page?: number) => {
+export const getMessages = (channelId: string, page?: number) => {
   if (page) {
     return client.get(`/message/get/${channelId}?page=${page}`);
   }

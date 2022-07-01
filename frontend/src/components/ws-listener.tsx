@@ -53,7 +53,7 @@ export const WSListeners: React.FC<Props> = ({ children }) => {
           const filtered = hiddenDMChannels!.filter((cId) => cId !== id);
           dispatch(selfUser.updated({ hiddenDMChannels: filtered }));
         }
-        if (activeChannel !== id) {
+        if (activeChannel?._id !== id) {
           playSound('NEW_MESSAGE');
         }
       }
@@ -72,7 +72,8 @@ export const WSListeners: React.FC<Props> = ({ children }) => {
           hiddenDMChannels: [...hiddenDMChannels!, channelId]
         })
       );
-      if (state().ui.activeChannel === channelId) navigate('/channels/@me');
+      if (state().ui.activeChannel!._id === channelId)
+        navigate('/channels/@me');
     });
     ws.on('NEW_FRIEND', ({ user, requestId, type, channel }) => {
       const { guildIds, _id, hiddenDMChannels } = state().user;

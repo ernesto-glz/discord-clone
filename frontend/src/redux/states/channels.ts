@@ -80,16 +80,11 @@ export const displayChannel = createAsyncThunk(
   }
 );
 
-export const selectDMChannels = (state: RootState) => {
+export const getDMChannels = (state: RootState) => {
   return state.channels.filter((channel) => channel.type === 'DM');
 };
-export const selectChannelName = (state: RootState) => {
-  const foundChannel = state.channels.find(
-    (channel) => channel._id === store.getState().ui.activeChannel
-  );
-  return foundChannel?.name;
-};
-export const selectChannel = (channelId: string) => {
+
+export const getChannel = (channelId: string) => {
   return createSelector(
     (state: RootState) => state.channels,
     (channels) =>

@@ -1,12 +1,12 @@
 import { useAppSelector } from 'src/redux/hooks';
-import { selectDMChannels } from 'src/redux/states/channels';
-import { selectActiveChannel } from 'src/redux/states/ui';
+import { getDMChannels } from 'src/redux/states/channels';
+import { getActiveChannel } from 'src/redux/states/ui';
 import ChannelButton from '../channel-button';
 import { Container, Category, AddCategoryIcon } from './styles';
 
 const ChannelList: React.FC = () => {
-  const channels = useAppSelector(selectDMChannels);
-  const activeChannel = useAppSelector(selectActiveChannel);
+  const channels = useAppSelector(getDMChannels);
+  const activeChannel = useAppSelector(getActiveChannel);
   const hiddenChannels = useAppSelector((s) => s.user.hiddenDMChannels);
 
   return (
@@ -16,7 +16,7 @@ const ChannelList: React.FC = () => {
         isGeneric={true}
         channelId=""
         genericImage="FRIEND"
-        selected={activeChannel}
+        selected={activeChannel?._id ?? ''}
       />
 
       <ChannelButton
@@ -24,7 +24,7 @@ const ChannelList: React.FC = () => {
         isGeneric={true}
         channelId="not"
         genericImage="NITRO"
-        selected={activeChannel}
+        selected={activeChannel?._id ?? ''}
       />
 
       <Category>
@@ -39,7 +39,7 @@ const ChannelList: React.FC = () => {
               <ChannelButton
                 key={i}
                 channelId={c._id}
-                selected={activeChannel}
+                selected={activeChannel?._id ?? ''}
                 friendId={c.dmUser!._id}
                 channelName={c.name}
                 imageUrl={`${process.env.REACT_APP_API_ROOT}/assets/avatars/${
