@@ -1,5 +1,5 @@
 import React from 'react';
-import { UserRaisingHand } from 'src/components/Images/tiny-icons/user-raising-hand';
+import { UserRaisingHand } from 'src/components/images/tiny-icons/user-raising-hand';
 import {
   Container,
   Title,

@@ -1,6 +1,6 @@
 import React from 'react';
 import { FriendUser, User } from 'src/models/user.model';
-import { CopyIdImage } from '../Images/tiny-icons/copy-id-image';
+import { CopyIdImage } from '../images/tiny-icons/copy-id-image';
 import { CtxBody, CtxItem, MessageLink, MyCtxMenu, Separator } from './styles';
 
 interface Props {

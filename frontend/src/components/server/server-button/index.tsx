@@ -1,7 +1,7 @@
 import React from 'react';
-import { DiscordLogo } from 'src/components/Images/server/discord-logo';
-import { ExploreButton } from 'src/components/Images/server/explore-button';
-import { AddServerButton } from 'src/components/Images/server/new-server-button';
+import { DiscordLogo } from 'src/components/images/server/discord-logo';
+import { ExploreButton } from 'src/components/images/server/explore-button';
+import { AddServerButton } from 'src/components/images/server/new-server-button';
 import { Button } from './styles';
 
 export interface Props {

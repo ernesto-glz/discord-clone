@@ -1,9 +1,4 @@
-import {
-  createAsyncThunk,
-  createSelector,
-  createSlice,
-  PayloadAction
-} from '@reduxjs/toolkit';
+import { createSelector, createSlice } from '@reduxjs/toolkit';
 import { getMessages } from 'src/api/message';
 import { Message } from 'src/models/message.model';
 import { compareDates } from 'src/utils/date';
@@ -66,6 +61,8 @@ export const fetchMessages =
   ({ channelId, page }: FetchMessages) =>
   async (dispatch: AppDispatch, getState: () => RootState) => {
     const { data } = await getMessages(channelId, page);
+
+    if (!data.docs?.length) return [];
 
     const messagesFound = data.docs
       .reverse()

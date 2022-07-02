@@ -3,8 +3,8 @@ import { useAppSelector } from 'src/redux/hooks';
 import { getFriend } from 'src/redux/states/friend';
 import { Channel } from 'src/redux/states/channels';
 import { Title, AIcon, Container, FileIcon, HelpIcon } from './styles';
-import { OfflineStatus } from 'src/components/Images/user-status/offline';
-import { OnlineStatus } from 'src/components/Images/user-status/online';
+import { OfflineStatus } from 'src/components/images/user-status/offline';
+import { OnlineStatus } from 'src/components/images/user-status/online';
 
 type Props = { channel: Channel };
 

@@ -1,6 +1,6 @@
 import React from 'react';
-import { UserRaisingHand } from 'src/components/Images/tiny-icons/user-raising-hand';
-import { NitroImage } from '../Images/tiny-icons/nitro-image';
+import { UserRaisingHand } from 'src/components/images/tiny-icons/user-raising-hand';
+import { NitroImage } from '../images/tiny-icons/nitro-image';
 import {
   AvatarImage,
   AvatarImageContainer,

@@ -51,7 +51,7 @@ const ChannelData: React.FC = () => {
 
   const LoadingIndicator: React.FC = () => (
     <div ref={skeletonRef}>
-      {page! < totalPages!
+      {page! < totalPages! || !page
         ? new Array(30).fill(0).map((_, i) => <SkeletonMessage key={i} />)
         : null}
     </div>
@@ -88,7 +88,7 @@ const ChannelData: React.FC = () => {
           onScroll={onScroll}
           className="scrollerBase scroller messages"
         >
-          {messages.length >= 1 ? (
+          {messages ? (
             <MessagesContainer>
               <Messages>
                 <ChannelWelcome
@@ -97,7 +97,11 @@ const ChannelData: React.FC = () => {
                   }.png`}
                   username={activeChannel.name}
                 />
-                <MessageDivider date={messages[0].updatedAt!} />
+                {messages.length ? (
+                  <React.Fragment>
+                    <MessageDivider date={messages[0].updatedAt!} />
+                  </React.Fragment>
+                ) : null}
                 <LoadingIndicator />
                 {messages.map((msg: any, index: number) => (
                   <ChannelMessage message={msg} key={index} />
