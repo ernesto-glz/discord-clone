@@ -18,7 +18,8 @@
     "strictNullChecks": true,
     "strictPropertyInitialization": false,
     "outDir": "dist",
-    "baseUrl": "src"
+    "baseUrl": "src",
+    "paths": { "@discord/types": ["../../types/main.ts"] }
   },
   "include": ["src", "**/*.ts", "types"]
 }

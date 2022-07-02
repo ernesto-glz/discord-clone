@@ -9,20 +9,20 @@ const router = AsyncRouter();
 
 router.get(ApiRoutes['FRIEND']['PENDING_REQUESTS'], async (req, res) => {
   const { user } = res.locals;
-  const pendingRequests = await FriendService.getPendingRequests(user._id);
+  const pendingRequests = await FriendService.getPending(user._id);
   res.status(200).send(pendingRequests);
 });
 
 router.get(ApiRoutes['FRIEND']['OUTGOING_REQUESTS'], async (req, res) => {
   const { user } = res.locals;
-  const outgoingRequests = await FriendService.getOutgoingRequests(user._id);
+  const outgoingRequests = await FriendService.getOutgoing(user._id);
   res.status(200).send(outgoingRequests);
 });
 
 router.post(ApiRoutes['FRIEND']['CREATE_REQUEST'], validateCreateFR, async (req, res) => {
   const { username, discriminator } = req.body;
   const { user } = res.locals;
-  const friendRequest = await FriendService.createRequest({
+  const friendRequest = await FriendService.create({
     from: user._id,
     discriminator,
     username
@@ -33,7 +33,7 @@ router.post(ApiRoutes['FRIEND']['CREATE_REQUEST'], validateCreateFR, async (req,
 router.put(ApiRoutes['FRIEND']['ACCEPT_REQUEST'], async (req, res) => {
   const { user } = res.locals;
   const { requestId } = req.params;
-  const result = await FriendService.acceptFriendRequest(requestId, user._id);
+  const result = await FriendService.accept(requestId, user._id);
   res.status(200).send(result);
 });
 
@@ -52,7 +52,7 @@ router.get(ApiRoutes['FRIEND']['GET_FRIENDS'], async (req, res) => {
 router.delete(ApiRoutes['FRIEND']['DELETE_REQUEST'], async (req, res) => {
   const { user } = res.locals;
   const { requestId } = req.params;
-  const result = await FriendService.deleteFriendRequest(requestId, user._id);
+  const result = await FriendService.remove(requestId, user._id);
   res.status(200).send(result);
 });
 

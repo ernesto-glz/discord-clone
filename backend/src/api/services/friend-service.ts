@@ -6,7 +6,7 @@ import { ChannelService } from './channel-service';
 import { generateSnowflake } from 'utils';
 
 export class FriendService {
-  static async createRequest({ from, username, discriminator }: CreateRequest) {
+  static async create({ from, username, discriminator }: CreateRequest) {
     const userFound = await app.users.findOne({
       discriminator,
       username
@@ -30,26 +30,27 @@ export class FriendService {
     return await app.friends.findOneAndPopulate({ _id: created._id }, 'from', 'to');
   }
 
-  static async getPendingRequests(userId: string) {
+  static async getPending(userId: string) {
     return await app.friends.getPendingRequests(userId);
   }
 
-  static async getOutgoingRequests(userId: string) {
+  static async getOutgoing(userId: string) {
     return await app.friends.getOutgoingRequests(userId);
   }
 
-  static async deleteFriendRequest(requestId: string, userId: string) {
-    const requestExists = await app.friends.findOne({
+  static async remove(requestId: string, userId: string) {
+    const request = await app.friends.findOneAndPopulate({
       _id: requestId,
       $or: [{ to: userId }, { from: userId }]
-    });
+    }, 'from', 'to');
 
-    if (!requestExists) throw new ApiError(400, ApiResponses['REQUEST_NOT_FOUND']);
+    if (!request) throw new ApiError(400, ApiResponses['REQUEST_NOT_FOUND']);
 
-    return await app.friends.findByIdAndDelete(requestId);
+    await app.friends.findByIdAndDelete(requestId)
+    return request;
   }
 
-  static async acceptFriendRequest(requestId: string, userId: string) {
+  static async accept(requestId: string, userId: string) {
     const request = await app.friends.findOne({
       _id: requestId,
       to: userId

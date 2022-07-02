@@ -25,7 +25,7 @@ export const RequestActionsItem: React.FC<Props> = ({ requestId, type }) => {
       FriendService.deleteFriendRequest(requestId)
     );
     if (data) {
-      ws.emit('FRIEND_REQUEST_REMOVE', { request: data});
+      ws.emit('FRIEND_REQUEST_REMOVE', { request: data });
     }
   };
 

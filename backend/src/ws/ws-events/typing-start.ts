@@ -1,11 +1,12 @@
 import { Socket } from 'socket.io';
 import { WebSocket } from '../websocket';
 import { WSEvent } from './ws-event';
+import { WS } from '@discord/types';
 
 export default class implements WSEvent<'TYPING_START'> {
   public on = 'TYPING_START' as const;
 
-  public async invoke(ws: WebSocket, client: Socket, { channelId }: any): Promise<any> {
+  public async invoke(ws: WebSocket, client: Socket, { channelId }: WS.Params.Typing): Promise<any> {
     if (!client.rooms.has(channelId)) await client.join(channelId);
 
     return [
