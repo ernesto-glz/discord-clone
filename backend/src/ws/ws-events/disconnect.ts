@@ -18,12 +18,10 @@ export default class implements WSEvent<'disconnect'> {
     user.status = 'OFFLINE';
     await user.save();
 
-    return [
-      {
-        emit: 'PRESENCE_UPDATE' as const,
-        to: user.guildIds,
-        send: { userId: user.id, status: user.status }
-      }
-    ];
+    return [{
+      emit: 'PRESENCE_UPDATE' as const,
+      to: user.guildIds,
+      send: { userId: user.id, status: user.status }
+    }];
   }
 }

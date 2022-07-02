@@ -1,7 +1,7 @@
 import React from 'react';
 import useFetchAndLoad from 'src/hooks/useFetchAndLoad';
 import { ws } from 'src/ws/websocket';
-import { User } from 'src/models/user.model';
+import { Entity } from '@discord/types';
 import { FriendService } from 'src/services/friend.service';
 import {
   AcceptIcon,
@@ -13,7 +13,7 @@ import { RequestType } from './friend-request';
 
 interface Props {
   requestId: string;
-  requestUser: User;
+  requestUser: Entity.User;
   type: RequestType;
 }
 

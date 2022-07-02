@@ -1,28 +1,18 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { getOutgoingRequests, getPendingRequests } from 'src/api/friend';
-import { FriendRequest } from 'src/models/friend.model';
 import { loadAbort } from 'src/utils/load-abort-axios';
 import { RootState } from '../configure-store';
+import { Entity, WS } from '@discord/types';
 
 export interface FriendRequests {
   incoming: {
-    entities: FriendRequest[];
+    entities: Entity.Request[];
     loading: 'idle' | 'loading' | 'failed';
   };
   outgoing: {
-    entities: FriendRequest[];
+    entities: Entity.Request[];
     loading: 'idle' | 'loading' | 'failed';
   };
-}
-
-export interface CreateReqPayload {
-  request: FriendRequest;
-  type: 'INCOMING' | 'OUTGOING';
-}
-
-export interface RemoveReqPayload {
-  requestId: string;
-  type: 'INCOMING' | 'OUTGOING';
 }
 
 export const initialState: FriendRequests = {
@@ -36,40 +26,24 @@ export const initialState: FriendRequests = {
   }
 };
 
-export const getIncoming = createAsyncThunk(
-  'requests/getIncoming',
-  async () => {
-    const response = await getPendingRequests(loadAbort());
-    return response.data;
-  }
-);
-
-export const getOutgoing = createAsyncThunk(
-  'requests/getOutgoing',
-  async () => {
-    const response = await getOutgoingRequests(loadAbort());
-    return response.data;
-  }
-);
-
 export const slice = createSlice({
   name: 'requests',
   initialState,
   reducers: {
-    addRequest: (requests, { payload }: PayloadAction<CreateReqPayload>) => {
+    addRequest: (requests, { payload }: PayloadAction<WS.Args.RequestCreate>) => {
       payload.type === 'INCOMING'
         ? requests.incoming.entities.push(payload.request)
         : requests.outgoing.entities.push(payload.request);
     },
-    removeRequest: (requests, { payload }: PayloadAction<RemoveReqPayload>) => {
+    removeRequest: (requests, { payload }: PayloadAction<WS.Args.RequestRemove>) => {
       if (payload.type === 'INCOMING') {
         requests.incoming.entities = requests.incoming.entities.filter(
-          (request) => request._id !== payload.requestId
+          (request) => request._id !== payload.request._id
         );
         return;
       }
       requests.outgoing.entities = requests.outgoing.entities.filter(
-        (request) => request._id !== payload.requestId
+        (request) => request._id !== payload.request._id
       );
     }
   },
@@ -107,3 +81,20 @@ export const selectOutgoing = (state: RootState) => {
 };
 export const actions = slice.actions;
 export default slice.reducer;
+
+
+export const getIncoming = createAsyncThunk(
+  'requests/getIncoming',
+  async () => {
+    const response = await getPendingRequests(loadAbort());
+    return response.data;
+  }
+);
+
+export const getOutgoing = createAsyncThunk(
+  'requests/getOutgoing',
+  async () => {
+    const response = await getOutgoingRequests(loadAbort());
+    return response.data;
+  }
+);

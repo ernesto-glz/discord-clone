@@ -19,7 +19,7 @@ export class FriendRepository extends Repository<FriendDocument> {
     return await this.findAndPopulate(
       {
         to,
-        friend_status: FriendStatus.PENDING
+        status: FriendStatus.PENDING
       },
       'from',
       'to'
@@ -30,7 +30,7 @@ export class FriendRepository extends Repository<FriendDocument> {
     return await this.findAndPopulate(
       {
         from,
-        friend_status: FriendStatus.PENDING
+        status: FriendStatus.PENDING
       },
       'from',
       'to'
@@ -41,7 +41,7 @@ export class FriendRepository extends Repository<FriendDocument> {
     const result = await this.findAndPopulate(
       {
         $or: [{ from: userId }, { to: userId }],
-        friend_status: FriendStatus.FRIEND
+        status: FriendStatus.FRIEND
       },
       'from',
       'to'
@@ -57,6 +57,6 @@ export class FriendRepository extends Repository<FriendDocument> {
   }
 
   async acceptFriendRequest(requestId: string) {
-    return await this.updateOne({ _id: requestId }, { friend_status: FriendStatus.FRIEND });
+    return await this.updateOne({ _id: requestId }, { status: FriendStatus.FRIEND });
   }
 }

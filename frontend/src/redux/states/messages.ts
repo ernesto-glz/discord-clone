@@ -30,7 +30,7 @@ export const messageSlice = createSlice({
       messages.totalPages = payload.totalPages;
       messages.page = payload.page;
     },
-    addMessage: (messages, { payload }) => {
+    created: (messages, { payload }) => {
       const message = payload;
       const prev = messages.entities[messages.entities.length - 1];
       const { sender } = message;

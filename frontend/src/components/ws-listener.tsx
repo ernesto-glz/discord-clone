@@ -15,6 +15,8 @@ import { AuthErrors } from 'src/config/constants';
 import { useNavigate } from 'react-router-dom';
 import { playSound } from 'src/utils/sounds';
 import { initPings } from 'src/redux/states/pings';
+import { WS } from '@discord/types';
+import { getJwt } from 'src/utils/user';
 
 interface Props {
   children: React.ReactNode;
@@ -29,78 +31,72 @@ export const WSListeners: React.FC<Props> = ({ children }) => {
   useEffect(() => {
     if (store.getState().meta.hasListenedToSocket) return;
 
-    ws.on('connect', () => ws.emit('READY'));
+    ws.on('connect', () => ws.emit('READY', { jwt: getJwt() }));
     ws.on('connect_error', (error) => {
-      if (Object.values(AuthErrors).indexOf(error.message) > -1) {
-        dispatch(logOut());
-        return;
-      }
-      console.log(error);
+      if (Object.values(AuthErrors).indexOf(error.message) <= -1) 
+        return console.log(error);
+      dispatch(logOut());
     });
-    ws.on('READY', (args) => {
+    ws.on('READY', () => {
       dispatch(fetchEntities());
       dispatch(initPings());
     });
-    ws.on('PRESENCE_UPDATE', ({ userId, status }) => {
+    ws.on('PRESENCE_UPDATE', ({ userId, status }: WS.Args.PresenceUpdate) => {
       dispatch(friends.updatePresence({ userId, user: { status } }));
     });
-    ws.on('MESSAGE_CREATE', (newMessage, id) => {
+    ws.on('MESSAGE_CREATE', ({ data: message }: { data: WS.Args.MessageCreate }) => {
       const { activeChannel } = state().ui;
       const { _id: selfId, hiddenDMChannels } = state().user;
-      const channelInfo = state().channels.find((c) => c._id === id);
-      if (channelInfo!.type === 'DM' && newMessage.sender !== selfId) {
-        if (hiddenDMChannels!.includes(id)) {
-          const filtered = hiddenDMChannels!.filter((cId) => cId !== id);
-          dispatch(selfUser.updated({ hiddenDMChannels: filtered }));
-        }
-        if (activeChannel?._id !== id) {
-          playSound('NEW_MESSAGE');
-        }
+      const { channelId, sender } = message;
+      const channel = state().channels.find((c) => c._id === channelId);
+      const isHiddenChannel = hiddenDMChannels!.includes(channelId);
+      
+      if (channel!.type === 'DM' && sender !== selfId && isHiddenChannel) {
+        const filtered = hiddenDMChannels!.filter((cId) => cId !== channelId);
+        dispatch(selfUser.updated({ hiddenDMChannels: filtered }));
       }
-      dispatch(messages.addMessage(newMessage));
+
+      if (!activeChannel || activeChannel._id !== channelId) {
+        playSound('NEW_MESSAGE');
+      }
+
+      dispatch(messages.created(message));
     });
-    ws.on('CHANNEL_DISPLAY', (channelId) => {
+    ws.on('CHANNEL_DISPLAY', ({ channelId }: WS.Args.ChannelUpdate) => {
       const { hiddenDMChannels } = state().user;
       const filtered = hiddenDMChannels!.filter((cId) => cId !== channelId);
       dispatch(selfUser.updated({ hiddenDMChannels: filtered }));
       navigate(`/channels/@me/${channelId}`, { replace: true });
     });
-    ws.on('CHANNEL_HIDE', (channelId) => {
+    ws.on('CHANNEL_HIDE', ({ channelId }: WS.Args.ChannelUpdate) => {
       const { hiddenDMChannels } = state().user;
-      dispatch(
-        selfUser.updated({
-          hiddenDMChannels: [...hiddenDMChannels!, channelId]
-        })
-      );
-      if (state().ui.activeChannel!._id === channelId)
+      const activeChannel = state().ui.activeChannel;
+      const data = [...hiddenDMChannels!, channelId];
+      
+      dispatch(selfUser.updated({hiddenDMChannels: data }));
+      
+      if (activeChannel && activeChannel._id === channelId)
         navigate('/channels/@me');
     });
-    ws.on('NEW_FRIEND', ({ user, requestId, type, channel }) => {
-      const { guildIds, _id, hiddenDMChannels } = state().user;
+    ws.on('NEW_FRIEND', ({ user, request, type, channel }) => {
+      const { _id, hiddenDMChannels } = state().user;
+      const data = [...hiddenDMChannels!, channel._id];
       dispatch(friends.addFriend(user));
-      dispatch(requests.removeRequest({ requestId, type }));
-      dispatch(
-        selfUser.updated({
-          gildIds: [...guildIds!, channel.guildId],
-          hiddenDMChannels: [...hiddenDMChannels!, channel._id]
-        })
-      );
+      dispatch(requests.removeRequest({ request, type }));
+      dispatch(selfUser.updated({ hiddenDMChannels: data }));
       dispatch(channels.created({ channel, myId: _id! }));
     });
-    ws.on('FRIEND_REQUEST_CREATE', ({ request, type }) => {
+    ws.on('FRIEND_REQUEST_CREATE', ({ request, type }: WS.Args.RequestCreate) => {
       dispatch(requests.addRequest({ request, type }));
     });
-    ws.on('FRIEND_REQUEST_REMOVE', ({ request, type }) => {
-      dispatch(requests.removeRequest({ requestId: request._id, type }));
+    ws.on('FRIEND_REQUEST_REMOVE', ({ request, type }: WS.Args.RequestRemove) => {
+      dispatch(requests.removeRequest({ request, type }));
     });
-    ws.on('TYPING_START', (args) => {
-      const timeout = setTimeout(
-        () => dispatch(typing.userStoppedTyping(args)),
-        20000
-      );
+    ws.on('TYPING_START', (args: WS.Args.Typing) => {
+      const timeout = setTimeout(() => dispatch(typing.userStoppedTyping(args)), 20000);
       dispatch(typing.userTyped({ ...args, timer: timeout }));
     });
-    ws.on('TYPING_STOP', (args) => {
+    ws.on('TYPING_STOP', (args: WS.Args.Typing) => {
       dispatch(typing.userStoppedTyping(args));
     });
 

@@ -21,7 +21,7 @@ export const Friend = model<FriendDocument, PaginateModel<FriendDocument>>(
         ref: 'User',
         required: true
       },
-      friend_status: {
+      status: {
         type: String,
         enum: Object.values(FriendStatus),
         default: FriendStatus.PENDING

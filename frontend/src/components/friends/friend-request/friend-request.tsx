@@ -1,14 +1,14 @@
 import React, { useMemo, useState } from 'react';
 import { UserImage } from 'src/components/user-image';
 import { Profile, UserData } from 'src/components/user-info/styles';
-import { FriendRequest } from 'src/models/friend.model';
+import { Entity } from '@discord/types';
 import { FriendRequest as FriendRequestContainer, ItemBody } from '../styles';
 import { RequestActionsItem } from './request-actions';
 
 export type RequestType = 'Incoming' | 'Outgoing';
 
 interface Props {
-  request: FriendRequest;
+  request: Entity.Request;
   type: RequestType;
 }
 

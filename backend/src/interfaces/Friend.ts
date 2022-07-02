@@ -9,7 +9,7 @@ export interface CreateRequest {
 export interface FriendRequest {
   from: string;
   to: string;
-  friend_status: string;
+  status: string;
 }
 
 export type FriendDocument = FriendRequest & Document;

@@ -9,12 +9,10 @@ export default class implements WSEvent<'TYPING_STOP'> {
   public async invoke(ws: WebSocket, client: Socket, { channelId }: WS.Params.Typing): Promise<any> {
     if (!client.rooms.has(channelId)) await client.join(channelId);
 
-    return [
-      {
-        emit: this.on,
-        to: [channelId],
-        send: { userId: ws.sessions.userId(client), channelId }
-      }
-    ];
+    return [{
+      emit: this.on,
+      to: [channelId],
+      send: { userId: ws.sessions.userId(client), channelId }
+    }];
   }
 }

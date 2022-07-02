@@ -2,6 +2,7 @@ import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { calculateEventDelay } from 'src/utils/date';
 import { ws } from 'src/ws/websocket';
 import { AppDispatch, RootState } from '../configure-store';
+import { WS } from '@discord/types';
 
 export type TypingState = {
   userId: string;
@@ -13,21 +14,17 @@ const slice = createSlice({
   name: 'typing',
   initialState: [] as TypingState[],
   reducers: {
-    userTyped: (typing, { payload }: PayloadAction<TypingState>) => {
+    userTyped: (typing, { payload }: PayloadAction<WS.Args.Typing & TypingState>) => {
       const alreadyExists = typing.find((e) => {
         return e.userId === payload.userId && e.channelId === payload.channelId;
       });
 
-      if (alreadyExists) {
-        // Clear previous timeout and set new one
-        clearTimeout(alreadyExists.timer);
-        Object.assign(alreadyExists, payload);
-        return;
-      }
+      if (!alreadyExists) return [...typing, payload];
 
-      typing.push(payload);
+      clearTimeout(alreadyExists.timer);
+      Object.assign(alreadyExists, payload);
     },
-    userStoppedTyping: (typing, { payload }: PayloadAction<TypingState>) => {
+    userStoppedTyping: (typing, { payload }: PayloadAction<WS.Args.Typing>) => {
       const index = getIndex(typing, payload.userId, payload.channelId);
       typing.splice(index, 1);
     }

@@ -10,17 +10,14 @@ export default class implements WSEvent<'FRIEND_REQUEST_REMOVE'> {
     const fromId = ws.sessions.getClientIdFromUserId(request.from._id);
     const toId = ws.sessions.getClientIdFromUserId(request.to._id);
 
-    return [
-      {
-        emit: this.on,
-        to: [fromId ?? ''],
-        send: { request, type: 'OUTGOING' }
-      },
-      {
-        emit: this.on,
-        to: [toId ?? ''],
-        send: { request, type: 'INCOMING' }
-      }
-    ];
+    return [{
+      emit: this.on,
+      to: [fromId ?? ''],
+      send: { request, type: 'OUTGOING' }
+    }, {
+      emit: this.on,
+      to: [toId ?? ''],
+      send: { request, type: 'INCOMING' }
+    }];
   }
 }

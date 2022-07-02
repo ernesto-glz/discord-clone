@@ -5,24 +5,40 @@ export declare namespace Entity {
     email: string;
     password: string;
     discriminator: string;
-    status: "ONLINE" | "OFFLINE";
+    status: UserTypes.StatusType;
+    avatar: string;
     guildIds: string[];
     hiddenDMChannels: string[];
-    lastReadMessageIds: any;
+    lastReadMessageIds: { [t: string]: string };
   }
+
   export interface Request {
     _id: string;
     from: User;
     to: User;
-    friend_status: "PENDING" | "FRIEND" | "BLOCKED";
+    status: RequestTypes.StatusType;
   }
+
   export interface Channel {
     _id: string;
     guildId: string;
     createdBy: string;
     userIds: string[];
     lastMessageId: string;
-    type: "DM" | "GUILD_TEXT" | "GUILD_VOICE";
+    type: ChannelTypes.Type;
   }
   export interface Message {}
+
+  export namespace UserTypes {
+    export type StatusType = "ONLINE" | "OFFLINE";
+  }
+
+  export namespace RequestTypes {
+    export type Type = "INCOMING" | "OUTGOING";
+    export type StatusType = "PENDING" | "FRIEND";
+  }
+
+  export namespace ChannelTypes {
+    export type Type = "DM" | "GUILD_TEXT" | "GUILD_VOICE";
+  }
 }

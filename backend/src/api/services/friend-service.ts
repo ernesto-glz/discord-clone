@@ -17,7 +17,7 @@ export class FriendService {
 
     const alreadyRequest = await app.friends.checkExistence(from, userFound._id);
 
-    if (alreadyRequest?.friend_status === FriendStatus['FRIEND'])
+    if (alreadyRequest?.status === FriendStatus['FRIEND'])
       throw new ApiError(400, ApiResponses['ALREADY_FRIENDS']);
     else if (alreadyRequest) throw new ApiError(400, ApiResponses['REQUEST_ALREADY_EXISTS']);
 

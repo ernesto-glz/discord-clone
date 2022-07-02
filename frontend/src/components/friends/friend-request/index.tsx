@@ -1,5 +1,4 @@
 import React from 'react';
-import { FriendRequest } from 'src/models/friend.model';
 import { RequestItem } from './friend-request';
 import { useAppSelector } from 'src/redux/hooks';
 import { selectIncoming, selectOutgoing } from 'src/redux/states/requests';
@@ -24,10 +23,10 @@ export const PendingRequests: React.FC = () => {
           <h2>PENDING - {totalRequests}</h2>
         </ListHeader>
         <ListBody>
-          {incomingRequests?.map((request: FriendRequest, i) => (
+          {incomingRequests?.map((request, i) => (
             <RequestItem request={request} key={i} type="Incoming" />
           ))}
-          {outgoingRequests?.map((request: FriendRequest, i) => (
+          {outgoingRequests?.map((request, i) => (
             <RequestItem request={request} key={i} type="Outgoing" />
           ))}
         </ListBody>

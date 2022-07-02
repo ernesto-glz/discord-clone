@@ -10,12 +10,10 @@ export default class implements WSEvent<'CHANNEL_HIDE'> {
     const userId = ws.sessions.userId(client) ?? '';
     await app.users.updateOne({ _id: userId }, { $push: { hiddenDMChannels: channelId } });
 
-    return [
-      {
-        emit: this.on,
-        to: [client.id],
-        send: channelId
-      }
-    ];
+    return [{
+      emit: this.on,
+      to: [client.id],
+      send: { channelId }
+    }];
   }
 }

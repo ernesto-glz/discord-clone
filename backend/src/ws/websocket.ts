@@ -9,7 +9,7 @@ import { WSAction, WSEvent } from './ws-events/ws-event';
 export class WebSocket {
   public io: SocketServer;
   public sessions = new SessionManager();
-  public events = new Map<keyof WS.Events, WSEvent<keyof WS.Events>>();
+  public events = new Map<keyof WS.To, WSEvent<keyof WS.To>>();
 
   public get connectedUserIds() {
     return Array.from(this.sessions.values());
@@ -27,12 +27,10 @@ export class WebSocket {
     const files = readdirSync(dir);
 
     for (const file of files) {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
       const Event = require(`./ws-events/${file}`).default;
       try {
         const event = new Event();
         this.events.set(event.on, event);
-        // eslint-disable-next-line no-empty
       } catch {}
     }
 
@@ -46,20 +44,16 @@ export class WebSocket {
             client.emit('error', { message: error.message });
           }
         });
-
-      client.on('MESSAGE_CREATE', (data) => {
-        this.io.to(data.channelId).emit('MESSAGE_CREATE', data, data.channelId);
-      });
     });
   }
 
-  public handle(action: WSAction<keyof WS.Events>) {
+  public handle(action: WSAction<keyof WS.From>) {
     this.io.to(action.to).emit(action.emit, action.send);
   }
 
   public to(...rooms: string[]) {
     return this.io.to(rooms) as {
-      emit: <T extends keyof WS.Events>(name: T, args: WS.Events[T]) => any;
+      emit: <T extends keyof WS.From>(name: T, args: WS.From[T]) => any;
     };
   }
 }
