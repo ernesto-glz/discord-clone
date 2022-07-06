@@ -60,7 +60,8 @@ export const WSListeners: React.FC = () => {
       const { activeDMCS } = state().auth.user!;
       const data = [...activeDMCS, channelId];
       
-      dispatch(auth.updated({ activeDMCS: data }));
+      if (!activeDMCS.find((a) => a === channelId))
+        dispatch(auth.updated({ activeDMCS: data }));
 
       navigate(`/channels/@me/${channelId}`);
     });
