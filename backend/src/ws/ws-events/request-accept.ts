@@ -22,7 +22,7 @@ export default class implements WSEvent<'FRIEND_REQUEST_ACCEPT'> {
       to: [fromSocketId ?? ''],
       send: {
         requestId: request._id,
-        channel,
+        channel: await app.channels.fillInfo(channel, request.from._id),
         user: request.to,
       }
     }, {
@@ -30,7 +30,7 @@ export default class implements WSEvent<'FRIEND_REQUEST_ACCEPT'> {
       to: [client.id],
       send: {
         requestId: request._id,
-        channel,
+        channel: await app.channels.fillInfo(channel, request.to._id),
         user: request.from,
       }
     }];

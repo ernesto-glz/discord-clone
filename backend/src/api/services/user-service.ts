@@ -1,4 +1,4 @@
-import { ApiError } from 'api/errors/ApiError';
+import { ApiError } from 'api/modules/api-error';
 import { ApiResponses } from 'config/constants/api-responses';
 import { Message } from 'interfaces/Message';
 

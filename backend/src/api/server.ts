@@ -2,10 +2,10 @@ import express, { json, urlencoded } from 'express';
 import http from 'http';
 import cors from 'cors';
 import helmet from 'helmet';
-import v1 from './routes/v1/index-routes';
+import v1 from './routes/index-routes';
 import mongoSanitize from 'express-mongo-sanitize';
-import { apiErrorHandler } from './middleware/ApiErrorHandler';
-import { ApiError } from './errors/ApiError';
+import { apiErrorHandler } from './middleware/error-handling';
+import { ApiError } from './modules/api-error';
 import { join } from 'path';
 
 export class Server {
@@ -24,7 +24,7 @@ export class Server {
     this.express.use(helmet.frameguard({ action: 'deny' }));
     this.express.use(mongoSanitize());
     this.express.use('/v1', v1);
-    this.express.use('/assets', express.static(join(__dirname, '../assets')));
+    this.express.use('/assets', express.static(join(__dirname, '../../assets')));
     this.express.use('/', () => {
       throw new ApiError(400, 'Invalid API version number');
     });

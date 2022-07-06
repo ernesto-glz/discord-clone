@@ -1,5 +1,5 @@
 import { Repository } from './Base';
-import { User } from 'models/user';
+import { User } from 'data/models/user';
 import { UserDocument } from 'interfaces/User';
 
 export class UserRepository extends Repository<UserDocument> {

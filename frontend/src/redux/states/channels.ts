@@ -17,9 +17,6 @@ export const slice = createSlice({
     fetched: (channels, { payload }) => {
       channels.push(...payload.filter(notInArray(channels)));
     },
-    created: (channels, { payload }) => {
-      channels.concat({ ...payload.channel });
-    },
     updated: (channels, { payload }) => {
       const channel = channels.find((c) => c._id === payload._id);
       if (!channel) return;

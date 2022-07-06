@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { UserImage } from 'src/components/user-image';
 import { ws } from 'src/ws/websocket';
 import { isOnline } from 'src/utils/redux';
-import { CloseIcon, Container, NotificationMark } from './styles';
+import { CloseIcon, Container } from './styles';
 import { useSelector } from 'react-redux';
 import { Store } from 'types/store';
 import { store } from 'src/redux/configure-store';
@@ -38,11 +38,11 @@ const ChannelButton: React.FC<Props> = ({ channel }) => {
       <div onClick={goToChannel}>
         <UserImage
           isGeneric={false}
-          imageUrl={`${process.env.REACT_APP_API_ROOT}/assets/avatars/${channel.avatar}.png`}
+          imageUrl={`${process.env.REACT_APP_API_ROOT}/assets/avatars/${channel.avatar ?? 'unknown'}.png`}
           isOnline={userStatus}
           displayStatus={true}
         />
-        <span>{channel.name}</span>
+        <span>{channel.name ?? 'Unknown'}</span>
       </div>
       {/* 
       {!channelId && notifications > 0 && (

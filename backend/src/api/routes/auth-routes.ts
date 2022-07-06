@@ -1,7 +1,7 @@
 import { AsyncRouter } from 'express-async-router';
 import { AuthService } from 'api/services/auth-service';
 import { Auth } from 'shared/auth';
-import { ApiError } from 'api/errors/ApiError';
+import { ApiError } from 'api/modules/api-error';
 import { ApiResponses } from 'config/constants/api-responses';
 import { validateLogin, validateRegister } from 'api/validations/auth-validations';
 

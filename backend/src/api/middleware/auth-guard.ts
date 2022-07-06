@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { verify } from 'jsonwebtoken';
-import { ApiError } from 'api/errors/ApiError';
+import { ApiError } from 'api/modules/api-error';
 import { ApiResponses } from 'config/constants/api-responses';
 import { ApiErrors } from 'config/constants/api-errors';
 

@@ -1,4 +1,4 @@
-import { ApiError } from 'api/errors/ApiError';
+import { ApiError } from 'api/modules/api-error';
 import { UserDocument } from 'interfaces/User';
 import { Socket } from 'socket.io';
 

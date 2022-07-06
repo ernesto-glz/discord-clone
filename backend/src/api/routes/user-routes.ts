@@ -1,5 +1,6 @@
 import { AsyncRouter } from 'express-async-router';
 import { UserService } from 'api/services/user-service';
+import { Channel } from 'data/models/channel';
 
 export const router = AsyncRouter();
 
@@ -7,9 +8,10 @@ router.get('/entities', async (req, res) => {
   const { _id: userId, guildIds } = res.locals.user;
   const $in = guildIds;
 
+  // app.channels.find({ userIds: userId }),
   const [friends, channels, users, requests] = await Promise.all([
     app.friends.getFriends(userId),
-    app.channels.find({ userIds: userId }),
+    Channel.find({ userIds: userId }),
     app.users.find({ guildIds: { $in } }),
     app.friends.getRequests(userId),
   ]);

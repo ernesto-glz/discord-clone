@@ -34,6 +34,7 @@ export const WSListeners: React.FC = () => {
     ws.on('READY', (data) => {
       dispatch(fetchEntities());
       dispatch(auth.ready(data.user))
+      dispatch(users.fetched([data.user]))
       // dispatch(initPings());
     });
     ws.on('PRESENCE_UPDATE', ({ userId, status }: WS.Args.PresenceUpdate) => {
@@ -75,12 +76,10 @@ export const WSListeners: React.FC = () => {
         navigate('/channels/@me');
     });
     ws.on('NEW_FRIEND', ({ user, requestId, channel }) => {
-      const { _id } = state().auth.user!;
-
       dispatch(users.fetched([user]))
       dispatch(friends.addFriend(user._id));
+      dispatch(channels.fetched([channel]));
       dispatch(requests.removeRequest({ requestId }));
-      dispatch(channels.created({ channel, selfId: _id! }));
     });
     ws.on('FRIEND_REQUEST_CREATE', ({ request }: WS.Args.RequestCreate) => {
       dispatch(requests.addRequest({ request }));

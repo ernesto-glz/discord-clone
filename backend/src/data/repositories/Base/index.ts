@@ -1,7 +1,7 @@
-import mongoose, { FilterQuery, Model, UpdateQuery } from 'mongoose';
+import { FilterQuery, Model, UpdateQuery } from 'mongoose';
 
 export abstract class Repository<T> {
-  protected constructor(protected readonly entityModel: Model<T> & mongoose.PaginateModel<T>) {}
+  protected constructor(protected readonly entityModel: Model<T>) {}
 
   async findOne(
     entityFilterQuery: FilterQuery<T>,
@@ -48,41 +48,22 @@ export abstract class Repository<T> {
     return await this.entityModel.create(createEntityData);
   }
 
-  async paginate(entityFilterQuery: FilterQuery<T>, options?: object) {
-    return await this.entityModel.paginate(entityFilterQuery, options);
-  }
-
   async deleteMany(entityFilterQuery: FilterQuery<T>) {
     return await this.entityModel.deleteMany(entityFilterQuery);
   }
 
   async findAndPopulate(
     entityFilterQuery: FilterQuery<T>,
-    populateItem: string,
-    populateItemTwo?: string
+    populate: string | string[],
   ): Promise<T[] | null> {
-    if (populateItemTwo) {
-      return this.entityModel
-        .find(entityFilterQuery)
-        .populate(populateItem)
-        .populate(populateItemTwo);
-    }
-    return this.entityModel.find(entityFilterQuery).populate(populateItem);
+    return this.entityModel.find(entityFilterQuery).populate(populate);
   }
 
   async findOneAndPopulate(
     entityFilterQuery: FilterQuery<T>,
-    populateItem: string,
-    populateItemTwo?: string
+    populate: string | string[],
   ) {
-    if (populateItemTwo) {
-      return this.entityModel
-        .findOne(entityFilterQuery)
-        .populate(populateItem)
-        .populate(populateItemTwo);
-    }
-
-    return this.entityModel.findOne(entityFilterQuery).populate(populateItem);
+    return this.entityModel.findOne(entityFilterQuery).populate(populate);
   }
 
   async countDocuments(entityFilterQuery: FilterQuery<T>) {

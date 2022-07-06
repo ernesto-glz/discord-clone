@@ -1,7 +1,7 @@
 import { Auth } from 'shared/auth';
-import { ApiError } from 'api/errors/ApiError';
+import { ApiError } from 'api/modules/api-error';
 import { ApiResponses } from 'config/constants/api-responses';
-import { generateSnowflake, toFourDigits } from 'utils';
+import { generateSnowflake } from 'utils/snowflake';
 
 export class AuthService {
   public static async signIn(email: string, password: string) {
@@ -37,7 +37,8 @@ export class AuthService {
       username,
       password: hashedPassword,
       email,
-      discriminator: toFourDigits(discriminator),
+      avatar: Math.floor(Math.random() * 5).toString(),
+      discriminator: discriminator.toString().padStart(4, '0'),
       guildIds: []
     });
 

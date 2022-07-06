@@ -1,11 +1,12 @@
-import { ApiError } from 'api/errors/ApiError';
-import { Message } from 'interfaces/Message';
+import { ApiError } from 'api/modules/api-error';
 import { ApiResponses } from 'config/constants/api-responses';
 import { UserService } from './user-service';
-import { generateSnowflake } from 'utils';
+import { generateSnowflake } from 'utils/snowflake';
+import { Entity } from '@discord/types';
+import { Message } from 'data/models/message';
 
 export class MessageService {
-  static async getPaginated(channelId: string, userId: string, limit: number, selectedPage: number) {
+  static async getPaginated(channelId: string, userId: string, limit: number, page: number) {
     const channel = await app.channels.findOne({
       _id: channelId,
       $or: [{ sender: userId }, { receiver: userId }]
@@ -15,9 +16,9 @@ export class MessageService {
       throw new ApiError(400, ApiResponses.NO_MESSAGES_FOUND);
     }
 
-    const messages = await app.messages.paginate(
+    const messages = await Message.paginate(
       { channelId },
-      { limit, page: selectedPage, sort: { _id: 'desc' } }
+      { limit, page, sort: { _id: 'desc' } }
     );
 
     if (!messages.docs.length) {
@@ -32,7 +33,7 @@ export class MessageService {
     return messages;
   }
 
-  static async create(data: Message) {
+  static async create(data: Entity.Message) {
     const { channelId, sender } = data;
 
     const message = await app.messages.create({

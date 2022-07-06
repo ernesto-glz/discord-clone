@@ -35,7 +35,3 @@ export function snowflakeToDate(snowflake: string) {
   const sinceEpochMs = Number(binary64(snowflake).slice(0, 42 + 2));
   return new Date(sinceEpochMs + discordEpoch);
 }
-
-export function toFourDigits(discriminator: string | number) {
-  return discriminator.toLocaleString('en-US', { minimumIntegerDigits: 4, useGrouping: false });
-}

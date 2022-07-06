@@ -1,9 +1,9 @@
 import { FriendStatus } from 'config/constants/status';
-import { ApiError } from 'api/errors/ApiError';
+import { ApiError } from 'api/modules/api-error';
 import { CreateRequest } from 'interfaces/Friend';
 import { ApiResponses } from 'config/constants/api-responses';
 import { ChannelService } from './channel-service';
-import { generateSnowflake } from 'utils';
+import { generateSnowflake } from 'utils/snowflake';
 
 export class FriendService {
   static async create({ from, username, discriminator }: CreateRequest) {
@@ -27,14 +27,14 @@ export class FriendService {
       to: userFound._id
     });
 
-    return await app.friends.findOneAndPopulate({ _id: created._id }, 'from', 'to');
+    return await app.friends.findOneAndPopulate({ _id: created._id }, ['from', 'to']);
   }
 
   static async remove(requestId: string, userId: string) {
     const request = await app.friends.findOneAndPopulate({
       _id: requestId,
       $or: [{ to: userId }, { from: userId }]
-    }, 'from', 'to');
+    }, ['from', 'to']);
 
     if (!request) throw new ApiError(400, ApiResponses['REQUEST_NOT_FOUND']);
 
@@ -53,13 +53,13 @@ export class FriendService {
     const updated = await app.friends.acceptFriendRequest(requestId);
     if (!updated) throw new ApiError(500, ApiResponses['SOMETHING_WRONG']);
 
-    const result = await ChannelService.createDM({
+    const created = await ChannelService.createDM({
       myId: request.from,
       userId: request.to
     });
 
-    const populated = await app.friends.findOneAndPopulate({ _id: request._id }, 'from', 'to');
+    const result = await app.friends.findOneAndPopulate({ _id: request._id }, ['from', 'to']);
 
-    return { request: populated, channel: result.channel };
+    return { request: result, channel: created.channel };
   }
 }

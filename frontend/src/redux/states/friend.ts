@@ -9,7 +9,7 @@ export const slice = createSlice({
     fetched: (friends, { payload }: PayloadAction<Entity.User[]>) => {
       friends.push(...payload.filter(notInArray(friends)));
     },
-    addFriend: (friends, { payload}) => {
+    addFriend: (friends, { payload }) => {
       friends.push(payload);
     }
   }

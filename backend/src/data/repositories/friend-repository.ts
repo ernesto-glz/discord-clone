@@ -1,6 +1,6 @@
 import { FriendStatus } from 'config/constants/status';
 import { FriendDocument } from 'interfaces/Friend';
-import { Friend } from 'models/friend';
+import { Friend } from 'data/models/friend';
 import { Repository } from './Base';
 
 export class FriendRepository extends Repository<FriendDocument> {
@@ -32,7 +32,7 @@ export class FriendRepository extends Repository<FriendDocument> {
   async getRequests(selfId: string) {
     const requests = await this.findAndPopulate({ 
       $or: [{ to: selfId }, { from: selfId }], status: 'PENDING' 
-    }, 'from', 'to');
+    }, ['from', 'to']);
 
     if (!requests) return [];
 

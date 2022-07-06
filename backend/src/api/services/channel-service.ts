@@ -1,8 +1,8 @@
-import { ApiError } from 'api/errors/ApiError';
+import { ApiError } from 'api/modules/api-error';
 import { CreateDMChannel } from 'interfaces/Channel';
 import { ApiResponses } from 'config/constants/api-responses';
 import { ChannelTypes } from 'config/constants/status';
-import { generateSnowflake } from 'utils';
+import { generateSnowflake } from 'utils/snowflake';
 
 export class ChannelService {
   static async createDM({ myId, userId }: CreateDMChannel) {
