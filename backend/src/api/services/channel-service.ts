@@ -21,7 +21,7 @@ export class ChannelService {
 
     await app.users.updateMany(
       {$or: [{ _id: myId }, { _id: userId }]},
-      { $push: { guildIds: guildId, hiddenDMChannels: created._id } }
+      { $push: { guildIds: guildId, activeDMCS: created._id } }
     );
 
     return { channel: created, alreadyExists: false };

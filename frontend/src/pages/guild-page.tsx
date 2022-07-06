@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ChannelData from 'src/components/channel/channel-data';
 import FriendsHeader from 'src/components/friends/friend-header';
 import ServerName from 'src/components/server/server-name';
@@ -7,24 +7,31 @@ import RightPanel from 'src/components/right-pannel';
 import { useParams } from 'react-router-dom';
 import PageWrapper from './page-wrapper';
 import { ChannelHeader } from 'src/components/channel/channel-header/channel-header';
-import { Store } from 'types/store';
 import { useAppSelector } from 'src/redux/hooks';
+import { useDispatch } from 'react-redux';
+import { pageSwitched } from 'src/redux/states/ui';
 
 export type Pages = 'ONLINE' | 'ALL' | 'PENDING' | 'ADD';
 
 export const GuildPage: React.FC = () => {
   const { channelId, guildId } = useParams();
   const [page, setPage] = useState<Pages>('ONLINE');
-  const activeChannel = useAppSelector((s) => s.ui.activeChannel);
-  const channel = useAppSelector((s: Store.AppState) =>
-    s.channels.find((c) => c._id === channelId)
-  );
+  const { activeGuild, activeChannel } = useAppSelector((s) => s.ui);
+  const channel = useAppSelector((s) => s.channels.find((c) => c._id === channelId));
+  const dispatch = useDispatch();
 
-  return guildId ? (
-    <PageWrapper pageTitle={channel?.name ?? 'Discord Clone'}>
+  useEffect(() => {
+    dispatch(pageSwitched({
+      channel: channelId ? channel ?? null : null,
+      guild: guildId ?? '@me'
+    }));
+  }, [channelId, guildId]);
+
+  return (activeGuild) ? (
+    <PageWrapper pageTitle={activeChannel?.name ?? 'Discord Clone'}>
       <ServerName />
       {activeChannel ? (
-        <ChannelHeader channel={channel!} />
+        <ChannelHeader />
       ) : (
         <FriendsHeader pageState={[page, setPage]} />
       )}

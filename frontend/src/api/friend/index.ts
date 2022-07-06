@@ -5,7 +5,7 @@ export const createFriendRequest = (
   data: CreateFriendRequest,
   controller: AbortController
 ) => {
-  return client.post('/friends/create-request', data, {
+  return client.post('/friends', data, {
     signal: controller.signal
   });
 };
@@ -21,7 +21,7 @@ export const acceptFriendRequest = (
   requestId: string,
   controller: AbortController
 ) => {
-  return client.put(`/friends/accept/${requestId}`, {
+  return client.put(`/friends/${requestId}`, {
     controller: controller.signal
   });
 };

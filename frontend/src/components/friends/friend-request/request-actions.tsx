@@ -24,18 +24,20 @@ export const RequestActionsItem: React.FC<Props> = ({ requestId, type }) => {
     const { data } = await callEndpoint(
       FriendService.deleteFriendRequest(requestId)
     );
-    if (data) {
-      ws.emit('FRIEND_REQUEST_REMOVE', { request: data });
-    }
+
+    if (!data) return;
+    
+    ws.emit('FRIEND_REQUEST_REMOVE', { request: data });
   };
 
   const handleAcceptRequest = async () => {
     const { data } = await callEndpoint(
       FriendService.acceptFriendRequest(requestId)
     );
-    if (data) {
-      ws.emit('FRIEND_REQUEST_ACCEPT', data);
-    }
+
+    if (!data) return;
+
+    ws.emit('FRIEND_REQUEST_ACCEPT', data);
   };
 
   return (

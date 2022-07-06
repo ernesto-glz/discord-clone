@@ -41,7 +41,7 @@ export declare namespace Entity {
     export type StatusType = "ONLINE" | "OFFLINE";
     export interface Self extends Entity.User {
       email: string;
-      hiddenDMChannels: string[];
+      activeDMCS: string[];
       lastReadMessageIds: { [t: string]: string };
     }
   }

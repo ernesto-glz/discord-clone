@@ -28,7 +28,7 @@ export default class implements WSEvent<'FRIEND_REQUEST_ACCEPT'> {
       }
     }, {
       emit: 'NEW_FRIEND' as const,
-      to: [client.id ?? ''],
+      to: [client.id],
       send: {
         request,
         channel,

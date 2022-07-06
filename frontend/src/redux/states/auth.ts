@@ -31,8 +31,8 @@ export const slice = createSlice({
       ws.disconnect();
       auth.attemptedLogin = false;
     },
-    updated: (user, { payload }) => {
-      Object.assign(user, payload);
+    updated: (auth, { payload }) => {
+      Object.assign(auth.user, payload);
     }
   }
 });

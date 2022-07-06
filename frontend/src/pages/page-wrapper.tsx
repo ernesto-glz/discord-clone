@@ -1,15 +1,11 @@
 import React, { useEffect } from 'react';
-import { useStore } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import ChannelList from 'src/components/channel/channel-list';
 import ServerList from 'src/components/server/server-list';
 import UserInfo from 'src/components/user-info';
 import { WSListeners } from 'src/components/ws-listener';
-import { useAppDispatch } from 'src/redux/hooks';
-import { getChannel } from 'src/redux/states/channels';
-import { pageSwitched } from 'src/redux/states/ui';
+import { useAppSelector } from 'src/redux/hooks';
 import { AppGridContainer } from 'src/styled-components/app-container';
-import { Store } from 'types/store';
 
 export type PageWrapperProps = React.DetailedHTMLProps<
   React.HTMLAttributes<HTMLDivElement>,
@@ -17,21 +13,14 @@ export type PageWrapperProps = React.DetailedHTMLProps<
 > & { pageTitle?: string };
 
 const PageWrapper: React.FC<PageWrapperProps> = (props) => {
-  const { channelId, guildId } = useParams();
-  const dispatch = useAppDispatch();
-  const store = useStore();
+  const activeChannel = useAppSelector((s) => s.ui.activeChannel);
+  const { channelId } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     document.title = props.pageTitle ?? 'Discord Clone';
-    dispatch(
-      pageSwitched({
-        channel: channelId
-          ? getChannel(channelId!)(store.getState() as Store.AppState) ?? null
-          : null,
-        guild: guildId ?? '@me'
-      })
-    );
-  }, [channelId, guildId]);
+    if (!activeChannel && channelId) navigate('/channels/@me')
+  }, [])
 
   return (
     <React.Fragment>

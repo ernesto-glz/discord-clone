@@ -15,10 +15,6 @@ export class UserService {
     return await app.users.updateOne({ _id: userId }, { status });
   };
 
-  public static setInHiddenDMS = async (userId: string, channelId: string) => {
-    return await app.users.updateOne({ _id: userId }, { $push: { hiddenDMChannels: channelId } });
-  };
-
   public static markAsRead = async (userId: string, message: Message) => {
     const user = await app.users.findById(userId);
     if (!user) throw new ApiError(400, ApiResponses.USER_NOT_FOUND);

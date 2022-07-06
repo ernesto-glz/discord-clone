@@ -15,7 +15,7 @@ export class UserRepository extends Repository<UserDocument> {
     const u = { ...user.toObject() } as any;
     delete u.email;
     delete u.lastReadMessageIds;
-    delete u.hiddenDMChannels;
+    delete u.activeDMCS;
     return u;
   }
 }

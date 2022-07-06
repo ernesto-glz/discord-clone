@@ -6,9 +6,9 @@ import { WSEvent } from './ws-event';
 export default class implements WSEvent<'CHANNEL_DISPLAY'> {
   public on = 'CHANNEL_DISPLAY' as const;
 
-  public async invoke(ws: WebSocket, client: Socket, { channelId }: WS.Params.ChannelUpdate): Promise<any> {
+  public async invoke(ws: WebSocket, client: Socket, { channelId }: WS.Params.ChannelUpdate) {
     const userId = ws.sessions.userId(client) ?? '';
-    await app.users.updateOne({ _id: userId }, { $pull: { hiddenDMChannels: channelId } });
+    await app.users.updateOne({ _id: userId }, { $push: { activeDMCS: channelId } });
 
     return [{
       emit: this.on,

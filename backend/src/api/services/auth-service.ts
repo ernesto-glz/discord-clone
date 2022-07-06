@@ -14,7 +14,7 @@ export class AuthService {
     if (!(await Auth.checkCredentials(password, userFound.password)))
       throw new ApiError(401, ApiResponses['INVALID_CREDENTIALS']);
 
-    return await app.users.findOneAndSelect({ email }, '+hiddenDMChannels');
+    return await app.users.findOne({ email });
   }
 
   public static async calcDiscriminator(username: string) {
@@ -41,6 +41,6 @@ export class AuthService {
       guildIds: []
     });
 
-    return await app.users.findOneAndSelect({ email }, '+hiddenDMChannels');
+    return await app.users.findOne({ email });
   }
 }

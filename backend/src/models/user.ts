@@ -52,7 +52,7 @@ export const User = model<UserDocument, PaginateModel<UserDocument>>(
         enum: Object.values(UserStatus),
         default: 'OFFLINE'
       },
-      hiddenDMChannels: {
+      activeDMCS: {
         type: [String],
         ref: 'Channels',
         default: []

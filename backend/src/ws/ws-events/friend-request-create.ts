@@ -11,7 +11,7 @@ export default class implements WSEvent<'FRIEND_REQUEST_CREATE'> {
 
     return [{
       emit: this.on,
-      to: [client.id ?? ''],
+      to: [client.id],
       send: { request, type: 'OUTGOING' }
     }, {
       emit: this.on,

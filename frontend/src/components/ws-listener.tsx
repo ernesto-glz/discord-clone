@@ -41,14 +41,14 @@ export const WSListeners: React.FC = () => {
     });
     ws.on('MESSAGE_CREATE', ({ data: message }: { data: WS.Args.MessageCreate }) => {
       const { activeChannel } = state().ui;
-      const { _id: selfId, hiddenDMChannels } = state().auth.user!;
+      const { _id: selfId, activeDMCS } = state().auth.user!;
       const { channelId, sender } = message;
       const channel = state().channels.find((c) => c._id === channelId);
-      const isHiddenChannel = hiddenDMChannels!.includes(channelId);
+      const isHiddenChannel = activeDMCS.includes(channelId);
       
       if (channel!.type === 'DM' && sender !== selfId && isHiddenChannel) {
-        const filtered = hiddenDMChannels!.filter((cId) => cId !== channelId);
-        dispatch(auth.updated({ hiddenDMChannels: filtered }));
+        const filtered = activeDMCS.filter((cId) => cId !== channelId);
+        dispatch(auth.updated({ activeDMCS: filtered }));
       }
 
       if (!activeChannel || activeChannel._id !== channelId)
@@ -57,29 +57,29 @@ export const WSListeners: React.FC = () => {
       dispatch(messages.created(message));
     });
     ws.on('CHANNEL_DISPLAY', ({ channelId }: WS.Args.ChannelUpdate) => {
-      const { hiddenDMChannels } = state().auth.user!;
-      const filtered = hiddenDMChannels!.filter((cId) => cId !== channelId);
-      dispatch(auth.updated({ hiddenDMChannels: filtered }));
-      navigate(`/channels/@me/${channelId}`, { replace: true });
+      const { activeDMCS } = state().auth.user!;
+      const data = [...activeDMCS, channelId];
+      
+      dispatch(auth.updated({ activeDMCS: data }));
+
+      navigate(`/channels/@me/${channelId}`);
     });
     ws.on('CHANNEL_HIDE', ({ channelId }: WS.Args.ChannelUpdate) => {
-      const { hiddenDMChannels } = state().auth.user!;
+      const { activeDMCS } = state().auth.user!;
+      const filtered = activeDMCS.filter((cId) => cId !== channelId);
       const activeChannel = state().ui.activeChannel;
-      const data = [...hiddenDMChannels!, channelId];
       
-      dispatch(auth.updated({ hiddenDMChannels: data }));
+      dispatch(auth.updated({ activeDMCS: filtered }));
       
-      if (activeChannel && activeChannel._id === channelId)
+      if (activeChannel?._id === channelId)
         navigate('/channels/@me');
     });
     ws.on('NEW_FRIEND', ({ user, request, type, channel }) => {
-      const { _id, hiddenDMChannels } = state().auth.user!;
-      const data = [...hiddenDMChannels, channel._id];
+      const { _id } = state().auth.user!;
 
       dispatch(users.added(user))
       dispatch(friends.addFriend(user._id));
       dispatch(requests.removeRequest({ request, type }));
-      dispatch(auth.updated({ hiddenDMChannels: data }));
       dispatch(channels.created({ channel, selfId: _id! }));
     });
     ws.on('FRIEND_REQUEST_CREATE', ({ request, type }: WS.Args.RequestCreate) => {

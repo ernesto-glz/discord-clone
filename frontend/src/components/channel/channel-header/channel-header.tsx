@@ -2,14 +2,12 @@ import React from 'react';
 import { Title, AIcon, Container, FileIcon, HelpIcon } from './styles';
 import { OfflineStatus } from 'src/components/images/user-status/offline';
 import { OnlineStatus } from 'src/components/images/user-status/online';
-import { Entity } from '@discord/types';
 import { getUserById } from 'src/redux/states/users';
 import { useAppSelector } from 'src/redux/hooks';
 
-type Props = { channel: Entity.Channel };
-
-export const ChannelHeader: React.FC<Props> = ({ channel }) => {
-  const user = useAppSelector(getUserById(channel?.dmUserId ?? ''));
+export const ChannelHeader: React.FC = () => {
+  const { activeChannel } = useAppSelector((s) => s.ui);
+  const user = useAppSelector(getUserById(activeChannel?.dmUserId ?? ''));
   const isOnline = user?.status === 'ONLINE';
 
   return (

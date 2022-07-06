@@ -9,7 +9,7 @@ export interface User {
   status: 'ONLINE' | 'OFFLINE';
   avatar: string;
   guildIds: string[];
-  hiddenDMChannels: string[];
+  activeDMCS: string[];
   lastReadMessageIds: any;
 }
 
