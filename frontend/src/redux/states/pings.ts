@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import store, { AppDispatch, RootState } from '../configure-store';
 
 type PingPayload = { channelId: string; guildId: string };
 type Pings = { [guildId: string]: string[] };
@@ -20,17 +19,17 @@ export const slice = createSlice({
 export const actions = slice.actions;
 export default slice.reducer;
 
-export const initPings = () => (dispatch: AppDispatch) => {
-  const user = store.getState().user!;
-  const channels = store.getState().channels;
-  const pings: Pings = {};
+// export const initPings = () => (dispatch: AppDispatch) => {
+//   const user = store.getState().auth.user!;
+//   const channels = store.getState().channels;
+//   const pings: Pings = {};
 
-  for (const channel of channels) {
-    const lastReadId = user.lastReadMessageIds[channel._id];
-    if (true || lastReadId === channel.lastMessageId) {
-      pings[channel._id] = pings[channel._id] ?? [];
-      pings[channel._id].push(channel._id);
-    }
-  }
-  dispatch(actions.initialized(pings));
-};
+//   for (const channel of channels) {
+//     const lastReadId = user.lastReadMessageIds[channel._id];
+//     if (true || lastReadId === channel.lastMessageId) {
+//       pings[channel._id] = pings[channel._id] ?? [];
+//       pings[channel._id].push(channel._id);
+//     }
+//   }
+//   dispatch(actions.initialized(pings));
+// };

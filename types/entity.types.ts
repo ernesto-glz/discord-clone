@@ -2,14 +2,10 @@ export declare namespace Entity {
   export interface User {
     _id: string;
     username: string;
-    email: string;
-    password: string;
     discriminator: string;
     status: UserTypes.StatusType;
     avatar: string;
     guildIds: string[];
-    hiddenDMChannels: string[];
-    lastReadMessageIds: { [t: string]: string };
   }
 
   export interface Request {
@@ -22,15 +18,32 @@ export declare namespace Entity {
   export interface Channel {
     _id: string;
     guildId: string;
+    name?: string;
+    avatar?: string;
     createdBy: string;
     userIds: string[];
     lastMessageId: string;
     type: ChannelTypes.Type;
+    dmUserId?: string;
   }
-  export interface Message {}
+  
+  export interface Message {
+    _id: string;
+    sender: string;
+    channelId: string;
+    content: string;
+    createdAt: string;
+    updatedAt?: string;
+    stackMessage?: boolean;
+  }
 
   export namespace UserTypes {
     export type StatusType = "ONLINE" | "OFFLINE";
+    export interface Self extends Entity.User {
+      email: string;
+      hiddenDMChannels: string[];
+      lastReadMessageIds: { [t: string]: string };
+    }
   }
 
   export namespace RequestTypes {

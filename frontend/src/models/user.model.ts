@@ -9,22 +9,3 @@ export interface UserCredentials {
     value: string;
   };
 }
-
-export interface User {
-  _id: string;
-  username: string;
-  email: string;
-  token: string;
-  discriminator: string;
-  avatar?: string;
-  status: 'ONLINE' | 'OFFLINE';
-}
-
-export interface FriendUser {
-  _id: string;
-  username: string;
-  email: string;
-  discriminator: string;
-  avatar?: string;
-  status: 'ONLINE' | 'OFFLINE';
-}

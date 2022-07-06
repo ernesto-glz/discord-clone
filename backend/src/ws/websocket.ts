@@ -41,7 +41,7 @@ export class WebSocket {
             const actions = await event.invoke.call(event, this, client, data);
             for (const action of actions) if (action) this.handle(action);
           } catch (error: any) {
-            client.emit('error', { message: error.message });
+            this.io.to(client.id).emit('error', { message: error.message });
           }
         });
     });

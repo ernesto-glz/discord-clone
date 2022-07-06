@@ -1,10 +1,10 @@
 import React from 'react';
-import { FriendUser, User } from 'src/models/user.model';
 import { CopyIdImage } from '../images/tiny-icons/copy-id-image';
 import { CtxBody, CtxItem, MessageLink, MyCtxMenu, Separator } from './styles';
+import { Entity } from '@discord/types';
 
 interface Props {
-  user: FriendUser | User;
+  user: Entity.User;
 }
 
 const UserMenu: React.FC<Props> = ({ user }) => {

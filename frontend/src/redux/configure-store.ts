@@ -1,5 +1,5 @@
-import { configureStore } from '@reduxjs/toolkit';
-import userReducer from './states/user';
+import { combineReducers, configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import userReducer from './states/auth';
 import pingsReducer from './states/pings';
 import friendReducer from './states/friend';
 import metaReducer from './states/meta';
@@ -8,10 +8,18 @@ import messageReducer from './states/messages';
 import uiReducer from './states/ui';
 import requestsReducer from './states/requests';
 import typingReducer from './states/typing';
+import usersReducer from './states/users';
+import api from './middleware/rest';
+import ws from './middleware/ws';
 
-const store = configureStore({
-  reducer: {
-    user: userReducer,
+export const store = configureStore({
+  middleware: [
+    ...getDefaultMiddleware({ serializableCheck: false }),
+    api,
+    ws,
+  ] as any,
+  reducer: combineReducers({
+    auth: userReducer,
     pings: pingsReducer,
     friends: friendReducer,
     meta: metaReducer,
@@ -19,10 +27,7 @@ const store = configureStore({
     messages: messageReducer,
     ui: uiReducer,
     requests: requestsReducer,
-    typing: typingReducer
-  }
+    typing: typingReducer,
+    users: usersReducer
+  })
 });
-
-export type AppDispatch = typeof store.dispatch;
-export type RootState = ReturnType<typeof store.getState>;
-export default store;

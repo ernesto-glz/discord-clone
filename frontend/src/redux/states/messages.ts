@@ -1,27 +1,19 @@
-import { createSelector, createSlice } from '@reduxjs/toolkit';
+import { createSelector, createSlice, Dispatch } from '@reduxjs/toolkit';
 import { getMessages } from 'src/api/message';
 import { Message } from 'src/models/message.model';
 import { compareDates } from 'src/utils/date';
 import { notInArray } from 'src/utils/redux';
-import { AppDispatch, RootState } from '../configure-store';
-
-export interface MessageState {
-  entities: Message[];
-  totalPages: number | null;
-  page: number | null;
-}
-
-const initialState: MessageState = {
-  entities: [],
-  totalPages: null,
-  page: null
-};
+import { Store } from 'types/store';
 
 export type FetchMessages = { channelId: string; page?: number };
 
 export const messageSlice = createSlice({
   name: 'messages',
-  initialState,
+  initialState: {
+    entities: [],
+    totalPages: null,
+    page: null
+  } as Store.AppState['messages'],
   reducers: {
     fetched: (messages, { payload }) => {
       messages.entities.unshift(
@@ -53,13 +45,13 @@ export default messageSlice.reducer;
 
 export const getChannelMessages = (channelId: string) =>
   createSelector(
-    (state: RootState) => state.messages.entities,
+    (state: Store.AppState) => state.messages.entities,
     (messages) => messages.filter((m) => m.channelId === channelId)
   );
 
 export const fetchMessages =
   ({ channelId, page }: FetchMessages) =>
-  async (dispatch: AppDispatch, getState: () => RootState) => {
+  async (dispatch: Dispatch, getState: () => Store.AppState) => {
     const { data } = await getMessages(channelId, page);
 
     if (!data.docs?.length) return [];

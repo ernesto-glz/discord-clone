@@ -1,35 +1,25 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getOutgoingRequests, getPendingRequests } from 'src/api/friend';
-import { loadAbort } from 'src/utils/load-abort-axios';
-import { RootState } from '../configure-store';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Entity, WS } from '@discord/types';
-
-export interface FriendRequests {
-  incoming: {
-    entities: Entity.Request[];
-    loading: 'idle' | 'loading' | 'failed';
-  };
-  outgoing: {
-    entities: Entity.Request[];
-    loading: 'idle' | 'loading' | 'failed';
-  };
-}
-
-export const initialState: FriendRequests = {
-  incoming: {
-    entities: [],
-    loading: 'idle'
-  },
-  outgoing: {
-    entities: [],
-    loading: 'idle'
-  }
-};
+import { notInArray } from 'src/utils/redux';
+import { Store } from 'types/store';
 
 export const slice = createSlice({
   name: 'requests',
-  initialState,
+  initialState: {
+    incoming: {
+      entities: []
+    },
+    outgoing: {
+      entities: []
+    }
+  } as Store.AppState['requests'],
   reducers: {
+    fetchedIncoming: (requests, { payload }) => {
+      requests.incoming.entities.push(...payload.filter(notInArray(requests.incoming.entities)));
+    },
+    fetchedOutgoing: (requests, { payload }) => {
+      requests.outgoing.entities.push(...payload.filter(notInArray(requests.outgoing.entities)));
+    },
     addRequest: (requests, { payload }: PayloadAction<WS.Args.RequestCreate>) => {
       payload.type === 'INCOMING'
         ? requests.incoming.entities.push(payload.request)
@@ -46,55 +36,16 @@ export const slice = createSlice({
         (request) => request._id !== payload.request._id
       );
     }
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(getIncoming.pending, (requests) => {
-        requests.incoming.loading = 'loading';
-      })
-      .addCase(getIncoming.fulfilled, (requests, action) => {
-        requests.incoming.loading = 'idle';
-        requests.incoming.entities = action.payload;
-      })
-      .addCase(getIncoming.rejected, (requests) => {
-        requests.incoming.loading = 'failed';
-      });
-    builder
-      .addCase(getOutgoing.pending, (requests) => {
-        requests.outgoing.loading = 'loading';
-      })
-      .addCase(getOutgoing.fulfilled, (requests, action) => {
-        requests.outgoing.loading = 'idle';
-        requests.outgoing.entities = action.payload;
-      })
-      .addCase(getOutgoing.rejected, (requests) => {
-        requests.outgoing.loading = 'failed';
-      });
   }
 });
 
-export const selectIncoming = (state: RootState) => {
+export const selectIncoming = (state: Store.AppState): Entity.Request[] => {
   return state.requests.incoming.entities;
 };
-export const selectOutgoing = (state: RootState) => {
+
+export const selectOutgoing = (state: Store.AppState): Entity.Request[] => {
   return state.requests.outgoing.entities;
 };
+
 export const actions = slice.actions;
 export default slice.reducer;
-
-
-export const getIncoming = createAsyncThunk(
-  'requests/getIncoming',
-  async () => {
-    const response = await getPendingRequests(loadAbort());
-    return response.data;
-  }
-);
-
-export const getOutgoing = createAsyncThunk(
-  'requests/getOutgoing',
-  async () => {
-    const response = await getOutgoingRequests(loadAbort());
-    return response.data;
-  }
-);

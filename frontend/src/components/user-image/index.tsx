@@ -49,6 +49,10 @@ export const UserImage: React.FC<Props> = ({
         alt="avatar"
         aria-hidden="true"
         customSize={customSize}
+        onError={(e) => {
+          e.currentTarget.onerror = null;
+          e.currentTarget.src = `${process.env.REACT_APP_API_ROOT}/assets/avatars/unknown.png`;
+        }}
       />
 
       {displayStatus && (

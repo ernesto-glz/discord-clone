@@ -1,7 +1,6 @@
 import { FriendStatus } from 'config/constants/status';
 import { FriendDocument } from 'interfaces/Friend';
 import { Friend } from 'models/friend';
-import { flattenUser } from 'utils';
 import { Repository } from './Base';
 
 export class FriendRepository extends Repository<FriendDocument> {
@@ -38,22 +37,14 @@ export class FriendRepository extends Repository<FriendDocument> {
   }
 
   async getFriends(userId: string) {
-    const result = await this.findAndPopulate(
-      {
-        $or: [{ from: userId }, { to: userId }],
-        status: FriendStatus.FRIEND
-      },
-      'from',
-      'to'
-    );
+    const result = await this.find({
+      $or: [{ from: userId }, { to: userId }],
+      status: FriendStatus.FRIEND
+    });
 
-    if (result?.length) {
-      return result.map((e: any) => {
-        return { ...e.toObject(), to: flattenUser(e.to), from: flattenUser(e.from) };
-      });
-    }
+    if (!result) return null;
 
-    return result;
+    return result.map((f) => f.from === userId ? f.to : f.from)
   }
 
   async acceptFriendRequest(requestId: string) {

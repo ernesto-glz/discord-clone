@@ -1,15 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { RootState } from '../configure-store';
+import { Store } from 'types/store';
 
 export const metaSlice = createSlice({
   name: 'meta',
   initialState: {
     fetchedEntities: false,
-    hasListenedToSocket: false
-  },
+    hasListenedToWS: false
+  } as Store.AppState['meta'],
   reducers: {
     listenedToSocket: (state) => {
-      state.hasListenedToSocket = true;
+      state.hasListenedToWS = true;
     },
     fetchedEntities: (state) => {
       state.fetchedEntities = true;
@@ -17,11 +17,9 @@ export const metaSlice = createSlice({
   }
 });
 
-export const hasListenedToSocket = (state: RootState) => {
-  return state.meta.hasListenedToSocket;
+export const hasListenedToSocket = (state: Store.AppState) => {
+  return state.meta.hasListenedToWS;
 };
-export const hasFetchedEntities = (state: RootState) => {
-  return state.meta.fetchedEntities;
-};
+
 export const { listenedToSocket, fetchedEntities } = metaSlice.actions;
 export default metaSlice.reducer;

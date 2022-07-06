@@ -17,8 +17,10 @@
     "jsx": "react-jsx",
     "baseUrl": ".",
     "outDir": "dist",
-    "paths": { "src/*": ["src/*"], "@discord/types": ["../types/main.ts"] }
+    "paths": { "src/*": ["src/*"], "@discord/types": ["../types/main.ts"] },
+    "types": ["cypress", "dom-mediacapture-record"],
+    "typeRoots": ["./types"]
   },
   "exclude": ["node_modules"],
-  "include": ["src"]
+  "include": ["src", "**/*.ts"]
 }

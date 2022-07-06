@@ -3,7 +3,7 @@ import { model, Schema, PaginateModel } from 'mongoose';
 import paginate from 'mongoose-paginate-v2';
 
 export const Message = model<MessageDocument, PaginateModel<MessageDocument>>(
-  'Message',
+  'Messages',
   new Schema(
     {
       _id: {
@@ -12,12 +12,12 @@ export const Message = model<MessageDocument, PaginateModel<MessageDocument>>(
       },
       sender: {
         type: String,
-        ref: 'User',
+        ref: 'Users',
         required: true
       },
       channelId: {
         type: String,
-        ref: 'Channel',
+        ref: 'Channels',
         required: true
       },
       content: {

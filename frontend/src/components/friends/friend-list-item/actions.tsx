@@ -15,7 +15,7 @@ export const FriendItemActions: React.FC<Props> = ({ userId }: Props) => {
       <ActionButton
         onClick={(e) => {
           e.stopPropagation();
-          dispatch(displayChannel({ userId }));
+          dispatch(displayChannel(userId));
         }}
       >
         <MessageIcon className="message" />

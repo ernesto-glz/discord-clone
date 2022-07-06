@@ -2,7 +2,7 @@ import { FormEvent, useState } from 'react';
 import useFetchAndLoad from 'src/hooks/useFetchAndLoad';
 import { UserCredentials } from 'src/models/user.model';
 import { useAppDispatch } from 'src/redux/hooks';
-import { logIn } from 'src/redux/states/user';
+import { actions as auth } from 'src/redux/states/auth';
 import { RegisterService } from 'src/services/auth.service';
 
 const useRegister = ({ username, email, password }: UserCredentials) => {
@@ -22,7 +22,7 @@ const useRegister = ({ username, email, password }: UserCredentials) => {
       const { data } = await callEndpoint(
         RegisterService({ username, email, password })
       );
-      dispatch(logIn({ user: data.user, jwt: data.token }));
+      dispatch(auth.logIn({ user: data.user, jwt: data.token }));
       window.location.assign('/channels/@me');
     } catch (error: any) {
       setLoading(false);

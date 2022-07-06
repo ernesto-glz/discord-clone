@@ -1,20 +1,14 @@
-import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSelector, createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit';
 import { calculateEventDelay } from 'src/utils/date';
 import { ws } from 'src/ws/websocket';
-import { AppDispatch, RootState } from '../configure-store';
 import { WS } from '@discord/types';
-
-export type TypingState = {
-  userId: string;
-  channelId: string;
-  timer: NodeJS.Timeout;
-};
+import { Store } from 'types/store';
 
 const slice = createSlice({
   name: 'typing',
-  initialState: [] as TypingState[],
+  initialState: [] as Store.AppState['typing'],
   reducers: {
-    userTyped: (typing, { payload }: PayloadAction<WS.Args.Typing & TypingState>) => {
+    userTyped: (typing, { payload }: PayloadAction<WS.Args.Typing & { timer: NodeJS.Timer }>) => {
       const alreadyExists = typing.find((e) => {
         return e.userId === payload.userId && e.channelId === payload.channelId;
       });
@@ -42,14 +36,14 @@ export default slice.reducer;
 
 export const getTypersInChannel = (channelId: string) =>
   createSelector(
-    (state: RootState) => state.typing,
+    (state: Store.AppState) => state.typing,
     (typing) => typing.filter((t) => t.channelId === channelId)
   );
 
 let lastTypedAt: Date;
 
 export const startTyping =
-  (channelId: string) => (dispatch: AppDispatch, getState: () => RootState) => {
+  (channelId: string) => (dispatch: Dispatch, getState: () => Store.AppState) => {
     // Set Message delay
     const now = new Date();
     if (lastTypedAt && !calculateEventDelay(lastTypedAt, now)) return;
@@ -59,7 +53,7 @@ export const startTyping =
   };
 
 export const stopTyping =
-  (channelId: string) => (dispatch: AppDispatch, getState: () => RootState) => {
+  (channelId: string) => (dispatch: Dispatch, getState: () => Store.AppState) => {
     // Reset message delay
     const now = new Date();
     lastTypedAt = new Date(now.getTime() - 50 * 1000);

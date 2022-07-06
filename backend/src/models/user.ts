@@ -5,7 +5,7 @@ import { Schema, model } from 'mongoose';
 import paginate from 'mongoose-paginate-v2';
 
 export const User = model<UserDocument, PaginateModel<UserDocument>>(
-  'User',
+  'Users',
   new Schema(
     {
       _id: {
@@ -28,8 +28,8 @@ export const User = model<UserDocument, PaginateModel<UserDocument>>(
         type: String,
         required: true,
         trim: true,
-        minlength: 5,
-        select: false
+        select: false,
+        minlength: 5
       },
       discriminator: {
         type: String,
@@ -54,8 +54,7 @@ export const User = model<UserDocument, PaginateModel<UserDocument>>(
       },
       hiddenDMChannels: {
         type: [String],
-        select: false,
-        ref: 'Channel',
+        ref: 'Channels',
         default: []
       }
     },

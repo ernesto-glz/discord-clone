@@ -1,20 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../configure-store';
-import { Channel } from './channels';
-
-export interface UIState {
-  activeChannel: Channel | null;
-  activeGuild: string | null;
-}
+import { Entity } from '@discord/types'
+import { Store } from 'types/store';
 
 export interface PageSwitch {
-  channel: Channel | null;
+  channel: Entity.Channel | null;
   guild: string | null;
 }
 
 export const slice = createSlice({
   name: 'ui',
-  initialState: {} as UIState,
+  initialState: {} as Store.AppState['ui'],
   reducers: {
     pageSwitched: (state, { payload }: PayloadAction<PageSwitch>) => {
       state.activeChannel = payload.channel;
@@ -23,6 +18,5 @@ export const slice = createSlice({
   }
 });
 
-export const getActiveChannel = (state: RootState) => state.ui.activeChannel;
 export const { pageSwitched } = slice.actions;
 export default slice.reducer;

@@ -10,4 +10,12 @@ export class UserRepository extends Repository<UserDocument> {
   async findWithPassword(email: string) {
     return await this.findOneAndSelect({ email }, '+password');
   }
+
+  public secure(user: UserDocument) {
+    const u = { ...user.toObject() } as any;
+    delete u.email;
+    delete u.lastReadMessageIds;
+    delete u.hiddenDMChannels;
+    return u;
+  }
 }

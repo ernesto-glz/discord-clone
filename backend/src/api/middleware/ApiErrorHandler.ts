@@ -12,6 +12,6 @@ export const apiErrorHandler = (
   if (err instanceof ApiError) {
     return res.status(err.code).json(err.message);
   }
-  console.log(err.message);
+  console.log(err);
   res.status(500).json(ApiResponses.SOMETHING_WRONG);
 };

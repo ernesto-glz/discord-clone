@@ -46,11 +46,10 @@ export const AddFriend: React.FC = () => {
     const splitted = userToAdd.value.split('#');
 
     if (splitted[1].length < 4 || splitted[1].length > 4) {
-      setResponseMessage({
+      return setResponseMessage({
         message: `Invalid four digit tag.`,
         type: 'Error'
-      });
-      return;
+      }); 
     }
 
     const dataToSend = {
@@ -63,13 +62,13 @@ export const AddFriend: React.FC = () => {
         FriendService.createRequest(dataToSend)
       );
 
-      if (data) {
-        setResponseMessage({
-          message: `Friend request sent to ${userToAdd.value}`,
-          type: 'Success'
-        });
-        ws.emit('FRIEND_REQUEST_CREATE', { request: data });
-      }
+      if (!data) return;
+
+      setResponseMessage({
+        message: `Friend request sent to ${userToAdd.value}`,
+        type: 'Success'
+      });
+      ws.emit('FRIEND_REQUEST_CREATE', { request: data });
     } catch (err: any) {
       setResponseMessage({
         message: err?.response?.data || 'Undetermined error',

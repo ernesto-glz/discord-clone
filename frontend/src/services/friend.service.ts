@@ -1,10 +1,7 @@
 import {
   acceptFriendRequest,
   createFriendRequest,
-  deleteFriendRequest,
-  getFriends,
-  getOutgoingRequests,
-  getPendingRequests
+  deleteFriendRequest
 } from 'src/api/friend';
 import { CreateFriendRequest } from 'src/models/friend.model';
 import { loadAbort } from 'src/utils/load-abort-axios';
@@ -14,22 +11,6 @@ export class FriendService {
     const controller = loadAbort();
     return {
       call: createFriendRequest(data, controller),
-      controller
-    };
-  }
-
-  static getPendingRequests() {
-    const controller = loadAbort();
-    return {
-      call: getPendingRequests(controller),
-      controller
-    };
-  }
-
-  static getOutgoingRequests() {
-    const controller = loadAbort();
-    return {
-      call: getOutgoingRequests(controller),
       controller
     };
   }

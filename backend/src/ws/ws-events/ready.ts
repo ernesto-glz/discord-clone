@@ -18,7 +18,7 @@ export default class implements WSEvent<'READY'> {
     return [{
       emit: this.on,
       to: [client.id],
-      send: {}
+      send: { user }
     }, {
       emit: 'PRESENCE_UPDATE' as const,
       to: user.guildIds,

@@ -4,7 +4,7 @@ import paginate from 'mongoose-paginate-v2';
 import { FriendDocument } from 'interfaces/Friend';
 
 export const Friend = model<FriendDocument, PaginateModel<FriendDocument>>(
-  'Friend',
+  'Friends',
   new Schema(
     {
       _id: {
@@ -13,12 +13,12 @@ export const Friend = model<FriendDocument, PaginateModel<FriendDocument>>(
       },
       from: {
         type: String,
-        ref: 'User',
+        ref: 'Users',
         required: true
       },
       to: {
         type: String,
-        ref: 'User',
+        ref: 'Users',
         required: true
       },
       status: {

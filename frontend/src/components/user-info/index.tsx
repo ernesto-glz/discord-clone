@@ -1,6 +1,9 @@
 import React from 'react';
-import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
-import { logOut } from 'src/redux/states/user';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from 'src/redux/hooks';
+import { actions as auth } from 'src/redux/states/auth';
+import { Store } from 'types/store';
 import { UserImage } from '../user-image';
 
 import {
@@ -15,33 +18,39 @@ import {
 
 const UserInfo: React.FC = () => {
   const dispatch = useAppDispatch();
-  const user = useAppSelector((s) => s.user);
+  const user = useSelector((s: Store.AppState) => s.auth.user);
+  const navigate = useNavigate()
 
   const handleLogout = () => {
-    dispatch(logOut());
+    dispatch(auth.logOut());
+    navigate('/login', { replace: true });
   };
 
   return (
-    <Container>
-      <Profile>
-        <UserImage
-          imageUrl={`${process.env.REACT_APP_API_ROOT}/assets/avatars/${user.avatar}.png`}
-          isGeneric={false}
-          displayStatus={true}
-          isOnline={true}
-        />
-        <UserData>
-          <strong>{user.username}</strong>
-          <span>#{user.discriminator}</span>
-        </UserData>
-      </Profile>
+    <React.Fragment>
+      {user ? (
+        <Container>
+          <Profile>
+            <UserImage
+              imageUrl={`${process.env.REACT_APP_API_ROOT}/assets/avatars/${user.avatar}.png`}
+              isGeneric={false}
+              displayStatus={true}
+              isOnline={true}
+            />
+            <UserData>
+              <strong>{user.username}</strong>
+              <span>#{user.discriminator}</span>
+            </UserData>
+          </Profile>
 
-      <Icons>
-        <MicIcon />
-        <HeadphoneIcon />
-        <SettingsIcon onClick={handleLogout} />
-      </Icons>
-    </Container>
+          <Icons>
+            <MicIcon />
+            <HeadphoneIcon />
+            <SettingsIcon onClick={handleLogout} />
+          </Icons>
+        </Container>
+      ) : null}
+    </React.Fragment>
   );
 };
 

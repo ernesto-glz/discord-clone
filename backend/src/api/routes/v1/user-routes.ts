@@ -1,19 +1,52 @@
 import { AsyncRouter } from 'express-async-router';
-import { ApiRoutes } from 'config/constants/api-routes';
 import { UserService } from 'api/services/user-service';
 
-const router = AsyncRouter();
+export const router = AsyncRouter();
 
-router.get(ApiRoutes['USER']['GET_USER'], async (req, res) => {
-  const { userId } = req.params;
-  const userInfo = await UserService.getUser(userId);
-  res.status(200).send(userInfo);
+router.get('/entities', async (req, res) => {
+  const { _id: userId, guildIds } = res.locals.user;
+  const $in = guildIds;
+
+  const [friends, channels, users, incoming, outgoing] = await Promise.all([
+    app.friends.getFriends(userId),
+    app.channels.find({ userIds: userId }),
+    app.users.find({ guildIds: { $in } }),
+    app.friends.getPendingRequests(userId),
+    app.friends.getOutgoingRequests(userId)
+  ]);
+
+  const securedUsers = users?.map((u) => app.users.secure(u));
+  const filledChannels = await Promise.all(
+    (channels ?? []).map(async (c) => {
+      return await app.channels.fillInfo(c.toObject(), userId);
+    })
+  );
+
+  res.json({
+    friends,
+    channels: filledChannels,
+    users: securedUsers,
+    incoming,
+    outgoing
+  });
 });
 
-router.get(ApiRoutes['USER']['GET_SELF'], async (req, res) => {
+router.get('/@me', async (req, res) => {
   const selfUser = res.locals;
   const result = await UserService.getUser(selfUser._id);
   res.status(200).send(result);
 });
 
-export default router;
+router.get('/@me/channels', async (req, res) => {
+  res.status(200).json({ message: 'Not implemented' });
+});
+
+router.get('/:userId', async (req, res) => {
+  const { userId } = req.params;
+  const userInfo = await UserService.getUser(userId);
+  res.status(200).send(userInfo);
+});
+
+router.get('/:userId/channels', async (req, res) => {
+  res.status(200).json({ message: 'Not implemented' });
+});

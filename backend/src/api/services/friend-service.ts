@@ -30,14 +30,6 @@ export class FriendService {
     return await app.friends.findOneAndPopulate({ _id: created._id }, 'from', 'to');
   }
 
-  static async getPending(userId: string) {
-    return await app.friends.getPendingRequests(userId);
-  }
-
-  static async getOutgoing(userId: string) {
-    return await app.friends.getOutgoingRequests(userId);
-  }
-
   static async remove(requestId: string, userId: string) {
     const request = await app.friends.findOneAndPopulate({
       _id: requestId,
@@ -69,26 +61,5 @@ export class FriendService {
     const populated = await app.friends.findOneAndPopulate({ _id: request._id }, 'from', 'to');
 
     return { request: populated, channel: result.channel };
-  }
-
-  static async getFriends(userId: string, extraInfo: boolean) {
-    const friends = await app.friends.getFriends(userId);
-
-    if (!friends) throw new ApiError(400, ApiResponses.NO_FRIENDS);
-
-    if (!friends.length) return friends;
-
-    if (!extraInfo) {
-      return friends.map((entity: any) => {
-        if (entity.from._id === userId) {
-          const status = app.webSocket.sessions.isOnline(entity.to._id) === true ? 'ONLINE' : 'OFFLINE';
-          return { ...entity.to, status };
-        }
-        const status = app.webSocket.sessions.isOnline(entity.from._id) === true ? 'ONLINE' : 'OFFLINE';
-        return { ...entity.from, status };
-      });
-    }
-
-    return friends;
   }
 }

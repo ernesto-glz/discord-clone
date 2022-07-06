@@ -1,6 +1,7 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Message } from 'src/models/message.model';
-import { useAppSelector } from 'src/redux/hooks';
+import { Store } from 'types/store';
 import { CopyIdImage } from '../images/tiny-icons/copy-id-image';
 import { CtxBody, CtxItem, MessageLink, MyCtxMenu, Separator } from './styles';
 
@@ -9,7 +10,7 @@ interface Props {
 }
 
 const MessageMenu: React.FC<Props> = ({ message }) => {
-  const activeGuild = useAppSelector((s) => s.ui.activeGuild);
+  const activeGuild = useSelector((s: Store.AppState) => s.ui.activeGuild);
 
   const copyInClipboard = (content: string) => {
     navigator.clipboard.writeText(content);

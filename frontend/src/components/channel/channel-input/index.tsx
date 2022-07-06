@@ -1,6 +1,13 @@
 import React, { useRef, useState } from 'react';
 import useFetchAndLoad from 'src/hooks/useFetchAndLoad';
 import { MessageService } from 'src/services/message.service';
+import striptags from 'striptags';
+import { ws } from 'src/ws/websocket';
+import { PulseLoader } from 'react-spinners';
+import { startTyping, stopTyping } from 'src/redux/states/typing';
+import useTypingUsers from 'src/hooks/useTypingUsers';
+import { InputHelper } from './input-helper';
+import { Entity } from '@discord/types';
 import {
   InputContainer,
   InputWrapper,
@@ -13,18 +20,11 @@ import {
   Placeholder,
   UploadPlusIcon
 } from '../channel-data/styles';
-import striptags from 'striptags';
-import { ws } from 'src/ws/websocket';
-import { PulseLoader } from 'react-spinners';
 import { useAppDispatch } from 'src/redux/hooks';
-import { startTyping, stopTyping } from 'src/redux/states/typing';
-import useTypingUsers from 'src/hooks/useTypingUsers';
-import { InputHelper } from './input-helper';
-import { Channel } from 'src/redux/states/channels';
 
 interface Props {
   placeholder: string;
-  activeChannel: Channel;
+  activeChannel: Entity.Channel;
 }
 
 export const MessageInput: React.FC<Props> = (props) => {

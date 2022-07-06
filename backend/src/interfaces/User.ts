@@ -7,6 +7,7 @@ export interface User {
   password: string;
   discriminator: string;
   status: 'ONLINE' | 'OFFLINE';
+  avatar: string;
   guildIds: string[];
   hiddenDMChannels: string[];
   lastReadMessageIds: any;

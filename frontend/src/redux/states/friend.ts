@@ -1,74 +1,20 @@
-import {
-  createSlice,
-  createAsyncThunk,
-  createSelector
-} from '@reduxjs/toolkit';
-import { getFriends } from 'src/api/friend';
-import { FriendUser } from 'src/models/user.model';
-import store, { RootState } from '../configure-store';
+import {createSlice, createSelector, PayloadAction, Store as ReduxStore } from '@reduxjs/toolkit';
+import { notInArray } from 'src/utils/redux';
+import { Store } from 'types/store';
+import { Entity } from '@discord/types';
 
-export interface FriendState {
-  entities: FriendUser[];
-  loading: 'idle' | 'loading' | 'failed';
-}
-
-const initialState: FriendState = {
-  entities: [],
-  loading: 'idle'
-};
-
-export const getAllFriends = createAsyncThunk(
-  'friend/getAllFriends',
-  async () => {
-    const response = await getFriends({ extraInfo: false });
-    return response.data;
-  }
-);
-
-export const friendSlice = createSlice({
+export const slice = createSlice({
   name: 'friend',
-  initialState,
+  initialState: [] as Entity.User[],
   reducers: {
-    addFriend: (state, action) => {
-      state.entities.push(action.payload);
+    fetched: (friends, { payload }: PayloadAction<Entity.User[]>) => {
+      friends.push(...payload.filter(notInArray(friends)));
     },
-    updatePresence: (state, { payload }) => {
-      const user = state.entities.find((e) => e._id === payload.userId);
-      if (user) Object.assign(user, payload.user);
+    addFriend: (friends, { payload}) => {
+      friends.push(payload);
     }
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(getAllFriends.pending, (state) => {
-        state.loading = 'loading';
-      })
-      .addCase(getAllFriends.fulfilled, (state, action) => {
-        state.loading = 'idle';
-        state.entities = action.payload;
-      })
-      .addCase(getAllFriends.rejected, (state) => {
-        state.loading = 'failed';
-      });
   }
 });
 
-export const selectFriends = (state: RootState) => state.friends.entities;
-
-export const getFriend = (userId: string) =>
-  createSelector(
-    (state: RootState) => state.friends.entities,
-    (friends) => {
-      const selfUser = store.getState().user;
-      return selfUser._id === userId
-        ? (selfUser as unknown as FriendUser)
-        : friends.find((e) => e._id === userId) ??
-            ({
-              avatar: 'unknown',
-              username: 'Unknown',
-              discriminator: '0000'
-            } as FriendUser);
-    }
-  );
-
-export const actions = friendSlice.actions;
-export default friendSlice.reducer;
+export const actions = slice.actions;
+export default slice.reducer;

@@ -1,6 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
-import { getActiveChannel } from 'src/redux/states/ui';
 import ChannelMessage from '../channel-message';
 import { fetchMessages, getChannelMessages } from 'src/redux/states/messages';
 import { MessageInput } from '../channel-input';
@@ -13,10 +11,11 @@ import {
   MessagesContainer,
   MessagesWrapper
 } from './styles';
+import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 
 const ChannelData: React.FC = () => {
   const { page, totalPages } = useAppSelector((s) => s.messages);
-  const activeChannel = useAppSelector(getActiveChannel)!;
+  const activeChannel = useAppSelector((s) => s.ui.activeChannel)!;
   const messages = useAppSelector(getChannelMessages(activeChannel!._id));
   const messagesRef = useRef<HTMLDivElement>(null);
   const skeletonRef = useRef<HTMLDivElement>(null);
@@ -24,9 +23,7 @@ const ChannelData: React.FC = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const messageInput = document.querySelector(
-      '#messageInput'
-    ) as HTMLDivElement;
+    const messageInput = document.querySelector('#messageInput') as HTMLDivElement;
     messageInput.focus();
 
     dispatch(fetchMessages({ channelId: activeChannel._id }));
@@ -93,9 +90,9 @@ const ChannelData: React.FC = () => {
               <Messages>
                 <ChannelWelcome
                   imageUrl={`${process.env.REACT_APP_API_ROOT}/assets/avatars/${
-                    activeChannel.dmUser!.avatar
+                    activeChannel.avatar!
                   }.png`}
-                  username={activeChannel.name}
+                  username={activeChannel.name!}
                 />
                 {messages.length ? (
                   <React.Fragment>
@@ -122,7 +119,7 @@ const ChannelData: React.FC = () => {
 
       <MessageInput
         activeChannel={activeChannel}
-        placeholder={`Message @${activeChannel.name}`}
+        placeholder={`Message @${activeChannel.name!}`}
       />
     </Container>
   );

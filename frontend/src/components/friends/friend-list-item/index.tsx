@@ -1,21 +1,23 @@
 import React, { useMemo, useState } from 'react';
+import { useSelector, useStore } from 'react-redux';
 import { UserImage } from 'src/components/user-image';
 import { Profile, UserData } from 'src/components/user-info/styles';
-import { FriendUser } from 'src/models/user.model';
-import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import { displayChannel } from 'src/redux/states/channels';
-import { selectFriends } from 'src/redux/states/friend';
 import { isOnline } from 'src/utils/redux';
 import { FriendRequest, ItemBody } from '../styles';
 import { FriendItemActions } from './actions';
+import { Entity } from '@discord/types';
+import { useAppDispatch } from 'src/redux/hooks';
+import { getFriendUsers } from 'src/redux/states/users';
 
 interface Props {
-  friend: FriendUser;
+  friend: Entity.User;
 }
 
 export const FriendItem: React.FC<Props> = ({ friend }) => {
-  const friends = useAppSelector(selectFriends);
-  const friendStatus = useMemo(() => isOnline(friend._id), [friends]);
+  const store = useStore();
+  const friends = useSelector(getFriendUsers());
+  const friendStatus = useMemo(() => isOnline(friend._id, store), [friends]);
   const [showDiscriminator, setShowDiscriminator] = useState(false);
   const dispatch = useAppDispatch();
 
@@ -23,7 +25,7 @@ export const FriendItem: React.FC<Props> = ({ friend }) => {
     <FriendRequest
       onMouseOver={() => setShowDiscriminator(true)}
       onMouseLeave={() => setShowDiscriminator(false)}
-      onClick={() => dispatch(displayChannel({ userId: friend._id }))}
+      onClick={() => dispatch(displayChannel(friend._id))}
     >
       <ItemBody>
         <div>

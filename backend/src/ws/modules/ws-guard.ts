@@ -4,7 +4,6 @@ import { ExtendedError } from 'socket.io/dist/namespace';
 import { ApiErrors } from 'config/constants/api-errors';
 import { ApiResponses } from 'config/constants/api-responses';
 import { UserService } from 'api/services/user-service';
-import { FriendService } from 'api/services/friend-service';
 
 type SocketIo = Socket;
 type SocketIoNext = (err?: ExtendedError | undefined) => void;
@@ -37,15 +36,10 @@ export const WSGuard = async (socket: SocketIo, next: SocketIoNext) => {
 
   try {
     const user = await UserService.getUser(decoded._id);
-    const friends = await FriendService.getFriends(decoded._id, false);
 
-    if (!user) {
-      return next(new Error(ApiResponses.USER_NOT_FOUND));
-    }
+    if (!user) return next(new Error(ApiResponses.USER_NOT_FOUND));
 
     socket.data.user = JSON.parse(JSON.stringify(user));
-    socket.data.friends = friends ? JSON.parse(JSON.stringify(friends)) : [];
-
     app.webSocket.sessions.set(socket.id, user._id);
     next();
   } catch (error) {

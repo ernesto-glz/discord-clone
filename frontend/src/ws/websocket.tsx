@@ -7,8 +7,7 @@ export const ws = io(
   {
     secure: true,
     path: '/websocket',
-    auth: { token },
-    autoConnect: false
+    auth: { token }
   }
 );
 ws.io.on('open', () => console.log('Connected to WS Server'));

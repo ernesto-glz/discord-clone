@@ -1,6 +1,5 @@
 import React from 'react';
 import { RequestItem } from './friend-request';
-import { useAppSelector } from 'src/redux/hooks';
 import { selectIncoming, selectOutgoing } from 'src/redux/states/requests';
 import {
   Container,
@@ -10,10 +9,11 @@ import {
   WampusImage,
   WampusMessage
 } from '../styles';
+import { useSelector } from 'react-redux';
 
 export const PendingRequests: React.FC = () => {
-  const incomingRequests = useAppSelector(selectIncoming);
-  const outgoingRequests = useAppSelector(selectOutgoing);
+  const incomingRequests = useSelector(selectIncoming);
+  const outgoingRequests = useSelector(selectOutgoing);
   const totalRequests = incomingRequests.length + outgoingRequests.length;
 
   if (incomingRequests.length || outgoingRequests.length) {

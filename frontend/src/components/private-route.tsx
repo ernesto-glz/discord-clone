@@ -1,14 +1,16 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import { useAppSelector } from 'src/redux/hooks';
-import { hasFetchedEntities } from 'src/redux/states/meta';
 import { LoadingScreen } from './loading-screen';
 
 export const PrivateRoute = () => {
-  const isLoggedIn = useAppSelector((s) => s.user.username);
-  const fetchedEntities = useAppSelector(hasFetchedEntities);
+  const user = useAppSelector((s) => s.auth.user);
+  const attemptedLogin = useAppSelector((s) => s.auth.attemptedLogin);
+  const fetchedEntities = useAppSelector((s) => s.meta.fetchedEntities);
 
-  if (!isLoggedIn) return <Navigate to="/login" replace />;
-  else if (!fetchedEntities) return <LoadingScreen />;
+  if (!user && attemptedLogin) return <Navigate to="/login" replace />;
+  else if (!user || !fetchedEntities) return <LoadingScreen />;
 
-  return <Outlet />;
+  return (
+    <Outlet />
+  );
 };

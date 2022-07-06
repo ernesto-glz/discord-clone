@@ -1,7 +1,5 @@
 import React, { useMemo } from 'react';
 import { FriendItem } from './friend-list-item';
-import { useAppSelector } from 'src/redux/hooks';
-import { selectFriends } from 'src/redux/states/friend';
 import {
   Container,
   FlexColumnContainer,
@@ -10,27 +8,27 @@ import {
   WampusImage,
   WampusMessage
 } from './styles';
+import { useSelector } from 'react-redux';
+import { getFriendUsers } from 'src/redux/states/users';
 
 interface Props {
   justOnline?: boolean;
 }
 
 export const MyFriends: React.FC<Props> = (props) => {
-  const friends = useAppSelector(selectFriends);
-  const friendsOnline = useMemo(() => {
-    const onlineFriends = friends.filter(
-      (friend) => friend.status === 'ONLINE'
-    );
-    return onlineFriends;
-  }, [friends]);
+  const friends = useSelector(getFriendUsers());
+  const onlineFriends = useMemo(
+    () => friends.filter((f) => f.status === 'ONLINE'),
+    [friends]
+  );
 
-  if (props.justOnline ? friendsOnline.length : friends.length) {
+  if (props.justOnline ? onlineFriends.length : friends.length) {
     return (
       <FlexColumnContainer>
         <ListHeader>
           <h2>
             {props.justOnline ? 'ONLINE' : 'ALL FRIENDS'} -{' '}
-            {props.justOnline ? friendsOnline.length : friends.length}
+            {props.justOnline ? onlineFriends.length : friends.length}
           </h2>
         </ListHeader>
         <ListBody>
