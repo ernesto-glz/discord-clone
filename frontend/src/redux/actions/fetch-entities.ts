@@ -17,8 +17,7 @@ export default () => async (dispatch: Dispatch<any>) => {
       dispatch(users.fetched(data.users));
       dispatch(friends.fetched(data.friends));
       dispatch(channels.fetched(data.channels));
-      dispatch(requests.fetchedIncoming(data.incoming));
-      dispatch(requests.fetchedOutgoing(data.outgoing));
+      dispatch(requests.fetched(data.requests));
       setTimeout(() => dispatch(fetchedEntities()), 1000);    
     }
   }))

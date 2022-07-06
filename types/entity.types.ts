@@ -12,6 +12,7 @@ export declare namespace Entity {
     _id: string;
     from: User;
     to: User;
+    type?: RequestTypes.Type;
     status: RequestTypes.StatusType;
   }
 

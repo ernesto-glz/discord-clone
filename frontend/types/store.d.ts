@@ -22,14 +22,7 @@ export declare namespace Store {
       page: number | null;
     };
     friends: string[];
-    requests: {
-      incoming: {
-        entities: Entity.Request[];
-      };
-      outgoing: {
-        entities: Entity.Request[];
-      };
-    };
+    requests: Entity.Request[];
     typing: { userId: string, channelId: string, timer: NodeJS.Timer }[];
   }
 }

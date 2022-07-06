@@ -13,11 +13,11 @@ export default class implements WSEvent<'FRIEND_REQUEST_REMOVE'> {
     return [{
       emit: this.on,
       to: [fromId ?? ''],
-      send: { request, type: 'OUTGOING' }
+      send: { requestId: request._id }
     }, {
       emit: this.on,
       to: [toId ?? ''],
-      send: { request, type: 'INCOMING' }
+      send: { requestId: request._id }
     }];
   }
 }

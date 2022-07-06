@@ -5,16 +5,14 @@ import { Entity } from '@discord/types';
 import { FriendRequest as FriendRequestContainer, ItemBody } from '../styles';
 import { RequestActionsItem } from './request-actions';
 
-export type RequestType = 'Incoming' | 'Outgoing';
-
 interface Props {
   request: Entity.Request;
-  type: RequestType;
+  type: Entity.RequestTypes.Type;
 }
 
 export const RequestItem: React.FC<Props> = ({ request, type }) => {
   const requestUser = useMemo(
-    () => (type === 'Outgoing' ? request.to : request.from),
+    () => (type === 'OUTGOING' ? request.to : request.from),
     [request]
   );
   const [showDiscriminator, setShowDiscriminator] = useState(false);
@@ -39,7 +37,7 @@ export const RequestItem: React.FC<Props> = ({ request, type }) => {
                 </span>
               </strong>
               <span>
-                {type === 'Outgoing'
+                {type === 'OUTGOING'
                   ? 'Outgoing Friend Request'
                   : 'Incoming Friend Request'}
               </span>

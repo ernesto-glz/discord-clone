@@ -9,12 +9,11 @@ import {
   CancelIcon,
   RequestActions
 } from '../styles';
-import { RequestType } from './friend-request';
 
 interface Props {
   requestId: string;
   requestUser: Entity.User;
-  type: RequestType;
+  type: Entity.RequestTypes.Type;
 }
 
 export const RequestActionsItem: React.FC<Props> = ({ requestId, type }) => {
@@ -42,7 +41,7 @@ export const RequestActionsItem: React.FC<Props> = ({ requestId, type }) => {
 
   return (
     <RequestActions>
-      {type === 'Outgoing' ? (
+      {type === 'OUTGOING' ? (
         <ActionButton onClick={handleDenyOrCancelRequest}>
           <CancelIcon className="cancel" />
         </ActionButton>

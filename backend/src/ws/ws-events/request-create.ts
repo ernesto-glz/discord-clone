@@ -12,11 +12,11 @@ export default class implements WSEvent<'FRIEND_REQUEST_CREATE'> {
     return [{
       emit: this.on,
       to: [client.id],
-      send: { request, type: 'OUTGOING' }
+      send: { request: { ...request, type: 'OUTGOING' } }
     }, {
       emit: this.on,
       to: [toSocketId ?? ''],
-      send: { request, type: 'INCOMING' }
+      send: { request: { ...request, type: 'INCOMING' } }
     }];
   }
 }

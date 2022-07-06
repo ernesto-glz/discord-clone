@@ -102,12 +102,10 @@ export declare namespace WS {
 
     export interface RequestCreate {
       request: Entity.Request;
-      type: Entity.RequestTypes.Type;
     }
 
     export interface RequestRemove {
-      request: Entity.Request;
-      type: Entity.RequestTypes.Type;
+      requestId: string;
     }
   }
 }

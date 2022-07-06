@@ -75,19 +75,19 @@ export const WSListeners: React.FC = () => {
       if (activeChannel?._id === channelId)
         navigate('/channels/@me');
     });
-    ws.on('NEW_FRIEND', ({ user, request, type, channel }) => {
+    ws.on('NEW_FRIEND', ({ user, requestId, channel }) => {
       const { _id } = state().auth.user!;
 
       dispatch(users.added(user))
       dispatch(friends.addFriend(user._id));
-      dispatch(requests.removeRequest({ request, type }));
+      dispatch(requests.removeRequest({ requestId }));
       dispatch(channels.created({ channel, selfId: _id! }));
     });
-    ws.on('FRIEND_REQUEST_CREATE', ({ request, type }: WS.Args.RequestCreate) => {
-      dispatch(requests.addRequest({ request, type }));
+    ws.on('FRIEND_REQUEST_CREATE', ({ request }: WS.Args.RequestCreate) => {
+      dispatch(requests.addRequest({ request }));
     });
-    ws.on('FRIEND_REQUEST_REMOVE', ({ request, type }: WS.Args.RequestRemove) => {
-      dispatch(requests.removeRequest({ request, type }));
+    ws.on('FRIEND_REQUEST_REMOVE', ({ requestId }: WS.Args.RequestRemove) => {
+      dispatch(requests.removeRequest({ requestId }));
     });
     ws.on('TYPING_START', (args: WS.Args.Typing) => {
       const timeout = setTimeout(() => dispatch(typing.userStoppedTyping(args)), 20000);

@@ -21,19 +21,17 @@ export default class implements WSEvent<'FRIEND_REQUEST_ACCEPT'> {
       emit: 'NEW_FRIEND' as const,
       to: [fromSocketId ?? ''],
       send: {
-        request,
+        requestId: request._id,
         channel,
         user: request.to,
-        type: 'OUTGOING'
       }
     }, {
       emit: 'NEW_FRIEND' as const,
       to: [client.id],
       send: {
-        request,
+        requestId: request._id,
         channel,
         user: request.from,
-        type: 'INCOMING'
       }
     }];
   }
