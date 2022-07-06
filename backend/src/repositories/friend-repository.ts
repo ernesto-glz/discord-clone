@@ -14,28 +14,6 @@ export class FriendRepository extends Repository<FriendDocument> {
     });
   }
 
-  async getPendingRequests(to: string) {
-    return await this.findAndPopulate(
-      {
-        to,
-        status: FriendStatus.PENDING
-      },
-      'from',
-      'to'
-    );
-  }
-
-  async getOutgoingRequests(from: string) {
-    return await this.findAndPopulate(
-      {
-        from,
-        status: FriendStatus.PENDING
-      },
-      'from',
-      'to'
-    );
-  }
-
   async getFriends(userId: string) {
     const result = await this.find({
       $or: [{ from: userId }, { to: userId }],

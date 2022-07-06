@@ -19,6 +19,11 @@ export class ChannelService {
       type: ChannelTypes.DM
     });
 
+    await app.users.updateMany(
+      { $or: [{ _id: myId }, { _id: userId }] },
+      { $push: { guildIds: guildId } }
+    );
+
     return { channel: created, alreadyExists: false };
   }
 

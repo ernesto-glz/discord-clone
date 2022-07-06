@@ -12,11 +12,6 @@ export const slice = createSlice({
     updated: (users, { payload }) => {
       const user = users.find((e) => e._id === payload.userId);
       if (user) Object.assign(user, payload.user);
-    },
-    added: (users, { payload }) => {
-      const user = users.find((u) => u._id === payload.user._id);
-      if (user) return;
-      current(users).push(payload.user); 
     }
   }
 });

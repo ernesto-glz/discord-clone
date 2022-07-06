@@ -78,7 +78,7 @@ export const WSListeners: React.FC = () => {
     ws.on('NEW_FRIEND', ({ user, requestId, channel }) => {
       const { _id } = state().auth.user!;
 
-      dispatch(users.added(user))
+      dispatch(users.fetched([user]))
       dispatch(friends.addFriend(user._id));
       dispatch(requests.removeRequest({ requestId }));
       dispatch(channels.created({ channel, selfId: _id! }));

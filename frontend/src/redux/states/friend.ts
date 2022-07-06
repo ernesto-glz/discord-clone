@@ -1,6 +1,5 @@
-import {createSlice, createSelector, PayloadAction, Store as ReduxStore } from '@reduxjs/toolkit';
+import {createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { notInArray } from 'src/utils/redux';
-import { Store } from 'types/store';
 import { Entity } from '@discord/types';
 
 export const slice = createSlice({
