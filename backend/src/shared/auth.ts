@@ -1,8 +1,7 @@
 import { hash, compare } from 'bcrypt';
 import { Response } from 'express';
 import { sign } from 'jsonwebtoken';
-import { UserDocument } from 'interfaces/User';
-import { ApiErrors } from 'config/constants/api-errors';
+import { UserDocument } from 'data/models/user';
 
 export class Auth {
   private static saltRounds = 10;
@@ -17,11 +16,6 @@ export class Auth {
 
   static createToken(user: UserDocument, statusCode: number, res: Response) {
     const payload = { id: user.id };
-
-    if (!process.env.JWT_SECRET_KEY) {
-      console.log(ApiErrors.NO_JWT_SECRET_KEY);
-      throw new Error(ApiErrors.NO_JWT_SECRET_KEY);
-    }
 
     const token = sign(payload, process.env.JWT_SECRET_KEY, {
       expiresIn: process.env.JWT_EXPIRES_IN || '30d'

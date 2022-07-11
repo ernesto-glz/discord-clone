@@ -10,8 +10,8 @@ export declare namespace Entity {
 
   export interface Request {
     id: string;
-    from: User;
-    to: User;
+    from: Entity.User;
+    to: Entity.User;
     type?: RequestTypes.Type;
     status: RequestTypes.StatusType;
   }

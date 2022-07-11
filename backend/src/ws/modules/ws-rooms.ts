@@ -1,5 +1,5 @@
 import { ApiError } from 'api/modules/api-error';
-import { UserDocument } from 'interfaces/User';
+import { UserDocument } from 'data/models/user';
 import { Socket } from 'socket.io';
 
 export class WSRooms {

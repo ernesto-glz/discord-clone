@@ -1,12 +1,6 @@
 import { Document } from 'mongoose';
 import { Entity } from '@discord/types';
 
-export interface CreateRequest {
-  from: string;
-  username: string;
-  discriminator: string;
-}
-
 export interface FriendRequest {
   from: string;
   to: string;

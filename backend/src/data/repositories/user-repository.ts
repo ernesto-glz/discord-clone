@@ -1,6 +1,5 @@
 import { Repository } from './Base';
-import { User } from 'data/models/user';
-import { UserDocument } from 'interfaces/User';
+import { User, UserDocument } from 'data/models/user';
 
 export class UsersRepository extends Repository<UserDocument> {
   constructor() {

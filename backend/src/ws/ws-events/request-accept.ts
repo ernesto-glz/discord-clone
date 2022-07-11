@@ -2,7 +2,7 @@ import { Socket } from 'socket.io';
 import { WS } from '@discord/types';
 import { WebSocket } from '../websocket';
 import { WSEvent } from './ws-event';
-import { UserDocument } from 'interfaces/User';
+import { UserDocument } from 'data/models/user';
 
 export default class implements WSEvent<'FRIEND_REQUEST_ACCEPT'> {
   public on = 'FRIEND_REQUEST_ACCEPT' as const;

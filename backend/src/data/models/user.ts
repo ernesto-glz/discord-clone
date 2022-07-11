@@ -1,7 +1,11 @@
+import { Schema, model, Document } from 'mongoose';
 import { baseModelConfig } from 'config/constants/model-config';
-import { UserDocument } from 'interfaces/User';
-import { Schema, model } from 'mongoose';
+import { Entity } from '../../../../types/entity.types';
 
+export interface UserDocument extends Document, Entity.UserTypes.Self {
+  id: string;
+  password: string;
+}
 const UserStatus = { ONLINE: 'ONLINE', OFFLINE: 'OFFLINE' };
 
 export const User = model<UserDocument>('user', new Schema({

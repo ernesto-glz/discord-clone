@@ -1,5 +1,4 @@
-import { ChannelDocument } from 'interfaces/Channel';
-import { Channel } from 'data/models/channel';
+import { Channel, ChannelDocument } from 'data/models/channel';
 import { Entity } from '@discord/types';
 import { Repository } from './Base';
 

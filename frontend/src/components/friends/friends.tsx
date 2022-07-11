@@ -32,16 +32,11 @@ export const MyFriends: React.FC<Props> = (props) => {
           </h2>
         </ListHeader>
         <ListBody>
-          {friends.map((friend, i) => {
-            if (props.justOnline) {
-              return (
-                friend.status === 'ONLINE' && (
-                  <FriendItem key={i} friend={friend} />
-                )
-              );
-            }
-            return <FriendItem key={i} friend={friend} />;
-          })}
+          {props.justOnline ? (
+            onlineFriends.map((friend, i) => <FriendItem key={i} friend={friend} />)
+          ) : (
+            friends.map((friend, i) => <FriendItem key={i} friend={friend} />)
+          )}
         </ListBody>
       </FlexColumnContainer>
     );

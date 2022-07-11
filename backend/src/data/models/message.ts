@@ -1,9 +1,14 @@
+import { Document } from 'mongoose';
 import { baseModelConfig } from 'config/constants/model-config';
-import { MessageDocument as MessageDoc } from 'interfaces/Message';
 import { model, Schema, PaginateModel as Paginate } from 'mongoose';
+import { Entity } from '@discord/types';
 import paginate from 'mongoose-paginate-v2';
 
-export const Message = model<MessageDoc, Paginate<MessageDoc>>('message', new Schema({
+export interface MessageDocument extends Document, Entity.Message {
+  id: string;
+}
+
+export const Message = model<MessageDocument, Paginate<MessageDocument>>('message', new Schema({
   _id: {
     type: String,
     required: true

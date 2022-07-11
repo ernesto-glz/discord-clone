@@ -11,24 +11,21 @@ export class MessageService {
       _id: channelId,
       $or: [{ sender: userId }, { receiver: userId }]
     });
-
-    if (!channel) {
+    
+    if (!channel)
       throw new ApiError(400, ApiResponses.NO_MESSAGES_FOUND);
-    }
-
-    const messages = await Message.paginate(
+    
+      const messages = await Message.paginate(
       { channelId },
       { limit, page, sort: { _id: 'desc' } }
     );
-
-    if (!messages.docs.length) {
-      return messages.docs;
-    }
+    
+    if (!messages.docs.length) return messages.docs;
 
     const lastMessage = messages.docs[0];
-    if (lastMessage._id === channel.lastMessageId) {
+    
+    if (lastMessage._id === channel.lastMessageId)
       UserService.markAsRead(userId, lastMessage);
-    }
 
     return messages;
   }
@@ -44,7 +41,8 @@ export class MessageService {
     const channel = await app.channels.findById(channelId);
     const user = await app.users.findOne({ _id: sender });
 
-    if (!channel || !user) throw new ApiError(500, ApiResponses.SOMETHING_WRONG);
+    if (!channel || !user)
+      throw new ApiError(500, ApiResponses.SOMETHING_WRONG);
 
     user.lastReadMessageIds[channelId] = message.id;
     channel.lastMessageId = message.id;

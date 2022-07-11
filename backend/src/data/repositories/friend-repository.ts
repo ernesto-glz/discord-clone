@@ -22,7 +22,7 @@ export class FriendsRepository extends Repository<FriendDocument> {
 
     if (!result) return null;
 
-    return result.map((f) => f.from === userId ? f.to : f.from)
+    return result.map((request) => request.from === userId ? request.to : request.from)
   }
 
   async acceptFriendRequest(requestId: string) {
@@ -36,9 +36,9 @@ export class FriendsRepository extends Repository<FriendDocument> {
 
     if (!requests) return [];
 
-    return requests.map((r) => {
-      if (r.from === selfId) return { ...r, type: 'OUTGOING' };
-      return { ...r.toObject(), type: 'INCOMING' }
+    return requests.map((request) => {
+      if (request.from === selfId) return { ...request.toObject(), type: 'OUTGOING' };
+      return { ...request.toObject(), type: 'INCOMING' }
     })
   }
 }

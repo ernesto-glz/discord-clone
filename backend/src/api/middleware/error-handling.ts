@@ -9,9 +9,7 @@ export const apiErrorHandler = (
   next: NextFunction
 ) => {
   if (!err) next();
-  if (err instanceof ApiError) {
-    return res.status(err.code).json(err.message);
-  }
+  if (err instanceof ApiError) return res.status(err.code).json(err.message);
   console.log(err);
   res.status(500).json(ApiResponses.SOMETHING_WRONG);
 };

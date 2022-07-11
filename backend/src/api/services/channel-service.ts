@@ -1,10 +1,9 @@
 import { ApiError } from 'api/modules/api-error';
-import { CreateDMChannel } from 'interfaces/Channel';
 import { ApiResponses } from 'config/constants/api-responses';
 import { generateSnowflake } from 'utils/snowflake';
 
 export class ChannelService {
-  static async createDM({ myId, userId }: CreateDMChannel) {
+  static async createDM({ myId, userId }) {
     const guildId = generateSnowflake();
 
     const channel = await app.channels.checkIfExistsDM(myId, userId);

@@ -1,7 +1,10 @@
 import { baseModelConfig } from 'config/constants/model-config';
-import { ChannelDocument } from 'interfaces/Channel';
-import { Schema, model } from 'mongoose';
+import { Schema, model, Document } from 'mongoose';
+import { Entity } from '@discord/types';
 
+export interface ChannelDocument extends Document, Entity.Channel {
+  id: string;
+}
 const ChannelTypes = { DM: 'DM', GUILD_TEXT: 'GUILD_TEXT', GUILD_VOICE: 'GUILD_VOICE' };
 
 export const Channel = model<ChannelDocument>('channel', new Schema({
@@ -28,5 +31,6 @@ export const Channel = model<ChannelDocument>('channel', new Schema({
     type: [String],
     default: []
   }
-}, { ...baseModelConfig })
+}, 
+  { ...baseModelConfig })
 )

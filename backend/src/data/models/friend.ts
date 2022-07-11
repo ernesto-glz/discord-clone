@@ -1,6 +1,12 @@
 import { model, Schema } from 'mongoose';
-import { FriendDocument } from 'interfaces/Friend';
 import { baseModelConfig } from 'config/constants/model-config';
+import { Document } from 'mongoose';
+import { Entity } from '@discord/types';
+import { FriendDocument } from 'interfaces/Friend';
+
+// export interface FriendDocument extends Document, Entity.Request {
+//   id: string;
+// }
 
 export const FriendStatus = { FRIEND: 'FRIEND', PENDING: 'PENDING' };
 
@@ -22,7 +28,7 @@ export const Friend = model<FriendDocument>('friend', new Schema({
   status: {
     type: String,
     enum: Object.values(FriendStatus),
-    default: FriendStatus.PENDING
+    default: 'PENDING'
   }
 },
   { ...baseModelConfig })
