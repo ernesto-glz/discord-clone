@@ -14,13 +14,13 @@ const UserMenu: React.FC<Props> = ({ user }) => {
 
   return (
     // @ts-expect-error
-    <MyCtxMenu id={user._id}>
+    <MyCtxMenu id={user.id}>
       <CtxBody>
         <div>
           {/* @ts-expect-error */}
           <CtxItem
             onClick={() =>
-              copyInClipboard(`${window.location.href}/${user._id}`)
+              copyInClipboard(`${window.location.href}/${user.id}`)
             }
           >
             <p className="childLeft">Copy User Link</p>
@@ -28,7 +28,7 @@ const UserMenu: React.FC<Props> = ({ user }) => {
           </CtxItem>
           <Separator />
           {/* @ts-expect-error */}
-          <CtxItem key={user._id} onClick={() => copyInClipboard(user._id)}>
+          <CtxItem key={user.id} onClick={() => copyInClipboard(user.id)}>
             <p className="childLeft">Copy ID</p>
             <CopyIdImage className="childRight" />
           </CtxItem>

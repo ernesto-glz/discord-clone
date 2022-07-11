@@ -46,8 +46,8 @@ export class MessageService {
 
     if (!channel || !user) throw new ApiError(500, ApiResponses.SOMETHING_WRONG);
 
-    user.lastReadMessageIds[channelId] = message._id;
-    channel.lastMessageId = message._id;
+    user.lastReadMessageIds[channelId] = message.id;
+    channel.lastMessageId = message.id;
     user.markModified('lastReadMessageIds');
     channel.markModified('lastMessageId');
     await channel.save();

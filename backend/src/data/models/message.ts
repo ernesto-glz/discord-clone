@@ -1,7 +1,7 @@
+import { baseModelConfig } from 'config/constants/model-config';
 import { MessageDocument as MessageDoc } from 'interfaces/Message';
 import { model, Schema, PaginateModel as Paginate } from 'mongoose';
 import paginate from 'mongoose-paginate-v2';
-import { useId } from 'utils/utils';
 
 export const Message = model<MessageDoc, Paginate<MessageDoc>>('message', new Schema({
   _id: {
@@ -24,7 +24,6 @@ export const Message = model<MessageDoc, Paginate<MessageDoc>>('message', new Sc
     type: String
   }
 },
-  { timestamps: true, versionKey: false, toJSON: { getters: true } })
+  { ...baseModelConfig, timestamps: true })
   .plugin(paginate)
-  .method('toClient', useId)
 );

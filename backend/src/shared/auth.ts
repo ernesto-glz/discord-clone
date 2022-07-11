@@ -1,7 +1,7 @@
 import { hash, compare } from 'bcrypt';
 import { Response } from 'express';
 import { sign } from 'jsonwebtoken';
-import { UserDto } from 'interfaces/User';
+import { UserDocument } from 'interfaces/User';
 import { ApiErrors } from 'config/constants/api-errors';
 
 export class Auth {
@@ -15,8 +15,8 @@ export class Auth {
     return await compare(password, hashedPwd);
   }
 
-  static createToken(user: UserDto, statusCode: number, res: Response) {
-    const payload = { _id: user._id };
+  static createToken(user: UserDocument, statusCode: number, res: Response) {
+    const payload = { id: user.id };
 
     if (!process.env.JWT_SECRET_KEY) {
       console.log(ApiErrors.NO_JWT_SECRET_KEY);
@@ -27,7 +27,8 @@ export class Auth {
       expiresIn: process.env.JWT_EXPIRES_IN || '30d'
     });
 
-    delete user.password;
-    res.status(statusCode).json({ token, user });
+    const partialUser = { ...user.toObject() } as any;
+    delete partialUser.password;
+    res.status(statusCode).json({ token, user: partialUser });
   }
 }

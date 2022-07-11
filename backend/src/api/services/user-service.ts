@@ -19,7 +19,7 @@ export class UserService {
     const user = await app.users.findById(userId);
     if (!user) throw new ApiError(400, ApiResponses.USER_NOT_FOUND);
     if (user.lastReadMessageIds) {
-      user.lastReadMessageIds[message.channelId] = message._id;
+      user.lastReadMessageIds[message.channelId] = message.id;
       user.markModified('lastReadMessageIds');
     }
     await user.save();

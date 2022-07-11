@@ -1,7 +1,6 @@
 import { ApiError } from 'api/modules/api-error';
 import { CreateDMChannel } from 'interfaces/Channel';
 import { ApiResponses } from 'config/constants/api-responses';
-import { ChannelTypes } from 'config/constants/status';
 import { generateSnowflake } from 'utils/snowflake';
 
 export class ChannelService {
@@ -16,7 +15,7 @@ export class ChannelService {
       guildId,
       userIds: [myId, userId],
       createdBy: myId,
-      type: ChannelTypes.DM
+      type: 'DM'
     });
 
     await app.users.updateMany(

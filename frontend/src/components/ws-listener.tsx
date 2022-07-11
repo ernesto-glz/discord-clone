@@ -42,16 +42,16 @@ export const WSListeners: React.FC = () => {
     });
     ws.on('MESSAGE_CREATE', ({ data: message }: { data: WS.Args.MessageCreate }) => {
       const { activeChannel } = state().ui;
-      const { _id: selfId, activeDMCS } = state().auth.user!;
+      const { id: selfId, activeDMCS } = state().auth.user!;
       const { channelId, sender } = message;
-      const channel = state().channels.find((c) => c._id === channelId);
+      const channel = state().channels.find((c) => c.id === channelId);
       const isActiveChannel = activeDMCS.includes(channelId);
       
       if (channel!.type === 'DM' && sender !== selfId && !isActiveChannel) {
         dispatch(auth.updated({ activeDMCS: [...activeDMCS, channelId] }));
       }
 
-      if (!activeChannel || activeChannel._id !== channelId)
+      if (!activeChannel || activeChannel.id !== channelId)
         playSound('NEW_MESSAGE');
 
       dispatch(messages.created(message));
@@ -72,13 +72,19 @@ export const WSListeners: React.FC = () => {
       
       dispatch(auth.updated({ activeDMCS: filtered }));
       
-      if (activeChannel?._id === channelId)
+      if (activeChannel?.id === channelId)
         navigate('/channels/@me');
     });
     ws.on('NEW_FRIEND', ({ user, requestId, channel }) => {
-      dispatch(users.fetched([user]))
-      dispatch(friends.addFriend(user._id));
+      const { id: selfId, guildIds } = state().auth.user!
+      const guilds = [...guildIds, channel.guildId];
+      const partialUser = { guildIds: guilds };
+
+      dispatch(users.updated({ userId: selfId, user: partialUser }))
+      dispatch(users.fetched([user]));
+      dispatch(friends.addFriend(user.id));
       dispatch(channels.fetched([channel]));
+      dispatch(auth.updated({ guildIds: guilds }))
       dispatch(requests.removeRequest({ requestId }));
     });
     ws.on('FRIEND_REQUEST_CREATE', ({ request }: WS.Args.RequestCreate) => {

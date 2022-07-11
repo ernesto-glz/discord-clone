@@ -16,7 +16,7 @@ import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 const ChannelData: React.FC = () => {
   const { page, totalPages } = useAppSelector((s) => s.messages);
   const activeChannel = useAppSelector((s) => s.ui.activeChannel)!;
-  const messages = useAppSelector(getChannelMessages(activeChannel!._id));
+  const messages = useAppSelector(getChannelMessages(activeChannel!.id));
   const messagesRef = useRef<HTMLDivElement>(null);
   const skeletonRef = useRef<HTMLDivElement>(null);
   const lastMessageRef = useRef<HTMLDivElement>(null);
@@ -26,7 +26,7 @@ const ChannelData: React.FC = () => {
     const messageInput = document.querySelector('#messageInput') as HTMLDivElement;
     messageInput.focus();
 
-    dispatch(fetchMessages({ channelId: activeChannel._id }));
+    dispatch(fetchMessages({ channelId: activeChannel.id }));
   }, [activeChannel]);
 
   useEffect(() => {
@@ -71,7 +71,7 @@ const ChannelData: React.FC = () => {
       page >= totalPages
     )
       return;
-    dispatch(fetchMessages({ channelId: activeChannel._id, page: page + 1 }));
+    dispatch(fetchMessages({ channelId: activeChannel.id, page: page + 1 }));
     messagesRef.current!.scroll({
       top: skeletonRef.current!.scrollHeight + 1000
     });

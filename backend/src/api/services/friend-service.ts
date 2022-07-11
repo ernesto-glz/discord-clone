@@ -1,4 +1,3 @@
-import { FriendStatus } from 'config/constants/status';
 import { ApiError } from 'api/modules/api-error';
 import { CreateRequest } from 'interfaces/Friend';
 import { ApiResponses } from 'config/constants/api-responses';
@@ -13,21 +12,20 @@ export class FriendService {
     });
 
     if (!userFound) throw new ApiError(400, ApiResponses['ERROR_CREATE_REQUEST']);
-    else if (userFound._id === from) throw new ApiError(400, ApiResponses['ERROR_CREATE_REQUEST']);
+    else if (userFound.id === from) throw new ApiError(400, ApiResponses['ERROR_CREATE_REQUEST']);
 
-    const alreadyRequest = await app.friends.checkExistence(from, userFound._id);
+    const alreadyRequest = await app.friends.checkExistence(from, userFound.id);
 
-    if (alreadyRequest?.status === FriendStatus['FRIEND'])
-      throw new ApiError(400, ApiResponses['ALREADY_FRIENDS']);
+    if (alreadyRequest?.status === 'FRIEND') throw new ApiError(400, ApiResponses['ALREADY_FRIENDS']);
     else if (alreadyRequest) throw new ApiError(400, ApiResponses['REQUEST_ALREADY_EXISTS']);
 
     const created = await app.friends.create({
       _id: generateSnowflake(),
       from,
-      to: userFound._id
+      to: userFound.id
     });
 
-    return await app.friends.findOneAndPopulate({ _id: created._id }, ['from', 'to']);
+    return await app.friends.findOneAndPopulate({ _id: created.id }, ['from', 'to']);
   }
 
   static async remove(requestId: string, userId: string) {
@@ -58,7 +56,7 @@ export class FriendService {
       userId: request.to
     });
 
-    const result = await app.friends.findOneAndPopulate({ _id: request._id }, ['from', 'to']);
+    const result = await app.friends.findOneAndPopulate({ _id: request.id }, ['from', 'to']);
 
     return { request: result, channel: created.channel };
   }

@@ -17,7 +17,7 @@ export const GuildPage: React.FC = () => {
   const { channelId, guildId } = useParams();
   const [page, setPage] = useState<Pages>('ONLINE');
   const { activeGuild, activeChannel } = useAppSelector((s) => s.ui);
-  const channel = useAppSelector((s) => s.channels.find((c) => c._id === channelId));
+  const channel = useAppSelector((s) => s.channels.find((c) => c.id === channelId));
   const dispatch = useDispatch();
 
   useEffect(() => {

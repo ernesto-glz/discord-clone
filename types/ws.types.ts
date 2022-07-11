@@ -43,7 +43,7 @@ export declare namespace WS {
     }
 
     export interface MessageCreate {
-      _id: string;
+      id: string;
       sender: string;
       channelId: string;
       guildId: string;
@@ -79,7 +79,7 @@ export declare namespace WS {
     }
 
     export interface MessageCreate {
-      _id: string;
+      id: string;
       sender: string;
       channelId: string;
       guildId: string;

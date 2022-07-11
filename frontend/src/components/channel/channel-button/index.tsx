@@ -24,8 +24,8 @@ const ChannelButton: React.FC<Props> = ({ channel }) => {
   const { activeGuild, activeChannel } = useAppSelector((s) => s.ui); 
 
   const goToChannel = () => {
-    if (channel._id !== activeChannel?._id) {
-      navigate(`/channels/${activeGuild}/${channel._id}`);
+    if (channel.id !== activeChannel?.id) {
+      navigate(`/channels/${activeGuild}/${channel.id}`);
     }
   };
 
@@ -33,7 +33,7 @@ const ChannelButton: React.FC<Props> = ({ channel }) => {
     <Container
       onMouseOver={() => setIsVisible(true)}
       onMouseLeave={() => setIsVisible(false)}
-      className={activeChannel?._id === channel._id ? 'active' : ''}
+      className={activeChannel?.id === channel.id ? 'active' : ''}
     >
       <div onClick={goToChannel}>
         <UserImage
@@ -51,7 +51,7 @@ const ChannelButton: React.FC<Props> = ({ channel }) => {
         </NotificationMark>
       )} */}
       <CloseIcon
-        onClick={() => ws.emit('CHANNEL_HIDE', { channelId: channel._id })}
+        onClick={() => ws.emit('CHANNEL_HIDE', { channelId: channel.id })}
         isVisible={isVisible}
       />
     </Container>

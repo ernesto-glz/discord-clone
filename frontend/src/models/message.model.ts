@@ -4,7 +4,7 @@ export interface CreateMessage {
 }
 
 export interface Message {
-  _id: string;
+  id: string;
   sender: string;
   channelId: string;
   content: string;

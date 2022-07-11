@@ -1,7 +1,8 @@
-import { UserStatus } from 'config/constants/status';
+import { baseModelConfig } from 'config/constants/model-config';
 import { UserDocument } from 'interfaces/User';
 import { Schema, model } from 'mongoose';
-import { useId } from 'utils/utils';
+
+const UserStatus = { ONLINE: 'ONLINE', OFFLINE: 'OFFLINE' };
 
 export const User = model<UserDocument>('user', new Schema({
   _id: {
@@ -52,6 +53,5 @@ export const User = model<UserDocument>('user', new Schema({
     default: []
   }
 },
-  { versionKey: false, toJSON: { getters: true } })
-  .method('toClient', useId)
+  { ...baseModelConfig })
 );

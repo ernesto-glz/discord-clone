@@ -10,7 +10,7 @@ export const slice = createSlice({
       users.push(...payload.filter(notInArray(users)));
     },
     updated: (users, { payload }) => {
-      const user = users.find((e) => e._id === payload.userId);
+      const user = users.find((e) => e.id === payload.userId);
       if (user) Object.assign(user, payload.user);
     }
   }
@@ -22,13 +22,13 @@ export default slice.reducer;
 export const getUserById = (userId: string) => {
   return createSelector(
     (state: Store.AppState) => state.users,
-    (users) => users.find((u) => u._id === userId)
+    (users) => users.find((u) => u.id === userId)
   )
 }
 
 export const getFriendUsers = () => {
   return createSelector(
     (state: Store.AppState) => state,
-    (state) => state.users.filter((u) => state.friends.includes(u._id))
+    (state) => state.users.filter((u) => state.friends.includes(u.id))
   )
 }

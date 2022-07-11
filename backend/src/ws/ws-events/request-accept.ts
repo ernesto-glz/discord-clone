@@ -9,7 +9,7 @@ export default class implements WSEvent<'FRIEND_REQUEST_ACCEPT'> {
 
   public async invoke(ws: WebSocket, client: Socket, { request, channel }: WS.Params.RequestAccept) {
     const { from, to } = request;
-    const fromSocketId = ws.sessions.getClientIdFromUserId(request.from._id);
+    const fromSocketId = ws.sessions.getClientIdFromUserId(request.from.id);
 
     app.rooms.joinGuildRooms(to as unknown as UserDocument, client);
 
@@ -21,16 +21,16 @@ export default class implements WSEvent<'FRIEND_REQUEST_ACCEPT'> {
       emit: 'NEW_FRIEND' as const,
       to: [fromSocketId ?? ''],
       send: {
-        requestId: request._id,
-        channel: await app.channels.fillInfo(channel, request.from._id),
+        requestId: request.id,
+        channel: await app.channels.fillInfo(channel, request.from.id),
         user: request.to,
       }
     }, {
       emit: 'NEW_FRIEND' as const,
       to: [client.id],
       send: {
-        requestId: request._id,
-        channel: await app.channels.fillInfo(channel, request.to._id),
+        requestId: request.id,
+        channel: await app.channels.fillInfo(channel, request.to.id),
         user: request.from,
       }
     }];

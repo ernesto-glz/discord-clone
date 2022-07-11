@@ -35,12 +35,12 @@ export const WSGuard = async (socket: SocketIo, next: SocketIoNext) => {
   }
 
   try {
-    const user = await UserService.getUser(decoded._id);
+    const user = await app.users.findById(decoded.id);
 
     if (!user) return next(new Error(ApiResponses.USER_NOT_FOUND));
 
     socket.data.user = JSON.parse(JSON.stringify(user));
-    app.webSocket.sessions.set(socket.id, user._id);
+    app.webSocket.sessions.set(socket.id, user.id);
     next();
   } catch (error) {
     if (error) {

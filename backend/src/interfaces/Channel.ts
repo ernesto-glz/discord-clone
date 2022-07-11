@@ -1,7 +1,7 @@
 import { Document } from 'mongoose';
 
 export interface Channel {
-  _id: string;
+  id: string;
   guildId: string;
   createdBy: string;
   userIds: string[];

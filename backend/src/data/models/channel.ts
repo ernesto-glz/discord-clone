@@ -1,7 +1,8 @@
-import { ChannelTypes } from 'config/constants/status';
+import { baseModelConfig } from 'config/constants/model-config';
 import { ChannelDocument } from 'interfaces/Channel';
 import { Schema, model } from 'mongoose';
-import { useId } from 'utils/utils';
+
+const ChannelTypes = { DM: 'DM', GUILD_TEXT: 'GUILD_TEXT', GUILD_VOICE: 'GUILD_VOICE' };
 
 export const Channel = model<ChannelDocument>('channel', new Schema({
   _id: {
@@ -15,14 +16,8 @@ export const Channel = model<ChannelDocument>('channel', new Schema({
     type: String,
     required: true
   },
-  firstMessageId: {
-    type: String
-  },
   lastMessageId: {
     type: String
-  },
-  position: {
-    type: Number
   },
   type: {
     type: String,
@@ -33,6 +28,5 @@ export const Channel = model<ChannelDocument>('channel', new Schema({
     type: [String],
     default: []
   }
-}, { versionKey: false, toJSON: { getters: true } })
-  .method('toClient', useId)
+}, { ...baseModelConfig })
 )

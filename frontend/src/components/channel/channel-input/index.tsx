@@ -40,23 +40,23 @@ export const MessageInput: React.FC<Props> = (props) => {
 
     if (text === '') {
       if (event.key === 'Backspace')
-        dispatch(stopTyping(props.activeChannel._id));
+        dispatch(stopTyping(props.activeChannel.id));
       return;
     }
 
-    dispatch(startTyping(props.activeChannel._id));
+    dispatch(startTyping(props.activeChannel.id));
     const emptyMessage = content.replaceAll('\n', '');
 
     if (event.key !== 'Enter' || !emptyMessage || event.shiftKey) return;
 
     const { data } = await callEndpoint(
       MessageService.createMessage({
-        channelId: props.activeChannel._id,
+        channelId: props.activeChannel.id,
         content: striptags(content, 'a')
       })
     );
 
-    dispatch(stopTyping(props.activeChannel._id));
+    dispatch(stopTyping(props.activeChannel.id));
     ws.emit('MESSAGE_CREATE', data);
 
     setContent('');

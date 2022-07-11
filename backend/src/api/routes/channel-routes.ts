@@ -9,7 +9,7 @@ router.post('/', validateCreateChannel, async (req, res) => {
   const user = res.locals.user;
   const { userId } = req.body;
   const channel = await ChannelService.createDM({
-    myId: user._id,
+    myId: user.id,
     userId
   });
   res.status(200).send(channel);
@@ -29,6 +29,6 @@ router.get('/:channelId/messages', async (req, res) => {
   const perPage = limit ? parseInt(limit.toString(), 10) : 30;
   const selectedPage = page ? parseInt(page.toString()) : 1;
 
-  const messages = await MessageService.getPaginated(channelId, user._id, perPage, selectedPage);
+  const messages = await MessageService.getPaginated(channelId, user.id, perPage, selectedPage);
   res.status(200).send(messages);
 })

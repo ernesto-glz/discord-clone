@@ -12,7 +12,7 @@ export default class implements WSEvent<'disconnect'> {
 
     if (!user) return;
 
-    const anotherInstance = ws.sessions.isOnline(user._id);
+    const anotherInstance = ws.sessions.isOnline(user.id);
     if (anotherInstance) return;
 
     user.status = 'OFFLINE';

@@ -46,7 +46,7 @@ export const RequestItem: React.FC<Props> = ({ request, type }) => {
         </div>
         <RequestActionsItem
           requestUser={requestUser}
-          requestId={request._id}
+          requestId={request.id}
           type={type}
         />
       </ItemBody>

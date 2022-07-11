@@ -18,18 +18,3 @@ export const slice = createSlice({
 
 export const actions = slice.actions;
 export default slice.reducer;
-
-// export const initPings = () => (dispatch: AppDispatch) => {
-//   const user = store.getState().auth.user!;
-//   const channels = store.getState().channels;
-//   const pings: Pings = {};
-
-//   for (const channel of channels) {
-//     const lastReadId = user.lastReadMessageIds[channel._id];
-//     if (true || lastReadId === channel.lastMessageId) {
-//       pings[channel._id] = pings[channel._id] ?? [];
-//       pings[channel._id].push(channel._id);
-//     }
-//   }
-//   dispatch(actions.initialized(pings));
-// };

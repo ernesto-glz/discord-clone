@@ -18,7 +18,7 @@ export const slice = createSlice({
       channels.push(...payload.filter(notInArray(channels)));
     },
     updated: (channels, { payload }) => {
-      const channel = channels.find((c) => c._id === payload._id);
+      const channel = channels.find((c) => c.id === payload.id);
       if (!channel) return;
       Object.assign(channel, payload);
     }
@@ -37,7 +37,7 @@ export const displayChannel = (userId: string) => (dispatch: Dispatch) => {
     callback: (data) => {
       dispatch( api.wsCallBegan({
         event: 'CHANNEL_DISPLAY',
-        data: { channelId: data.channel._id }
+        data: { channelId: data.channel.id }
       }))
     }
   }))
@@ -50,5 +50,5 @@ export const getDMChannels = (state: Store.AppState) => {
 export const getChannel = (channelId: string) =>
   createSelector(
     (state: Store.AppState) => state.channels,
-    (channels) => channels.find((e) => e._id === channelId)
+    (channels) => channels.find((e) => e.id === channelId)
 );

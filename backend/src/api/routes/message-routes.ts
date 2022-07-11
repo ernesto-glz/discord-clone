@@ -10,7 +10,7 @@ router.post('/', validateCreateMessage, async (req, res) => {
   const { user } = res.locals;
 
   const newMessage = await MessageService.create({
-    sender: user._id,
+    sender: user.id,
     content,
     channelId
   } as Entity.Message);

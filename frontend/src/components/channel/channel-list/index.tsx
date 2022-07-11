@@ -8,7 +8,7 @@ import { GenericButton } from '../channel-button/generic-button';
 const ChannelList: React.FC = () => {
   const selfUser = useAppSelector((s) => s.auth.user)!;
   const channels = useAppSelector((s) => s.channels.filter((c) => {
-      return c.type === 'DM' && selfUser.activeDMCS.includes(c._id);
+      return c.type === 'DM' && selfUser.activeDMCS.includes(c.id);
     })
   );
 

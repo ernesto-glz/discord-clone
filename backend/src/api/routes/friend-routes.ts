@@ -8,7 +8,7 @@ router.post('/', validateCreateFR, async (req, res) => {
   const { username, discriminator } = req.body;
   const { user } = res.locals;
   const friendRequest = await FriendService.create({
-    from: user._id,
+    from: user.id,
     discriminator,
     username
   });
@@ -18,13 +18,13 @@ router.post('/', validateCreateFR, async (req, res) => {
 router.put('/:requestId', async (req, res) => {
   const { user } = res.locals;
   const { requestId } = req.params;
-  const result = await FriendService.accept(requestId, user._id);
+  const result = await FriendService.accept(requestId, user.id);
   res.status(200).send(result);
 });
 
 router.delete('/:requestId', async (req, res) => {
   const { user } = res.locals;
   const { requestId } = req.params;
-  const result = await FriendService.remove(requestId, user._id);
+  const result = await FriendService.remove(requestId, user.id);
   res.status(200).send(result);
 });

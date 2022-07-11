@@ -1,23 +1,23 @@
-import { FriendStatus } from 'config/constants/status';
 import { FriendDocument } from 'interfaces/Friend';
 import { Friend } from 'data/models/friend';
 import { Repository } from './Base';
 
-export class FriendRepository extends Repository<FriendDocument> {
+export class FriendsRepository extends Repository<FriendDocument> {
   constructor() {
     super(Friend);
   }
 
   async checkExistence(fromId: string, userId: string) {
     return await this.findOne({
-      $or: [{ $and: [{ from: userId }, { to: fromId }] }, { $and: [{ from: fromId }, { to: userId }] }]
+      $or: [{ $and: [{ from: userId }, { to: fromId }] }, 
+      { $and: [{ from: fromId }, { to: userId }] }]
     });
   }
 
   async getFriends(userId: string) {
     const result = await this.find({
       $or: [{ from: userId }, { to: userId }],
-      status: FriendStatus.FRIEND
+      status: 'FRIEND'
     });
 
     if (!result) return null;
@@ -26,7 +26,7 @@ export class FriendRepository extends Repository<FriendDocument> {
   }
 
   async acceptFriendRequest(requestId: string) {
-    return await this.updateOne({ _id: requestId }, { status: FriendStatus.FRIEND });
+    return await this.updateOne({ _id: requestId }, { status: 'FRIEND' });
   }
 
   async getRequests(selfId: string) {

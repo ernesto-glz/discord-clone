@@ -1,10 +1,9 @@
-import { ChannelTypes } from 'config/constants/status';
 import { ChannelDocument } from 'interfaces/Channel';
 import { Channel } from 'data/models/channel';
 import { Entity } from '@discord/types';
 import { Repository } from './Base';
 
-export class ChannelRepository extends Repository<ChannelDocument> {
+export class ChannelsRepository extends Repository<ChannelDocument> {
   constructor() {
     super(Channel);
   }
@@ -15,7 +14,7 @@ export class ChannelRepository extends Repository<ChannelDocument> {
         { $and: [{ 'userIds.0': selfId }, { 'userIds.1': userId }] },
         { $and: [{ 'userIds.0': userId }, { 'userIds.1': selfId }] }
       ],
-      type: ChannelTypes.DM
+      type: 'DM'
     });
   }
 
@@ -28,7 +27,7 @@ export class ChannelRepository extends Repository<ChannelDocument> {
       ...channel,
       name:  user?.username ?? 'Deleted User',
       avatar: user?.avatar ?? 'unknown',
-      dmUserId: user?._id ?? 'unknown'
+      dmUserId: user?.id ?? 'unknown'
     };
   }
 }

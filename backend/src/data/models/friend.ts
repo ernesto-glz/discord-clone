@@ -1,7 +1,8 @@
 import { model, Schema } from 'mongoose';
-import { FriendStatus } from 'config/constants/status';
 import { FriendDocument } from 'interfaces/Friend';
-import { useId } from 'utils/utils';
+import { baseModelConfig } from 'config/constants/model-config';
+
+export const FriendStatus = { FRIEND: 'FRIEND', PENDING: 'PENDING' };
 
 export const Friend = model<FriendDocument>('friend', new Schema({
   _id: {
@@ -24,6 +25,5 @@ export const Friend = model<FriendDocument>('friend', new Schema({
     default: FriendStatus.PENDING
   }
 },
-  { versionKey: false, toJSON: { getters: true } })
-  .method('toClient', useId)
+  { ...baseModelConfig })
 );

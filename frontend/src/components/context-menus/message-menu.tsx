@@ -1,12 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Message } from 'src/models/message.model';
 import { Store } from 'types/store';
+import { Entity } from '@discord/types';
 import { CopyIdImage } from '../images/tiny-icons/copy-id-image';
 import { CtxBody, CtxItem, MessageLink, MyCtxMenu, Separator } from './styles';
 
 interface Props {
-  message: Message;
+  message: Entity.Message;
 }
 
 const MessageMenu: React.FC<Props> = ({ message }) => {
@@ -18,13 +18,13 @@ const MessageMenu: React.FC<Props> = ({ message }) => {
 
   return activeGuild ? (
     // @ts-expect-error
-    <MyCtxMenu id={message._id}>
+    <MyCtxMenu id={message.id}>
       <CtxBody>
         <div>
           {/* @ts-expect-error */}
           <CtxItem
             onClick={() =>
-              copyInClipboard(`${window.location.href}/${message._id}`)
+              copyInClipboard(`${window.location.href}/${message.id}`)
             }
           >
             <p className="childLeft">Copy Message Link</p>
@@ -33,8 +33,8 @@ const MessageMenu: React.FC<Props> = ({ message }) => {
           <Separator />
           {/* @ts-expect-error */}
           <CtxItem
-            key={message._id}
-            onClick={() => copyInClipboard(message._id)}
+            key={message.id}
+            onClick={() => copyInClipboard(message.id)}
           >
             <p className="childLeft">Copy ID</p>
             <CopyIdImage className="childRight" />

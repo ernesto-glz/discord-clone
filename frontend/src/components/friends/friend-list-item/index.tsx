@@ -17,7 +17,7 @@ interface Props {
 export const FriendItem: React.FC<Props> = ({ friend }) => {
   const store = useStore();
   const friends = useSelector(getFriendUsers());
-  const friendStatus = useMemo(() => isOnline(friend._id, store), [friends]);
+  const friendStatus = useMemo(() => isOnline(friend.id, store), [friends]);
   const [showDiscriminator, setShowDiscriminator] = useState(false);
   const dispatch = useAppDispatch();
 
@@ -25,7 +25,7 @@ export const FriendItem: React.FC<Props> = ({ friend }) => {
     <FriendRequest
       onMouseOver={() => setShowDiscriminator(true)}
       onMouseLeave={() => setShowDiscriminator(false)}
-      onClick={() => dispatch(displayChannel(friend._id))}
+      onClick={() => dispatch(displayChannel(friend.id))}
     >
       <ItemBody>
         <div>
@@ -48,7 +48,7 @@ export const FriendItem: React.FC<Props> = ({ friend }) => {
             </UserData>
           </Profile>
         </div>
-        <FriendItemActions userId={friend._id} />
+        <FriendItemActions userId={friend.id} />
       </ItemBody>
     </FriendRequest>
   );

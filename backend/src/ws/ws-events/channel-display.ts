@@ -11,9 +11,8 @@ export default class implements WSEvent<'CHANNEL_DISPLAY'> {
 
     const alreadyDisplayed = await app.users.findOne({ _id: userId, activeDMCS: channelId })
 
-    if (!alreadyDisplayed) {
+    if (!alreadyDisplayed)
       await app.users.updateOne({ _id: userId }, { $push: { activeDMCS: channelId } });
-    }
 
     return [{
       emit: this.on,

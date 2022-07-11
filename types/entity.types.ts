@@ -1,6 +1,6 @@
 export declare namespace Entity {
   export interface User {
-    _id: string;
+    id: string;
     username: string;
     discriminator: string;
     status: UserTypes.StatusType;
@@ -9,7 +9,7 @@ export declare namespace Entity {
   }
 
   export interface Request {
-    _id: string;
+    id: string;
     from: User;
     to: User;
     type?: RequestTypes.Type;
@@ -17,7 +17,7 @@ export declare namespace Entity {
   }
 
   export interface Channel {
-    _id: string;
+    id: string;
     guildId: string;
     name?: string;
     avatar?: string;
@@ -29,7 +29,7 @@ export declare namespace Entity {
   }
   
   export interface Message {
-    _id: string;
+    id: string;
     sender: string;
     channelId: string;
     content: string;

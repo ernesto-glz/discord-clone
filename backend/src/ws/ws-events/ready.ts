@@ -22,12 +22,12 @@ export default class implements WSEvent<'READY'> {
     }, {
       emit: 'PRESENCE_UPDATE' as const,
       to: user.guildIds,
-      send: { userId: user._id, status: user.status }
+      send: { userId: user.id, status: user.status }
     }];
   }
 
   private getUserIdFromToken(jwt: string) {
-    const decoded = verify(jwt, process.env.JWT_SECRET_KEY) as { _id: string };
-    return decoded?._id;
+    const decoded = verify(jwt, process.env.JWT_SECRET_KEY) as { id: string };
+    return decoded?.id;
   }
 }

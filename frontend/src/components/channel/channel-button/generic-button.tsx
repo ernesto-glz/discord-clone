@@ -12,7 +12,7 @@ export const GenericButton: React.FC<Props> = ({ genericImage, displayName }) =>
   const navigate = useNavigate();
 
   const onClick = () => {
-    if (activeChannel?._id !== "" && displayName !== 'Nitro') {
+    if (activeChannel?.id !== "" && displayName !== 'Nitro') {
       navigate(`/channels/${activeGuild}`);
     }
   };

@@ -14,7 +14,7 @@ export const slice = createSlice({
       requests.push(payload.request)
     },
     removeRequest: (requests, { payload }: PayloadAction<WS.Args.RequestRemove>) => {
-      const index = requests.findIndex((r) => r._id === payload.requestId)
+      const index = requests.findIndex((r) => r.id === payload.requestId)
       requests.splice(index, 1);
     }
   }
