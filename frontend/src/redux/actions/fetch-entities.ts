@@ -1,6 +1,5 @@
 import { fetchedEntities } from '../states/meta';
 import { actions as api } from '../states/api';
-import { actions as friends } from '../states/friend';
 import { actions as users } from '../states/users';
 import { actions as requests } from '../states/requests';
 import { actions as channels } from '../states/channels';
@@ -15,7 +14,6 @@ export default () => async (dispatch: Dispatch<any>) => {
     url: '/users/entities',
     callback: (data) => {
       dispatch(users.fetched(data.users));
-      dispatch(friends.fetched(data.friends));
       dispatch(channels.fetched(data.channels));
       dispatch(requests.fetched(data.requests));
       setTimeout(() => dispatch(fetchedEntities()), 1000);    

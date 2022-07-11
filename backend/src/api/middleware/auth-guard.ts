@@ -22,7 +22,8 @@ export const AuthGuard = async (req: Request, res: Response, next: NextFunction)
 
   const user = await app.users.findById(decoded.id);
 
-  if (!user) throw new ApiError(401, ApiResponses.USER_NOT_FOUND);
+  if (!user)
+    throw new ApiError(401, ApiResponses.USER_NOT_FOUND);
 
   res.locals.user = user.toObject();
   next();

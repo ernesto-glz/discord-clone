@@ -11,7 +11,7 @@ export interface DisplayChannel {
 export type UpdateType = 'VISIBLE' | 'HIDDEN';
 
 export const slice = createSlice({
-  name: 'channel',
+  name: 'channels',
   initialState: [] as Store.AppState['channels'],
   reducers: {
     fetched: (channels, { payload }) => {

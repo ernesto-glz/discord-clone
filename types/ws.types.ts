@@ -28,12 +28,17 @@ export declare namespace WS {
     FRIEND_REQUEST_REMOVE: Params.RequestRemove;
     /* Called when a channel of type DM is hiddened by user */
     CHANNEL_HIDE: Args.ChannelUpdate;
-    /* /* Called when a channel of type DM is displayed by user  */
+    /* Called when a channel of type DM is displayed by user  */
     CHANNEL_DISPLAY: Args.ChannelUpdate;
+    /* Called when a message is created  */
     MESSAGE_CREATE: Args.MessageCreate;
+    /* Called when a user in room start typing  */
     TYPING_START: Args.Typing;
+    /* Called when a user in room stop typing  */
     TYPING_STOP: Args.Typing;
+    /* Called when new friend is added  */
     NEW_FRIEND: any;
+    /* obvious :L */
     error: object;
   }
 
@@ -63,7 +68,8 @@ export declare namespace WS {
     }
 
     export interface RequestAccept {
-      request: Entity.Request;
+      requestId: string;
+      friendId: string;
       channel: Entity.Channel;
     }
 

@@ -34,12 +34,12 @@ const ChannelData: React.FC = () => {
   }, [messages[messages.length - 1], activeChannel]);
 
   useEffect(() => {
-    const myInput = document.querySelector('#messageInput');
+    const chatInput = document.querySelector('#messageInput');
     const resizeObserver = new ResizeObserver(() => {
       messagesRef.current!.scroll({ top: messagesRef.current?.scrollHeight });
     });
 
-    resizeObserver.observe(myInput as HTMLDivElement);
+    resizeObserver.observe(chatInput as HTMLDivElement);
 
     return () => {
       resizeObserver.disconnect();

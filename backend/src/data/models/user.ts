@@ -43,6 +43,9 @@ export const User = model<UserDocument>('user', new Schema({
   guildIds: {
     type: [String]
   },
+  friendIds: {
+    type: [String]
+  },
   lastReadMessageIds: {
     type: Object,
     default: {}

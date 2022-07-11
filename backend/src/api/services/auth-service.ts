@@ -38,8 +38,7 @@ export class AuthService {
       password: hashedPassword,
       email,
       avatar: Math.floor(Math.random() * 5).toString(),
-      discriminator: discriminator.toString().padStart(4, '0'),
-      guildIds: []
+      discriminator: discriminator.toString().padStart(4, '0')
     });
 
     return await app.users.findOne({ email });

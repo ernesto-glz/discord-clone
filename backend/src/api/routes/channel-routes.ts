@@ -9,7 +9,7 @@ router.post('/', validateCreateChannel, async (req, res) => {
   const user = res.locals.user;
   const { userId } = req.body;
   const channel = await ChannelService.createDM({
-    myId: user.id,
+    selfId: user.id,
     userId
   });
   res.status(200).send(channel);

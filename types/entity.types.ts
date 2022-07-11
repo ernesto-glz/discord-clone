@@ -6,6 +6,7 @@ export declare namespace Entity {
     status: UserTypes.StatusType;
     avatar: string;
     guildIds: string[];
+    friendIds: string[];
   }
 
   export interface Request {
@@ -13,7 +14,6 @@ export declare namespace Entity {
     from: Entity.User;
     to: Entity.User;
     type?: RequestTypes.Type;
-    status: RequestTypes.StatusType;
   }
 
   export interface Channel {
@@ -49,7 +49,6 @@ export declare namespace Entity {
 
   export namespace RequestTypes {
     export type Type = "INCOMING" | "OUTGOING";
-    export type StatusType = "PENDING" | "FRIEND";
   }
 
   export namespace ChannelTypes {

@@ -1,8 +1,7 @@
 import React from 'react';
-import useFetchAndLoad from 'src/hooks/useFetchAndLoad';
-import { ws } from 'src/ws/websocket';
 import { Entity } from '@discord/types';
-import { FriendService } from 'src/services/friend.service';
+import { useAppDispatch } from 'src/redux/hooks';
+import { removeRequest, acceptRequest } from 'src/redux/states/requests';
 import {
   AcceptIcon,
   ActionButton,
@@ -17,40 +16,28 @@ interface Props {
 }
 
 export const RequestActionsItem: React.FC<Props> = ({ requestId, type }) => {
-  const { callEndpoint } = useFetchAndLoad();
+  const dispatch = useAppDispatch();
 
-  const handleDenyOrCancelRequest = async () => {
-    const { data } = await callEndpoint(
-      FriendService.deleteFriendRequest(requestId)
-    );
-
-    if (!data) return;
-    
-    ws.emit('FRIEND_REQUEST_REMOVE', { request: data });
+  const handleCancel = async () => {
+    dispatch(removeRequest(requestId));
   };
 
-  const handleAcceptRequest = async () => {
-    const { data } = await callEndpoint(
-      FriendService.acceptFriendRequest(requestId)
-    );
-
-    if (!data) return;
-
-    ws.emit('FRIEND_REQUEST_ACCEPT', data);
+  const handleAccept = async () => {
+    dispatch(acceptRequest(requestId));
   };
 
   return (
     <RequestActions>
       {type === 'OUTGOING' ? (
-        <ActionButton onClick={handleDenyOrCancelRequest}>
+        <ActionButton onClick={handleCancel}>
           <CancelIcon className="cancel" />
         </ActionButton>
       ) : (
         <>
-          <ActionButton onClick={handleAcceptRequest}>
+          <ActionButton onClick={handleAccept}>
             <AcceptIcon className="accept" />
           </ActionButton>
-          <ActionButton onClick={handleDenyOrCancelRequest}>
+          <ActionButton onClick={handleCancel}>
             <CancelIcon className="cancel" />
           </ActionButton>
         </>

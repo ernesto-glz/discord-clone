@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { listenedToSocket } from 'src/redux/states/meta';
 import { actions as auth } from 'src/redux/states/auth';
 import { actions as channels } from 'src/redux/states/channels';
-import { actions as friends } from 'src/redux/states/friend';
 import { actions as requests } from 'src/redux/states/requests';
 import { actions as messages } from 'src/redux/states/messages';
 import { actions as typing } from 'src/redux/states/typing';
@@ -76,22 +75,23 @@ export const WSListeners: React.FC = () => {
         navigate('/channels/@me');
     });
     ws.on('NEW_FRIEND', ({ user, requestId, channel }) => {
-      const { id: selfId, guildIds } = state().auth.user!
-      const guilds = [...guildIds, channel.guildId];
-      const partialUser = { guildIds: guilds };
+      const { id: selfId, guildIds, friendIds } = state().auth.user!
+      const partialUser = {
+        guildIds: [...guildIds, channel.guildId],
+        friendIds: [...friendIds, user.id]
+      };
 
       dispatch(users.updated({ userId: selfId, user: partialUser }))
       dispatch(users.fetched([user]));
-      dispatch(friends.addFriend(user.id));
       dispatch(channels.fetched([channel]));
-      dispatch(auth.updated({ guildIds: guilds }))
-      dispatch(requests.removeRequest({ requestId }));
+      dispatch(auth.updated(partialUser))
+      dispatch(requests.removed({ requestId }));
     });
     ws.on('FRIEND_REQUEST_CREATE', ({ request }: WS.Args.RequestCreate) => {
-      dispatch(requests.addRequest({ request }));
+      dispatch(requests.added(request));
     });
     ws.on('FRIEND_REQUEST_REMOVE', ({ requestId }: WS.Args.RequestRemove) => {
-      dispatch(requests.removeRequest({ requestId }));
+      dispatch(requests.removed({ requestId }));
     });
     ws.on('TYPING_START', (args: WS.Args.Typing) => {
       const timeout = setTimeout(() => dispatch(typing.userStoppedTyping(args)), 20000);

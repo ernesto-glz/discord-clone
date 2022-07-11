@@ -2,37 +2,44 @@ import { Socket } from 'socket.io';
 import { WS } from '@discord/types';
 import { WebSocket } from '../websocket';
 import { WSEvent } from './ws-event';
-import { UserDocument } from 'data/models/user';
 
 export default class implements WSEvent<'FRIEND_REQUEST_ACCEPT'> {
   public on = 'FRIEND_REQUEST_ACCEPT' as const;
 
-  public async invoke(ws: WebSocket, client: Socket, { request, channel }: WS.Params.RequestAccept) {
-    const { from, to } = request;
-    const fromSocketId = ws.sessions.getClientIdFromUserId(request.from.id);
-
-    app.rooms.joinGuildRooms(to as unknown as UserDocument, client);
-
-    ws.io.sockets.sockets.forEach((s) => {
-      if (s.id === fromSocketId) app.rooms.joinGuildRooms(from as unknown as UserDocument, s);
-    });
+  public async invoke(ws: WebSocket, client: Socket, { requestId, friendId, channel }: WS.Params.RequestAccept) {
+    const selfId = ws.sessions.userId(client);
+    const fromSocketId = ws.sessions.getClientIdFromUserId(friendId);
+    
+    this.joinRooms(ws, client, { channel, from: fromSocketId });
 
     return [{
       emit: 'NEW_FRIEND' as const,
       to: [fromSocketId ?? ''],
       send: {
-        requestId: request.id,
-        channel: await app.channels.fillInfo(channel, request.from.id),
-        user: request.to,
+        requestId,
+        channel: await app.channels.fillInfo(channel, friendId),
+        user: await app.users.findById(selfId),
       }
     }, {
       emit: 'NEW_FRIEND' as const,
       to: [client.id],
       send: {
-        requestId: request.id,
-        channel: await app.channels.fillInfo(channel, request.to.id),
-        user: request.from,
+        requestId,
+        channel: await app.channels.fillInfo(channel, selfId),
+        user: await app.users.findById(friendId),
       }
     }];
+  }
+
+  private joinRooms(ws: WebSocket, client: Socket, { channel, from }) {
+    client.join(channel.id);
+    client.join(channel.guildId);
+
+    ws.io.sockets.sockets.forEach((s) => {
+      if (s.id === from) {
+        s.join(channel.id);
+        s.join(channel.guildId);
+      }
+    });
   }
 }

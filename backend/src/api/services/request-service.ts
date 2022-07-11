@@ -3,46 +3,46 @@ import { ApiResponses } from 'config/constants/api-responses';
 import { ChannelService } from './channel-service';
 import { generateSnowflake } from 'utils/snowflake';
 
-export class FriendService {
-  static async create({ from, username, discriminator }) {
-    const userFound = await app.users.findOne({ discriminator, username });
+export class RequestService {
+  static async create({ from, username, discriminator, selfUser }) {
+    const userFound = await app.users.findOne({ username, discriminator });
 
     if (!userFound) 
       throw new ApiError(400, ApiResponses['ERROR_CREATE_REQUEST']);
     else if (userFound.id === from) 
       throw new ApiError(400, ApiResponses['ERROR_CREATE_REQUEST']);
 
-    const alreadyRequest = await app.friends.checkExistence(from, userFound.id);
+    const alreadyRequest = await app.requests.checkExistence(from, userFound.id);
 
-    if (alreadyRequest?.status === 'FRIEND')
+    if (selfUser.friendIds.includes(userFound.id))
       throw new ApiError(400, ApiResponses['ALREADY_FRIENDS']);
     else if (alreadyRequest) 
       throw new ApiError(400, ApiResponses['REQUEST_ALREADY_EXISTS']);
 
-    const created = await app.friends.create({
+    const created = await app.requests.create({
       _id: generateSnowflake(),
       from,
       to: userFound.id
     });
 
-    return await app.friends.findOneAndPopulate({ _id: created.id }, ['from', 'to']);
+    return await app.requests.findOneAndPopulate({ _id: created.id }, ['from', 'to']);
   }
 
   static async remove(requestId: string, userId: string) {
-    const request = await app.friends.findOneAndPopulate({
+    const request = await app.requests.findOneAndPopulate({
       _id: requestId,
       $or: [{ to: userId }, { from: userId }]
     }, ['from', 'to']);
-
+    
     if (!request) 
       throw new ApiError(400, ApiResponses['REQUEST_NOT_FOUND']);
 
-    await app.friends.findByIdAndDelete(requestId)
+    await app.requests.findByIdAndDelete(requestId)
     return request;
   }
 
   static async accept(requestId: string, userId: string) {
-    const request = await app.friends.findOne({
+    const request = await app.requests.findOne({
       _id: requestId,
       to: userId
     });
@@ -50,18 +50,24 @@ export class FriendService {
     if (!request)
       throw new ApiError(400, ApiResponses['REQUEST_NOT_FOUND']);
 
-    const updated = await app.friends.acceptFriendRequest(requestId);
+    const deleted = await app.requests.findByIdAndDelete(requestId);
 
-    if (!updated)
+    if (!deleted)
       throw new ApiError(500, ApiResponses['SOMETHING_WRONG']);
 
-    const created = await ChannelService.createDM({
-      myId: request.from,
+    await app.users.updateOne({ _id: request.from }, {
+      $push: { friendIds: request.to }
+    });
+    
+    await app.users.updateOne({ _id: request.to }, {
+      $push: { friendIds: request.from }
+    });
+
+    const createdDM = await ChannelService.createDM({
+      selfId: request.from,
       userId: request.to
     });
 
-    const result = await app.friends.findOneAndPopulate({ _id: request.id }, ['from', 'to']);
-
-    return { request: result, channel: created.channel };
+    return { friendId: request.from, channel: createdDM.channel };
   }
 }

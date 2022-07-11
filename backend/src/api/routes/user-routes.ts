@@ -7,11 +7,10 @@ router.get('/entities', async (req, res) => {
   const { id: userId, guildIds } = res.locals.user;
   const $in = guildIds;
 
-  const [friends, channels, users, requests] = await Promise.all([
-    app.friends.getFriends(userId),
+  const [channels, users, requests] = await Promise.all([
     app.channels.find({ userIds: userId }),
     app.users.find({ guildIds: { $in } }),
-    app.friends.getRequests(userId)
+    app.requests.get(userId)
   ]);
 
   const securedUsers = users?.map((u) => app.users.secure(u));
@@ -20,7 +19,6 @@ router.get('/entities', async (req, res) => {
   );
 
   res.json({
-    friends,
     channels: filledChannels,
     users: securedUsers,
     requests

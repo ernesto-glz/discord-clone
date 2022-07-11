@@ -1,8 +1,6 @@
 import React, { FormEvent, useState } from 'react';
 import { ws } from 'src/ws/websocket';
-import useFetchAndLoad from 'src/hooks/useFetchAndLoad';
 import { useInputValue } from 'src/hooks/useInputValue';
-import { FriendService } from 'src/services/friend.service';
 import {
   Container,
   FlexColumnContainer,
@@ -12,6 +10,9 @@ import {
   HeaderContainer,
   InputHeader
 } from '../styles';
+import client from 'src/api/client';
+import { useAppDispatch } from 'src/redux/hooks';
+import { actions as requests } from 'src/redux/states/requests';
 
 interface ResponseMessage {
   message: string | null;
@@ -30,17 +31,16 @@ export const AddFriend: React.FC = () => {
   });
   const [focused, setFocused] = useState(false);
   const userToAdd = useInputValue('');
-  const { callEndpoint } = useFetchAndLoad();
+  const dispatch = useAppDispatch();
 
   const handleAddFriend = async (e: FormEvent) => {
     e.preventDefault();
 
     if (!userToAdd.value.includes('#')) {
-      setResponseMessage({
+      return setResponseMessage({
         message: `We need asd's four digit tag so we know wich one they are.`,
         type: 'Error'
       });
-      return;
     }
 
     const splitted = userToAdd.value.split('#');
@@ -58,9 +58,7 @@ export const AddFriend: React.FC = () => {
     };
 
     try {
-      const { data } = await callEndpoint(
-        FriendService.createRequest(dataToSend)
-      );
+      const { data } = await client.post('/requests', dataToSend);
 
       if (!data) return;
 
@@ -68,6 +66,8 @@ export const AddFriend: React.FC = () => {
         message: `Friend request sent to ${userToAdd.value}`,
         type: 'Success'
       });
+
+      dispatch(requests.added({ ...data, type: 'OUTGOING' }));
       ws.emit('FRIEND_REQUEST_CREATE', { request: data });
     } catch (err: any) {
       setResponseMessage({

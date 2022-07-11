@@ -29,6 +29,6 @@ export const getUserById = (userId: string) => {
 export const getFriendUsers = () => {
   return createSelector(
     (state: Store.AppState) => state,
-    (state) => state.users.filter((u) => state.friends.includes(u.id))
+    (state) => state.users.filter((u) => state.auth.user!.friendIds.includes(u.id))
   )
 }

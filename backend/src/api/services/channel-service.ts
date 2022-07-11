@@ -3,22 +3,22 @@ import { ApiResponses } from 'config/constants/api-responses';
 import { generateSnowflake } from 'utils/snowflake';
 
 export class ChannelService {
-  static async createDM({ myId, userId }) {
+  static async createDM({ selfId, userId }) {
     const guildId = generateSnowflake();
 
-    const channel = await app.channels.checkIfExistsDM(myId, userId);
+    const channel = await app.channels.checkIfExistsDM(selfId, userId);
     if (channel) return { channel, alreadyExists: true };
 
     const created = await app.channels.create({
       _id: generateSnowflake(),
       guildId,
-      userIds: [myId, userId],
-      createdBy: myId,
+      userIds: [selfId, userId],
+      createdBy: selfId,
       type: 'DM'
     });
 
     await app.users.updateMany(
-      { $or: [{ _id: myId }, { _id: userId }] },
+      { $or: [{ _id: selfId }, { _id: userId }] },
       { $push: { guildIds: guildId } }
     );
 
