@@ -35,7 +35,6 @@ export declare namespace Entity {
     content: string;
     createdAt: string;
     updatedAt?: string;
-    stackMessage?: boolean;
   }
 
   export namespace UserTypes {

@@ -58,16 +58,20 @@ export const getDate = (dateStr: string) => {
   })} ${aux.getDay()}, ${aux.getFullYear()}`;
 };
 
-export const compareDates = (prevDate: string, newDate: string) => {
+export const isExtraForTime = (prevDate: string, newDate: string) => {
   const newDate1 = new Date(prevDate);
   const newDate2 = new Date(newDate);
-  return (
-    `${newDate1.getDay()} ${newDate1.getHours()} ${newDate1.getMinutes()}` ===
-    `${newDate2.getDay()} ${newDate2.getHours()} ${newDate2.getMinutes()}`
-  );
+  
+  const difference = newDate2.getMinutes() - newDate1.getMinutes()
+  const isSameMonth = newDate1.getMonth() === newDate2.getMonth();
+  const isSameDay = newDate1.getDay() === newDate2.getDay();
+  const isSameHour = newDate1.getHours() === newDate2.getHours();
+  const inTimeRange = difference >= 0 && difference <= 5;
+  
+  return isSameMonth && isSameDay && isSameHour && inTimeRange;
 };
 
-export function calculateEventDelay(prevDate: Date, newDate: Date) {
+export function lessThan(prevDate: Date, newDate: Date, seconds: number) {
   const difference = newDate.getSeconds() - prevDate.getSeconds();
-  return difference > 15 || newDate.getMinutes() !== prevDate.getMinutes();
+  return difference > seconds || newDate.getMinutes() !== prevDate.getMinutes();
 }

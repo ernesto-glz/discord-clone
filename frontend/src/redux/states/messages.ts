@@ -1,7 +1,7 @@
 import { createSelector, createSlice, Dispatch } from '@reduxjs/toolkit';
 import { getMessages } from 'src/api/message';
 import { Message } from 'src/models/message.model';
-import { compareDates } from 'src/utils/date';
+import { isExtraForTime } from 'src/utils/date';
 import { notInArray } from 'src/utils/redux';
 import { Store } from 'types/store';
 
@@ -22,20 +22,8 @@ export const messageSlice = createSlice({
       messages.totalPages = payload.totalPages;
       messages.page = payload.page;
     },
-    created: (messages, { payload }) => {
-      const message = payload;
-      const prev = messages.entities[messages.entities.length - 1];
-      const { sender } = message;
-
-      if (!prev || prev.sender !== sender) {
-        messages.entities.push({ ...message });
-        return;
-      }
-
-      messages.entities.push({
-        ...message,
-        stackMessage: compareDates(prev.createdAt, message.createdAt)
-      });
+    created: (messages, { payload: message }) => {
+      messages.entities.push(message);
     }
   }
 });
@@ -56,19 +44,7 @@ export const fetchMessages =
 
     if (!data.docs?.length) return [];
 
-    const messagesFound = data.docs
-      .reverse()
-      .map((message: Message, index: number) => {
-        const prev = data.docs[index - 1];
-        const { sender } = message;
-
-        if (!prev || prev.sender !== sender) return { ...message };
-
-        return {
-          ...message,
-          stackMessage: compareDates(prev.createdAt, message.createdAt)
-        };
-      });
+    const messagesFound = data.docs.reverse();
 
     delete data.docs;
     dispatch(actions.fetched({ ...data, entities: messagesFound }));

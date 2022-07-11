@@ -1,5 +1,5 @@
 import { createSelector, createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit';
-import { calculateEventDelay } from 'src/utils/date';
+import { lessThan } from 'src/utils/date';
 import { ws } from 'src/ws/websocket';
 import { WS } from '@discord/types';
 import { Store } from 'types/store';
@@ -46,7 +46,7 @@ export const startTyping =
   (channelId: string) => (dispatch: Dispatch, getState: () => Store.AppState) => {
     // Set Message delay
     const now = new Date();
-    if (lastTypedAt && !calculateEventDelay(lastTypedAt, now)) return;
+    if (lastTypedAt && !lessThan(lastTypedAt, now, 5)) return;
     lastTypedAt = new Date();
 
     ws.emit('TYPING_START', { channelId });

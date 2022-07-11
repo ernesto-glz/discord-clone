@@ -20,7 +20,7 @@ export const Container = styled.div`
     padding: 2px 16px;
     margin-bottom: 1px;
   }
-  &.stackMessage {
+  &.isExtra {
     margin-bottom: 3px;
     align-items: flex-start;
     padding: 2px 0px;
@@ -43,7 +43,7 @@ export const Avatar = styled.div`
   height: 40px;
   background-color: var(--secondary);
   border-radius: 50%;
-  &.stackMessage {
+  &.isExtra {
     background-color: transparent;
   }
 `;
@@ -59,7 +59,7 @@ export const Message = styled.div`
   user-select: text;
   -moz-user-select: text;
   -webkit-user-select: text;
-  &.stackMessage {
+  &.isExtra {
     margin-left: 57px;
   }
 `;
