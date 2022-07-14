@@ -1,8 +1,5 @@
 import React, { useRef, useState } from 'react';
-import useFetchAndLoad from 'src/hooks/useFetchAndLoad';
-import { MessageService } from 'src/services/message.service';
 import striptags from 'striptags';
-import { ws } from 'src/ws/websocket';
 import { PulseLoader } from 'react-spinners';
 import { startTyping, stopTyping } from 'src/redux/states/typing';
 import useTypingUsers from 'src/hooks/useTypingUsers';
@@ -21,6 +18,7 @@ import {
   UploadPlusIcon
 } from '../channel-data/styles';
 import { useAppDispatch } from 'src/redux/hooks';
+import { createMessage } from 'src/redux/states/messages';
 
 interface Props {
   placeholder: string;
@@ -28,7 +26,6 @@ interface Props {
 }
 
 export const MessageInput: React.FC<Props> = (props) => {
-  const { callEndpoint } = useFetchAndLoad();
   const [content, setContent] = useState('');
   const messageBoxRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
@@ -49,15 +46,12 @@ export const MessageInput: React.FC<Props> = (props) => {
 
     if (event.key !== 'Enter' || !emptyMessage || event.shiftKey) return;
 
-    const { data } = await callEndpoint(
-      MessageService.createMessage({
-        channelId: props.activeChannel.id,
-        content: striptags(content, 'a')
-      })
-    );
+    dispatch(createMessage({
+      channelId: props.activeChannel.id,
+      content: striptags(content, 'a')
+    }));
 
     dispatch(stopTyping(props.activeChannel.id));
-    ws.emit('MESSAGE_CREATE', data);
 
     setContent('');
     messageBoxRef.current!.innerText = '';

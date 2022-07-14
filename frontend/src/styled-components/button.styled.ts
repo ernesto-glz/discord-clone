@@ -12,7 +12,7 @@ export const Button = styled.button`
   border: none;
   border-radius: 3px;
   font-weight: 500;
-  cursor: pointer;
+  cursor: ${(props) => props.disabled ? 'not-allowed' : 'pointer'};
   &:hover {
     background-color: var(--brand-experiment-560);
   }

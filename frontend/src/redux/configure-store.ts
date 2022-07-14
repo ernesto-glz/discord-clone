@@ -1,6 +1,5 @@
 import { combineReducers, configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import userReducer from './states/auth';
-import pingsReducer from './states/pings';
 import metaReducer from './states/meta';
 import channelReducer from './states/channels';
 import messageReducer from './states/messages';
@@ -19,13 +18,12 @@ export const store = configureStore({
   ] as any,
   reducer: combineReducers({
     auth: userReducer,
-    pings: pingsReducer,
-    meta: metaReducer,
+    typing: typingReducer,
     channels: channelReducer,
     messages: messageReducer,
-    ui: uiReducer,
     requests: requestsReducer,
-    typing: typingReducer,
-    users: usersReducer
+    users: usersReducer,
+    ui: uiReducer,
+    meta: metaReducer,
   })
 });

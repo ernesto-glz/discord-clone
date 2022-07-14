@@ -18,7 +18,6 @@
     "baseUrl": ".",
     "outDir": "dist",
     "paths": { "src/*": ["src/*"], "@discord/types": ["../types/main.ts"] },
-    "types": ["cypress", "dom-mediacapture-record"],
     "typeRoots": ["./types"]
   },
   "exclude": ["node_modules"],

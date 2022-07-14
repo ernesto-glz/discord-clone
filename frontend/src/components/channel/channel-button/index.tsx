@@ -2,11 +2,9 @@ import React, { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserImage } from 'src/components/user-image';
 import { ws } from 'src/ws/websocket';
-import { isOnline } from 'src/utils/redux';
 import { CloseIcon, Container } from './styles';
 import { useSelector } from 'react-redux';
 import { Store } from 'types/store';
-import { store } from 'src/redux/configure-store';
 import { useAppSelector } from 'src/redux/hooks';
 import { Entity } from '@discord/types';
 
@@ -20,7 +18,10 @@ const ChannelButton: React.FC<Props> = ({ channel }) => {
   const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
   const users = useSelector((s: Store.AppState) => s.users);
-  const userStatus = useMemo(() => isOnline(channel.dmUserId!, store), [users]);
+  const isOnline = useMemo(() => {
+    const user = users.find((u) => u.id === channel.dmUserId);
+    return user?.status === 'ONLINE';
+  }, [users]);
   const { activeGuild, activeChannel } = useAppSelector((s) => s.ui); 
 
   const goToChannel = () => {
@@ -39,7 +40,7 @@ const ChannelButton: React.FC<Props> = ({ channel }) => {
         <UserImage
           isGeneric={false}
           imageUrl={`${process.env.REACT_APP_API_ROOT}/assets/avatars/${channel.avatar ?? 'unknown'}.png`}
-          isOnline={userStatus}
+          isOnline={isOnline}
           displayStatus={true}
         />
         <span>{channel.name ?? 'Unknown'}</span>

@@ -1,4 +1,4 @@
-import { generateRandomIntWith } from 'src/utils/math';
+import { generateRandomIntWith } from 'src/utils/utils';
 import { Skeleton, SkeletonContent } from './styles';
 
 export const availablHeights = ['1rem', '2rem', '3rem'];

@@ -1,4 +1,3 @@
-import { WSGuard } from './modules/ws-guard';
 import { Server as SocketServer } from 'socket.io';
 import { SessionManager } from './modules/session-manager';
 import { join } from 'path';
@@ -21,7 +20,6 @@ export class WebSocket {
       path: '/websocket',
       serveClient: false
     });
-    this.io.use(WSGuard);
 
     const dir = join(`${__dirname}/ws-events`);
     const files = readdirSync(dir);

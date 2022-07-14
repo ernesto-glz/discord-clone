@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { listenedToSocket } from 'src/redux/states/meta';
-import { actions as auth } from 'src/redux/states/auth';
+import { actions as meta } from 'src/redux/states/meta';
+import { actions as auth, logoutUser } from 'src/redux/states/auth';
 import { actions as channels } from 'src/redux/states/channels';
 import { actions as requests } from 'src/redux/states/requests';
 import { actions as messages } from 'src/redux/states/messages';
@@ -9,7 +9,7 @@ import { actions as users } from 'src/redux/states/users';
 import fetchEntities from 'src/redux/actions/fetch-entities';
 import { useNavigate } from 'react-router-dom';
 import { playSound } from 'src/utils/sounds';
-import { WS } from '@discord/types';
+import { WS, Entity } from '@discord/types';
 import { useAppDispatch } from 'src/redux/hooks';
 import { AuthErrors } from 'src/config/constants';
 import { store } from 'src/redux/configure-store';
@@ -27,7 +27,7 @@ export const WSListeners: React.FC = () => {
     ws.on('connect_error', (error) => {
       if (Object.values(AuthErrors).indexOf(error.message) < 0) 
         return console.log(error);
-      dispatch(auth.logOut());
+      dispatch(logoutUser());
       navigate('/login', { replace: true })
     });
     ws.on('READY', (data) => {
@@ -39,7 +39,7 @@ export const WSListeners: React.FC = () => {
     ws.on('PRESENCE_UPDATE', ({ userId, status }: WS.Args.PresenceUpdate) => {
       dispatch(users.updated({ userId, user: { status } }));
     });
-    ws.on('MESSAGE_CREATE', ({ data: message }: { data: WS.Args.MessageCreate }) => {
+    ws.on('MESSAGE_CREATE', ({ message }: { message: Entity.Message }) => {
       const { activeChannel } = state().ui;
       const { id: selfId, activeDMCS } = state().auth.user!;
       const { channelId, sender } = message;
@@ -47,7 +47,7 @@ export const WSListeners: React.FC = () => {
       const isActiveChannel = activeDMCS.includes(channelId);
       
       if (channel!.type === 'DM' && sender !== selfId && !isActiveChannel) {
-        dispatch(auth.updated({ activeDMCS: [...activeDMCS, channelId] }));
+        dispatch(auth.updatedUser({ activeDMCS: [...activeDMCS, channelId] }));
       }
 
       if (!activeChannel || activeChannel.id !== channelId)
@@ -60,7 +60,7 @@ export const WSListeners: React.FC = () => {
       const data = [...activeDMCS, channelId];
       
       if (!activeDMCS.find((a) => a === channelId))
-        dispatch(auth.updated({ activeDMCS: data }));
+        dispatch(auth.updatedUser({ activeDMCS: data }));
 
       navigate(`/channels/@me/${channelId}`);
     });
@@ -69,7 +69,7 @@ export const WSListeners: React.FC = () => {
       const filtered = activeDMCS.filter((cId) => cId !== channelId);
       const activeChannel = state().ui.activeChannel;
       
-      dispatch(auth.updated({ activeDMCS: filtered }));
+      dispatch(auth.updatedUser({ activeDMCS: filtered }));
       
       if (activeChannel?.id === channelId)
         navigate('/channels/@me');
@@ -84,7 +84,7 @@ export const WSListeners: React.FC = () => {
       dispatch(users.updated({ userId: selfId, user: partialUser }))
       dispatch(users.fetched([user]));
       dispatch(channels.fetched([channel]));
-      dispatch(auth.updated(partialUser))
+      dispatch(auth.updatedUser(partialUser))
       dispatch(requests.removed({ requestId }));
     });
     ws.on('FRIEND_REQUEST_CREATE', ({ request }: WS.Args.RequestCreate) => {
@@ -101,7 +101,7 @@ export const WSListeners: React.FC = () => {
       dispatch(typing.userStoppedTyping(args));
     });
 
-    dispatch(listenedToSocket());
+    dispatch(meta.listenedToWS());
   }, []);
 
   return null;

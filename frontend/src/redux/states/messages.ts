@@ -1,9 +1,9 @@
 import { createSelector, createSlice, Dispatch } from '@reduxjs/toolkit';
-import { getMessages } from 'src/api/message';
-import { Message } from 'src/models/message.model';
-import { isExtraForTime } from 'src/utils/date';
-import { notInArray } from 'src/utils/redux';
+import client from 'src/api/client';
+import { CreateMessage } from 'src/models/message.model';
+import { notInArray } from 'src/utils/utils';
 import { Store } from 'types/store';
+import { actions as api } from './api';
 
 export type FetchMessages = { channelId: string; page?: number };
 
@@ -31,21 +31,25 @@ export const messageSlice = createSlice({
 export const actions = messageSlice.actions;
 export default messageSlice.reducer;
 
-export const getChannelMessages = (channelId: string) =>
-  createSelector(
-    (state: Store.AppState) => state.messages.entities,
-    (messages) => messages.filter((m) => m.channelId === channelId)
-  );
+export const getChannelMessages = (channelId: string) => createSelector(
+  (state: Store.AppState) => state.messages.entities,
+  (messages) => messages.filter((m) => m.channelId === channelId)
+);
 
-export const fetchMessages =
-  ({ channelId, page }: FetchMessages) =>
-  async (dispatch: Dispatch, getState: () => Store.AppState) => {
-    const { data } = await getMessages(channelId, page);
+export const fetchMessages = ({ channelId, page }: FetchMessages) => async (dispatch: Dispatch) => {
+  const { data } = await client.get(`/channels/${channelId}/messages?page=${page ?? 1}`);
 
-    if (!data.docs?.length) return [];
+  if (!data.docs?.length) return [];
 
-    const messagesFound = data.docs.reverse();
+  const messagesFound = data.docs.reverse();
 
-    delete data.docs;
-    dispatch(actions.fetched({ ...data, entities: messagesFound }));
-  };
+  delete data.docs;
+  dispatch(actions.fetched({ ...data, entities: messagesFound }));
+};
+
+export const createMessage = (data: CreateMessage) => (dispatch: Dispatch) => {
+  dispatch(api.wsCallBegan({
+    event: 'MESSAGE_CREATE',
+    data
+  }));
+};

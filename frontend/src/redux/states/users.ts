@@ -1,5 +1,5 @@
-import { createSelector, createSlice, current } from '@reduxjs/toolkit';
-import { notInArray } from 'src/utils/redux';
+import { createSelector, createSlice } from '@reduxjs/toolkit';
+import { notInArray } from 'src/utils/utils';
 import { Store } from 'types/store';
 
 export const slice = createSlice({

@@ -15,7 +15,8 @@ export class WSRooms {
     const ids: string[] = [];
     const channels = await app.channels.find({ guildId: { $in: guildIds } });
 
-    if (!channels) throw new ApiError(500, 'No channels available to jon');
+    if (!channels)
+      throw new ApiError(500, 'No channels available to jon');
 
     for (const channel of channels) {
       if (channel.type === 'GUILD_VOICE') continue;

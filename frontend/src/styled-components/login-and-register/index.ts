@@ -1,5 +1,5 @@
-import { InputTitleProps } from 'src/pages/login';
-import { GeneralFormProps } from 'src/pages/register';
+import { InputTitleProps } from 'src/pages/auth/login-page';
+import { GeneralFormProps } from 'src/pages/auth/register-page';
 import styled from 'styled-components';
 
 export const GeneralContainer = styled.div`
@@ -26,7 +26,7 @@ export const Form = styled.form<GeneralFormProps>`
   box-sizing: border-box;
   width: ${(props) => (props.isRegisterPage ? '450px' : '784px')};
   color: #72767d;
-  background-color: var(--background-mobile-primary);
+  background-color: var(--background-primary);
   border-radius: 5px;
   @media (max-width: 830px) {
     max-width: 480px;

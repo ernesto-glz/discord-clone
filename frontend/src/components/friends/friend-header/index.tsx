@@ -44,13 +44,9 @@ const FriendsHeader: React.FC<Props> = (props) => {
         <HeaderMenuButton
           pageState={props.pageState}
           buttonPage="PENDING"
-          displayName={`Pending ${
-            notifications > 0 ? (
-              <NotificationMark>{notifications}</NotificationMark>
-            ) : (
-              ''
-            )
-          }`}
+          displayName={`Pending ${notifications > 0 ?
+             ( <NotificationMark>{notifications}</NotificationMark> )
+            : '' }`}
         />
 
         <HeaderMenuButton

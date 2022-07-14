@@ -5,7 +5,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: 3px 6px 0 16px;
-  background-color: var(--primary);
+  background-color: var(--background-primary);
   border-left: 1px solid var(--background-modifier-accent);
   max-height: calc(100vh - 46px);
   overflow-y: scroll;

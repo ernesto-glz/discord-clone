@@ -6,25 +6,17 @@ import {
 import { Input } from 'src/styled-components/input.styled';
 
 interface Props {
-  errors: { email: null; password: null };
-  handler: {
-    value: any;
-    onChange: (val: any) => void;
-  };
+  error?: string;
+  handler: { value: any; onChange: (val: any) => void };
   type?: 'password' | 'text';
   title: string;
 }
 
-export const AuthInput: React.FC<Props> = ({
-  errors,
-  handler,
-  title,
-  type = 'text'
-}) => (
+export const AuthInput: React.FC<Props> = ({ error, handler, title, type = 'text' }) => (
   <React.Fragment>
-    <InputTitle error={errors.password}>
+    <InputTitle error={error}>
       <span>{title}</span>
-      {errors.password && <ErrorMessage>-{errors.password}</ErrorMessage>}
+      {error && <ErrorMessage>-{error}</ErrorMessage>}
     </InputTitle>
     <Input {...handler} type={type} />
   </React.Fragment>

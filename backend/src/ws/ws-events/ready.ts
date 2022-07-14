@@ -9,7 +9,11 @@ export default class implements WSEvent<'READY'> {
 
   public async invoke(ws: WebSocket, client: Socket, { jwt }: WS.Params.Ready) {
     const user = await app.users.findById(this.getUserIdFromToken(jwt));
-    if (!user) throw new TypeError('User not found');
+    
+    if (!user) 
+      throw new TypeError('User not found');
+
+    ws.sessions.set(client.id, user.id);
 
     await app.rooms.joinGuildRooms(user, client);
     user.status = 'ONLINE';

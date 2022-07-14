@@ -1,23 +1,22 @@
 import React, { useMemo, useState } from 'react';
-import { useSelector, useStore } from 'react-redux';
 import { UserImage } from 'src/components/user-image';
 import { Profile, UserData } from 'src/components/user-info/styles';
 import { displayChannel } from 'src/redux/states/channels';
-import { isOnline } from 'src/utils/redux';
 import { FriendRequest, ItemBody } from '../styles';
 import { FriendItemActions } from './actions';
 import { Entity } from '@discord/types';
-import { useAppDispatch } from 'src/redux/hooks';
-import { getFriendUsers } from 'src/redux/states/users';
+import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 
 interface Props {
   friend: Entity.User;
 }
 
 export const FriendItem: React.FC<Props> = ({ friend }) => {
-  const store = useStore();
-  const friends = useSelector(getFriendUsers());
-  const friendStatus = useMemo(() => isOnline(friend.id, store), [friends]);
+  const users = useAppSelector((s) => s.users);
+  const isOnline = useMemo(() => {
+    const user = users.find((u) => u.id === friend.id);
+    return user?.status === 'ONLINE';
+  }, [users]);
   const [showDiscriminator, setShowDiscriminator] = useState(false);
   const dispatch = useAppDispatch();
 
@@ -33,7 +32,7 @@ export const FriendItem: React.FC<Props> = ({ friend }) => {
             <UserImage
               isGeneric={false}
               displayStatus={true}
-              isOnline={friendStatus}
+              isOnline={isOnline}
               imageUrl={`${process.env.REACT_APP_API_ROOT}/assets/avatars/${friend.avatar}.png`}
             />
             <UserData>
@@ -43,7 +42,7 @@ export const FriendItem: React.FC<Props> = ({ friend }) => {
               </strong>
 
               <span className="userStatus">
-                {friend.status === 'ONLINE' ? 'Online' : 'Offline'}
+                {isOnline ? 'Online' : 'Offline'}
               </span>
             </UserData>
           </Profile>

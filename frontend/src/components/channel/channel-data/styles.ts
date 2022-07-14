@@ -35,7 +35,7 @@ export const MessagesContainer = styled.div`
 
 export const Messages = styled.ol`
   min-height: 0;
-  > .lastMessage {
+  > .divider {
     height: 30px;
   }
 `;

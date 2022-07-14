@@ -1,5 +1,6 @@
 import { Repository } from './Base';
 import { User, UserDocument } from 'data/models/user';
+import { ApiError } from 'api/modules/api-error';
 
 export class UsersRepository extends Repository<UserDocument> {
   constructor() {
@@ -8,6 +9,13 @@ export class UsersRepository extends Repository<UserDocument> {
 
   async findWithPassword(email: string) {
     return await this.findOneAndSelect({ email }, '+password');
+  }
+
+  async getSelf(userId: string) {
+    const selfUser = await app.users.findById(userId);
+    if (!selfUser)
+      throw new ApiError(400, 'User not found');
+    return selfUser;
   }
 
   public secure(user: UserDocument) {

@@ -48,10 +48,7 @@ export declare namespace WS {
     }
 
     export interface MessageCreate {
-      id: string;
-      sender: string;
       channelId: string;
-      guildId: string;
       content: string;
     }
 

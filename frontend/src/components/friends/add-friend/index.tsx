@@ -1,6 +1,8 @@
-import React, { FormEvent, useState } from 'react';
-import { ws } from 'src/ws/websocket';
+import React, { FormEvent, useEffect, useState } from 'react';
 import { useInputValue } from 'src/hooks/useInputValue';
+import { useAppDispatch } from 'src/redux/hooks';
+import { createRequest } from 'src/redux/states/requests';
+import events from 'src/services/event-service';
 import {
   Container,
   FlexColumnContainer,
@@ -10,93 +12,73 @@ import {
   HeaderContainer,
   InputHeader
 } from '../styles';
-import client from 'src/api/client';
-import { useAppDispatch } from 'src/redux/hooks';
-import { actions as requests } from 'src/redux/states/requests';
 
-interface ResponseMessage {
+interface Response {
   message: string | null;
   type: 'Success' | 'Error' | null;
 }
 
 export interface AddInputProps {
   focus: boolean;
-  state: ResponseMessage;
+  state: Response;
 }
 
 export const AddFriend: React.FC = () => {
-  const [responseMessage, setResponseMessage] = useState<ResponseMessage>({
-    message: null,
-    type: null
-  });
+  const [response, setResponse] = useState<Response>({ message: null, type: null });
   const [focused, setFocused] = useState(false);
-  const userToAdd = useInputValue('');
+  const target = useInputValue('');
   const dispatch = useAppDispatch();
 
-  const handleAddFriend = async (e: FormEvent) => {
+  const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    if (!userToAdd.value.includes('#')) {
-      return setResponseMessage({
+    if (!target.value.includes('#')) {
+      return setResponse({
         message: `We need asd's four digit tag so we know wich one they are.`,
         type: 'Error'
       });
     }
 
-    const splitted = userToAdd.value.split('#');
+    const splitted = target.value.split('#');
 
     if (splitted[1].length < 4 || splitted[1].length > 4) {
-      return setResponseMessage({
-        message: `Invalid four digit tag.`,
-        type: 'Error'
-      }); 
+      return setResponse({ message: 'Invalid four digit tag.', type: 'Error' });
     }
 
-    const dataToSend = {
-      username: splitted[0],
-      discriminator: splitted[1]
-    };
-
-    try {
-      const { data } = await client.post('/requests', dataToSend);
-
-      if (!data) return;
-
-      setResponseMessage({
-        message: `Friend request sent to ${userToAdd.value}`,
-        type: 'Success'
-      });
-
-      dispatch(requests.added({ ...data, type: 'OUTGOING' }));
-      ws.emit('FRIEND_REQUEST_CREATE', { request: data });
-    } catch (err: any) {
-      setResponseMessage({
-        message: err?.response?.data || 'Undetermined error',
-        type: 'Error'
-      });
-    }
+    const payload = { username: splitted[0], discriminator: splitted[1] };
+    dispatch(createRequest(payload));
   };
+
+  useEffect(() => {
+    events.on('REQUEST_CREATE_SUCCEEDED', (message) => {
+      setResponse({  message,  type: 'Success' });
+    });
+    events.on('REQUEST_CREATE_FAILED', (message) => {
+      setResponse({ message, type: 'Error' });
+    });
+
+    return () => {
+      events.off('REQUEST_CREATE_SUCCESS', () => {});
+      events.off('REQUEST_CREATE_FAILURE', () => {});
+    };
+  }, []);
 
   return (
     <FlexColumnContainer>
       <FriendHeader>
         <h2>Add Friend</h2>
-        <form onSubmit={handleAddFriend} autoComplete="off">
-          <div
-            className={`${responseMessage.type === 'Error' && 'error'} ${
-              responseMessage.type === 'Success' && 'success'
-            }`}
-          >
-            {!responseMessage.message
+        <form onSubmit={onSubmit} autoComplete="off">
+          <div className={response.type ?? ''}>
+            {!response.message
               ? "You can add a friend with their Discord Tag. It's cAsE sEnSitIvE!"
-              : responseMessage.message}
+              : response.message}
           </div>
-          <HeaderContainer state={responseMessage} focus={focused}>
+          <HeaderContainer state={response} focus={focused}>
             <div className="inputWrapper">
               <InputHeader
                 type="text"
                 maxLength={40}
-                {...userToAdd}
+                {...target}
                 autoFocus
                 onFocus={() => setFocused(true)}
                 onBlur={() => setFocused(false)}

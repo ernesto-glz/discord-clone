@@ -1,8 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch } from 'src/redux/hooks';
-import { actions as auth } from 'src/redux/states/auth';
 import { Store } from 'types/store';
 import { UserImage } from '../user-image';
 
@@ -17,14 +15,8 @@ import {
 } from './styles';
 
 const UserInfo: React.FC = () => {
-  const dispatch = useAppDispatch();
   const user = useSelector((s: Store.AppState) => s.auth.user);
-  const navigate = useNavigate()
-
-  const handleLogout = () => {
-    dispatch(auth.logOut());
-    navigate('/login', { replace: true });
-  };
+  const navigate = useNavigate();
 
   return (
     <React.Fragment>
@@ -46,7 +38,7 @@ const UserInfo: React.FC = () => {
           <Icons>
             <MicIcon />
             <HeadphoneIcon />
-            <SettingsIcon onClick={handleLogout} />
+              <SettingsIcon onClick={() => navigate('/logout')} />
           </Icons>
         </Container>
       ) : null}

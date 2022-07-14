@@ -1,15 +1,16 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { PrivateRoute } from './components/private-route';
-import { Login } from './pages/login';
-import { Register } from './pages/register';
 import { GuildPage } from './pages/guild-page';
 import { ready } from './redux/states/auth';
 import { useAppDispatch } from './redux/hooks';
-import './styles/dots-loading-animation.css';
-import './styles/whitney-fonts.css';
+import LoginPage from './pages/auth/login-page';
+import RegisterPage from './pages/auth/register-page';
+import LogoutPage from './pages/auth/logout-page';
+import FriendsPage from './pages/friends-page';
+import './styles/index.css';
 
-function App() {
+const App = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -21,10 +22,11 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Navigate to="/channels/@me" />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path='/logout' element={<LogoutPage />} />
           <Route element={<PrivateRoute />}>
-            <Route path="/channels/:guildId" element={<GuildPage />} />
+            <Route path="/channels/@me" element={<FriendsPage />} />
             <Route path="/channels/:guildId/:channelId" element={<GuildPage />} />
           </Route>
           <Route path="*" element={<h1>404 - Not Found</h1>} />

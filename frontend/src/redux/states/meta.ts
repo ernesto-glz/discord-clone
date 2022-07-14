@@ -1,25 +1,24 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { Store } from 'types/store';
 
-export const metaSlice = createSlice({
+export const slice = createSlice({
   name: 'meta',
   initialState: {
     fetchedEntities: false,
     hasListenedToWS: false
   } as Store.AppState['meta'],
   reducers: {
-    listenedToSocket: (state) => {
-      state.hasListenedToWS = true;
+    listenedToWS: (meta) => {
+      meta.hasListenedToWS = true;
     },
-    fetchedEntities: (state) => {
-      state.fetchedEntities = true;
+    fetchedEntities: (meta) => {
+      meta.fetchedEntities = true;
+    },
+    reseted: (meta) => {
+      meta.fetchedEntities = false;
     }
   }
 });
 
-export const hasListenedToSocket = (state: Store.AppState) => {
-  return state.meta.hasListenedToWS;
-};
-
-export const { listenedToSocket, fetchedEntities } = metaSlice.actions;
-export default metaSlice.reducer;
+export const actions = slice.actions;
+export default slice.reducer;

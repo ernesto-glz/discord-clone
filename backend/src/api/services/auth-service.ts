@@ -12,7 +12,7 @@ export class AuthService {
     else if (!(await Auth.checkCredentials(password, userFound.password)))
       throw new ApiError(401, ApiResponses['INVALID_CREDENTIALS']);
 
-    return await app.users.findOne({ email });
+    return app.users.secure(userFound);
   }
 
   public static async calcDiscriminator(username: string) {
@@ -32,7 +32,7 @@ export class AuthService {
     const hashedPassword = await Auth.hashPassword(password);
     const discriminator = await this.calcDiscriminator(username);
 
-    await app.users.create({
+    const created = await app.users.create({
       _id: generateSnowflake(),
       username,
       password: hashedPassword,
@@ -41,6 +41,6 @@ export class AuthService {
       discriminator: discriminator.toString().padStart(4, '0')
     });
 
-    return await app.users.findOne({ email });
+    return app.users.secure(created);
   }
 }

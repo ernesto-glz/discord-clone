@@ -11,7 +11,7 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: var(--primary);
+  background-color: var(--background-primary);
 `;
 
 export const WampusImage = styled.img`
@@ -52,10 +52,10 @@ export const FriendHeader = styled.header`
     font-weight: 400;
     color: var(--gray);
   }
-  > form > .error {
+  > form > .Error {
     color: var(--text-danger);
   }
-  > form > .success {
+  > form > .Success {
     color: hsl(139, calc(var(--saturation-factor, 1) * 47.3%), 43.9%);
   }
 `;

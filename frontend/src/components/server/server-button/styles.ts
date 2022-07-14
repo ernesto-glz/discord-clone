@@ -11,7 +11,7 @@ export const Button = styled.button<Props>`
   border-radius: 50%;
   margin-bottom: 8px;
   background-color: ${(props) =>
-    props.isHome ? 'var(--brand-experiment)' : 'var(--primary)'};
+    props.isHome ? 'var(--brand-experiment)' : 'var(--background-primary)'};
   position: relative;
 
   cursor: pointer;

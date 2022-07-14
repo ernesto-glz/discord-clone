@@ -18,11 +18,9 @@ export class Auth {
     const payload = { id: user.id };
 
     const token = sign(payload, process.env.JWT_SECRET_KEY, {
-      expiresIn: process.env.JWT_EXPIRES_IN || '30d'
+      expiresIn: process.env.JWT_EXPIRES_IN ?? '30d'
     });
 
-    const partialUser = { ...user.toObject() } as any;
-    delete partialUser.password;
-    res.status(statusCode).json({ token, user: partialUser });
+    res.status(statusCode).json({ token });
   }
 }

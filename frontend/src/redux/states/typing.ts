@@ -1,8 +1,8 @@
 import { createSelector, createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit';
 import { lessThan } from 'src/utils/date';
-import { ws } from 'src/ws/websocket';
 import { WS } from '@discord/types';
 import { Store } from 'types/store';
+import { actions as api } from './api';
 
 const slice = createSlice({
   name: 'typing',
@@ -25,38 +25,39 @@ const slice = createSlice({
   }
 });
 
-const getIndex = (typing: any[], userId: string, channelId: string) => {
-  return typing.findIndex(
-    (t) => t.channelId === channelId && t.userId === userId
-  );
-};
-
 export const actions = slice.actions;
 export default slice.reducer;
 
-export const getTypersInChannel = (channelId: string) =>
-  createSelector(
-    (state: Store.AppState) => state.typing,
-    (typing) => typing.filter((t) => t.channelId === channelId)
-  );
+const getIndex = (typing: any[], userId: string, channelId: string) => {
+  return typing.findIndex((t) => t.channelId === channelId && t.userId === userId);
+};
+
+export const getTypersInChannel = (channelId: string) => createSelector(
+  (state: Store.AppState) => state.typing,
+  (typing) => typing.filter((t) => t.channelId === channelId)
+);
 
 let lastTypedAt: Date;
 
-export const startTyping =
-  (channelId: string) => (dispatch: Dispatch, getState: () => Store.AppState) => {
-    // Set Message delay
-    const now = new Date();
-    if (lastTypedAt && !lessThan(lastTypedAt, now, 5)) return;
-    lastTypedAt = new Date();
+export const startTyping = (channelId: string) => (dispatch: Dispatch) => {
+  // Set Message delay
+  const now = new Date();
+  if (lastTypedAt && !lessThan(lastTypedAt, now, 5)) return;
+  lastTypedAt = new Date();
 
-    ws.emit('TYPING_START', { channelId });
-  };
+  dispatch(api.wsCallBegan({
+    event: 'TYPING_START',
+    data: { channelId }
+  }));
+};
 
-export const stopTyping =
-  (channelId: string) => (dispatch: Dispatch, getState: () => Store.AppState) => {
-    // Reset message delay
-    const now = new Date();
-    lastTypedAt = new Date(now.getTime() - 50 * 1000);
+export const stopTyping = (channelId: string) => (dispatch: Dispatch) => {
+  // Reset message delay
+  const now = new Date();
+  lastTypedAt = new Date(now.getTime() - 50 * 1000);
 
-    ws.emit('TYPING_STOP', { channelId });
-  };
+  dispatch(api.wsCallBegan({
+    event: 'TYPING_STOP',
+    data: { channelId }
+  }));
+};

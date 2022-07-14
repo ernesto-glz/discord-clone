@@ -5,21 +5,19 @@ import { MessageInput } from '../channel-input';
 import { ChannelWelcome } from '../channel-welcome';
 import { MessageDivider } from 'src/components/message-divider';
 import SkeletonMessage from '../channel-message/skeleton-message';
+import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import {
   Container,
   Messages,
   MessagesContainer,
   MessagesWrapper
 } from './styles';
-import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 
 const ChannelData: React.FC = () => {
   const { page, totalPages } = useAppSelector((s) => s.messages);
   const activeChannel = useAppSelector((s) => s.ui.activeChannel)!;
-  const messages = useAppSelector(getChannelMessages(activeChannel!.id));
+  const messages = useAppSelector(getChannelMessages(activeChannel.id));
   const messagesRef = useRef<HTMLDivElement>(null);
-  const skeletonRef = useRef<HTMLDivElement>(null);
-  const lastMessageRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -30,7 +28,7 @@ const ChannelData: React.FC = () => {
   }, [activeChannel]);
 
   useEffect(() => {
-    lastMessageRef.current!.scrollIntoView();
+    messagesRef.current!.scrollTo({ top: messagesRef.current!.scrollHeight });
   }, [messages[messages.length - 1], activeChannel]);
 
   useEffect(() => {
@@ -46,14 +44,6 @@ const ChannelData: React.FC = () => {
     };
   }, []);
 
-  const LoadingIndicator: React.FC = () => (
-    <div ref={skeletonRef}>
-      {page! < totalPages! || !page
-        ? new Array(30).fill(0).map((_, i) => <SkeletonMessage key={i} />)
-        : null}
-    </div>
-  );
-
   const SkeletonLoader: React.FC = () => (
     <div>
       {new Array(30).fill(0).map((_, i) => (
@@ -63,17 +53,15 @@ const ChannelData: React.FC = () => {
   );
 
   const onScroll = () => {
-    if (
-      !skeletonRef.current ||
-      messagesRef.current!.scrollTop > skeletonRef.current!.scrollHeight ||
-      !page ||
-      !totalPages ||
-      page >= totalPages
-    )
+    if (!page 
+        || !totalPages 
+        || messagesRef.current!.scrollTop > 300 
+        || page >= totalPages)
       return;
+
     dispatch(fetchMessages({ channelId: activeChannel.id, page: page + 1 }));
     messagesRef.current!.scroll({
-      top: skeletonRef.current!.scrollHeight + 1000
+      top: messagesRef.current!.scrollHeight + 300
     });
   };
 
@@ -90,7 +78,7 @@ const ChannelData: React.FC = () => {
               <Messages>
                 <ChannelWelcome
                   imageUrl={`${process.env.REACT_APP_API_ROOT}/assets/avatars/${
-                    activeChannel.avatar!
+                    activeChannel.avatar
                   }.png`}
                   username={activeChannel.name!}
                 />
@@ -99,18 +87,16 @@ const ChannelData: React.FC = () => {
                     <MessageDivider date={messages[0].updatedAt!} />
                   </React.Fragment>
                 ) : null}
-                <LoadingIndicator />
                 {messages.map((msg: any, index: number) => (
                   <ChannelMessage message={msg} key={index} />
                 ))}
-                <div className="lastMessage" ref={lastMessageRef} />
+                <div className="divider" />
               </Messages>
             </MessagesContainer>
           ) : (
             <MessagesContainer>
               <Messages>
                 <SkeletonLoader />
-                <div className="lastMessage" ref={lastMessageRef} />
               </Messages>
             </MessagesContainer>
           )}

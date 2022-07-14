@@ -2,13 +2,13 @@ import React from 'react';
 import { AddFriend } from './add-friend';
 import { MyFriends } from './friends';
 import { PendingRequests } from './friend-request';
-import { Pages } from 'src/pages/guild-page';
+import { Pages } from 'src/pages/friends-page';
 
 interface Props {
   page: Pages;
 }
 
-const FriendsPage: React.FC<Props> = ({ page }) => {
+const FriendsPageWrapper: React.FC<Props> = ({ page }) => {
   switch (page) {
     case 'ONLINE':
       return <MyFriends justOnline />;
@@ -21,4 +21,4 @@ const FriendsPage: React.FC<Props> = ({ page }) => {
   }
 };
 
-export default FriendsPage;
+export default FriendsPageWrapper;

@@ -2,6 +2,7 @@ import { ApiError } from 'api/modules/api-error';
 import { ApiResponses } from 'config/constants/api-responses';
 import { ChannelService } from './channel-service';
 import { generateSnowflake } from 'utils/snowflake';
+import { Request } from 'data/models/request';
 
 export class RequestService {
   static async create({ from, username, discriminator, selfUser }) {
@@ -19,13 +20,13 @@ export class RequestService {
     else if (alreadyRequest) 
       throw new ApiError(400, ApiResponses['REQUEST_ALREADY_EXISTS']);
 
-    const created = await app.requests.create({
+    const created = await Request.create({
       _id: generateSnowflake(),
       from,
       to: userFound.id
     });
 
-    return await app.requests.findOneAndPopulate({ _id: created.id }, ['from', 'to']);
+    return await Request.findOne({ _id: created.id }).populate(['from', 'to']);
   }
 
   static async remove(requestId: string, userId: string) {

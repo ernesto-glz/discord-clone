@@ -1,4 +1,4 @@
-import { fetchedEntities } from '../states/meta';
+import { actions as meta } from '../states/meta';
 import { actions as api } from '../states/api';
 import { actions as users } from '../states/users';
 import { actions as requests } from '../states/requests';
@@ -16,7 +16,7 @@ export default () => async (dispatch: Dispatch<any>) => {
       dispatch(users.fetched(data.users));
       dispatch(channels.fetched(data.channels));
       dispatch(requests.fetched(data.requests));
-      setTimeout(() => dispatch(fetchedEntities()), 1000);    
+      setTimeout(() => dispatch(meta.fetchedEntities()), 1000);    
     }
   }))
 };

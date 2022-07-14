@@ -1,42 +1,37 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import ChannelData from 'src/components/channel/channel-data';
-import FriendsHeader from 'src/components/friends/friend-header';
 import ServerName from 'src/components/server/server-name';
-import FriendsPage from 'src/components/friends';
-import RightPanel from 'src/components/right-pannel';
-import { useParams } from 'react-router-dom';
 import PageWrapper from './page-wrapper';
 import { ChannelHeader } from 'src/components/channel/channel-header/channel-header';
-import { useAppSelector } from 'src/redux/hooks';
-import { useDispatch } from 'react-redux';
-import { pageSwitched } from 'src/redux/states/ui';
-
-export type Pages = 'ONLINE' | 'ALL' | 'PENDING' | 'ADD';
+import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
+import { AppGridContainer } from 'src/styled-components/app-container';
+import ServerList from 'src/components/server/server-list';
+import UserInfo from 'src/components/user-info';
+import ChannelList from 'src/components/channel/channel-list';
+import { actions as uiActions } from 'src/redux/states/ui';
+import { useParams } from 'react-router-dom';
+import { getChannel } from 'src/redux/states/channels';
 
 export const GuildPage: React.FC = () => {
-  const { channelId, guildId } = useParams();
-  const [page, setPage] = useState<Pages>('ONLINE');
-  const { activeGuild, activeChannel } = useAppSelector((s) => s.ui);
-  const channel = useAppSelector((s) => s.channels.find((c) => c.id === channelId));
-  const dispatch = useDispatch();
+  const { channelId, guildId }: any = useParams();
+  const ui = useAppSelector((s) => s.ui);
+  const channel = useAppSelector(getChannel(channelId)) ?? null;
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(pageSwitched({
-      channel: channelId ? channel ?? null : null,
-      guild: guildId ?? '@me'
-    }));
-  }, [channelId, guildId]);
+    dispatch(uiActions.pageSwitched({ guild: guildId ?? '@me', channel }))
+  }, [channelId])
 
-  return (activeGuild) ? (
-    <PageWrapper pageTitle={activeChannel?.name ?? 'Discord Clone'}>
-      <ServerName />
-      {activeChannel ? (
+  return (ui.activeGuild) ? (
+    <PageWrapper pageTitle={ui.activeChannel?.name ?? 'Discord Clone'}>
+      <AppGridContainer>
+        <UserInfo />
+        <ServerList />
+        <ServerName />
+        <ChannelList />
+        {ui.activeChannel && <ChannelData /> }
         <ChannelHeader />
-      ) : (
-        <FriendsHeader pageState={[page, setPage]} />
-      )}
-      {activeChannel ? <ChannelData /> : <FriendsPage page={page} />}
-      {!activeChannel && <RightPanel />}
+      </AppGridContainer>
     </PageWrapper>
   ) : null;
 };
