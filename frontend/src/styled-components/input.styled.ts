@@ -9,6 +9,6 @@ export const Input = styled.input`
   border-radius: 3px;
   color: var(--text-normal);
   width: 100%;
-  background-color: var(--input-background);
+  background-color: var(--background-tertiary);
   transition: border-color 0.2s ease-in-out;
 `;

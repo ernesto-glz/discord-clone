@@ -24,7 +24,7 @@ const FriendsPage: React.FC = () => {
   }, [channelId]);
 
   return (
-    <PageWrapper pageTitle={'Discord Clone | Friends'}>
+    <PageWrapper>
       <FriendsContainer>
         <UserInfo />
         <ServerName />

@@ -1,11 +1,11 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from 'src/redux/hooks';
 import { Store } from 'types/store';
 import ServerButton from '../server-button';
 import { Container, Separator } from './styles';
 
 const ServerList: React.FC = () => {
-  const activeGuild = useSelector((s: Store.AppState) => s.ui.activeGuild);
+  const activeGuild = useAppSelector((s) => s.ui.activeGuild);
 
   return (
     <Container>

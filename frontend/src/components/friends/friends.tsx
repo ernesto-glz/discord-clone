@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { FriendItem } from './friend-list-item';
+import { getFriendUsers } from 'src/redux/states/users';
 import {
   Container,
   FlexColumnContainer,
@@ -8,15 +9,14 @@ import {
   WampusImage,
   WampusMessage
 } from './styles';
-import { useSelector } from 'react-redux';
-import { getFriendUsers } from 'src/redux/states/users';
+import { useAppSelector } from 'src/redux/hooks';
 
 interface Props {
   justOnline?: boolean;
 }
 
 export const MyFriends: React.FC<Props> = (props) => {
-  const friends = useSelector(getFriendUsers());
+  const friends = useAppSelector(getFriendUsers());
   const onlineFriends = useMemo(
     () => friends.filter((f) => f.status === 'ONLINE'),
     [friends]

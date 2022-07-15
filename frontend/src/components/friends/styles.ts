@@ -63,7 +63,7 @@ export const FriendHeader = styled.header`
 export const HeaderContainer = styled.div<AddInputProps>`
   display: flex;
   align-items: center;
-  background: var(--input-background);
+  background: var(--background-tertiary);
   width: 100%;
   margin-top: 16px;
   padding: 0 12px;

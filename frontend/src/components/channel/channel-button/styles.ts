@@ -59,13 +59,12 @@ export const SettingsIcon = styled(Settings)`
 `;
 
 export const CloseIcon = styled(Close)<CloseIconProps>`
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   display: ${(props) => (props.isVisible ? 'block' : 'none')};
-  color: var(--symbol);
+  color: var(--interactive-normal);
   cursor: pointer;
   transition: color 0.2s;
-  margin-right: 3px;
   &:hover {
     color: var(--white);
   }

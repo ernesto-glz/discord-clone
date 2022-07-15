@@ -7,7 +7,7 @@ export const Container = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  background-color: var(--quaternary);
+  background-color: var(--background-secondary);
   box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 0px;
 `;
 
@@ -64,43 +64,49 @@ export const Icons = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-around;
-  > svg:not(:first-child) {
-    margin-left: 7px;
-  }
 `;
 
 export const MicIcon = styled(Mic)`
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   color: var(--white);
   opacity: 0.7;
   cursor: pointer;
+  padding: 4px;
   transition: opacity 0.2s;
   &:hover {
     opacity: 1;
+    background: var(--background-modifier-accent);
+    border-radius: 4px;
   }
 `;
 
 export const HeadphoneIcon = styled(Headset)`
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   color: var(--white);
   opacity: 0.7;
   cursor: pointer;
+  padding: 4px;
   transition: opacity 0.2s;
   &:hover {
     opacity: 1;
+    background: var(--background-modifier-accent);
+    border-radius: 4px;
   }
 `;
 
 export const SettingsIcon = styled(Settings)`
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   color: var(--white);
   opacity: 0.7;
   cursor: pointer;
   transition: opacity 0.2s;
+  padding: 4px;
   &:hover {
     opacity: 1;
+    background: var(--background-modifier-accent);
+    border-radius: 4px;
   }
 `;

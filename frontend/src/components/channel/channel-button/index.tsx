@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { UserImage } from 'src/components/user-image';
 import { ws } from 'src/ws/websocket';
 import { CloseIcon, Container } from './styles';
-import { useSelector } from 'react-redux';
-import { Store } from 'types/store';
 import { useAppSelector } from 'src/redux/hooks';
 import { Entity } from '@discord/types';
 
@@ -17,7 +15,7 @@ export interface CloseIconProps {
 const ChannelButton: React.FC<Props> = ({ channel }) => {
   const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
-  const users = useSelector((s: Store.AppState) => s.users);
+  const users = useAppSelector((s) => s.users);
   const isOnline = useMemo(() => {
     const user = users.find((u) => u.id === channel.dmUserId);
     return user?.status === 'ONLINE';

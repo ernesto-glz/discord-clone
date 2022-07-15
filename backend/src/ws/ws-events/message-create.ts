@@ -21,12 +21,10 @@ export default class implements WSEvent<'MESSAGE_CREATE'> {
     sender.lastReadMessageIds[channelId] = message.id;
     await sender.save();
 
-    return [
-      {
-        emit: this.on,
-        to: [channelId],
-        send: { message }
-      }
-    ];
+    return [{
+      emit: this.on,
+      to: [channelId],
+      send: { message }
+    }];
   }
 }

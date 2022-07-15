@@ -28,6 +28,6 @@ export const Category = styled.div`
 export const AddCategoryIcon = styled(Add)`
   width: 21px;
   height: 21px;
-  color: var(--symbol);
+  color: var(--interactive-normal);
   cursor: pointer;
 `;

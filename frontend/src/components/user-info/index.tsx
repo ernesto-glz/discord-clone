@@ -1,7 +1,6 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Store } from 'types/store';
+import { useAppSelector } from 'src/redux/hooks';
 import { UserImage } from '../user-image';
 
 import {
@@ -15,7 +14,7 @@ import {
 } from './styles';
 
 const UserInfo: React.FC = () => {
-  const user = useSelector((s: Store.AppState) => s.auth.user);
+  const user = useAppSelector((s) => s.auth.user);
   const navigate = useNavigate();
 
   return (
@@ -38,7 +37,7 @@ const UserInfo: React.FC = () => {
           <Icons>
             <MicIcon />
             <HeadphoneIcon />
-              <SettingsIcon onClick={() => navigate('/logout')} />
+            <SettingsIcon onClick={() => navigate('/logout')} />
           </Icons>
         </Container>
       ) : null}
