@@ -6,7 +6,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: 10px 9.5px 0 10px;
-  background-color: var(--secondary);
+  background-color: var(--background-secondary);
 `;
 
 export const Category = styled.div`

@@ -156,7 +156,7 @@ export const ListBody = styled.div`
   }
   ::-webkit-scrollbar {
     width: 8px;
-    background-color: var(--secondary);
+    background-color: var(--background-secondary);
     border-radius: 10px;
   }
 

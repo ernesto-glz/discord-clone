@@ -21,7 +21,7 @@ export const Container = styled.div`
     border-radius: 4px;
   }
   ::-webkit-scrollbar-track {
-    background-color: var(--secondary);
+    background-color: var(--background-secondary);
   }
 
   @media (max-width: 1200px) {

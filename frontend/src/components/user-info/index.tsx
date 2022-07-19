@@ -1,7 +1,7 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAppSelector } from 'src/redux/hooks';
+import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import { UserImage } from '../user-image';
+import { actions as ui } from 'src/redux/states/ui';
 
 import {
   Container,
@@ -15,7 +15,7 @@ import {
 
 const UserInfo: React.FC = () => {
   const user = useAppSelector((s) => s.auth.user);
-  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   return (
     <React.Fragment>
@@ -37,7 +37,7 @@ const UserInfo: React.FC = () => {
           <Icons>
             <MicIcon />
             <HeadphoneIcon />
-            <SettingsIcon onClick={() => navigate('/logout')} />
+            <SettingsIcon onClick={() => dispatch(ui.openedModal('UserSettings'))} />
           </Icons>
         </Container>
       ) : null}

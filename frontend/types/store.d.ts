@@ -14,6 +14,7 @@ export declare namespace Store {
     ui: {
       activeChannel: Entity.Channel | null;
       activeGuild: string | null;
+      openModal?: string;
     };
     users: Entity.User[];
     messages: {

@@ -41,7 +41,7 @@ export const Container = styled.div`
 export const Avatar = styled.div`
   width: 40px;
   height: 40px;
-  background-color: var(--secondary);
+  background-color: var(--background-secondary);
   border-radius: 50%;
   &.isExtra {
     background-color: transparent;

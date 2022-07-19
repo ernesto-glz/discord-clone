@@ -6,11 +6,12 @@ import { actions as requests } from 'src/redux/states/requests';
 import { actions as messages } from 'src/redux/states/messages';
 import { actions as typing } from 'src/redux/states/typing';
 import { actions as users } from 'src/redux/states/users';
+import { actions as ui } from 'src/redux/states/ui';
 import fetchEntities from 'src/redux/actions/fetch-entities';
 import { useNavigate } from 'react-router-dom';
 import { playSound } from 'src/utils/sounds';
 import { WS, Entity } from '@discord/types';
-import { useAppDispatch } from 'src/redux/hooks';
+import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import { AuthErrors } from 'src/config/constants';
 import { store } from 'src/redux/configure-store';
 import { ws } from 'src/ws/websocket';
@@ -23,6 +24,11 @@ export const WSListeners: React.FC = () => {
 
   useEffect(() => {
     if (state().meta.hasListenedToWS) return;
+
+    document.addEventListener('keyup', (event) => {
+      if (event.key === 'Escape' && state().ui.openModal)
+        dispatch(ui.closedModal());
+    });
 
     ws.on('connect_error', (error) => {
       if (Object.values(AuthErrors).indexOf(error.message) < 0) 

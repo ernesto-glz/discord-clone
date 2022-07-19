@@ -14,7 +14,13 @@ export const slice = createSlice({
     pageSwitched: (state, { payload }: PayloadAction<PageSwitch>) => {
       state.activeChannel = payload.channel;
       state.activeGuild = payload.guild;
-    }
+    },
+    openedModal: (state, { payload }) => {      
+      state.openModal = payload;
+    },
+    closedModal: (state) => {
+      delete state.openModal;
+    },
   }
 });
 

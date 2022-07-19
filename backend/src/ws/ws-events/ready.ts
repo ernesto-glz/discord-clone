@@ -32,6 +32,6 @@ export default class implements WSEvent<'READY'> {
 
   private getUserIdFromToken(jwt: string) {
     const decoded = verify(jwt, process.env.JWT_SECRET_KEY) as { id: string };
-    return decoded?.id;
+    return decoded.id;
   }
 }

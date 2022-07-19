@@ -1,6 +1,5 @@
 import React from 'react';
 import { useAppSelector } from 'src/redux/hooks';
-import { Store } from 'types/store';
 import ServerButton from '../server-button';
 import { Container, Separator } from './styles';
 
