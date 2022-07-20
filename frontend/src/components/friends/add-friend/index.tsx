@@ -58,8 +58,8 @@ export const AddFriend: React.FC = () => {
     });
 
     return () => {
-      events.off('REQUEST_CREATE_SUCCESS', () => {});
-      events.off('REQUEST_CREATE_FAILURE', () => {});
+      events.off('REQUEST_CREATE_SUCCEEDED', () => {});
+      events.off('REQUEST_CREATE_FAILED', () => {});
     };
   }, []);
 

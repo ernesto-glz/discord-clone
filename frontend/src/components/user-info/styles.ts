@@ -7,7 +7,7 @@ export const Container = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  background-color: var(--background-secondary);
+  background-color: var(--background-secondary-alt);
   box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 0px;
 `;
 

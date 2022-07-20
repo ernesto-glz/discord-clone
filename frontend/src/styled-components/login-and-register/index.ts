@@ -80,7 +80,7 @@ export const InputTitle = styled.h5<InputTitleProps>`
 export const ErrorMessage = styled.span`
   color: var(--text-danger);
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 600;
   font-style: italic;
   text-transform: none;
   margin-left: 4px;

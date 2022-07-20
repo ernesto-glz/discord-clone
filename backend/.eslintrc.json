@@ -16,6 +16,7 @@
     "@typescript-eslint/no-explicit-any": "off",
     "no-empty": "off",
     "@typescript-eslint/no-var-requires": "off",
-    "no-unsafe-finally": "off"
+    "no-unsafe-finally": "off",
+    "@typescript-eslint/no-non-null-assertion": "off"
   }
 }

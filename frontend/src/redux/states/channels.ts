@@ -1,5 +1,4 @@
 import { createSelector, createSlice, Dispatch } from '@reduxjs/toolkit';
-import { Entity } from '@discord/types';
 import { notInArray } from 'src/utils/utils';
 import { Store } from 'types/store';
 import { actions as api } from './api';

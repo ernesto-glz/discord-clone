@@ -1,6 +1,7 @@
-import { createSelector, createSlice } from '@reduxjs/toolkit';
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { notInArray } from 'src/utils/utils';
 import { Store } from 'types/store';
+import { WS } from '@discord/types';
 
 export const slice = createSlice({
   name: 'users',
@@ -9,9 +10,9 @@ export const slice = createSlice({
     fetched: (users, { payload }) => {
       users.push(...payload.filter(notInArray(users)));
     },
-    updated: (users, { payload }) => {
+    updated: (users, { payload }: PayloadAction<WS.Args.UserUpdate>) => {
       const user = users.find((e) => e.id === payload.userId);
-      if (user) Object.assign(user, payload.user);
+      if (user) Object.assign(user, payload.partialUser);
     }
   }
 });

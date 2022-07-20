@@ -5,29 +5,22 @@ import { useAppSelector } from 'src/redux/hooks';
 
 interface Props {
   name: string;
-  size?: 'full' | 'sm' | 'md';
+  background?: boolean;
   children: React.ReactNode;
 }
 
-const sizes = {
-  'sm': 'sm',
-  'md': 'md',
-  'full': 'full'
-}
-
-const Modal: React.FC<Props> = ({ name, size, children }) => {
-  const openModal = useAppSelector((s) => s.ui.openModal);
+const Modal: React.FC<Props> = ({ name, background, children }) => {
+  const isOpen = !!useAppSelector((s) =>
+    s.ui.openModals?.find((n) => n === name)
+  );
 
   return (
     <ReactModal
-      className={sizes[size ?? 'sm']}
+      className={background ? 'bg-modal' : 'bg-modal-none'}
       appElement={document.querySelector('#root') as HTMLDivElement}
-      isOpen={openModal === name}
+      isOpen={isOpen}
     >
-      <motion.div
-        initial={{ opacity: 0.75, scale: 0.75 }}
-        animate={{ opacity: 1, scale: 1 }}
-      >
+      <motion.div initial={{ scale: 0.75 }} animate={{ scale: 1 }}>
         {children}
       </motion.div>
     </ReactModal>

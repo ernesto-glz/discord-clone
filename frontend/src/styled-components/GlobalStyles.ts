@@ -23,8 +23,13 @@ export default createGlobalStyle`
     --background-modifier-selected: rgba(79,84,92,0.6);
     --background-modifier-hover: rgba(79,84,92,0.4);
     --background-message-hover: rgba(4,4,5,0.07);
+    --background-secondary-alt: #292b2f;
     --background-floating: #18191c;
     --button-secondary-background: #4f545c;
+    --modal-background: #36393f;
+    --button-danger-background: hsl(359,calc(var(--saturation-factor, 1)*66.7%),54.1%);
+    --button-danger-background-hover: hsl(359,calc(var(--saturation-factor, 1)*56.3%),40.4%);
+    --button-secondary-background-hover: #686d73;
 
     --header-primary: #fff;
     --header-secondary: #b9bbbe;

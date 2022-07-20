@@ -1,6 +1,5 @@
-import { Close } from '@styled-icons/material';
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { LogoutImage } from 'src/components/images/tiny-icons/logout-image';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import { actions as ui } from 'src/redux/states/ui';
 import Modal from '../modal';
@@ -35,15 +34,13 @@ export const UserSettings: React.FC = () => {
   const user = useAppSelector((s) => s.auth.user);
   const [activeOption, setActiveOption] = useState<Options>('Account');
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const closeModal = () => {
-    dispatch(ui.closedModal());
+    dispatch(ui.closedModal('UserSettings'));
   };
 
-  const handleLogout = () => {
-    closeModal();
-    navigate('/logout');
+  const openLogoutConfirm = () => {
+    dispatch(ui.openedModal('LogoutConfirm'));
   };
 
   const Item = (props: ItemProps) => {
@@ -60,7 +57,7 @@ export const UserSettings: React.FC = () => {
   };
 
   return (user) ? (
-    <Modal size="full" name="UserSettings">
+    <Modal background={false} name="UserSettings">
       <SettingsContainer>
         <SidebarRegion>
           <div className="scrollerBase inputScroller">
@@ -71,9 +68,10 @@ export const UserSettings: React.FC = () => {
                 <Item name="User Profile" option="Profile" />
                 <Item name="Friend Requests" option="Requests" />
                 <Separator />
-                <NavItem onClick={handleLogout} isActive={false}>
-                  Log Out
+                <NavItem onClick={openLogoutConfirm} isActive={false}>
+                  Log Out <LogoutImage />
                 </NavItem>
+                <Separator />
               </NavList>
             </nav>
           </div>
@@ -85,7 +83,11 @@ export const UserSettings: React.FC = () => {
                 <SectionTitle>
                   <h1>{sectionTitles[activeOption]}</h1>
                 </SectionTitle>
-                {activeOption === 'Account' && <MyAccount changeOption={setActiveOption} />}
+                {activeOption === 'Account' && (
+                  <MyAccount changeOption={setActiveOption} />
+                )}
+                {activeOption === 'Profile' && <h1>Not implemented</h1>}
+                {activeOption === 'Requests' && <h1>Not Implemented</h1>}
               </div>
             </ContentWrapper>
             <ToolsContainer>

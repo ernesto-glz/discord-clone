@@ -96,3 +96,22 @@ export const logoutUser = () => (dispatch: Dispatch) => {
   localStorage.removeItem('access_token');
   resetWS();
 };
+
+export const changeUsername = (payload: any) => (dispatch: Dispatch) => {
+  dispatch(api.restCallBegan({
+    url: '/auth/change-username',
+    method: 'patch',
+    data: payload,
+    callback: (data) => {
+      dispatch(api.wsCallBegan({
+        event: 'USER_UPDATE',
+        data
+      }));
+      events.emit('CHANGE_USERNAME_SUCCEEDED');
+    },
+    errorCallback: (error) => {
+      const errorMessage = error?.response?.data;
+      events.emit('CHANGE_USERNAME_FAILED', errorMessage ?? 'Unknown Error');
+    }
+  }))
+}

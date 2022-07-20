@@ -25,9 +25,6 @@ export class Server {
     this.express.use(mongoSanitize());
     this.express.use('/v1', v1);
     this.express.use('/assets', express.static(join(__dirname, '../../assets')));
-    this.express.use('/', () => {
-      throw new ApiError(400, 'Invalid API version number');
-    });
     this.express.use((req, res, next) => {
       next(new ApiError(404, 'Not found'));
     });

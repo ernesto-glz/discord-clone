@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
-export const useInputValue = (initialValue: any) => {
+export const useInputValue = (initialValue?: any) => {
   const [value, setValue] = useState(
-    initialValue !== undefined ? initialValue : null
+    initialValue !== undefined ? initialValue : ''
   );
   const onChange = (val: any) => {
     if (val.target !== null && val.target !== undefined) {
@@ -11,5 +11,10 @@ export const useInputValue = (initialValue: any) => {
       setValue(val);
     }
   };
-  return { value, onChange };
+
+  const reset = () => {
+    setValue('');
+  }
+
+  return { value, onChange, reset };
 };

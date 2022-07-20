@@ -26,8 +26,8 @@ export const WSListeners: React.FC = () => {
     if (state().meta.hasListenedToWS) return;
 
     document.addEventListener('keyup', (event) => {
-      if (event.key === 'Escape' && state().ui.openModal)
-        dispatch(ui.closedModal());
+      if (event.key === 'Escape' && state().ui.openModals?.length)
+        dispatch(ui.closedLastModal());
     });
 
     ws.on('connect_error', (error) => {
@@ -43,7 +43,7 @@ export const WSListeners: React.FC = () => {
       // dispatch(initPings());
     });
     ws.on('PRESENCE_UPDATE', ({ userId, status }: WS.Args.PresenceUpdate) => {
-      dispatch(users.updated({ userId, user: { status } }));
+      dispatch(users.updated({ userId, partialUser: { status } }));
     });
     ws.on('MESSAGE_CREATE', ({ message }: { message: Entity.Message }) => {
       const { activeChannel } = state().ui;
@@ -87,7 +87,7 @@ export const WSListeners: React.FC = () => {
         friendIds: [...friendIds, user.id]
       };
 
-      dispatch(users.updated({ userId: selfId, user: partialUser }))
+      dispatch(users.updated({ userId: selfId, partialUser }))
       dispatch(users.fetched([user]));
       dispatch(channels.fetched([channel]));
       dispatch(auth.updatedUser(partialUser))
@@ -105,6 +105,23 @@ export const WSListeners: React.FC = () => {
     });
     ws.on('TYPING_STOP', (args: WS.Args.Typing) => {
       dispatch(typing.userStoppedTyping(args));
+    });
+    ws.on('USER_UPDATE', (args: WS.Args.UserUpdate) => {
+      const selfId = state().auth.user!.id;
+      const isSelf = selfId === args.userId;
+      const dmChannel = state().channels.find((c) => c.dmUserId === args.userId);
+
+      dispatch(users.updated(args));
+      if (isSelf) 
+        dispatch(auth.updatedUser(args.partialUser));
+      if (dmChannel) {
+        const user = state().users.find((u) => u.id === args.userId)!;
+        dispatch(channels.updated({ 
+          id: dmChannel.id,
+          avatar: user.avatar,
+          name: user.username
+        }))
+      }
     });
 
     dispatch(meta.listenedToWS());

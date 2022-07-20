@@ -3,11 +3,11 @@ import { useAppSelector } from 'src/redux/hooks';
 import { EditButton, ItemWrapper, Value } from './styles';
 
 export const ListItemEmail = () => {
-  const [revealState, setReavealState] = useState<boolean>(false);
+  const [displayState, setDisplayState] = useState<boolean>(false);
   const user = useAppSelector((s) => s.auth.user)!;
   const [email, provider] = user.email.split('@');
 
-  const changeReveal = () => setReavealState(!revealState);
+  const changeReveal = () => setDisplayState(!displayState);
 
   return (
     <ItemWrapper style={{ marginTop: '24px' }}>
@@ -15,9 +15,9 @@ export const ListItemEmail = () => {
         <h5>EMAIL</h5>
         <Value>
           <span>
-            {revealState ? email : '*******'}@{provider}
+            {displayState ? email : '*******'}@{provider}
             <button onClick={changeReveal}>
-              {revealState ? 'Hide' : 'Reveal'}
+              {displayState ? 'Hide' : 'Reveal'}
             </button>
           </span>
         </Value>

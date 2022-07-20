@@ -11,6 +11,7 @@ export declare namespace WS {
     MESSAGE_CREATE: Params.MessageCreate;
     TYPING_START: Params.Typing;
     TYPING_STOP: Params.Typing;
+    USER_UPDATE: Args.UserUpdate;
     NEW_FRIEND: any;
     disconnect: any;
   }
@@ -38,6 +39,8 @@ export declare namespace WS {
     TYPING_STOP: Args.Typing;
     /* Called when new friend is added  */
     NEW_FRIEND: any;
+    /* Called when a user is updated (email, username) */
+    USER_UPDATE: Args.UserUpdate;
     /* obvious :L */
     error: object;
   }
@@ -72,6 +75,18 @@ export declare namespace WS {
 
     export interface Ready {
       jwt: string;
+    }
+
+    export interface UserUpdate {
+      userId: string;
+      partialUser: {
+        username?: string;
+        discriminator?: string;
+        status?: Entity.UserTypes.StatusType;
+        email?: string;
+        guildIds?: string[];
+        friendIds?: string[];
+      };
     }
   }
 
@@ -109,6 +124,18 @@ export declare namespace WS {
 
     export interface RequestRemove {
       requestId: string;
+    }
+
+    export interface UserUpdate {
+      userId: string;
+      partialUser: {
+        username?: string;
+        discriminator?: string;
+        status?: Entity.UserTypes.StatusType;
+        email?: string;
+        guildIds?: string[];
+        friendIds?: string[];
+      };
     }
   }
 }

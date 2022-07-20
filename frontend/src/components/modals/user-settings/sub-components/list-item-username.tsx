@@ -1,9 +1,15 @@
-import { useAppSelector } from "src/redux/hooks";
-import { EditButton, ItemWrapper, Value } from "./styles";
+import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
+import { EditButton, ItemWrapper, Value } from './styles';
+import { actions as ui } from 'src/redux/states/ui';
 
 export const ListItemUsername = () => {
   const user = useAppSelector((s) => s.auth.user)!;
-  
+  const dispatch = useAppDispatch();
+
+  const onClick = () => {
+    dispatch(ui.openedModal('EditUsername'));
+  };
+
   return (
     <ItemWrapper>
       <div className="leftSide">
@@ -13,7 +19,7 @@ export const ListItemUsername = () => {
           <span className="discrim">#{user.discriminator}</span>
         </Value>
       </div>
-      <EditButton className="button">
+      <EditButton className="button" onClick={onClick}>
         <div>Edit</div>
       </EditButton>
     </ItemWrapper>

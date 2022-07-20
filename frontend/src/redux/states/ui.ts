@@ -11,16 +11,25 @@ export const slice = createSlice({
   name: 'ui',
   initialState: {} as Store.AppState['ui'],
   reducers: {
-    pageSwitched: (state, { payload }: PayloadAction<PageSwitch>) => {
-      state.activeChannel = payload.channel;
-      state.activeGuild = payload.guild;
+    pageSwitched: (ui, { payload }: PayloadAction<PageSwitch>) => {
+      ui.activeChannel = payload.channel;
+      ui.activeGuild = payload.guild;
     },
-    openedModal: (state, { payload }) => {      
-      state.openModal = payload;
+    openedModal: (ui, { payload }) => {
+      ui.openModals ??= [];      
+      ui.openModals.push(payload);
     },
-    closedModal: (state) => {
-      delete state.openModal;
+    closedModal: (ui, { payload }) => {
+      const index = ui.openModals?.indexOf(payload);
+      if (typeof index === 'undefined' || index === -1) return;
+      ui.openModals?.splice(index, 1);
     },
+    closedLastModal: (ui) => {
+      ui.openModals?.pop();
+    },
+    closedAllModals: (ui) => {
+      ui.openModals = [];
+    }
   }
 });
 

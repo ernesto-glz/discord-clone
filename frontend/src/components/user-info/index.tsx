@@ -17,32 +17,30 @@ const UserInfo: React.FC = () => {
   const user = useAppSelector((s) => s.auth.user);
   const dispatch = useAppDispatch();
 
-  return (
-    <React.Fragment>
-      {user ? (
-        <Container>
-          <Profile>
-            <UserImage
-              imageUrl={`${process.env.REACT_APP_API_ROOT}/assets/avatars/${user.avatar}.png`}
-              isGeneric={false}
-              displayStatus={true}
-              isOnline={true}
-            />
-            <UserData>
-              <strong>{user.username}</strong>
-              <span>#{user.discriminator}</span>
-            </UserData>
-          </Profile>
+  return (user) ? (
+    <Container>
+      <Profile>
+        <UserImage
+          imageUrl={`${process.env.REACT_APP_API_ROOT}/assets/avatars/${user.avatar}.png`}
+          isGeneric={false}
+          displayStatus={true}
+          isOnline={true}
+        />
+        <UserData>
+          <strong>{user.username}</strong>
+          <span>#{user.discriminator}</span>
+        </UserData>
+      </Profile>
 
-          <Icons>
-            <MicIcon />
-            <HeadphoneIcon />
-            <SettingsIcon onClick={() => dispatch(ui.openedModal('UserSettings'))} />
-          </Icons>
-        </Container>
-      ) : null}
-    </React.Fragment>
-  );
+      <Icons>
+        <MicIcon />
+        <HeadphoneIcon />
+        <SettingsIcon
+          onClick={() => dispatch(ui.openedModal('UserSettings'))}
+        />
+      </Icons>
+    </Container>
+  ) : null;
 };
 
 export default UserInfo;

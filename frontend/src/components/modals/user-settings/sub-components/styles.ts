@@ -40,4 +40,7 @@ export const EditButton = styled.button`
   min-width: 60px;
   min-height: 32px;
   cursor: pointer;
+  &:hover {
+    background-color: var(--button-secondary-background-hover);
+  }
 `;

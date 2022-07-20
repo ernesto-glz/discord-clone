@@ -4,9 +4,11 @@ import { NavItemProps } from './user-settings';
 
 export const SettingsContainer = styled.section`
   color: #fff;
-  min-width: 40vw;
+  width: 100vw;
   height: 100vh;
   display: flex;
+  box-sizing: border-box;
+  position: relative;
 `;
 
 export const SidebarRegion = styled.div`
@@ -55,6 +57,9 @@ export const NavItem = styled.div<NavItemProps>`
   position: relative;
   font-size: 16px;
   line-height: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   cursor: pointer;
   ${(props) => props.isActive && `
     background-color: var(--background-modifier-selected);

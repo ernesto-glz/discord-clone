@@ -26,9 +26,9 @@ const RegisterPage: React.FC = () => {
   const user = useAppSelector((s) => s.auth.user);
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(false);
-  const username = useInputValue('');
-  const email = useInputValue('');
-  const password = useInputValue('');
+  const username = useInputValue();
+  const email = useInputValue();
+  const password = useInputValue();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 

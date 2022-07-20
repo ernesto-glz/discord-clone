@@ -4,7 +4,6 @@ export const Divider = styled.div`
   margin-top: 1.5rem;
   margin-bottom: 0.5rem;
   margin-left: 25px;
-  z-index: 1;
   height: 0;
   border-top: thin solid var(--background-modifier-accent);
   display: flex;
