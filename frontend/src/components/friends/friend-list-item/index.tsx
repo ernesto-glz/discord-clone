@@ -16,7 +16,7 @@ export const FriendItem: React.FC<Props> = ({ friend }) => {
   const isOnline = useMemo(() => {
     const user = users.find((u) => u.id === friend.id);
     return user?.status === 'ONLINE';
-  }, [users]);
+  }, [users, friend]);
   const [showDiscriminator, setShowDiscriminator] = useState(false);
   const dispatch = useAppDispatch();
 
