@@ -74,7 +74,7 @@ export const EditUsername: React.FC = () => {
   }, []);
 
   return user ? (
-    <Modal background={true} name="EditUsername">
+    <Modal background={true} name="EditUsername" animated>
       <EditModalBase>
         <Header>
           <div className="title">Change your username</div>

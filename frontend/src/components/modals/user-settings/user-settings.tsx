@@ -56,8 +56,13 @@ export const UserSettings: React.FC = () => {
     );
   };
 
-  return (user) ? (
-    <Modal background={false} name="UserSettings">
+  return user ? (
+    <Modal
+      background={false}
+      name="UserSettings"
+      animated
+      animationVariant="BigToSmall"
+    >
       <SettingsContainer>
         <SidebarRegion>
           <div className="scrollerBase inputScroller">

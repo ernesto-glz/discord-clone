@@ -132,28 +132,11 @@ export const ListHeader = styled.div`
 `;
 
 export const ListBody = styled.div`
+  height: 100%;
   overflow: hidden scroll;
   margin-top: 8px;
-  height: 100%;
   display: flex;
   flex-direction: column;
-  > div {
-    cursor: pointer;
-    margin-left: 30px;
-    margin-right: 20px;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 18px;
-    padding: 0px 10px;
-    border-top: 1px solid var(--background-modifier-accent);
-    &:hover {
-      background: var(--background-modifier-hover);
-      -webkit-box-shadow: none;
-      box-shadow: none;
-      border-radius: 8px;
-      border-color: transparent;
-    }
-  }
   ::-webkit-scrollbar {
     width: 8px;
     background-color: var(--background-secondary);
@@ -168,6 +151,21 @@ export const ListBody = styled.div`
 
 export const FriendRequest = styled.div`
   min-height: 62px;
+  cursor: pointer;
+  margin-left: 30px;
+  margin-right: 20px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 18px;
+  padding: 0px 10px;
+  border-top: 1px solid var(--background-modifier-accent);
+  &:hover {
+    background: var(--background-modifier-hover);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-radius: 8px;
+    border-color: transparent;
+  }
 `;
 
 export const ItemBody = styled.div`

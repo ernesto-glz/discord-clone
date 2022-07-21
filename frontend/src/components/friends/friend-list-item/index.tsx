@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { UserImage } from 'src/components/user-image';
 import { Profile, UserData } from 'src/components/user-info/styles';
 import { displayChannel } from 'src/redux/states/channels';
@@ -13,10 +13,7 @@ interface Props {
 
 export const FriendItem: React.FC<Props> = ({ friend }) => {
   const users = useAppSelector((s) => s.users);
-  const isOnline = useMemo(() => {
-    const user = users.find((u) => u.id === friend.id);
-    return user?.status === 'ONLINE';
-  }, [users, friend]);
+  const isOnline = users.find((u) => u.id === friend.id)?.status === 'ONLINE' ?? false;
   const [showDiscriminator, setShowDiscriminator] = useState(false);
   const dispatch = useAppDispatch();
 

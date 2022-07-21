@@ -17,3 +17,36 @@ export const DiscordTips = [
   'Click the compass in the server list to find new servers',
   `Discord's official birthday is May 13'th, 2015.`
 ];
+
+export const Animations = {
+  'BigToSmall': {
+    medium: {
+      scale: 1.1
+    },
+    visible: {
+      scale: 1,
+      transition: {
+        duration: 0.2
+      }
+    },
+    hidden: {
+      scale: 2,
+      opacity: 0,
+      transition: {
+        duration: 4
+      }
+    }
+  },
+  'SmallToBig': {
+    medium: {
+      scale: 0.75
+    },
+    visible: {
+      scale: 1,
+      transition: {
+        duration: 0.3,
+        type: 'spring'
+      }
+    }
+  }
+}
