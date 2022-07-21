@@ -1,6 +1,6 @@
 import { Schema, model, Document } from 'mongoose';
-import { baseModelConfig } from 'config/constants/model-config';
-import { Entity } from '../../../../types/entity.types';
+import { Entity } from '@discord/types';
+import { transformUser } from 'utils/utils';
 
 export interface UserDocument extends Document, Entity.UserTypes.Self {
   id: string;
@@ -60,5 +60,7 @@ export const User = model<UserDocument>('user', new Schema({
     default: []
   }
 },
-  { ...baseModelConfig })
+  { toJSON: { transform: transformUser }, 
+    toObject: { transform: transformUser } 
+  })
 );

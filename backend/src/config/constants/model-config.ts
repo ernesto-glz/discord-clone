@@ -1,4 +1,6 @@
+import { transformDocument } from 'utils/utils';
+
 export const baseModelConfig = {
-  toJSON: { virtuals: true, versionKey: false },
-  toObject: { virtuals: true, versionKey: false }
-}
+  toObject: { transform: transformDocument },
+  toJSON: { transform: transformDocument }
+};
