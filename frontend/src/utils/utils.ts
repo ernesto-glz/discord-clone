@@ -7,7 +7,9 @@ export function searchError(errors: ErrorObject[], param: ErrorObject['param']) 
   if (!errors.length) return undefined;
   const first = errors[0].msg;
  
-  if (first === 'Email or password is invalid' || first === 'Email already in use')
+  if (first === 'Email or password is invalid' 
+      || first === 'Email already in use'
+      || first === 'This account is locked!')  
     return first;
   
   return errors.find((e) => e.param === param)?.msg;

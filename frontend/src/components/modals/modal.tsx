@@ -19,9 +19,7 @@ const Modal: React.FC<Props> = ({
   animationVariant,
   children
 }) => {
-  const isOpen = !!useAppSelector((s) =>
-    s.ui.openModals?.find((n) => n === name)
-  );
+  const isOpen = !!useAppSelector((s) => s.ui.openModals?.find((n) => n === name));
 
   return (
     <ReactModal

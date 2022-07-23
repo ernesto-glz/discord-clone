@@ -1,6 +1,7 @@
 import { Repository } from './Base';
 import { User, UserDocument } from 'data/models/user';
 import { ApiError } from 'api/modules/api-error';
+import { ApiResponses } from 'config/constants/api-responses';
 
 export class UsersRepository extends Repository<UserDocument> {
   constructor() {
@@ -24,5 +25,13 @@ export class UsersRepository extends Repository<UserDocument> {
     delete u.lastReadMessageIds;
     delete u.activeDMCS;
     return u;
+  }
+
+  public async calcDiscriminator(username: string) {
+    const usersLength = await app.users.countDocuments({ username });
+    const discriminator = usersLength + 1;
+    if (discriminator > 9999)
+      throw new ApiError(400, ApiResponses['DISCRIM_OUT_OF_RANGE']);
+    return discriminator;
   }
 }

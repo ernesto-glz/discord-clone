@@ -13,9 +13,6 @@ export const slice = createSlice({
     },
     fetchedEntities: (meta) => {
       meta.fetchedEntities = true;
-    },
-    reseted: (meta) => {
-      meta.fetchedEntities = false;
     }
   }
 });

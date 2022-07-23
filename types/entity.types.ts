@@ -43,6 +43,7 @@ export declare namespace Entity {
       email: string;
       activeDMCS: string[];
       lastReadMessageIds: { [t: string]: string };
+      locked: boolean;
     }
   }
 

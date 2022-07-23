@@ -1,4 +1,4 @@
-import { Dispatch, Store } from '@reduxjs/toolkit';
+import { Store } from '@reduxjs/toolkit';
 import client from 'src/api/client';
 import { actions, APIArgs } from '../states/api';
 
@@ -22,12 +22,11 @@ export default (store: Store) => (next: any) => async (action: any) => {
 
     if (callback) await callback(payload);
   } catch (error) {
-    const dispatch = store.dispatch as Dispatch<any>;
     const response = (error as any).response;
     const errorMessage = response?.data?.message ?? (error as Error)?.message ?? 'Unknown Error';
     
-    dispatch(actions.restCallFailed({ url, response }));
-    console.log(errorMessage);
+    store.dispatch(actions.restCallFailed({ url, response }));
+    // console.log(errorMessage);
 
     if (errorCallback) errorCallback(error);
   }

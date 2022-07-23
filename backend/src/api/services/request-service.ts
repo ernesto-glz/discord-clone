@@ -8,9 +8,7 @@ export class RequestService {
   static async create({ from, username, discriminator, selfUser }) {
     const userFound = await app.users.findOne({ username, discriminator });
 
-    if (!userFound) 
-      throw new ApiError(400, ApiResponses['ERROR_CREATE_REQUEST']);
-    else if (userFound.id === from) 
+    if (!userFound || userFound.id === from) 
       throw new ApiError(400, ApiResponses['ERROR_CREATE_REQUEST']);
 
     const alreadyRequest = await app.requests.checkExistence(from, userFound.id);

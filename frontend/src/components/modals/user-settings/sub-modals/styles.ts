@@ -34,6 +34,15 @@ export const Header = styled.div`
     font-size: 16px;
     line-height: 20px;
   }
+  > .delete {
+    color: hsl(0,calc(var(--saturation-factor, 1)*0%),100%);
+    background-color: var(--status-warning-background);
+    margin: 5px 20px;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: -10px;
+  }
 `;
 
 export const CloseButton = styled.button`

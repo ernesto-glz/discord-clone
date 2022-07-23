@@ -16,7 +16,9 @@ export const slice = createSlice({
       ui.activeGuild = payload.guild;
     },
     openedModal: (ui, { payload }) => {
-      ui.openModals ??= [];      
+      ui.openModals ??= [];
+      if (ui.openModals.includes(payload))
+        return;  
       ui.openModals.push(payload);
     },
     closedModal: (ui, { payload }) => {

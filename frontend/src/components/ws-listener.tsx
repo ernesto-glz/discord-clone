@@ -56,7 +56,9 @@ export const WSListeners: React.FC = () => {
         dispatch(auth.updatedUser({ activeDMCS: [...activeDMCS, channelId] }));
       }
 
-      if (!activeChannel || activeChannel.id !== channelId)
+      if (!activeChannel 
+          || activeChannel.id !== channelId
+          || document.visibilityState === 'hidden')
         playSound('NEW_MESSAGE');
 
       dispatch(messages.created(message));

@@ -30,6 +30,7 @@ export default createGlobalStyle`
     --button-danger-background: hsl(359,calc(var(--saturation-factor, 1)*66.7%),54.1%);
     --button-danger-background-hover: hsl(359,calc(var(--saturation-factor, 1)*56.3%),40.4%);
     --button-secondary-background-hover: #686d73;
+    --status-warning-background: hsl(38,calc(var(--saturation-factor, 1)*95.7%),54.1%);
 
     --header-primary: #fff;
     --header-secondary: #b9bbbe;

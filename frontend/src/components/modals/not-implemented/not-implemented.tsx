@@ -7,10 +7,10 @@ import { actions as ui } from 'src/redux/states/ui';
 export const NotImplemented: React.FC = () => {
   const dispatch = useDispatch();
 
-  const onClick = () => dispatch(ui.closedModal('notImplemented'));
+  const onClick = () => dispatch(ui.closedModal('NotImplemented'));
 
   return (
-    <Modal name="notImplemented" background={true} animated>
+    <Modal name="NotImplemented" background={true} animated>
       <Base>
         <Header>
           <div className="title">Sorry!</div>

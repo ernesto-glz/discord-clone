@@ -1,5 +1,3 @@
-import { ApiError } from 'api/modules/api-error';
-import { ApiResponses } from 'config/constants/api-responses';
 import { generateSnowflake } from 'utils/snowflake';
 
 export class ChannelService {
@@ -23,15 +21,5 @@ export class ChannelService {
     );
 
     return { channel: created, alreadyExists: false };
-  }
-
-  static async getAll(userId: string) {
-    return await app.channels.find({ userIds: userId });
-  }
-
-  static async getById(channelId: string) {
-    const channel = await app.channels.findOne({ _id: channelId });
-    if (!channel) throw new ApiError(400, ApiResponses.CHANNEL_NOT_FOUND);
-    return channel;
   }
 }

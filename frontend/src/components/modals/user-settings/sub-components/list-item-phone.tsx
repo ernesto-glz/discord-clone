@@ -5,7 +5,7 @@ import { useAppDispatch } from 'src/redux/hooks';
 export const ListItemPhone = () => {
   const dispatch = useAppDispatch();
 
-  const onClick = () => dispatch(ui.openedModal('notImplemented'));
+  const onClick = () => dispatch(ui.openedModal('NotImplemented'));
 
   return (
     <ItemWrapper style={{ marginTop: '24px' }}>

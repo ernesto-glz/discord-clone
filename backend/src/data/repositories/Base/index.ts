@@ -40,7 +40,7 @@ export abstract class Repository<T> {
     return !!result.modifiedCount;
   }
 
-  async findOneAndSelect(entityFilterQuery: FilterQuery<T>, value: string) {
+  async findOneAndSelect(entityFilterQuery: FilterQuery<T>, value: string | string[]) {
     return this.entityModel.findOne(entityFilterQuery).select(value);
   }
 

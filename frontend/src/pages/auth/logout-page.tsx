@@ -5,7 +5,7 @@ import { logoutUser } from 'src/redux/states/auth';
 const LogoutPage: React.FunctionComponent = () => {
   useAppDispatch()(logoutUser());
 
-  return <Navigate to="/login" replace />;
+  return <Navigate to="/login" />;
 }
  
 export default LogoutPage;

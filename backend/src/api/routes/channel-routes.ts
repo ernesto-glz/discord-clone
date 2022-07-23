@@ -2,6 +2,7 @@ import { AsyncRouter } from 'express-async-router';
 import { validateCreateChannel } from 'api/validations/channel-validations';
 import { ChannelService } from 'api/services/channel-service';
 import { MessageService } from 'api/services/message-service';
+import { ApiError } from 'api/modules/api-error';
 
 export const router = AsyncRouter();
 
@@ -17,7 +18,9 @@ router.post('/', validateCreateChannel, async (req, res) => {
 
 router.get('/:channelId', async (req, res) => {
   const { channelId } = req.params;
-  const channel = await ChannelService.getById(channelId);
+  const channel = await app.channels.findById(channelId);
+  if (!channel)
+    throw new ApiError(400, 'Channel not found');
   res.status(200).send(channel);
 });
 

@@ -58,7 +58,8 @@ export const User = model<UserDocument>('user', new Schema({
   activeDMCS: {
     type: [String],
     default: []
-  }
+  },
+  locked: Boolean
 },
   { toJSON: { transform: transformUser }, 
     toObject: { transform: transformUser } 

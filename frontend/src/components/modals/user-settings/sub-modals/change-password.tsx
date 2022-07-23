@@ -2,57 +2,50 @@ import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import Modal from '../../modal';
 import {
-  CloseIcon,
-  EditModalBase,
-  Header,
-  CloseButton,
   Body,
   BodyItem,
-  Footer,
+  CancelButton,
+  CloseButton,
+  CloseIcon,
   DoneButton,
-  CancelButton
+  EditModalBase,
+  Footer,
+  Header
 } from './styles';
 import { actions as ui } from 'src/redux/states/ui';
-import { changeUsername } from 'src/redux/states/auth';
 import { Input } from 'src/styled-components/input.styled';
 import { useInputValue } from 'src/hooks/useInputValue';
-import { PulseLoader } from 'react-spinners';
-import events from 'src/services/event-service';
+import { changePassword } from 'src/redux/states/auth';
 import { ErrorMessage } from 'src/styled-components/login-and-register';
+import { PulseLoader } from 'react-spinners';
 
-export type ErrorProps = { errorOcurred: null | string };
-
-export const EditUsername: React.FC = () => {
-  const [loading, setLoading] = useState(false);
+export const ChangePassword: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
   const user = useAppSelector((s) => s.auth.user);
-  const newUsername = useInputValue(user?.username);
   const currentPassword = useInputValue();
+  const newPassword = useInputValue();
+  const newPasswordConfirm = useInputValue();
   const dispatch = useAppDispatch();
 
   const handleClose = () => {
-    setLoading(false);
     setError(null);
+    setLoading(false);
     currentPassword.reset();
-    dispatch(ui.closedModal('EditUsername'));
+    newPassword.reset();
+    newPasswordConfirm.reset();
+    dispatch(ui.closedModal('ChangePassword'));
   };
 
   const done = () => {
-    if (newUsername.value === user!.username && !currentPassword.value) {
-      setLoading(true);
-      setTimeout(() => handleClose(), 500);
-      return;
-    }
+    if (newPassword.value !== newPasswordConfirm.value)
+      return setError('Password do not match!');
 
     setLoading(true);
-    dispatch(changeUsername({
-      newUsername: newUsername.value,
-      password: currentPassword.value
+    dispatch(changePassword({
+      currentPassword: currentPassword.value,
+      newPassword: newPassword.value
     }));
-  };
-
-  const onKeyUp = (event: React.KeyboardEvent) => {
-    if (event.key === 'Enter' && !loading) done();
   };
 
   useEffect(() => {
@@ -62,22 +55,27 @@ export const EditUsername: React.FC = () => {
       setError(message);
     };
 
-    events.on('CHANGE_USERNAME_SUCCEEDED', onSuccess);
-    events.on('CHANGE_USERNAME_FAILED', onFailure);
+    events.on('CHANGE_PASSWORD_SUCCEEDED', onSuccess);
+    events.on('CHANGE_PASSWORD_FAILED', onFailure);
 
     return () => {
-      events.off('CHANGE_USERNAME_SUCCEEDED', onSuccess);
-      events.off('CHANGE_USERNAME_FAILED', onFailure);
+      events.off('CHANGE_PASSWORD_SUCCEEDED', onSuccess);
+      events.off('CHANGE_PASSWORD_FAILED', onFailure);
     };
   }, []);
 
+  const onKeyUp = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !loading)
+      done();
+  }
+
   return (user) ? (
-    <Modal background={true} name="EditUsername" animated>
+    <Modal background={true} name="ChangePassword" animated>
       <EditModalBase>
         <Header>
-          <div className="title">Change your username</div>
+          <div className="title">Update your Password</div>
           <div className="description">
-            Enter a new username and your existing password.
+            Enter your current password and a new password.
           </div>
           <CloseButton onClick={handleClose}>
             <CloseIcon className="closeIcon" />
@@ -85,14 +83,16 @@ export const EditUsername: React.FC = () => {
         </Header>
         <Body>
           <BodyItem errorOcurred={error}>
-            <h5>Username{error && <ErrorMessage>- {error}</ErrorMessage>}</h5>
-            <Input {...newUsername} />
+            <h5>Current password{error && <ErrorMessage>- {error}</ErrorMessage>}</h5>
+            <Input onKeyUp={onKeyUp} {...currentPassword} type="password" />
           </BodyItem>
           <BodyItem errorOcurred={error}>
-            <h5>
-              Current Password{error && <ErrorMessage>- {error}</ErrorMessage>}
-            </h5>
-            <Input {...currentPassword} onKeyUp={onKeyUp} type="password" />
+            <h5>New password{error && <ErrorMessage>- {error}</ErrorMessage>}</h5>
+            <Input onKeyUp={onKeyUp} {...newPassword} type="password" />
+          </BodyItem>
+          <BodyItem errorOcurred={error}>
+            <h5>Confirm new password{error && <ErrorMessage>- {error}</ErrorMessage>}</h5>
+            <Input onKeyUp={onKeyUp} {...newPasswordConfirm} type="password" />
           </BodyItem>
         </Body>
         <Footer>

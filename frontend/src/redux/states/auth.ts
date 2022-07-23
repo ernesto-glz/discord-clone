@@ -92,9 +92,9 @@ export const registerUser = (payload: any) => (dispatch: Dispatch<any>) => {
 
 export const logoutUser = () => (dispatch: Dispatch) => {
   dispatch(actions.loggedOut());
-  dispatch(meta.reseted());
   localStorage.removeItem('access_token');
   resetWS();
+  window.location.assign('/login');
 };
 
 export const changeUsername = (payload: any) => (dispatch: Dispatch) => {
@@ -113,5 +113,39 @@ export const changeUsername = (payload: any) => (dispatch: Dispatch) => {
       const errorMessage = error?.response?.data;
       events.emit('CHANGE_USERNAME_FAILED', errorMessage ?? 'Unknown Error');
     }
-  }))
-}
+  }));
+};
+
+export const changePassword = (payload: any) => (dispatch: Dispatch) => {
+  dispatch(api.restCallBegan({
+    url: '/auth/change-password',
+    method: 'patch',
+    data: payload,
+    callback: () => {
+      events.emit('CHANGE_PASSWORD_SUCCEEDED');
+    },
+    errorCallback: (error) => {
+      const errorMessage = error?.response?.data;
+      events.emit('CHANGE_PASSWORD_FAILED', errorMessage ?? 'Unknown Error');
+    }
+  }));
+};
+
+export const deleteAccount = (payload: any) => (dispatch: Dispatch<any>) => {
+  dispatch(api.restCallBegan({
+    url: '/users',
+    method: 'delete',
+    data: payload,
+    callback: (data) => {
+      dispatch(api.wsCallBegan({
+        event: 'USER_UPDATE',
+        data
+      }));
+      dispatch(logoutUser());
+    },
+    errorCallback: (error) => {
+      const errorMessage = error?.response?.data;
+      events.emit('ACCOUNT_DELETE_FAILED', errorMessage ?? 'Unknown Error')
+    }
+  }));
+};

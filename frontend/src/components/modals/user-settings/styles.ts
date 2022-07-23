@@ -117,6 +117,13 @@ export const SectionTitle = styled.div`
     font-size: 20px;
     line-height: 24px;
   }
+  > h5 {
+    color: var(--header-secondary);
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
 `;
 
 export const ToolsContainer = styled.div`
@@ -247,5 +254,69 @@ export const InfoList = styled.div`
   margin: 8px 16px 16px;
   > .leftSIde {
     
+  }
+`;
+
+export const Divider = styled.div`
+  width: 100%;
+  height: 1px;
+  border-top: thin solid var(--background-modifier-accent);
+  margin-top: 40px;
+`;
+
+export const UserSecuritySection = styled.div`
+  margin-top: 40px;
+  > .desc {
+    margin-bottom: 16px;
+    color: var(--header-secondary);
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 300;
+    margin-top: -10px;
+  }
+`;
+
+export const AccountRemovalSection = styled.div`
+  margin-top: 40px;
+  > .desc {
+    margin-bottom: 16px;
+    color: var(--header-secondary);
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 300;
+    margin-top: -20px;
+  }
+  > .actions {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+  }
+`
+
+export const DisableButton = styled.button`
+  color: #fff;
+  background-color: var(--button-danger-background);
+  box-sizing: border-box;
+  width: auto;
+  height: 32px;
+  min-width: 60px;
+  min-height: 32px;
+  cursor: pointer;
+  &:hover {
+    background-color: var(--button-danger-background-hover);
+  }
+`;
+
+export const DeleteButton = styled.button`
+  color: #fff;
+  border: 1px solid hsl(359,calc(var(--saturation-factor, 1)*82.6%),59.4%);
+  box-sizing: border-box;
+  width: auto;
+  height: 32px;
+  min-width: 60px;
+  min-height: 32px;
+  cursor: pointer;
+  &:hover {
+    background-color: var(--button-danger-background);
   }
 `;
