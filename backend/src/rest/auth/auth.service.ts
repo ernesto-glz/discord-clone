@@ -1,4 +1,4 @@
-import { Entity } from '@discord/types';
+import { UserTypes } from '@discord/types';
 import { BadRequestException, ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { compare, hash } from 'bcrypt';
 import { Response } from 'express';
@@ -48,7 +48,7 @@ export class AuthService {
     this.createToken(app.users.secure(created), 201, response);
   }
 
-  async changeUsername(selfUser: Entity.UserTypes.Self, newUsername: string, password: string) {
+  async changeUsername(selfUser: UserTypes.Self, newUsername: string, password: string) {
     const self = await User.findById(selfUser.id).select('+password');
 
     if (!(await this.checkCredentials(password, self.password)))
@@ -77,7 +77,7 @@ export class AuthService {
     };
   }
 
-  async changePassword(selfUser: Entity.UserTypes.Self, changePasswordDto: ChangePasswordDto) {
+  async changePassword(selfUser: UserTypes.Self, changePasswordDto: ChangePasswordDto) {
     const { currentPassword, newPassword } = changePasswordDto;
     const self = await User.findById(selfUser.id).select('+password');
 

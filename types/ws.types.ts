@@ -1,4 +1,4 @@
-import { Entity } from "./entity.types";
+import { Entity, UserTypes } from "./entity.types";
 
 export declare namespace WS {
   export interface To {
@@ -82,7 +82,7 @@ export declare namespace WS {
       partialUser: {
         username?: string;
         discriminator?: string;
-        status?: Entity.UserTypes.StatusType;
+        status?: UserTypes.StatusType;
         email?: string;
         guildIds?: string[];
         friendIds?: string[];
@@ -93,7 +93,7 @@ export declare namespace WS {
   export namespace Args {
     export interface PresenceUpdate {
       userId: string;
-      status: Entity.UserTypes.StatusType;
+      status: UserTypes.StatusType;
     }
 
     export interface MessageCreate {
@@ -111,7 +111,7 @@ export declare namespace WS {
 
     export interface PresenceUpdate {
       userId: string;
-      status: Entity.UserTypes.StatusType;
+      status: UserTypes.StatusType;
     }
 
     export interface ChannelUpdate {
@@ -131,7 +131,7 @@ export declare namespace WS {
       partialUser: {
         username?: string;
         discriminator?: string;
-        status?: Entity.UserTypes.StatusType;
+        status?: UserTypes.StatusType;
         email?: string;
         guildIds?: string[];
         friendIds?: string[];

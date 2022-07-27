@@ -14,6 +14,7 @@
     "prettier:fix": "prettier --write src/**/*.{ts,tsx}"
   },
   "dependencies": {
+    "@discord/types": "link:../types/",
     "@reduxjs/toolkit": "1.8.1",
     "@styled-icons/bootstrap": "^10.34.0",
     "@styled-icons/boxicons-regular": "10.38.0",

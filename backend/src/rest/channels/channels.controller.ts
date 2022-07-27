@@ -1,4 +1,4 @@
-import { Entity } from '@discord/types';
+import { UserTypes } from '@discord/types';
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { User } from 'src/shared/user.decorator';
 import { ChannelsService } from './channels.service';
@@ -10,7 +10,7 @@ export class ChannelsController {
   constructor(private readonly channelsService: ChannelsService) {}
 
   @Post()
-  create(@Body() createChannelDto: CreateChannelDto, @User() selfUser: Entity.UserTypes.Self) {
+  create(@Body() createChannelDto: CreateChannelDto, @User() selfUser: UserTypes.Self) {
     return this.channelsService.createDM(selfUser.id, createChannelDto.userId);
   }
 
@@ -18,7 +18,7 @@ export class ChannelsController {
   getMessages(
     @Query() queryParams: GetMessagesQueryDto,
     @Param() params: GetMessagesParamDto,
-    @User() selfUser: Entity.UserTypes.Self
+    @User() selfUser: UserTypes.Self
   ) {
     const { back } = queryParams;
     const { channelId } = params;

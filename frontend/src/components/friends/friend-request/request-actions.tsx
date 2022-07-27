@@ -1,5 +1,5 @@
 import React from 'react';
-import { Entity } from '@discord/types';
+import { Entity, RequestTypes } from '@discord/types';
 import { useAppDispatch } from 'src/redux/hooks';
 import { removeRequest, acceptRequest } from 'src/redux/states/requests';
 import {
@@ -12,7 +12,7 @@ import {
 interface Props {
   requestId: string;
   requestUser: Entity.User;
-  type: Entity.RequestTypes.Type;
+  type: RequestTypes.Type;
 }
 
 export const RequestActionsItem: React.FC<Props> = ({ requestId, type }) => {

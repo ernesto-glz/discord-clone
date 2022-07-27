@@ -1,4 +1,4 @@
-import { Entity } from '@discord/types';
+import { UserTypes } from '@discord/types';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Request } from 'src/data/models/request-model';
 import { User } from 'src/data/models/user-model';
@@ -10,7 +10,7 @@ import { ChannelsService } from '../channels/channels.service';
 export class RequestsService {
   constructor(private readonly channelsService: ChannelsService) {}
 
-  async create(createRequestDto: CreateRequestDto, self: Entity.UserTypes.Self) {
+  async create(createRequestDto: CreateRequestDto, self: UserTypes.Self) {
     const { username, discriminator } = createRequestDto;
     const userFound = await User.findOne({ username, discriminator });
 

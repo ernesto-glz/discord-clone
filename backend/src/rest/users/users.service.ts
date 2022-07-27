@@ -1,4 +1,4 @@
-import { Entity } from '@discord/types';
+import { UserTypes } from '@discord/types';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { Channel } from 'src/data/models/channel-model';
 import { User } from 'src/data/models/user-model';
@@ -8,7 +8,7 @@ import { AuthService } from '../auth/auth.service';
 export class UsersService {
   constructor(private readonly authService: AuthService) {}
 
-  async fetchEntities(user: Entity.UserTypes.Self) {
+  async fetchEntities(user: UserTypes.Self) {
     const { id: userId, guildIds } = user;
   
     const [channels, users, requests] = await Promise.all([
@@ -29,7 +29,7 @@ export class UsersService {
     };
   }
 
-  async deleteUser(selfUser: Entity.UserTypes.Self, password: string) {
+  async deleteUser(selfUser: UserTypes.Self, password: string) {
     const self = await User.findById(selfUser.id).select('+password');
 
     if (!(await this.authService.checkCredentials(password, self.password)))

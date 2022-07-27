@@ -1,8 +1,8 @@
 import { Schema, model, Document } from 'mongoose';
-import { Entity } from '@discord/types';
+import { UserTypes } from '@discord/types';
 import { transformUser } from 'src/utils/utilts';
 
-export interface UserDocument extends Document, Entity.UserTypes.Self {
+export interface UserDocument extends Document, UserTypes.Self {
   id: string;
   password: string;
 }

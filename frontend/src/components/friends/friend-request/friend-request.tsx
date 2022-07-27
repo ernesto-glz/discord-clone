@@ -1,13 +1,13 @@
 import React, { useMemo, useState } from 'react';
 import { UserImage } from 'src/components/user-image';
 import { Profile, UserData } from 'src/components/user-info/styles';
-import { Entity } from '@discord/types';
+import { Entity, RequestTypes } from '@discord/types';
 import { FriendRequest as FriendRequestContainer, ItemBody } from '../styles';
 import { RequestActionsItem } from './request-actions';
 
 interface Props {
   request: Entity.Request;
-  type: Entity.RequestTypes.Type;
+  type: RequestTypes.Type;
 }
 
 export const RequestItem: React.FC<Props> = ({ request, type }) => {

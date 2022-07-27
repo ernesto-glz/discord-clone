@@ -1,11 +1,11 @@
+import { UserTypes } from '@discord/types';
 import { verify } from 'jsonwebtoken';
 import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
 import { User } from 'src/data/models/user-model';
 import { Request } from 'express';
-import { Entity } from '@discord/types';
 import { patterns } from './patterns';
 
-export type CustomRequest = Request & { user: Entity.UserTypes.Self };
+export type CustomRequest = Request & { user: UserTypes.Self };
 
 @Injectable()
 export class AuthGuard implements CanActivate {

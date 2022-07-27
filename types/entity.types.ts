@@ -27,7 +27,7 @@ export declare namespace Entity {
     type: ChannelTypes.Type;
     dmUserId?: string;
   }
-  
+
   export interface Message {
     id: string;
     sender: string;
@@ -36,22 +36,22 @@ export declare namespace Entity {
     createdAt: string;
     updatedAt?: string;
   }
+}
 
-  export namespace UserTypes {
-    export type StatusType = "ONLINE" | "OFFLINE";
-    export interface Self extends Entity.User {
-      email: string;
-      activeDMCS: string[];
-      lastReadMessageIds: { [t: string]: string };
-      locked: boolean;
-    }
+export namespace UserTypes {
+  export type StatusType = "ONLINE" | "OFFLINE";
+  export interface Self extends Entity.User {
+    email: string;
+    activeDMCS: string[];
+    lastReadMessageIds: { [t: string]: string };
+    locked: boolean;
   }
+}
 
-  export namespace RequestTypes {
-    export type Type = "INCOMING" | "OUTGOING";
-  }
+export namespace RequestTypes {
+  export type Type = "INCOMING" | "OUTGOING";
+}
 
-  export namespace ChannelTypes {
-    export type Type = "DM" | "GUILD_TEXT" | "GUILD_VOICE";
-  }
+export namespace ChannelTypes {
+  export type Type = "DM" | "GUILD_TEXT" | "GUILD_VOICE";
 }
