@@ -1,13 +1,14 @@
 import { Socket } from 'socket.io';
-import { WebSocket } from '../websocket';
+import { User } from 'src/data/models/user-model';
+import { WSGateway } from '../websocket';
 import { WSEvent } from './ws-event';
 
 export default class implements WSEvent<'disconnect'> {
   public on = 'disconnect' as const;
 
-  public async invoke(ws: WebSocket, client: Socket): Promise<any> {
+  public async invoke(ws: WSGateway, client: Socket): Promise<any> {
     const userId = ws.sessions.get(client.id);
-    const user = await app.users.findById(userId);
+    const user = await User.findById(userId);
     ws.sessions.delete(client.id);
 
     if (!user) return;

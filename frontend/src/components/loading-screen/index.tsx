@@ -1,9 +1,8 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { Container, LoadingSpinner } from './styles';
 import { DiscordTips } from 'src/config/constants';
 import PageWrapper from 'src/pages/page-wrapper';
-import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
-import { ready } from 'src/redux/states/auth';
+import { useAppSelector } from 'src/redux/hooks';
 
 export const LoadingScreen: React.FC = () => {
   const { fetchedEntities } = useAppSelector((s) => s.meta);
@@ -11,11 +10,6 @@ export const LoadingScreen: React.FC = () => {
     () => Math.floor(Math.random() * DiscordTips.length),
     []
   );
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(ready());
-  }, []);
 
   return (
     <PageWrapper pageTitle={!fetchedEntities ? 'Loading...' : undefined}>

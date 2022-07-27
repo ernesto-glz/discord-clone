@@ -18,9 +18,8 @@ export declare namespace Store {
     };
     users: Entity.User[];
     messages: {
-      entities: Entity.Message[];
-      totalPages: number | null;
-      page: number | null;
+      list: Entity.Message[];
+      total: { [channelId: string]: number; };
     };
     friends: string[];
     requests: Entity.Request[];

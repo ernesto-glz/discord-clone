@@ -20,8 +20,8 @@ export default createGlobalStyle`
     --background-tertiary: #202225;
     --background-inactive: #72767c;
     --background-modifier-accent: rgba(79,84,92,0.48);
-    --background-modifier-selected: rgba(79,84,92,0.6);
-    --background-modifier-hover: rgba(79,84,92,0.4);
+    --background-modifier-selected: hsla(217,calc(var(--saturation-factor, 1)*7.6%),33.5%,0.6);
+    --background-modifier-hover: hsla(217,calc(var(--saturation-factor, 1)*7.6%),33.5%,0.4);;
     --background-message-hover: rgba(4,4,5,0.07);
     --background-secondary-alt: #292b2f;
     --background-floating: #18191c;

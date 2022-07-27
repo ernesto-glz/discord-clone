@@ -44,7 +44,7 @@ export const createRequest = (payload: any) => (dispatch: Dispatch) => {
       );
     },
     errorCallback: (error) => {
-      const errorMessage = error?.response?.data ?? 'Unknown error';
+      const errorMessage = error.response?.data?.message ?? 'Unknown error';
       events.emit('REQUEST_CREATE_FAILED', errorMessage);
     }
   }))

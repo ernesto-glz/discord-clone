@@ -22,5 +22,5 @@ services:
     volumes:
       - ./backend:/app/backend
       - ./backend/node_modules:/app/backend/node_modules
-    ports: [4000:4000]
+    ports: [4000:4000, 4001:4001]
     tty: true

@@ -1,29 +1,26 @@
-import { ChannelsRepository } from 'data/repositories/channel-repository';
-import { RequestsRepository } from 'data/repositories/request-repository';
-import { MessagesRepository } from 'data/repositories/message-repository';
-import { UsersRepository } from 'data/repositories/user-repository';
-import { WSRooms } from '../ws/modules/ws-rooms';
-import { Server } from '../api/server';
-import { WebSocket } from '../ws/websocket';
+import Channels from "src/data/channels";
+import Requests from "src/data/requests";
+import Users from "src/data/users";
+import { SessionManager } from "src/ws/modules/session-manager";
+import { WSRooms } from "src/ws/modules/ws-rooms";
 
 export interface App {
-  rest: Server;
-  webSocket: WebSocket;
-  users: UsersRepository;
-  channels: ChannelsRepository;
-  requests: RequestsRepository;
-  messages: MessagesRepository;
+  users: Users;
+  channels: Channels;
+  requests: Requests;
   rooms: WSRooms;
+  sessions: SessionManager;
 }
 
-export const app: App = {
-  rest: new Server(),
-  webSocket: new WebSocket(),
-  users: new UsersRepository(),
-  channels: new ChannelsRepository(),
-  requests: new RequestsRepository(),
-  messages: new MessagesRepository(),
-  rooms: new WSRooms()
-};
+const app = {
+  users: new Users(),
+  channels: new Channels(),
+  requests: new Requests(),
+  rooms: new WSRooms(),
+  sessions: new SessionManager()
+} as App;
 
-global['app'] = app;
+export function defineAppGlobals() {
+  global['app'] = app;
+}
+

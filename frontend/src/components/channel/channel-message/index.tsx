@@ -19,7 +19,7 @@ export interface ContentProps {
 }
 
 const ChannelMessage: React.FC<Props> = ({ message }) => {
-  const messages = useAppSelector((s) => s.messages.entities);
+  const messages = useAppSelector((s) => s.messages.list);
   const author = useAppSelector(getUserById(message.sender));
   const [focused, setFocused] = useState(false);
 

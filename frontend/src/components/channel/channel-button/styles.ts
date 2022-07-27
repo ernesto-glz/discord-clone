@@ -25,9 +25,14 @@ export const Container = styled.div`
     color: var(--senary);
     font-size: 15px;
   }
-  &:hover,
+  &:hover {
+    background-color: var(--background-modifier-hover) !important;
+    > div > span {
+      color: var(--white);
+    }
+  }
   &.active {
-    background-color: var(--quinary);
+    background-color: var(--background-modifier-selected);
     > div > span {
       color: var(--white);
     }

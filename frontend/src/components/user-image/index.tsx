@@ -50,8 +50,8 @@ export const UserImage: React.FC<Props> = ({
         aria-hidden="true"
         customSize={customSize}
         onError={(e) => {
-          e.currentTarget.onerror = null;
-          e.currentTarget.src = `${process.env.REACT_APP_API_ROOT}/assets/avatars/unknown.png`;
+          // e.currentTarget.onerror = null;
+          // e.currentTarget.src = `${process.env.REACT_APP_API_ROOT}/assets/avatars/unknown.png`;
         }}
       />
 

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { actions as meta } from 'src/redux/states/meta';
-import { actions as auth, logoutUser } from 'src/redux/states/auth';
+import { actions as auth, logoutUser, ready } from 'src/redux/states/auth';
 import { actions as channels } from 'src/redux/states/channels';
 import { actions as requests } from 'src/redux/states/requests';
 import { actions as messages } from 'src/redux/states/messages';
@@ -11,7 +11,7 @@ import fetchEntities from 'src/redux/actions/fetch-entities';
 import { useNavigate } from 'react-router-dom';
 import { playSound } from 'src/utils/sounds';
 import { WS, Entity } from '@discord/types';
-import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
+import { useAppDispatch } from 'src/redux/hooks';
 import { AuthErrors } from 'src/config/constants';
 import { store } from 'src/redux/configure-store';
 import { ws } from 'src/ws/websocket';
@@ -30,17 +30,24 @@ export const WSListeners: React.FC = () => {
         dispatch(ui.closedLastModal());
     });
 
+    ws.on('connect', () => {
+      dispatch(ready())
+    });
     ws.on('connect_error', (error) => {
-      if (Object.values(AuthErrors).indexOf(error.message) < 0) 
-        return console.log(error);
+      if (state().meta.fetchedEntities) {
+        dispatch(meta.timeout());
+        dispatch(auth.loggedOut());
+      }
+      
+      if (Object.values(AuthErrors).indexOf(error.message) < 0)
+        return console.log('[WS]: Connection to the server lost.');
+      
       dispatch(logoutUser());
       navigate('/login', { replace: true })
     });
     ws.on('READY', (data) => {
       dispatch(fetchEntities());
-      dispatch(auth.ready(data.user))
-      dispatch(users.fetched([data.user]))
-      // dispatch(initPings());
+      dispatch(auth.ready(data.user));
     });
     ws.on('PRESENCE_UPDATE', ({ userId, status }: WS.Args.PresenceUpdate) => {
       dispatch(users.updated({ userId, partialUser: { status } }));

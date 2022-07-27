@@ -1,0 +1,42 @@
+import { Entity } from '@discord/types';
+import { Body, Controller, Patch, Post, Res } from '@nestjs/common';
+import { Response } from 'express';
+import { UserDocument } from 'src/data/models/user-model';
+import { User } from 'src/shared/user.decorator';
+import { AuthService } from './auth.service';
+import { ChangePasswordDto } from './dto/change-password.dto';
+import { ChangeUsernameDto } from './dto/change-username.dto';
+import { LoginUserDto } from './dto/login-user.dto';
+import { RegisterUserDto } from './dto/register-user.dto';
+
+@Controller('auth')
+export class AuthController {
+  constructor(private readonly authService: AuthService) {}
+
+  @Post('/login')
+  loginUser(@Body() loginUserDto: LoginUserDto, @Res() response: Response) {
+    return this.authService.loginUser(loginUserDto, response);
+  }
+
+  @Post('/register')
+  registerUser(@Body() registerUserDto: RegisterUserDto, @Res() response: Response) {
+    return this.authService.registerUser(registerUserDto, response);
+  }
+
+  @Patch('/change-username')
+  changeUsername(
+    @Body() changeUsernameDto: ChangeUsernameDto,
+    @User() selfUser: Entity.UserTypes.Self
+  ) {
+    const { newUsername, password } = changeUsernameDto;
+    return this.authService.changeUsername(selfUser, newUsername, password);
+  }
+
+  @Patch('/change-password')
+  changePassword(
+    @Body() changePasswordDto: ChangePasswordDto,
+    @User() selfUser: Entity.UserTypes.Self
+  ) {
+    return this.authService.changePassword(selfUser, changePasswordDto);
+  }
+}

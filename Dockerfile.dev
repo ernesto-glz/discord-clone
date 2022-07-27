@@ -7,6 +7,4 @@ COPY . .
 
 EXPOSE 4000
 
-RUN cd ./backend && yarn install
-
 CMD ["yarn", "backend:dev"]

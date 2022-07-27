@@ -1,13 +1,14 @@
 import { Socket } from 'socket.io';
-import { WebSocket } from '../websocket';
+import { WSGateway } from '../websocket';
 import { WSEvent } from './ws-event';
 import { WS } from '@discord/types';
+import { User } from 'src/data/models/user-model';
 
 export default class implements WSEvent<'USER_UPDATE'> {
   public on = 'USER_UPDATE' as const;
 
-  public async invoke(ws: WebSocket, client: Socket, { userId, partialUser }: WS.Params.UserUpdate) {
-    const user = await app.users.findById(userId);
+  public async invoke(ws: WSGateway, client: Socket, { userId, partialUser }: WS.Params.UserUpdate) {
+    const user = await User.findById(userId);
 
     if (!user)
       throw new TypeError('User not found');

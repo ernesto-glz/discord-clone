@@ -3,6 +3,6 @@
   "scripts": {
     "docker:dev": "docker-compose -f docker-compose.dev.yml up",
     "docker:build": "docker-compose -f docker-compose.dev.yml build",
-    "backend:dev": "cd backend && yarn dev"
+    "backend:dev": "cd backend && yarn start:dev"
   }
 }

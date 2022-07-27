@@ -1,0 +1,6 @@
+{
+  "name": "@discord/types",
+  "version": "0.1.0",
+  "main": "main.ts",
+  "license": "MIT"
+}

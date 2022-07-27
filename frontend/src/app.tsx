@@ -1,9 +1,6 @@
-import { useEffect } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { PrivateRoute } from './components/private-route';
 import { GuildPage } from './pages/guild-page';
-import { ready } from './redux/states/auth';
-import { useAppDispatch } from './redux/hooks';
 import LoginPage from './pages/auth/login-page';
 import RegisterPage from './pages/auth/register-page';
 import LogoutPage from './pages/auth/logout-page';
@@ -11,12 +8,6 @@ import FriendsPage from './pages/friends-page';
 import './styles/index.css';
 
 const App = () => {
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(ready())
-  }, [])
-
   return (
     <div className="App">
       <BrowserRouter>

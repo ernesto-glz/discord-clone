@@ -1,25 +1,21 @@
 {
-  "ts-node": {
-    "transpileOnly": true,
-    "files": true
-  },
   "compilerOptions": {
-    "strict": true,
-    "target": "es2016",
-    "lib": ["ES2020", "ES2019"],
-    "module": "CommonJS",
-    "esModuleInterop": true,
-    "moduleResolution": "node",
-    "removeComments": true,
-    "noImplicitAny": false,
-    "noEmit": false,
-    "sourceMap": false,
+    "module": "commonjs",
     "declaration": true,
-    "strictNullChecks": true,
-    "strictPropertyInitialization": false,
-    "outDir": "dist",
-    "baseUrl": "src",
-    "paths": { "@discord/types": ["../../types/main.ts"] }
-  },
-  "include": ["src", "**/*.ts", "types"]
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es2017",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false
+  }
 }

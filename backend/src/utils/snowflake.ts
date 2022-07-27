@@ -1,5 +1,3 @@
-import cluster from 'cluster';
-
 let inc = 0;
 let lastSnowflake: string;
 const discordEpoch = 1577836800000;
@@ -11,7 +9,7 @@ export function generateSnowflake() {
 
   const msSince = pad(new Date().getTime() - discordEpoch, 42);
   const pid = pad(process.pid, 5).slice(0, 5);
-  const wid = pad(cluster.worker?.id ?? 0, 5);
+  const wid = pad(0, 5);
   const getInc = (add: number) => pad(inc + add, 12);
 
   let snowflake = `0b${msSince}${wid}${pid}${getInc(inc)}`;

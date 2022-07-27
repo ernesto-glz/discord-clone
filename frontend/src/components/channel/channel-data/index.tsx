@@ -14,17 +14,18 @@ import {
 } from './styles';
 
 const ChannelData: React.FC = () => {
-  const { page, totalPages } = useAppSelector((s) => s.messages);
+  const { total } = useAppSelector((s) => s.messages);
   const activeChannel = useAppSelector((s) => s.ui.activeChannel)!;
   const messages = useAppSelector(getChannelMessages(activeChannel.id));
   const messagesRef = useRef<HTMLDivElement>(null);
+  const msgCount = useAppSelector((s) => s.messages.total[activeChannel.id]);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     const messageInput = document.querySelector('#messageInput') as HTMLDivElement;
     messageInput.focus();
 
-    dispatch(fetchMessages({ channelId: activeChannel.id }));
+    dispatch(fetchMessages({ channelId: activeChannel.id, back: 30 }));
   }, [activeChannel]);
 
   useEffect(() => {
@@ -53,13 +54,10 @@ const ChannelData: React.FC = () => {
   );
 
   const onScroll = () => {
-    if (!page 
-        || !totalPages 
-        || messagesRef.current!.scrollTop > 300 
-        || page >= totalPages)
+    if (messages.length ===  msgCount || messagesRef.current!.scrollTop > 300)
       return;
 
-    dispatch(fetchMessages({ channelId: activeChannel.id, page: page + 1 }));
+    dispatch(fetchMessages({ channelId: activeChannel.id, back: messages.length + 30 }));
     messagesRef.current!.scroll({
       top: messagesRef.current!.scrollHeight + 300
     });

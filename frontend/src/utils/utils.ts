@@ -1,3 +1,5 @@
+import { AxiosError } from "axios";
+
 interface ErrorObject {
   msg: string;
   param: 'username' | 'email' | 'password';
@@ -24,3 +26,15 @@ export const notInArray = (arr: any[]) => (old: any) => {
 };
 
 export const token = () => localStorage.getItem('access_token');
+
+export function extractErrorMessage(error: AxiosError) {
+  const { response } = error;
+  if (!response) return 'Unknown error';
+  const { data }: any = response;
+  if (!data.message) return 'Unknown error';
+  
+  if (Array.isArray(data.message))
+    return data.message[0];
+  
+  return data.message;
+}

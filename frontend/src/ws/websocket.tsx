@@ -1,11 +1,11 @@
 import { io } from 'socket.io-client';
 
 export const ws = io(
-  `${process.env.REACT_APP_API_ROOT || 'http://localhost:4000'}`,
+  `${process.env.REACT_APP_WS_ROOT ?? 'http://localhost:4001'}`,
   {
     secure: true,
     path: '/websocket',
-    transports: ['websocket', 'polling', 'flashsocket'],
+    transports: ['websocket', 'polling', 'flashsocket']
   }
 );
 export const resetWS = () => {

@@ -1,6 +1,6 @@
-import { ApiError } from 'api/modules/api-error';
-import { UserDocument } from 'data/models/user';
 import { Socket } from 'socket.io';
+import { Channel } from 'src/data/models/channel-model';
+import { UserDocument } from 'src/data/models/user-model';
 
 export class WSRooms {
   public async joinGuildRooms(user: UserDocument, client: Socket) {
@@ -13,10 +13,10 @@ export class WSRooms {
 
   private async getChannelIds(client: Socket, guildIds: string[]) {
     const ids: string[] = [];
-    const channels = await app.channels.find({ guildId: { $in: guildIds } });
+    const channels = await Channel.find({ guildId: { $in: guildIds } });
 
     if (!channels)
-      throw new ApiError(500, 'No channels available to jon');
+      throw new TypeError('No channels available to jon');
 
     for (const channel of channels) {
       if (channel.type === 'GUILD_VOICE') continue;

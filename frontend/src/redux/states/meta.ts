@@ -13,6 +13,9 @@ export const slice = createSlice({
     },
     fetchedEntities: (meta) => {
       meta.fetchedEntities = true;
+    },
+    timeout: (meta) => {
+      meta.fetchedEntities = false;
     }
   }
 });

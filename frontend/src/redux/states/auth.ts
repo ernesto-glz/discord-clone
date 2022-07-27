@@ -2,10 +2,9 @@ import { createSlice, Dispatch } from '@reduxjs/toolkit';
 import { WS, Entity } from '@discord/types';
 import { Store } from 'types/store';
 import { actions as api } from './api';
-import { actions as meta } from './meta';
 import { resetWS } from 'src/ws/websocket';
 import events from 'src/services/event-service';
-import { token } from 'src/utils/utils';
+import { extractErrorMessage, token } from 'src/utils/utils';
 
 export interface AuthState {
   user?: Entity.UserTypes.Self;
@@ -110,7 +109,7 @@ export const changeUsername = (payload: any) => (dispatch: Dispatch) => {
       events.emit('CHANGE_USERNAME_SUCCEEDED');
     },
     errorCallback: (error) => {
-      const errorMessage = error?.response?.data;
+      const errorMessage = extractErrorMessage(error);
       events.emit('CHANGE_USERNAME_FAILED', errorMessage ?? 'Unknown Error');
     }
   }));
@@ -125,7 +124,7 @@ export const changePassword = (payload: any) => (dispatch: Dispatch) => {
       events.emit('CHANGE_PASSWORD_SUCCEEDED');
     },
     errorCallback: (error) => {
-      const errorMessage = error?.response?.data;
+      const errorMessage = extractErrorMessage(error);
       events.emit('CHANGE_PASSWORD_FAILED', errorMessage ?? 'Unknown Error');
     }
   }));
@@ -144,7 +143,7 @@ export const deleteAccount = (payload: any) => (dispatch: Dispatch<any>) => {
       dispatch(logoutUser());
     },
     errorCallback: (error) => {
-      const errorMessage = error?.response?.data;
+      const errorMessage = extractErrorMessage(error);
       events.emit('ACCOUNT_DELETE_FAILED', errorMessage ?? 'Unknown Error')
     }
   }));
