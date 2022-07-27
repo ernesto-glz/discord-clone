@@ -9,10 +9,7 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Delete()
-  deleteUser(
-    @Body() deleteUserDto: DeleteUserDto,
-    @User() selfUser: UserTypes.Self
-  ) {
+  deleteUser(@Body() deleteUserDto: DeleteUserDto, @User() selfUser: UserTypes.Self) {
     const { password } = deleteUserDto;
     return this.usersService.deleteUser(selfUser, password);
   }

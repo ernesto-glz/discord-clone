@@ -1,4 +1,4 @@
-import { Entity, UserTypes } from "./entity.types";
+import { Entity, RequestTypes, UserTypes } from "./entity.types";
 
 export declare namespace WS {
   export interface To {
@@ -60,11 +60,12 @@ export declare namespace WS {
     }
 
     export interface RequestCreate {
-      request: Entity.Request;
+      request: RequestTypes.Populated;
     }
 
     export interface RequestRemove {
-      request: Entity.Request;
+      requestId: string;
+      notify: string;
     }
 
     export interface RequestAccept {
@@ -119,7 +120,7 @@ export declare namespace WS {
     }
 
     export interface RequestCreate {
-      request: Entity.Request;
+      request: RequestTypes.Populated;
     }
 
     export interface RequestRemove {

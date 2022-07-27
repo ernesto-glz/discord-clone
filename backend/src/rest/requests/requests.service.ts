@@ -49,10 +49,7 @@ export class RequestsService {
   }
 
   async accept(requestId: string, selfId: string) {
-    const request = await Request.findOne({
-      _id: requestId,
-      to: selfId
-    });
+    const request = await Request.findOne({ _id: requestId, to: selfId });
 
     if (!request)
       throw new BadRequestException('Request not found');
@@ -60,17 +57,14 @@ export class RequestsService {
     await Request.findByIdAndDelete(requestId);
 
     await User.updateOne({ _id: request.from }, {
-      $push: { friendIds: request.to as unknown as string }
+      $push: { friendIds: request.to }
     });
     
     await User.updateOne({ _id: request.to }, {
-      $push: { friendIds: request.from as unknown as string }
+      $push: { friendIds: request.from }
     });
 
-    const createdDM = await this.channelsService.createDM(
-      request.from as unknown as string, 
-      request.to as unknown as string
-    );
+    const createdDM = await this.channelsService.createDM(request.from, request.to);
 
     return { friendId: request.from, channel: createdDM.channel };
   }

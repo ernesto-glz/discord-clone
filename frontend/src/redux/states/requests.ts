@@ -1,9 +1,8 @@
 import { createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit';
-import { WS } from '@discord/types';
+import { RequestTypes, WS } from '@discord/types';
 import { notInArray } from 'src/utils/utils';
 import { Store } from 'types/store';
 import { actions as api } from './api';
-import { Entity } from '@discord/types';
 import events from 'src/services/event-service';
 
 export const slice = createSlice({
@@ -13,7 +12,7 @@ export const slice = createSlice({
     fetched: (requests, { payload }) => {
       requests.push(...payload.filter(notInArray(requests)));
     },
-    added: (requests, { payload }: PayloadAction<Entity.Request>) => {
+    added: (requests, { payload }: PayloadAction<RequestTypes.Populated>) => {
       requests.push(payload)
     },
     removed: (requests, { payload }: PayloadAction<WS.Args.RequestRemove>) => {
@@ -50,15 +49,22 @@ export const createRequest = (payload: any) => (dispatch: Dispatch) => {
   }))
 }
 
-export const removeRequest = (requestId: string) => (dispatch: Dispatch) => {
+export const removeRequest = (requestId: string) => (dispatch: Dispatch, getState: () => Store.AppState) => {
   dispatch(api.restCallBegan({
     onSuccess: [],
     url: `/requests/${requestId}`,
     method: 'delete',
-    callback: (data) => dispatch(api.wsCallBegan({
-      event: 'FRIEND_REQUEST_REMOVE',
-      data: { request: data }
-    }))
+    callback: (request: RequestTypes.Populated) => {
+      const { from, to } = request;
+      const selfId = getState().auth.user!.id;
+      const notify = from.id === selfId ? to.id : from.id;
+
+      dispatch(api.wsCallBegan({
+        event: 'FRIEND_REQUEST_REMOVE',
+        data: { requestId, notify }
+      }));
+      dispatch(actions.removed({ requestId }));
+    }
   }));
 };
 

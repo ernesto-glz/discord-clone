@@ -11,8 +11,8 @@ export declare namespace Entity {
 
   export interface Request {
     id: string;
-    from: Entity.User;
-    to: Entity.User;
+    from: string;
+    to: string;
     type?: RequestTypes.Type;
   }
 
@@ -50,6 +50,10 @@ export namespace UserTypes {
 
 export namespace RequestTypes {
   export type Type = "INCOMING" | "OUTGOING";
+  export interface Populated extends Omit<Entity.Request, 'to' | 'from'> {
+    from: Entity.User;
+    to: Entity.User;
+  }
 }
 
 export namespace ChannelTypes {

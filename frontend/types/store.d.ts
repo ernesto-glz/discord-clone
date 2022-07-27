@@ -1,10 +1,10 @@
-import { Entity } from '../../types/main';
+import { Entity, UserTypes, RequestTypes } from '@discord/types';
 
 export declare namespace Store {
   export interface AppState {
     auth: {
       attemptedLogin: boolean;
-      user?: Entity.UserTypes.Self;
+      user?: UserTypes.Self;
     };
     channels: Entity.Channel[];
     meta: {
@@ -22,7 +22,7 @@ export declare namespace Store {
       total: { [channelId: string]: number; };
     };
     friends: string[];
-    requests: Entity.Request[];
+    requests: RequestTypes.Populated[];
     typing: { userId: string, channelId: string, timer: NodeJS.Timer }[];
   }
 }

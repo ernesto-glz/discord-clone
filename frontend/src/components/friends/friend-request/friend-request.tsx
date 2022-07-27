@@ -1,12 +1,12 @@
 import React, { useMemo, useState } from 'react';
 import { UserImage } from 'src/components/user-image';
 import { Profile, UserData } from 'src/components/user-info/styles';
-import { Entity, RequestTypes } from '@discord/types';
+import { RequestTypes } from '@discord/types';
 import { FriendRequest as FriendRequestContainer, ItemBody } from '../styles';
 import { RequestActionsItem } from './request-actions';
 
 interface Props {
-  request: Entity.Request;
+  request: RequestTypes.Populated;
   type: RequestTypes.Type;
 }
 

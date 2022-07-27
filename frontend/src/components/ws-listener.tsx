@@ -90,10 +90,11 @@ export const WSListeners: React.FC = () => {
         navigate('/channels/@me');
     });
     ws.on('NEW_FRIEND', ({ user, requestId, channel }) => {
-      const { id: selfId, guildIds, friendIds } = state().auth.user!
+      const { id: selfId, guildIds, friendIds, activeDMCS } = state().auth.user!
       const partialUser = {
         guildIds: [...guildIds, channel.guildId],
-        friendIds: [...friendIds, user.id]
+        friendIds: [...friendIds, user.id],
+        activeDMCS: [...activeDMCS, channel.id]
       };
 
       dispatch(users.updated({ userId: selfId, partialUser }))
@@ -129,7 +130,7 @@ export const WSListeners: React.FC = () => {
           id: dmChannel.id,
           avatar: user.avatar,
           name: user.username
-        }))
+        }));
       }
     });
 

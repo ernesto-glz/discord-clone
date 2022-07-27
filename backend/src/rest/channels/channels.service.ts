@@ -1,14 +1,17 @@
+import { Entity } from '@discord/types';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Channel } from 'src/data/models/channel-model';
 import { Message } from 'src/data/models/message-model';
 import { User } from 'src/data/models/user-model';
 import { generateSnowflake } from 'src/utils/snowflake';
 
+export type CreatedDM = { channel: Entity.Channel, alreadyExists: boolean };
+
 @Injectable()
 export class ChannelsService {
   constructor() {}
 
-  public async createDM(selfId: string, userId: string) {
+  public async createDM(selfId: string, userId: string): Promise<CreatedDM> {
     const guildId = generateSnowflake();
 
     const channel = await app.channels.checkIfExistsDM(selfId, userId);
@@ -24,7 +27,7 @@ export class ChannelsService {
 
     await User.updateMany(
       { $or: [{ _id: selfId }, { _id: userId }] },
-      { $push: { guildIds: guildId } }
+      { $push: { guildIds: guildId, activeDMCS: created.id } }
     );
 
     return { channel: created, alreadyExists: false };
