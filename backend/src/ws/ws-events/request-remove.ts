@@ -6,13 +6,17 @@ import { WSEvent } from './ws-event';
 export default class implements WSEvent<'FRIEND_REQUEST_REMOVE'> {
   public on = 'FRIEND_REQUEST_REMOVE' as const;
 
-  public async invoke(ws: WSGateway, client: Socket, { requestId, notify }: WS.Params.RequestRemove) {
-    const socketId = ws.sessions.getClientIdFromUserId(notify);
+  public async invoke(ws: WSGateway, client: Socket, { request }: WS.Params.RequestRemove) {
+    const [fromInstances, toInstances] = app.sessions.getInstancesFromRequest(request);
 
     return [{
       emit: this.on,
-      to: [socketId ?? ''],
-      send: { requestId }
+      to: fromInstances ?? [''],
+      send: { requestId: request.id }
+    }, {
+      emit: this.on,
+      to: toInstances ?? [''],
+      send: { requestId: request.id }
     }];
   }
 }

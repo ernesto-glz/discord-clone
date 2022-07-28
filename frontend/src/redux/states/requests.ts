@@ -30,13 +30,12 @@ export const createRequest = (payload: any) => (dispatch: Dispatch) => {
     url: '/requests',
     method: 'post',
     data: payload,
-    callback: (payload) => {
-      const target = payload.to;
-      dispatch(actions.added({ ...payload, type: 'OUTGOING' }));
+    callback: (request) => {
+      const target = request.to;
       dispatch(api.wsCallBegan({
         event: 'FRIEND_REQUEST_CREATE',
-        data: { request: payload }
-      }))
+        data: { request }
+      }));
       events.emit(
         'REQUEST_CREATE_SUCCEEDED',
         `Friend request sent to ${target.username}#${target.discriminator}`
@@ -55,27 +54,22 @@ export const removeRequest = (requestId: string) => (dispatch: Dispatch, getStat
     url: `/requests/${requestId}`,
     method: 'delete',
     callback: (request: RequestTypes.Populated) => {
-      const { from, to } = request;
-      const selfId = getState().auth.user!.id;
-      const notify = from.id === selfId ? to.id : from.id;
-
       dispatch(api.wsCallBegan({
         event: 'FRIEND_REQUEST_REMOVE',
-        data: { requestId, notify }
+        data: { request }
       }));
-      dispatch(actions.removed({ requestId }));
     }
   }));
 };
 
-export const acceptRequest = (requestId: string) => (dispatch: Dispatch) => {
+export const acceptRequest = (request: RequestTypes.Populated) => (dispatch: Dispatch) => {
   dispatch(api.restCallBegan({
     onSuccess: [],
-    url: `/requests/${requestId}`,
+    url: `/requests/${request.id}`,
     method: 'put',
     callback: (data) => dispatch(api.wsCallBegan({
       event: 'FRIEND_REQUEST_ACCEPT',
-      data: { requestId, friendId: data.friendId, channel: data.channel }
+      data: { request, friendId: data.friendId, channel: data.channel }
     }))
   }));
 };

@@ -57,9 +57,9 @@ export const WSListeners: React.FC = () => {
       const { id: selfId, activeDMCS } = state().auth.user!;
       const { channelId, sender } = message;
       const channel = state().channels.find((c) => c.id === channelId);
-      const isActiveChannel = activeDMCS.includes(channelId);
+      const isDisplayedChannel = activeDMCS.includes(channelId);
       
-      if (channel!.type === 'DM' && sender !== selfId && !isActiveChannel) {
+      if (channel!.type === 'DM' && sender !== selfId && !isDisplayedChannel) {
         dispatch(auth.updatedUser({ activeDMCS: [...activeDMCS, channelId] }));
       }
 

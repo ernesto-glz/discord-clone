@@ -48,7 +48,7 @@ export class ChannelsService {
     const slicedMsgs = channelMsgs.slice(back);
 
     if (!slicedMsgs.length)
-      return slicedMsgs;
+      return { channelId, total: 0, list: [] };
 
     const lastMessage = slicedMsgs[slicedMsgs.length - 1];
     if (lastMessage.id === channel.lastMessageId)

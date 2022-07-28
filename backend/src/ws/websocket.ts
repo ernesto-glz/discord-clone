@@ -50,10 +50,4 @@ export class WSGateway implements OnGatewayInit, OnGatewayConnection {
   public handle(action: WSAction<keyof WS.From>) {
     this.io.to(action.to).emit(action.emit, action.send);
   }
-
-  public to(...rooms: string[]) {
-    return this.io.to(rooms) as {
-      emit: <T extends keyof WS.From>(name: T, args: WS.From[T]) => any;
-    };
-  }
 }

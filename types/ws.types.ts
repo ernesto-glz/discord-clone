@@ -64,12 +64,11 @@ export declare namespace WS {
     }
 
     export interface RequestRemove {
-      requestId: string;
-      notify: string;
+      request: RequestTypes.Populated;
     }
 
     export interface RequestAccept {
-      requestId: string;
+      request: RequestTypes.Populated;
       friendId: string;
       channel: Entity.Channel;
     }

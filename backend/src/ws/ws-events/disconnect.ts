@@ -7,7 +7,7 @@ export default class implements WSEvent<'disconnect'> {
   public on = 'disconnect' as const;
 
   public async invoke(ws: WSGateway, client: Socket): Promise<any> {
-    const userId = ws.sessions.get(client.id);
+    const userId = ws.sessions.userId(client);
     const user = await User.findById(userId);
     ws.sessions.delete(client.id);
 

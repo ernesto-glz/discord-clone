@@ -1,5 +1,4 @@
 import { createSelector, createSlice, Dispatch } from '@reduxjs/toolkit';
-import client from 'src/api/client';
 import { CreateMessage } from 'src/models/message.model';
 import { notInArray } from 'src/utils/utils';
 import { Store } from 'types/store';
@@ -7,16 +6,16 @@ import { actions as api } from './api';
 
 export type FetchMessages = { channelId: string; back?: number };
 
-export const messageSlice = createSlice({
+export const slice = createSlice({
   name: 'messages',
   initialState: {
     list: [],
     total: {},
   } as Store.AppState['messages'],
   reducers: {
-    fetched: ({ list, total }, { payload }) => {
-      list.unshift(...payload.list.filter(notInArray(list)));
-      total[payload.channelId] = payload.total;
+    fetched: (messages, { payload }) => {
+      messages.list.unshift(...payload.list.filter(notInArray(messages.list)));
+      messages.total[payload.channelId] = payload.total;
     },
     created: (messages, { payload: message }) => {
       messages.list.push(message);
@@ -24,8 +23,8 @@ export const messageSlice = createSlice({
   }
 });
 
-export const actions = messageSlice.actions;
-export default messageSlice.reducer;
+export const actions = slice.actions;
+export default slice.reducer;
 
 export const getChannelMessages = (channelId: string) => createSelector(
   (state: Store.AppState) => state.messages.list,

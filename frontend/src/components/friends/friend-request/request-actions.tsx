@@ -10,20 +10,20 @@ import {
 } from '../styles';
 
 interface Props {
-  requestId: string;
+  request: RequestTypes.Populated;
   requestUser: Entity.User;
   type: RequestTypes.Type;
 }
 
-export const RequestActionsItem: React.FC<Props> = ({ requestId, type }) => {
+export const RequestActionsItem: React.FC<Props> = ({ request, type }) => {
   const dispatch = useAppDispatch();
 
   const handleCancel = async () => {
-    dispatch(removeRequest(requestId));
+    dispatch(removeRequest(request.id));
   };
 
   const handleAccept = async () => {
-    dispatch(acceptRequest(requestId));
+    dispatch(acceptRequest(request));
   };
 
   return (

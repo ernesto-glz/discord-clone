@@ -1,3 +1,4 @@
+import { RequestTypes } from '@discord/types';
 import { Socket } from 'socket.io';
 
 export class SessionManager extends Map<string, string> {
@@ -11,11 +12,20 @@ export class SessionManager extends Map<string, string> {
     return this.get(client.id);
   }
 
-  public getClientIdFromUserId(userId: string) {
-    return Array.from(this.entries()).find(([, value]) => value === userId)?.[0];
+  public getInstancesFromUserId(userId: string) {
+    return Array.from(this.entries())
+      .filter(([, value]) => value === userId)
+      .map(([key]) => key);
   }
 
   public isOnline(userId: string) {
-    return !!this.getClientIdFromUserId(userId);
+    return this.getInstancesFromUserId(userId)?.length ? true : false;
+  }
+
+  public getInstancesFromRequest(request: RequestTypes.Populated) {
+    const { from, to } = request;
+    const fromInstances = this.getInstancesFromUserId(from.id);
+    const toInstances = this.getInstancesFromUserId(to.id);
+    return [fromInstances, toInstances];
   }
 }
