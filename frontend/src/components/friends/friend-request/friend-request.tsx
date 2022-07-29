@@ -4,6 +4,7 @@ import { Profile, UserData } from 'src/components/user-info/styles';
 import { RequestTypes } from '@discord/types';
 import { FriendRequest as FriendRequestContainer, ItemBody } from '../styles';
 import { RequestActionsItem } from './request-actions';
+import { getAvatarUrl } from 'src/utils/utils';
 
 interface Props {
   request: RequestTypes.Populated;
@@ -26,7 +27,7 @@ export const RequestItem: React.FC<Props> = ({ request, type }) => {
         <div>
           <Profile>
             <UserImage
-              imageUrl={`${process.env.REACT_APP_API_ROOT}/assets/avatars/${requestUser.avatar}.png`}
+              imageUrl={getAvatarUrl(requestUser)}
               isGeneric={false}
             />
             <UserData>

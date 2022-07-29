@@ -5,6 +5,7 @@ import { ws } from 'src/ws/websocket';
 import { CloseIcon, Container } from './styles';
 import { useAppSelector } from 'src/redux/hooks';
 import { Entity } from '@discord/types';
+import { getAvatarUrl } from 'src/utils/utils';
 
 export type Props = { channel: Entity.Channel }
 
@@ -37,7 +38,7 @@ const ChannelButton: React.FC<Props> = ({ channel }) => {
       <div onClick={goToChannel}>
         <UserImage
           isGeneric={false}
-          imageUrl={`${process.env.REACT_APP_API_ROOT}/assets/avatars/${channel.avatar ?? 'unknown'}.png`}
+          imageUrl={getAvatarUrl(channel)}
           isOnline={isOnline}
           displayStatus={true}
         />

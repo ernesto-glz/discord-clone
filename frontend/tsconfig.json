@@ -18,7 +18,8 @@
     "baseUrl": ".",
     "outDir": "dist",
     "paths": { "src/*": ["src/*"] },
-    "typeRoots": ["./types"]
+    "typeRoots": ["./types"],
+    "strictPropertyInitialization": false
   },
   "exclude": ["node_modules"],
   "include": ["src", "**/*.ts"]

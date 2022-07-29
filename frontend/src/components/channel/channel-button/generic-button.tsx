@@ -20,11 +20,7 @@ export const GenericButton: React.FC<Props> = ({ genericImage, displayName }) =>
   return (
     <Container className={isActive ? 'active' : ''}>
       <div onClick={onClick}>
-        <UserImage
-          isGeneric={true}
-          genericImage={genericImage}
-          imageUrl={`${process.env.REACT_APP_API_ROOT}/assets/avatars/${genericImage}.png`}
-        />
+        <UserImage isGeneric={true} genericImage={genericImage} />
         <span>{displayName}</span>
       </div>
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import { actions as ui } from 'src/redux/states/ui';
+import { getAvatarUrl } from 'src/utils/utils';
 import { LogoutConfirm } from '../logout-confirm/logout-confirm';
 import { Button } from '../not-implemented/styles';
 import {
@@ -37,9 +38,7 @@ export const MyAccount: React.FC<Props> = ({ changeOption }) => {
         <div className="banner" />
         <UserInfoRegion>
           <UserAvatar>
-            <img
-              src={`${process.env.REACT_APP_API_ROOT}/assets/avatars/${user.avatar}.png`}
-            />
+            <img src={getAvatarUrl(user)} />
           </UserAvatar>
           <ProfileUsername>
             <div className="userTag">

@@ -5,7 +5,7 @@ import { DotsVerticalRounded } from '@styled-icons/boxicons-regular';
 import { AddInputProps } from './add-friend';
 
 export const Container = styled.div`
-  grid-area: CD;
+  grid-area: CP;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -25,7 +25,7 @@ export const WampusMessage = styled.div`
 `;
 
 export const FlexColumnContainer = styled.div`
-  grid-area: CD;
+  grid-area: CP;
   display: flex;
   flex-direction: column;
   width: 100%;

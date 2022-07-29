@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import ChannelData from 'src/components/channel/channel-data';
+import ChannelPanel from 'src/components/channel/channel-panel';
 import ServerName from 'src/components/server/server-name';
 import PageWrapper from './page-wrapper';
 import { ChannelHeader } from 'src/components/channel/channel-header/channel-header';
@@ -29,7 +29,7 @@ export const GuildPage: React.FC = () => {
         <ServerList />
         <ServerName />
         <ChannelList />
-        {ui.activeChannel && <ChannelData /> }
+        {ui.activeChannel && <ChannelPanel /> }
         <ChannelHeader />
       </AppGridContainer>
     </PageWrapper>

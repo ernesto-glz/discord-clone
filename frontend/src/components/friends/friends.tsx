@@ -1,6 +1,9 @@
 import React from 'react';
 import { FriendItem } from './friend-list-item';
 import { getFriendUsers } from 'src/redux/states/users';
+import { useAppSelector } from 'src/redux/hooks';
+import { AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import {
   Container,
   FlexColumnContainer,
@@ -9,9 +12,6 @@ import {
   WampusImage,
   WampusMessage
 } from './styles';
-import { useAppSelector } from 'src/redux/hooks';
-import { AnimatePresence } from 'framer-motion';
-import { motion } from 'framer-motion';
 
 interface Props {
   justOnline?: boolean;

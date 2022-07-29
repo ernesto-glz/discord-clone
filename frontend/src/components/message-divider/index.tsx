@@ -4,10 +4,10 @@ import { Divider } from './styles';
 
 type Props = { date: string };
 
-export const MessageDivider: React.FC<Props> = (props) => {
+export const MessageDivider: React.FC<Props> = ({ date }) => {
   return (
     <Divider>
-      <span>{getDate(props.date)}</span>
+      <span>{getDate(date)}</span>
     </Divider>
   );
 };

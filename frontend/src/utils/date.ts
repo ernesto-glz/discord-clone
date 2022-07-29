@@ -52,10 +52,10 @@ export const getTime = (date: string) => {
 };
 
 export const getDate = (dateStr: string) => {
-  const aux = new Date(dateStr);
-  return `${aux.toLocaleString('en-us', {
-    month: 'long'
-  })} ${aux.getDay()}, ${aux.getFullYear()}`;
+  const date = new Date(dateStr);
+  return `
+    ${date.toLocaleDateString('en-us', { month: 'long', day: 'numeric' })}, ${date.getFullYear()}
+  `;
 };
 
 export const isExtraForTime = (prevDate: string, newDate: string) => {
@@ -74,4 +74,9 @@ export const isExtraForTime = (prevDate: string, newDate: string) => {
 export function lessThan(prevDate: Date, newDate: Date, seconds: number) {
   const difference = newDate.getSeconds() - prevDate.getSeconds();
   return difference > seconds || newDate.getMinutes() !== prevDate.getMinutes();
+}
+
+export function isNewDay(prevDate: Date, newDate: Date) {
+  if (prevDate.getMonth() !== newDate.getMonth()) return true;
+  return prevDate.getDay() !== newDate.getDay();
 }

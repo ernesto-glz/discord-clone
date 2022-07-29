@@ -1,10 +1,12 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import striptags from 'striptags';
 import { PulseLoader } from 'react-spinners';
 import { startTyping, stopTyping } from 'src/redux/states/typing';
 import useTypingUsers from 'src/hooks/useTypingUsers';
 import { InputHelper } from './input-helper';
 import { Entity } from '@discord/types';
+import { useAppDispatch } from 'src/redux/hooks';
+import { createMessage } from 'src/redux/states/messages';
 import {
   InputContainer,
   InputWrapper,
@@ -16,13 +18,12 @@ import {
   Wrapper,
   Placeholder,
   UploadPlusIcon
-} from '../channel-data/styles';
-import { useAppDispatch } from 'src/redux/hooks';
-import { createMessage } from 'src/redux/states/messages';
+} from '../channel/channel-panel/styles';
 
 interface Props {
   placeholder: string;
   activeChannel: Entity.Channel;
+  scrollbarRef: React.RefObject<HTMLDivElement>;
 }
 
 export const MessageInput: React.FC<Props> = (props) => {
@@ -61,6 +62,16 @@ export const MessageInput: React.FC<Props> = (props) => {
     if (event.key === 'Enter' && !event.shiftKey) event.preventDefault();
   };
 
+  useEffect(() => {
+    const chatInput = document.querySelector('#messageInput');
+    const resizeObserver = new ResizeObserver(() => {
+      props.scrollbarRef.current!.scroll({ top: props.scrollbarRef.current?.scrollHeight });
+    });
+
+    resizeObserver.observe(chatInput as HTMLDivElement);
+    return () => { resizeObserver.disconnect(); };
+  }, []);
+
   return (
     <MessageBoxContainer>
       <InputContainer>
@@ -70,9 +81,7 @@ export const MessageInput: React.FC<Props> = (props) => {
               <UploadPlusIcon />
             </InputLeftSide>
             <Wrapper>
-              {content.length < 1 && (
-                <Placeholder>{props.placeholder ?? 'Unknown'}</Placeholder>
-              )}
+              {content.length < 1 && <Placeholder>{props.placeholder}</Placeholder>}
               <Input
                 id="messageInput"
                 ref={messageBoxRef}

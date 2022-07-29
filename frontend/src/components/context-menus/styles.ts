@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { ContextMenu, MenuItem } from 'react-contextmenu';
 import { Link45deg } from '@styled-icons/bootstrap';
 
-export const MyCtxMenu = styled(ContextMenu)`
+export const CtxMenu = styled(ContextMenu)`
   z-index: 9;
 `;
 
@@ -66,7 +66,7 @@ export const Separator = styled.div`
   background-color: var(--background-modifier-accent);
 `;
 
-export const MessageLink = styled(Link45deg)`
+export const LinkImage = styled(Link45deg)`
   width: 18px;
   height: 18px;
 `;

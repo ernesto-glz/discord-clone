@@ -23,11 +23,7 @@ export default (store: Store) => (next: any) => async (action: any) => {
     if (callback) await callback(payload);
   } catch (error) {
     const response = (error as any).response;
-    const errorMessage = response?.data?.message ?? (error as Error)?.message ?? 'Unknown Error';
-    
     store.dispatch(actions.restCallFailed({ url, response }));
-    // console.log(errorMessage);
-
     if (errorCallback) errorCallback(error);
   }
 };

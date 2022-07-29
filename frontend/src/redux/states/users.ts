@@ -24,12 +24,12 @@ export const getUserById = (userId: string) => {
   return createSelector(
     (state: Store.AppState) => state.users,
     (users) => users.find((u) => u.id === userId)
-  )
-}
+  );
+};
 
 export const getFriendUsers = () => {
   return createSelector(
     (state: Store.AppState) => state,
     (state) => state.users.filter((u) => state.auth.user!.friendIds.includes(u.id))
-  )
-}
+  );
+};

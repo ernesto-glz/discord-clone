@@ -1,3 +1,4 @@
+import { Entity } from '@discord/types';
 import { AxiosError } from "axios";
 
 interface ErrorObject {
@@ -37,4 +38,13 @@ export function extractErrorMessage(error: AxiosError) {
     return data.message[0];
   
   return data.message;
+}
+
+export function getAvatarUrl(from: Entity.User | Entity.Channel) {
+  const { avatar } = from;
+  return `${process.env.REACT_APP_API_ROOT}/assets/avatars/${avatar ?? 'unknown'}.png`;
+}
+
+export function copyToClipboard(content: string) {
+  navigator.clipboard.writeText(content);
 }

@@ -6,6 +6,7 @@ import { FriendRequest, ItemBody } from '../styles';
 import { FriendItemActions } from './actions';
 import { Entity } from '@discord/types';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
+import { getAvatarUrl } from 'src/utils/utils';
 
 interface Props {
   friend: Entity.User;
@@ -30,7 +31,7 @@ export const FriendItem: React.FC<Props> = ({ friend }) => {
               isGeneric={false}
               displayStatus={true}
               isOnline={isOnline}
-              imageUrl={`${process.env.REACT_APP_API_ROOT}/assets/avatars/${friend.avatar}.png`}
+              imageUrl={getAvatarUrl(friend)}
             />
             <UserData>
               <strong>

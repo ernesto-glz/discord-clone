@@ -12,6 +12,7 @@ import {
   HeadphoneIcon,
   SettingsIcon
 } from './styles';
+import { getAvatarUrl } from 'src/utils/utils';
 
 const UserInfo: React.FC = () => {
   const user = useAppSelector((s) => s.auth.user);
@@ -21,7 +22,7 @@ const UserInfo: React.FC = () => {
     <Container>
       <Profile>
         <UserImage
-          imageUrl={`${process.env.REACT_APP_API_ROOT}/assets/avatars/${user.avatar}.png`}
+          imageUrl={getAvatarUrl(user)}
           isGeneric={false}
           displayStatus={true}
           isOnline={true}

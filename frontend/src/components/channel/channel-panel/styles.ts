@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { PlusCircleFill } from '@styled-icons/bootstrap';
 
 export const Container = styled.main`
-  grid-area: CD;
+  grid-area: CP;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -120,7 +120,7 @@ export const Placeholder = styled.div`
   color: var(--channel-text-area-placeholder);
   user-select: none;
   pointer-events: none;
-  margin-left: 68px;
+  margin-left: 72px;
 `;
 
 export const TypingAnnounce = styled.div`

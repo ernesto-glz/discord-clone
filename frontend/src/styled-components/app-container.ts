@@ -4,7 +4,7 @@ import styled from 'styled-components';
 // SN - Server Name
 // CI - Channel Info
 // CL - Channel List
-// CD - Channel Data
+// CP - Channel Pannel
 // UI - User Info
 // RP - Right Panel
 
@@ -15,13 +15,13 @@ export const AppGridContainer = styled.div`
   grid-template-rows: 46px auto 52px;
   grid-template-areas:
     'SL SN CI'
-    'SL CL CD'
-    'SL UI CD';
+    'SL CL CP'
+    'SL UI CP';
   @media (max-width: 1200px) {
     grid-template-areas:
       'SL SN CI'
-      'SL CL CD'
-      'SL UI CD';
+      'SL CL CP'
+      'SL UI CP';
     grid-template-columns: 71px 240px auto;
   }
 `;
@@ -33,13 +33,13 @@ export const FriendsContainer = styled.div`
   grid-template-rows: 46px auto 52px;
   grid-template-areas: 
     'SL SN CI CI'
-    'SL CL CD RP'
-    'SL UI CD RP';
+    'SL CL CP RP'
+    'SL UI CP RP';
   @media (max-width: 1200px) {
     grid-template-areas:
       'SL SN CI'
-      'SL CL CD'
-      'SL UI CD';
+      'SL CL CP'
+      'SL UI CP';
     grid-template-columns: 71px 240px auto;
   }
 `;
