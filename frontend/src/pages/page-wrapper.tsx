@@ -13,7 +13,7 @@ export type PageWrapperProps = React.DetailedHTMLProps<
 const PageWrapper: React.FC<PageWrapperProps> = (props) => {
   useEffect(() => {
     document.title = props.pageTitle ?? 'Discord Clone';
-  }, []);
+  }, [props.pageTitle]);
 
   return (
     <motion.div>
