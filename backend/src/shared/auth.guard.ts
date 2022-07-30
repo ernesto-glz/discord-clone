@@ -23,23 +23,23 @@ export class AuthGuard implements CanActivate {
 
   private async validateToken(request: CustomRequest): Promise<boolean> {
     const authHeader = request.headers.authorization;
-    if (!authHeader) throw new UnauthorizedException();
+    if (!authHeader) throw new UnauthorizedException(['Unauthorized']);
     const token = authHeader.split(' ')[1];
   
     try {
       this.decoded = verify(token, process.env.JWT_SECRET_KEY);
     } catch (error: any) {
       if (error?.name === 'JsonWebTokenError')
-        throw new UnauthorizedException('Invalid token');
+        throw new UnauthorizedException(['Invalid token']);
       if (error?.name === 'TokenExpiredError') 
-        throw new UnauthorizedException('Token expired');
+        throw new UnauthorizedException(['Token expired']);
 
-      throw new UnauthorizedException();
+      throw new UnauthorizedException(['Unauthorized']);
     }
   
     const user = await User.findById(this.decoded.id);
     if (!user)
-      throw new UnauthorizedException('User not found');
+      throw new UnauthorizedException(['User not found']);
   
     request.user = user.toObject();
     return true;

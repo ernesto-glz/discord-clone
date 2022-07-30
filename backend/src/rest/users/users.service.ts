@@ -33,7 +33,7 @@ export class UsersService {
     const self = await User.findById(selfUser.id).select('+password');
 
     if (!(await this.authService.checkCredentials(password, self.password)))
-      throw new UnauthorizedException('Password does not match.');
+      throw new UnauthorizedException(['Password does not match.']);
 
     self.locked ??= true;
     self.username = 'Deleted User';

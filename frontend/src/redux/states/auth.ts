@@ -65,7 +65,7 @@ export const loginUser = (credentials: Credentials) => (dispatch: Dispatch<any>)
       if (!response?.data) return;
       
       const errors = response.data?.errors;
-      events.emit('LOGIN_FAILED', errors ?? [{ msg: response.data }]);
+      events.emit('LOGIN_FAILED', errors ?? [{ message: response.data }]);
     }
   }));
 }
@@ -84,7 +84,7 @@ export const registerUser = (payload: any) => (dispatch: Dispatch<any>) => {
       if (!response?.data) return;
       
       const errors = response.data?.errors;
-      events.emit('REGISTER_FAILED', errors ?? [{ msg: response.data }]);
+      events.emit('REGISTER_FAILED', errors ?? [{ message: response.data }]);
     }
   }));
 }
@@ -109,8 +109,11 @@ export const changeUsername = (payload: any) => (dispatch: Dispatch) => {
       events.emit('CHANGE_USERNAME_SUCCEEDED');
     },
     errorCallback: (error) => {
-      const errorMessage = extractErrorMessage(error);
-      events.emit('CHANGE_USERNAME_FAILED', errorMessage ?? 'Unknown Error');
+      const response = error.response;
+      if (!response?.data) return;
+      
+      const errors = response.data?.errors;
+      events.emit('CHANGE_USERNAME_FAILED', errors ?? [{ message: response.data }]);
     }
   }));
 };
@@ -124,8 +127,11 @@ export const changePassword = (payload: any) => (dispatch: Dispatch) => {
       events.emit('CHANGE_PASSWORD_SUCCEEDED');
     },
     errorCallback: (error) => {
-      const errorMessage = extractErrorMessage(error);
-      events.emit('CHANGE_PASSWORD_FAILED', errorMessage ?? 'Unknown Error');
+      const response = error.response;
+      if (!response?.data) return;
+      
+      const errors = response.data?.errors;
+      events.emit('CHANGE_PASSWORD_FAILED', errors ?? [{ message: response.data }]);
     }
   }));
 };
@@ -143,8 +149,11 @@ export const deleteAccount = (payload: any) => (dispatch: Dispatch<any>) => {
       dispatch(logoutUser());
     },
     errorCallback: (error) => {
-      const errorMessage = extractErrorMessage(error);
-      events.emit('ACCOUNT_DELETE_FAILED', errorMessage ?? 'Unknown Error')
+      const response = error.response;
+      if (!response?.data) return;
+      
+      const errors = response.data?.errors;
+      events.emit('ACCOUNT_DELETE_FAILED', errors ?? [{ message: response.data }])
     }
   }));
 };

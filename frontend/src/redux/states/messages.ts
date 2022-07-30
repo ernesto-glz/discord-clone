@@ -1,5 +1,4 @@
 import { createSelector, createSlice, Dispatch } from '@reduxjs/toolkit';
-import { CreateMessage } from 'src/models/message.model';
 import { notInArray } from 'src/utils/utils';
 import { Store } from 'types/store';
 import { actions as api } from './api';
@@ -41,7 +40,7 @@ export const fetchMessages = ({ channelId, back = 25 }: FetchMessages) => async 
   }))
 };
 
-export const createMessage = (data: CreateMessage) => (dispatch: Dispatch) => {
+export const createMessage = (data: any) => (dispatch: Dispatch) => {
   dispatch(api.wsCallBegan({
     event: 'MESSAGE_CREATE',
     data

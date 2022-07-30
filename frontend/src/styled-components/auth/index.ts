@@ -2,7 +2,7 @@ import { InputTitleProps } from 'src/pages/auth/login-page';
 import { GeneralFormProps } from 'src/pages/auth/register-page';
 import styled from 'styled-components';
 
-export const GeneralContainer = styled.div`
+export const Background = styled.div`
   width: 100%;
   height: 100vh;
   box-sizing: border-box;
@@ -66,13 +66,17 @@ export const FormElement = styled.div`
   margin-bottom: 20px;
 `;
 
+export const FormDivider = styled.div`
+  margin-bottom: 20px;
+`;
+
 export const InputTitle = styled.h5<InputTitleProps>`
   color: ${(props) =>
     props.error ? 'var(--text-danger)' : 'var(--header-secondary)'};
   font-size: 12px;
   line-height: 16px;
   margin-bottom: 10px;
-  > span {
+  > .title {
     text-transform: uppercase;
   }
 `;

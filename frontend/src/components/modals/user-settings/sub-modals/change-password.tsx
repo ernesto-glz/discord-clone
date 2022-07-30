@@ -13,14 +13,15 @@ import {
   Header
 } from './styles';
 import { actions as ui } from 'src/redux/states/ui';
-import { Input } from 'src/styled-components/input.styled';
 import { useInputValue } from 'src/hooks/useInputValue';
 import { changePassword } from 'src/redux/states/auth';
-import { ErrorMessage } from 'src/styled-components/login-and-register';
+import { ErrorMessage } from 'src/styled-components/auth';
 import { PulseLoader } from 'react-spinners';
+import { Input } from 'src/components/input/input';
+import { ErrorObject, findError } from 'src/utils/errors';
 
 export const ChangePassword: React.FC = () => {
-  const [error, setError] = useState<string | null>(null);
+  const [errors, setErrors] = useState<ErrorObject[]>([]);
   const [loading, setLoading] = useState(false);
   const user = useAppSelector((s) => s.auth.user);
   const currentPassword = useInputValue();
@@ -29,7 +30,7 @@ export const ChangePassword: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const handleClose = () => {
-    setError(null);
+    setErrors([]);
     setLoading(false);
     currentPassword.reset();
     newPassword.reset();
@@ -39,7 +40,7 @@ export const ChangePassword: React.FC = () => {
 
   const done = () => {
     if (newPassword.value !== newPasswordConfirm.value)
-      return setError('Password do not match!');
+      return setErrors([{ code: 'PWD_NOT_MATCH', message: 'Password do not match!' }]);
 
     setLoading(true);
     dispatch(changePassword({
@@ -50,9 +51,9 @@ export const ChangePassword: React.FC = () => {
 
   useEffect(() => {
     const onSuccess = () => handleClose();
-    const onFailure = (message: string) => {
+    const onFailure = (errors: ErrorObject[]) => {
       setLoading(false);
-      setError(message);
+      setErrors(errors);
     };
 
     events.on('CHANGE_PASSWORD_SUCCEEDED', onSuccess);
@@ -65,11 +66,10 @@ export const ChangePassword: React.FC = () => {
   }, []);
 
   const onKeyUp = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !loading)
-      done();
-  }
+    if (e.key === 'Enter' && !loading) done();
+  };
 
-  return (user) ? (
+  return user ? (
     <Modal background={true} name="ChangePassword" animated>
       <EditModalBase>
         <Header>
@@ -82,18 +82,24 @@ export const ChangePassword: React.FC = () => {
           </CloseButton>
         </Header>
         <Body>
-          <BodyItem errorOcurred={error}>
-            <h5>Current password{error && <ErrorMessage>- {error}</ErrorMessage>}</h5>
-            <Input onKeyUp={onKeyUp} {...currentPassword} type="password" />
-          </BodyItem>
-          <BodyItem errorOcurred={error}>
-            <h5>New password{error && <ErrorMessage>- {error}</ErrorMessage>}</h5>
-            <Input onKeyUp={onKeyUp} {...newPassword} type="password" />
-          </BodyItem>
-          <BodyItem errorOcurred={error}>
-            <h5>Confirm new password{error && <ErrorMessage>- {error}</ErrorMessage>}</h5>
-            <Input onKeyUp={onKeyUp} {...newPasswordConfirm} type="password" />
-          </BodyItem>
+          <Input
+            onKeyUp={onKeyUp}
+            error={findError(errors, 'CURRENT_PWD')}
+            handler={currentPassword}
+            title="Current password"
+          />
+          <Input
+            onKeyUp={onKeyUp}
+            error={findError(errors, 'NEW_PWD')}
+            handler={newPassword}
+            title="New password"
+          />
+          <Input
+            onKeyUp={onKeyUp}
+            error={findError(errors, 'CONFIRM_PWD')}
+            handler={newPasswordConfirm}
+            title="Confirm new password"
+          />
         </Body>
         <Footer>
           <CancelButton className="button" onClick={handleClose}>

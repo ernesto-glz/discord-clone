@@ -1,30 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import Modal from '../../modal';
+import { actions as ui } from 'src/redux/states/ui';
+import { changeUsername } from 'src/redux/states/auth';
+import { useInputValue } from 'src/hooks/useInputValue';
+import { PulseLoader } from 'react-spinners';
+import events from 'src/services/event-service';
+import { ErrorObject, findError } from 'src/utils/errors';
+import { Input } from 'src/components/input/input';
 import {
   CloseIcon,
   EditModalBase,
   Header,
   CloseButton,
   Body,
-  BodyItem,
   Footer,
   DoneButton,
   CancelButton
 } from './styles';
-import { actions as ui } from 'src/redux/states/ui';
-import { changeUsername } from 'src/redux/states/auth';
-import { Input } from 'src/styled-components/input.styled';
-import { useInputValue } from 'src/hooks/useInputValue';
-import { PulseLoader } from 'react-spinners';
-import events from 'src/services/event-service';
-import { ErrorMessage } from 'src/styled-components/login-and-register';
 
-export type ErrorProps = { errorOcurred: null | string };
+export type ErrorProps = { errorOcurred: boolean };
 
 export const EditUsername: React.FC = () => {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [errors, setErrors] = useState<ErrorObject[]>([]);
   const user = useAppSelector((s) => s.auth.user);
   const newUsername = useInputValue(user?.username);
   const currentPassword = useInputValue();
@@ -32,7 +31,7 @@ export const EditUsername: React.FC = () => {
 
   const handleClose = () => {
     setLoading(false);
-    setError(null);
+    setErrors([]);
     currentPassword.reset();
     dispatch(ui.closedModal('EditUsername'));
   };
@@ -51,15 +50,11 @@ export const EditUsername: React.FC = () => {
     }));
   };
 
-  const onKeyUp = (event: React.KeyboardEvent) => {
-    if (event.key === 'Enter' && !loading) done();
-  };
-
   useEffect(() => {
     const onSuccess = () => handleClose();
-    const onFailure = (message: string) => {
+    const onFailure = (errors: ErrorObject[]) => {
       setLoading(false);
-      setError(message);
+      setErrors(errors);
     };
 
     events.on('CHANGE_USERNAME_SUCCEEDED', onSuccess);
@@ -71,7 +66,11 @@ export const EditUsername: React.FC = () => {
     };
   }, []);
 
-  return (user) ? (
+  const onKeyUp = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter' && !loading) done();
+  };
+
+  return user ? (
     <Modal background={true} name="EditUsername" animated>
       <EditModalBase>
         <Header>
@@ -84,16 +83,19 @@ export const EditUsername: React.FC = () => {
           </CloseButton>
         </Header>
         <Body>
-          <BodyItem errorOcurred={error}>
-            <h5>Username{error && <ErrorMessage>- {error}</ErrorMessage>}</h5>
-            <Input {...newUsername} />
-          </BodyItem>
-          <BodyItem errorOcurred={error}>
-            <h5>
-              Current Password{error && <ErrorMessage>- {error}</ErrorMessage>}
-            </h5>
-            <Input {...currentPassword} onKeyUp={onKeyUp} type="password" />
-          </BodyItem>
+          <Input
+            onKeyUp={onKeyUp}
+            error={findError(errors, 'USERNAME')}
+            handler={newUsername}
+            title="Username"
+          />
+          <Input
+            onKeyUp={onKeyUp}
+            error={findError(errors, 'PASSWORD')}
+            handler={currentPassword}
+            title="Current password"
+            type='password'
+          />
         </Body>
         <Footer>
           <CancelButton className="button" onClick={handleClose}>

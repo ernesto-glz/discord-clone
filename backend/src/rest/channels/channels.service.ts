@@ -40,7 +40,7 @@ export class ChannelsService {
     });
     
     if (!channel)
-      throw new BadRequestException('No messages found');
+      throw new BadRequestException(['No messages found']);
     
     const channelMsgs = await Message.find({ channelId });
     const batchSize = 30;

@@ -17,14 +17,14 @@ export default class Users extends DBWrapper<string, UserDocument> {
     const usersLength = await User.countDocuments({ username });
     const discriminator = usersLength + 1;
     if (discriminator > 9999)
-      throw new BadRequestException('Too many users have this username');
+      throw new BadRequestException(['Too many users have this username, please try another']);
     return discriminator;
   }
 
   async getSelf(userId: string) {
     const selfUser = await User.findById(userId);
     if (!selfUser)
-      throw new BadRequestException('User not found');
+      throw new BadRequestException(['User not found']);
     return selfUser;
   }
 
@@ -32,7 +32,7 @@ export default class Users extends DBWrapper<string, UserDocument> {
     const user = await User.findById(userId);
     
     if (!user)
-      throw new BadRequestException('User not found');
+      throw new BadRequestException(['User not found']);
     
     user.lastReadMessageIds ??= {};
     user.lastReadMessageIds[message.channelId] = message.id;

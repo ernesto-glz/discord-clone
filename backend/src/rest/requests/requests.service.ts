@@ -16,15 +16,15 @@ export class RequestsService {
 
     if (!userFound || userFound.id === self.id) 
       throw new BadRequestException(
-        `Hm, didn't work. Double check that the capitalization, spelling, any spaces, and numbers are correct.`
+        [`Hm, didn't work. Double check that the capitalization, spelling, any spaces, and numbers are correct.`]
       )
 
     const alreadyRequest = await app.requests.checkExistence(self.id, userFound.id);
 
     if (self.friendIds.includes(userFound.id))
-      throw new BadRequestException(`You're already friends with that user!`);
+      throw new BadRequestException([`You're already friends with that user!`]);
     else if (alreadyRequest) 
-      throw new BadRequestException('Friend request already exists');
+      throw new BadRequestException(['Friend request already exists']);
 
     const created = await Request.create({
       _id: generateSnowflake(),
@@ -42,7 +42,7 @@ export class RequestsService {
     }).populate(['from', 'to']);
     
     if (!request) 
-      throw new BadRequestException('Request not found');
+      throw new BadRequestException(['Request not found']);
 
     await Request.findByIdAndDelete(requestId);
     return request;
@@ -52,7 +52,7 @@ export class RequestsService {
     const request = await Request.findOne({ _id: requestId, to: selfId });
 
     if (!request)
-      throw new BadRequestException('Request not found');
+      throw new BadRequestException(['Request not found']);
 
     await Request.findByIdAndDelete(requestId);
 

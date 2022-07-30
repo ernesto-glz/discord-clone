@@ -3,22 +3,15 @@ import { useInputValue } from 'src/hooks/useInputValue';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import { deleteAccount } from 'src/redux/states/auth';
 import { actions as ui } from 'src/redux/states/ui';
-import { Input } from 'src/styled-components/input.styled';
-import { ErrorMessage } from 'src/styled-components/login-and-register';
 import Modal from '../../modal';
 import { DisableButton } from '../styles';
-import {
-  Body,
-  BodyItem,
-  CancelButton,
-  EditModalBase,
-  Footer,
-  Header
-} from './styles';
+import { Body, CancelButton, EditModalBase, Footer, Header } from './styles';
 import events from 'src/services/event-service';
+import { ErrorObject, findError } from 'src/utils/errors';
+import { Input } from 'src/components/input/input';
 
 export const DeleteAccount: React.FC = () => {
-  const [error, setError] = useState<string | null>(null);
+  const [errors, setErrors] = useState<ErrorObject[]>([]);
   const password = useInputValue();
   const user = useAppSelector((s) => s.auth.user);
   const dispatch = useAppDispatch();
@@ -30,8 +23,8 @@ export const DeleteAccount: React.FC = () => {
   const accept = () => dispatch(deleteAccount({ password: password.value }));
 
   useEffect(() => {
-    const onFail = (message: string) => {
-      setError(message);
+    const onFail = (errs: ErrorObject[]) => {
+      setErrors(errs);
     };
     events.on('ACCOUNT_DELETE_FAILED', onFail);
 
@@ -40,7 +33,11 @@ export const DeleteAccount: React.FC = () => {
     };
   }, []);
 
-  return user ? (
+  const onKeyUp = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') accept();
+  };
+
+  return (user) ? (
     <Modal name="DeleteAccount" background={true} animated>
       <EditModalBase>
         <Header>
@@ -52,10 +49,13 @@ export const DeleteAccount: React.FC = () => {
           </div>
         </Header>
         <Body>
-          <BodyItem errorOcurred={error}>
-            <h5>Password{error && <ErrorMessage>- {error}</ErrorMessage>}</h5>
-            <Input {...password} type="password" />
-          </BodyItem>
+          <Input
+            onKeyUp={onKeyUp}
+            error={findError(errors, 'PASSWORD')}
+            handler={password}
+            title="Password"
+            type="password"
+          />
         </Body>
         <Footer>
           <CancelButton onClick={handleClose} className="button">

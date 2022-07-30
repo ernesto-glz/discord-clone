@@ -28,9 +28,9 @@ export const UserData = styled.div`
   display: flex;
   flex-direction: column;
   > strong {
-    font-size: 16px;
+    font-size: 14px;
     color: var(--header-primary);
-    font-weight: 300;
+    font-weight: 600;
     overflow: hidden;
     text-overflow: ellipsis;
     display: block;

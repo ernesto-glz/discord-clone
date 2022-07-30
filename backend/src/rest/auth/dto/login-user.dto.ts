@@ -3,7 +3,7 @@ import { patterns } from 'src/shared/patterns';
 
 export class LoginUserDto {
   @IsString()
-  @Matches(patterns.email, { message: 'Email is not in a valid format' })
+  @Matches(patterns.email, { message: 'Not a well formed email address.' })
   email: string;
 
   @IsString()

@@ -19,9 +19,9 @@ export class AuthService {
     const userFound = await User.findOne({ email }).select('+password');
 
     if (!userFound || !(await this.checkCredentials(password, userFound.password)))
-      throw new UnauthorizedException('Email or password is invalid');
+      throw new UnauthorizedException(['Email or password is invalid']);
     else if (userFound.locked) 
-      throw new BadRequestException('This account is locked!');
+      throw new BadRequestException(['This account is locked!']);
 
     this.createToken(app.users.secure(userFound), 200, response);
   }
@@ -31,7 +31,7 @@ export class AuthService {
     const userExists = await User.findOne({ email });
 
     if (userExists) 
-      throw new ConflictException('Email already in use!');
+      throw new ConflictException(['Email is already registered']);
 
     const hashedPassword = await this.hashPassword(password);
     const discriminator = await app.users.calcDiscriminator(username);
@@ -52,7 +52,7 @@ export class AuthService {
     const self = await User.findById(selfUser.id).select('+password');
 
     if (!(await this.checkCredentials(password, self.password)))
-      throw new UnauthorizedException('Password does not match.');
+      throw new UnauthorizedException(['Password does not match.']);
 
     const userExists = await User.findOne({
       username: newUsername,
@@ -82,7 +82,7 @@ export class AuthService {
     const self = await User.findById(selfUser.id).select('+password');
 
     if (!(await this.checkCredentials(currentPassword, self.password)))
-      throw new UnauthorizedException('Password does not match.');
+      throw new UnauthorizedException(['Password does not match.']);
       
     const hashedPassword = await this.hashPassword(newPassword);
     await User.updateOne({ _id: selfUser.id }, { password: hashedPassword });

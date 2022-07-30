@@ -13,7 +13,7 @@ import { playSound } from 'src/utils/sounds';
 import { WS, Entity } from '@discord/types';
 import { useAppDispatch } from 'src/redux/hooks';
 import { AuthErrors } from 'src/config/constants';
-import { store } from 'src/redux/configure-store';
+import { store } from 'src/redux/store';
 import { ws } from 'src/ws/websocket';
 
 export const WSListeners: React.FC = () => {
