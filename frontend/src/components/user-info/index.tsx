@@ -23,7 +23,6 @@ const UserInfo: React.FC = () => {
       <Profile>
         <UserImage
           imageUrl={getAvatarUrl(user)}
-          isGeneric={false}
           displayStatus={true}
           isOnline={true}
         />

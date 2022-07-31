@@ -15,7 +15,6 @@ import {
 import { actions as ui } from 'src/redux/states/ui';
 import { useInputValue } from 'src/hooks/useInputValue';
 import { changePassword } from 'src/redux/states/auth';
-import { ErrorMessage } from 'src/styled-components/auth';
 import { PulseLoader } from 'react-spinners';
 import { Input } from 'src/components/input/input';
 import { ErrorObject, findError } from 'src/utils/errors';

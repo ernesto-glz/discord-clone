@@ -2,7 +2,6 @@ import React, { FormEvent, useEffect, useState } from 'react';
 import { useInputValue } from 'src/hooks/useInputValue';
 import { useAppDispatch } from 'src/redux/hooks';
 import { createRequest } from 'src/redux/states/requests';
-import events from 'src/services/event-service';
 import {
   Container,
   FlexColumnContainer,

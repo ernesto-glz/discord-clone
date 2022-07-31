@@ -1,10 +1,9 @@
 import { createSlice, Dispatch } from '@reduxjs/toolkit';
-import { WS, Entity, UserTypes } from '@discord/types';
+import { WS, UserTypes } from '@discord/types';
 import { Store } from 'types/store';
 import { actions as api } from './api';
 import { resetWS } from 'src/ws/websocket';
-import events from 'src/services/event-service';
-import { extractErrorMessage, token } from 'src/utils/utils';
+import { token } from 'src/utils/utils';
 
 export interface AuthState {
   user?: UserTypes.Self;
@@ -32,7 +31,7 @@ export const slice = createSlice({
       auth.attemptedLogin = false;
     },
     updatedUser: (auth, { payload }) => {
-      Object.assign(auth.user, payload);
+      Object.assign(auth.user as unknown as object, payload as unknown as object);
     }
   }
 });

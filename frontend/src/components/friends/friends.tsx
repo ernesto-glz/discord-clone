@@ -48,14 +48,14 @@ export const MyFriends: React.FC<Props> = (props) => {
     <React.Fragment>
       {props.justOnline ? (
         <Container>
-          <WampusImage src="/assets/wampus/wampus_sleeping.svg" alt="No Online" />
+          <WampusImage src='/assets/wampus/wampus_sleeping.svg' alt="No Online" />
           <WampusMessage>
             No one&apos;s around to play with Wumpus.
           </WampusMessage>
         </Container>
       ) : (
         <Container>
-          <WampusImage src="/assets/wampus/wampus_king.svg" alt="No Friends" />
+          <WampusImage src='/assets/wampus/wampus_king.svg' alt="No Friends" />
           <WampusMessage>No friends, only Wampus.</WampusMessage>
         </Container>
       )}

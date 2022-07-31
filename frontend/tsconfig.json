@@ -1,26 +1,28 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
+    "baseUrl": ".",
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "paths": {
+      "src/*": ["src/*"],
+      "assets/*": ["res/assets/styles/*"]
+    },
+    "allowJs": false,
     "skipLibCheck": true,
-    "esModuleInterop": true,
+    "esModuleInterop": false,
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
-    "moduleResolution": "node",
+    "module": "ESNext",
+    "moduleResolution": "Node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "baseUrl": ".",
-    "outDir": "dist",
-    "paths": { "src/*": ["src/*"] },
-    "typeRoots": ["./types"],
-    "strictPropertyInitialization": false
+    "noImplicitAny": false,
+    "typeRoots": ["./node_modules/@types/", "./types"]
   },
-  "exclude": ["node_modules"],
-  "include": ["src", "**/*.ts"]
+  "include": ["src", "types"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

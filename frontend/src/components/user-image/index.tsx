@@ -1,6 +1,4 @@
 import React from 'react';
-import { UserRaisingHand } from 'src/components/images/tiny-icons/user-raising-hand';
-import { NitroImage } from '../images/tiny-icons/nitro-image';
 import {
   AvatarImage,
   AvatarImageContainer,
@@ -10,11 +8,9 @@ import {
 
 interface Props {
   imageUrl?: string;
-  isGeneric: boolean;
   displayStatus?: boolean;
   isOnline?: boolean;
   customSize?: number;
-  genericImage?: 'FRIEND' | 'NITRO';
 }
 
 export interface AvatarImageProps {
@@ -28,20 +24,10 @@ export interface UserStatusProps {
 
 export const UserImage: React.FC<Props> = ({
   imageUrl,
-  isGeneric = false,
   displayStatus,
   isOnline = false,
-  customSize,
-  genericImage
+  customSize
 }) => {
-  if (isGeneric && genericImage === 'FRIEND') {
-    return <UserRaisingHand width="24" height="32" fill="currentColor" />;
-  }
-
-  if (isGeneric && genericImage === 'NITRO') {
-    return <NitroImage width="24" height="32" fill="currentColor" />;
-  }
-
   return (
     <AvatarImageContainer>
       <AvatarImage

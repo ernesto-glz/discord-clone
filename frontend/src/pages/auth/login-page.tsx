@@ -6,7 +6,6 @@ import { QRCode } from 'src/components/auth/qr-code';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import { loginUser } from 'src/redux/states/auth';
 import PageWrapper from '../page-wrapper';
-import events from 'src/services/event-service';
 import {
   Background,
   ForgotButton,

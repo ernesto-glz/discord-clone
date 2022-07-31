@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { UserImage } from 'src/components/user-image';
 import MessageMenu from 'src/components/context-menus/message-menu/message-menu';
 import UserMenu from 'src/components/context-menus/user-menu/user-menu';
@@ -21,6 +21,7 @@ import {
   isNewDay
 } from 'src/utils/date';
 import { MenuTrigger } from 'src/components/context-menus/menu-trigger';
+import { getChannelMessages } from 'src/redux/states/messages';
 
 export interface Props {
   message: Entity.Message;
@@ -32,7 +33,10 @@ export interface ContentProps {
 }
 
 const Message: React.FC<Props> = ({ message, wrappedRef }) => {
-  const messages = useAppSelector((s) => s.messages.list);
+  const channel = useAppSelector((s) => s.ui.activeChannel)!;
+  const msgCount = useAppSelector((s) => s.messages.total[channel.id]);
+  const messages = useAppSelector(getChannelMessages(channel.id));
+  const loadedAllMessages = useMemo(() => messages.length >= msgCount, [messages]);
   const author = useAppSelector(getUserById(message.sender)) as Entity.User;
   const [focused, setFocused] = useState(false);
 
@@ -54,7 +58,8 @@ const Message: React.FC<Props> = ({ message, wrappedRef }) => {
   const isActuallyNewDay = () => {
     const index = messages.findIndex((m) => m.id === message.id);
     const prev = messages[index - 1];
-    if (!prev) return true;
+    if (!prev && loadedAllMessages) return true;
+    else if (!prev && !loadedAllMessages) return false;
     return isNewDay(new Date(prev.createdAt), new Date(message.createdAt));
   };
 
@@ -78,7 +83,6 @@ const Message: React.FC<Props> = ({ message, wrappedRef }) => {
             <MenuTrigger id={author.id}>
               <UserImage
                 imageUrl={getAvatarUrl(author)}
-                isGeneric={false}
                 customSize={40}
               />
               <UserMenu user={author} />

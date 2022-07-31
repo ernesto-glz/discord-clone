@@ -1,0 +1,52 @@
+{
+  "appId": "Discord Clone",
+  "productName": "Discord-Clone",
+  "copyright": "Copyright © 2022 ${author}",
+  "asar": true,
+  "directories": {
+    "output": "release/${version}",
+    "buildResources": "electron/resources"
+  },
+  "extraResources": [
+    {
+      "from": "./res/assets",
+      "to": "assets"
+    },
+    {
+      "from": "./res/fonts",
+      "to": "fonts"
+    },
+    {
+      "from": "./res/scripts",
+      "to": "scripts"
+    },
+    {
+      "from": "./res/*.css",
+      "to": "."
+    }
+  ],
+  "files": ["dist"],
+  "win": {
+    "target": [
+      {
+        "target": "nsis",
+        "arch": ["x64"]
+      }
+    ],
+    "artifactName": "${productName}-Windows-${version}-Setup.${ext}"
+  },
+  "nsis": {
+    "oneClick": false,
+    "perMachine": false,
+    "allowToChangeInstallationDirectory": true,
+    "deleteAppDataOnUninstall": false
+  },
+  "mac": {
+    "target": ["dmg"],
+    "artifactName": "${productName}-Mac-${version}-Installer.${ext}"
+  },
+  "linux": {
+    "target": ["AppImage"],
+    "artifactName": "${productName}-Linux-${version}.${ext}"
+  }
+}

@@ -1,5 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { NitroImage } from "src/components/images/tiny-icons/nitro-image";
+import { UserRaisingHand } from "src/components/images/tiny-icons/user-raising-hand";
 import { UserImage } from "src/components/user-image";
 import { useAppSelector } from "src/redux/hooks";
 import { Container, CloseIcon } from './styles';
@@ -20,7 +22,12 @@ export const GenericButton: React.FC<Props> = ({ genericImage, displayName }) =>
   return (
     <Container className={isActive ? 'active' : ''}>
       <div onClick={onClick}>
-        <UserImage isGeneric={true} genericImage={genericImage} />
+        {genericImage === 'FRIEND' && (
+          <UserRaisingHand width="24" height="32" fill="currentColor" />
+        )}
+        {genericImage === 'NITRO' && (
+          <NitroImage width="24" height="32" fill="currentColor" />
+        )}
         <span>{displayName}</span>
       </div>
 

@@ -28,7 +28,6 @@ export const FriendItem: React.FC<Props> = ({ friend }) => {
         <div>
           <Profile>
             <UserImage
-              isGeneric={false}
               displayStatus={true}
               isOnline={isOnline}
               imageUrl={getAvatarUrl(friend)}

@@ -118,6 +118,7 @@ export const MenuButton = styled.button<MenuButtonProps>`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  ${(props) => props.isActive && 'cursor: default;'}
   &:hover {
     background-color: var(--background-modifier-hover);
   }

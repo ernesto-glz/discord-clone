@@ -26,10 +26,7 @@ export const RequestItem: React.FC<Props> = ({ request, type }) => {
       <ItemBody>
         <div>
           <Profile>
-            <UserImage
-              imageUrl={getAvatarUrl(requestUser)}
-              isGeneric={false}
-            />
+            <UserImage imageUrl={getAvatarUrl(requestUser)} />
             <UserData>
               <strong>
                 {requestUser.username}

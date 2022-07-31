@@ -1,8 +1,11 @@
-import axios from 'axios';
-import { token } from 'src/utils/utils';
+import axios from "axios";
+import { token } from "src/utils/utils";
+
+const API_ROOT = import.meta.env.VITE_API_ROOT;
+const API_VERSION = import.meta.env.VITE_API_VERSION;
 
 const client = axios.create({
-  baseURL: `${process.env.REACT_APP_API_ROOT}/v${process.env.REACT_APP_API_VERSION}`
+  baseURL: `${API_ROOT}/v${API_VERSION}`,
 });
 
 client.interceptors.request.use((config) => {

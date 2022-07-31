@@ -4,7 +4,6 @@ import { useInputValue } from 'src/hooks/useInputValue';
 import { Button } from 'src/styled-components/button.styled';
 import PageWrapper from '../page-wrapper';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
-import events from 'src/services/event-service';
 import { findError } from 'src/utils/errors';
 import { PulseLoader } from 'react-spinners';
 import {

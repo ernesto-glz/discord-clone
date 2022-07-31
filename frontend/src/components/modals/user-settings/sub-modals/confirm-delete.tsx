@@ -6,7 +6,6 @@ import { actions as ui } from 'src/redux/states/ui';
 import Modal from '../../modal';
 import { DisableButton } from '../styles';
 import { Body, CancelButton, EditModalBase, Footer, Header } from './styles';
-import events from 'src/services/event-service';
 import { ErrorObject, findError } from 'src/utils/errors';
 import { Input } from 'src/components/input/input';
 

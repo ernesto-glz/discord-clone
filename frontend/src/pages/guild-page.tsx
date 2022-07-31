@@ -23,7 +23,7 @@ export const GuildPage: React.FC = () => {
   }, [channelId])
 
   return (ui.activeGuild) ? (
-    <PageWrapper pageTitle={ui.activeChannel?.name ?? 'Discord Clone'}>
+    <PageWrapper pageTitle={`${ui.activeChannel?.name} - Discord Clone` ?? 'Discord Clone'}>
       <AppGridContainer>
         <UserInfo />
         <ServerList />

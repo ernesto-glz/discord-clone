@@ -2,26 +2,26 @@
   font-family: 'Whitney';
   font-style: normal;
   font-weight: bold;
-  src: url(/public/fonts/Whitney-Semibold.ttf);
+  src: url(fonts/Whitney-Semibold.ttf);
 }
 
 @font-face {
   font-family: 'Whitney';
   font-style: normal;
   font-weight: normal;
-  src: url(/public/fonts/Whitney-Medium.woff);
+  src: url(fonts/Whitney-Medium.woff);
 }
 
 @font-face {
   font-family: 'Whitney';
   font-style: normal;
   font-weight: 300;
-  src: url(/public/fonts/Whitney-Book.otf);
+  src: url(fonts/Whitney-Book.otf);
 }
 
 @font-face {
   font-family: 'Whitney';
   font-style: italic;
   font-weight: normal;
-  src: url(/public/fonts/Whitney-Italic.woff);
+  src: url(fonts/Whitney-Italic.woff);
 }

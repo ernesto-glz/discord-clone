@@ -3,7 +3,6 @@ import { RequestTypes, WS } from '@discord/types';
 import { notInArray } from 'src/utils/utils';
 import { Store } from 'types/store';
 import { actions as api } from './api';
-import events from 'src/services/event-service';
 
 export const slice = createSlice({
   name: 'requests',

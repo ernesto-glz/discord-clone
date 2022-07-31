@@ -1,6 +1,3 @@
-import { EventEmitter } from 'events';
+import { EventEmitter } from "events";
 
-const events = new EventEmitter();
-global['events'] = events;
-
-export default events;
+global["events"] = new EventEmitter();

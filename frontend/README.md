@@ -1,46 +1,75 @@
-# Getting Started with Create React App
+# electron-vite-react
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[![awesome-vite](https://awesome.re/mentioned-badge.svg)](https://github.com/vitejs/awesome-vite)
+![GitHub stars](https://img.shields.io/github/stars/caoxiemeihao/vite-react-electron?color=fa6470&style=flat)
+![GitHub issues](https://img.shields.io/github/issues/caoxiemeihao/vite-react-electron?color=d8b22d&style=flat)
+![GitHub license](https://img.shields.io/github/license/caoxiemeihao/vite-react-electron?style=flat)
+[![Required Node.JS >= v14.17.0](https://img.shields.io/static/v1?label=node&message=%3E=14.17.0&logo=node.js&color=3f893e&style=flat)](https://nodejs.org/about/releases)
 
-## Available Scripts
+English | [简体中文](README.zh-CN.md)
 
-In the project directory, you can run:
+## 👀 Overview
 
-### `yarn start`
+📦 Ready out of the box  
+🎯 Based on the official [react-ts](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) template, project structure will be familiar to you  
+🌱 Easily extendable and customizable  
+💪 Supports Node.js API in the renderer process  
+🔩 Supports C/C++ native addons  
+🐞 Debugger configuration included  
+🖥 Easy to implement multiple windows  
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 🛫 Quick start
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```sh
+npm create electron-vite
+```
 
-### `yarn test`
+![electron-vite-react.gif](https://github.com/electron-vite/electron-vite-react/blob/main/public/electron-vite-react.gif?raw=true)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🐞 Debug
 
-### `yarn build`
+![electron-vite-react-debug.gif](https://github.com/electron-vite/electron-vite-react/blob/main/public/electron-vite-react-debug.gif?raw=true)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 📂 Directory structure
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Familiar React application structure, just with `electron` folder on the top :wink:  
+*Files in this folder will be separated from your React application and built into `dist/electron`*  
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```tree
+├── electron                  Electron-related code
+│   ├── main                  Main-process source code
+│   ├── preload               Preload-scripts source code
+│   └── resources             Resources for the production build
+│       ├── icon.icns             Icon for the application on macOS
+│       ├── icon.ico              Icon for the application
+│       ├── installerIcon.ico     Icon for the application installer
+│       └── uninstallerIcon.ico   Icon for the application uninstaller
+│
+├── release                   Generated after production build, contains executables
+│   └── {version}
+│       ├── {os}-unpacked     Contains unpacked application executable
+│       └── Setup.{ext}       Installer for the application
+│
+├── public                    Static assets
+└── src                       Renderer source code, your React application
+```
 
-### `yarn eject`
+## 🚨 Be aware
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+This template integrates Node.js API to the renderer process by default. If you want to follow **Electron Security Concerns** you might want to disable this feature. You will have to expose needed API by yourself.  
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+To get started, remove the option as shown below. This will [modify the Vite configuration and disable this feature](https://github.com/electron-vite/vite-plugin-electron/tree/main/packages/electron-renderer#config-presets-opinionated).
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```diff
+# vite.config.ts
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+electron({
+- renderer: {}
+})
+```
 
-## Learn More
+## ❔ FAQ
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- [dependencies vs devDependencies](https://github.com/electron-vite/vite-plugin-electron/tree/main/packages/electron-renderer#dependencies-vs-devdependencies)
+- [Using C/C++ native addons in renderer](https://github.com/electron-vite/vite-plugin-electron/tree/main/packages/electron-renderer#load-nodejs-cc-native-modules)
+- [Node.js ESM packages](https://github.com/electron-vite/vite-plugin-electron/tree/main/packages/electron-renderer#nodejs-esm-packages) (e.g. `execa` `node-fetch`)

@@ -37,7 +37,6 @@ const ChannelButton: React.FC<Props> = ({ channel }) => {
     >
       <div onClick={goToChannel}>
         <UserImage
-          isGeneric={false}
           imageUrl={getAvatarUrl(channel)}
           isOnline={isOnline}
           displayStatus={true}

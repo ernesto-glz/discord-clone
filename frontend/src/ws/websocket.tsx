@@ -1,7 +1,9 @@
 import { io } from 'socket.io-client';
 
+const WS_SERVER_ROOT = import.meta.env.VITE_WS_ROOT;
+
 export const ws = io(
-  `${process.env.REACT_APP_WS_ROOT ?? 'http://localhost:4001'}`,
+  `${WS_SERVER_ROOT ?? 'http://localhost:4001'}`,
   {
     secure: true,
     path: '/websocket',
