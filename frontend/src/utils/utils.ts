@@ -31,3 +31,11 @@ export function getAvatarUrl(from: Entity.User | Entity.Channel) {
 export function copyToClipboard(content: string) {
   navigator.clipboard.writeText(content);
 }
+
+export function moveToStart(elements: string[], elementId: string) {
+  const elms = [...elements];
+  const index = elms.indexOf(elementId);
+  elms.splice(index, 1);
+  elms.unshift(...[elementId]);
+  return elms;
+}

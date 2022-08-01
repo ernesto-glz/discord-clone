@@ -3,12 +3,6 @@ import { notInArray } from 'src/utils/utils';
 import { Store } from 'types/store';
 import { actions as api } from './api';
 
-export interface DisplayChannel {
-  userId: string;
-}
-
-export type UpdateType = 'VISIBLE' | 'HIDDEN';
-
 export const slice = createSlice({
   name: 'channels',
   initialState: [] as Store.AppState['channels'],
@@ -42,9 +36,15 @@ export const displayChannel = (userId: string) => (dispatch: Dispatch) => {
   }))
 };
 
-export const getDMChannels = (state: Store.AppState) => {
-  return state.channels.filter((channel) => channel.type === 'DM');
-};
+export const getDMChannels = () => {
+  return createSelector(
+    (state: Store.AppState) => state,
+    (state) => {
+      const { channels, auth } = state;
+      return auth.user!.activeDMCS.map((channelId) => channels.find((c) => c.id === channelId)!);
+    }
+  );
+}
 
 export const getChannel = (channelId: string) =>
   createSelector(

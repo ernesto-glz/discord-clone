@@ -1,16 +1,14 @@
-import React from 'react';
-import { Entity } from '@discord/types';
-import ChannelButton from '../channel-button';
-import { Container, Category, AddCategoryIcon } from './styles';
-import { useAppSelector } from 'src/redux/hooks';
-import { GenericButton } from '../channel-button/generic-button';
+import React from "react";
+import { Entity } from "@discord/types";
+import ChannelButton from "../channel-button";
+import { Container, Category, AddCategoryIcon } from "./styles";
+import { useAppSelector } from "src/redux/hooks";
+import { GenericButton } from "../channel-button/generic-button";
+import { getDMChannels } from "src/redux/states/channels";
+import { motion, AnimatePresence } from "framer-motion";
 
 const ChannelList: React.FC = () => {
-  const selfUser = useAppSelector((s) => s.auth.user)!;
-  const channels = useAppSelector((s) => s.channels.filter((c) => {
-      return c.type === 'DM' && selfUser.activeDMCS.includes(c.id);
-    })
-  );
+  const channels = useAppSelector(getDMChannels());
 
   return (
     <Container>
@@ -23,8 +21,8 @@ const ChannelList: React.FC = () => {
       </Category>
 
       {channels.length > 0 &&
-        channels.map((c: Entity.Channel, i: number) => (
-          <ChannelButton channel={c} key={i} />
+        channels.map((channel: Entity.Channel) => (
+          <ChannelButton channel={channel} key={channel.id} />
         ))}
     </Container>
   );

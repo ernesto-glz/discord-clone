@@ -15,5 +15,13 @@ export function transformUser(doc, user) {
 }
 
 export function delay(time: number) {
-  return new Promise(resolve => setTimeout(resolve, time));
+  return new Promise((resolve) => setTimeout(resolve, time));
+}
+
+export function moveToStart(elements: string[], elementId: string) {
+  const elms = [...elements];
+  const index = elms.indexOf(elementId);
+  elms.splice(index, 1);
+  elms.unshift(...[elementId]);
+  return elms;
 }

@@ -71,9 +71,8 @@ export const HeaderContainer = styled.div<AddInputProps>`
   border-radius: 8px;
   border: 1px solid;
   border-color: ${(props) => {
-    if (props.state.type === 'Success') {
+    if (props.state.type === 'Success')
       return 'hsl(139, calc(var(--saturation-factor, 1) * 47.3%), 43.9%)';
-    }
     if (props.state.type === 'Error') return 'red';
     if (props.focus) return 'var(--text-link)';
     return 'var(--text-input-border)';
@@ -223,12 +222,4 @@ export const MessageIcon = styled(Message)`
 export const DotsIcon = styled(DotsVerticalRounded)`
   width: 20px;
   color: var(--header-secondary);
-`;
-
-export const LoaderContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center; ;
 `;

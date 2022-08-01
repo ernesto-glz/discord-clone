@@ -15,6 +15,7 @@ import { useAppDispatch } from 'src/redux/hooks';
 import { AuthErrors } from 'src/config/constants';
 import { store } from 'src/redux/store';
 import { ws } from 'src/ws/websocket';
+import { moveToStart } from 'src/utils/utils';
 
 export const WSListeners: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -58,9 +59,10 @@ export const WSListeners: React.FC = () => {
       const { channelId, sender } = message;
       const channel = state().channels.find((c) => c.id === channelId);
       const isDisplayedChannel = activeDMCS.includes(channelId);
+      const DMS = !activeDMCS.includes(channelId) ? [...activeDMCS, channelId] : [...activeDMCS];
       
       if (channel!.type === 'DM' && sender !== selfId && !isDisplayedChannel) {
-        dispatch(auth.updatedUser({ activeDMCS: [...activeDMCS, channelId] }));
+        dispatch(auth.updatedUser({ activeDMCS: DMS }));
       }
 
       if (!activeChannel 
@@ -69,6 +71,7 @@ export const WSListeners: React.FC = () => {
         playSound('NEW_MESSAGE');
 
       dispatch(messages.created(message));
+      dispatch(auth.updatedUser({ activeDMCS: moveToStart(DMS, channel!.id) }))
     });
     ws.on('CHANNEL_DISPLAY', ({ channelId }: WS.Args.ChannelUpdate) => {
       const { activeDMCS } = state().auth.user!;

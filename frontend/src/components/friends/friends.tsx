@@ -17,25 +17,22 @@ interface Props {
   justOnline?: boolean;
 }
 
-export const MyFriends: React.FC<Props> = (props) => {
+export const MyFriends: React.FC<Props> = ({ justOnline }) => {
   const friends = useAppSelector(getFriendUsers());
   const onlineFriends = friends.filter((f) => f.status === 'ONLINE');
-  const users = props.justOnline ? onlineFriends : friends;
+  const users = justOnline ? onlineFriends : friends;
 
   if (users.length) {
     return (
       <FlexColumnContainer>
         <ListHeader>
           <h2>
-            {props.justOnline ? 'ONLINE' : 'ALL FRIENDS'} - {users.length}
+            {justOnline ? 'ONLINE' : 'ALL FRIENDS'} - {users.length}
           </h2>
         </ListHeader>
-        <ListBody>
+        <ListBody className='scrollerBase scroller'>
           <AnimatePresence>
-            <motion.div
-              layout="size"
-              transition={{ duration: 0.1, type: 'tween' }}
-            >
+            <motion.div layout="size" transition={{ duration: 0.1 }}>
               {users.map((user) => <FriendItem key={user.id} friend={user} /> )}
             </motion.div>
           </AnimatePresence>
@@ -46,7 +43,7 @@ export const MyFriends: React.FC<Props> = (props) => {
 
   return (
     <React.Fragment>
-      {props.justOnline ? (
+      {justOnline ? (
         <Container>
           <WampusImage src='/assets/wampus/wampus_sleeping.svg' alt="No Online" />
           <WampusMessage>
