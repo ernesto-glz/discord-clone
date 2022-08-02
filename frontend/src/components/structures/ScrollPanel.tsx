@@ -11,11 +11,6 @@ export interface Props {
    */
   stickyBottom?: boolean;
 
-  /* startAtBottom: if set to true, the view is assumed to start
-   * scrolled to the bottom.
-   */
-  startAtBottom?: boolean;
-
   /* className: classnames to add to the top-level div
    */
   className?: string;
@@ -43,22 +38,32 @@ export interface Props {
 
 export const ScrollPanel: React.FC<Props> = ({
   stickyBottom = true,
-  startAtBottom = true,
   onScroll = () => {},
   wrappedRef,
   firstMsgRef,
   loaderRef,
   children
 }) => {
+  const [stuckAtBottom, setStuckAtBottom] = useState(false);
   const [isFilling, setIsFilling] = useState(false);
   const itemList = useRef<HTMLOListElement>(null);
   const channel = useAppSelector((s) => s.ui.activeChannel)!;
   const messages = useAppSelector(getChannelMessages(channel.id));
 
+  const isAtBottom = () => {
+    const sn = wrappedRef.current!;
+    return sn.scrollHeight - (sn.scrollTop + sn.clientHeight) <= 1;
+  }
+
   const handleScroll = async (ev: React.UIEvent<HTMLDivElement>) => {
     const loader = loaderRef.current;
+    
+    if (isAtBottom() && stickyBottom && !stuckAtBottom) setStuckAtBottom(true);
+    else if (!isAtBottom() && stuckAtBottom) setStuckAtBottom(false);
+
     if (!loader || isFilling || wrappedRef.current!.scrollTop > loader.scrollHeight) 
       return;
+
     setIsFilling(true);
     onScroll(ev);
   };
@@ -74,9 +79,21 @@ export const ScrollPanel: React.FC<Props> = ({
   }, [messages[0]]);
 
   useEffect(() => {
-    if (startAtBottom || stickyBottom)
-      scrollToBottom();
+    if (!stuckAtBottom && isAtBottom()) setStuckAtBottom(true);
+    if (stickyBottom) scrollToBottom();
   }, [messages[messages.length - 1], channel.id]);
+
+  useEffect(() => {
+    events.emit('UPDATE_STUCK_STATE', stuckAtBottom);
+
+    const resizeNotifier = new ResizeObserver(() => {
+      if (!stuckAtBottom || !stickyBottom) return;
+      scrollToBottom();
+    });
+
+    resizeNotifier.observe(wrappedRef.current!);
+    return () => { resizeNotifier.disconnect(); }
+  }, [stuckAtBottom]);
 
   return (
     <MessagesWrapper>

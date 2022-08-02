@@ -19,6 +19,7 @@ import {
   Placeholder,
   UploadPlusIcon
 } from '../channel/channel-panel/styles';
+import { useScrollbarState } from 'src/hooks/useScrollbarState';
 
 interface Props {
   placeholder: string;
@@ -31,6 +32,7 @@ export const MessageInput: React.FC<Props> = (props) => {
   const messageBoxRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
   const { typingUsers } = useTypingUsers();
+  const { stuckAtBottom } = useScrollbarState();
 
   const onKeyUp = async (event: React.KeyboardEvent<HTMLDivElement>) => {
     const text = event.currentTarget!.innerText.trim();
@@ -63,14 +65,14 @@ export const MessageInput: React.FC<Props> = (props) => {
   };
 
   useEffect(() => {
-    const chatInput = document.querySelector('#messageInput');
     const resizeObserver = new ResizeObserver(() => {
+      if (!stuckAtBottom) return;
       props.scrollbarRef.current!.scroll({ top: props.scrollbarRef.current?.scrollHeight });
     });
 
-    resizeObserver.observe(chatInput as HTMLDivElement);
+    resizeObserver.observe(messageBoxRef.current!);
     return () => { resizeObserver.disconnect(); };
-  }, []);
+  }, [stuckAtBottom]);
 
   return (
     <MessageBoxContainer>

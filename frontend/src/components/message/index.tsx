@@ -80,7 +80,7 @@ const Message: React.FC<Props> = ({ message, wrappedRef }) => {
               </p>
             </React.Fragment>
           ) : (
-            <MenuTrigger id={author.id}>
+            <MenuTrigger holdToDisplay={-10} id={author.id}>
               <UserImage
                 imageUrl={getAvatarUrl(author)}
                 customSize={40}

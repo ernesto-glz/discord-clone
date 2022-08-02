@@ -1,5 +1,3 @@
-export const toTimestamp = (isoStr: string) => new Date(isoStr).getTime();
-
 export const isYesterday = (date: Date) => {
   const yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
@@ -35,21 +33,16 @@ export const formatAMPM = (date: Date) => {
 export const dateFormatted = (date: string) => {
   const actual = new Date(date);
 
-  if (isToday(actual)) {
+  if (isToday(actual))
     return `Today at ${formatAMPM(actual)}`;
-  }
 
-  if (isYesterday(actual)) {
+  if (isYesterday(actual))
     return `Yesterday at ${formatAMPM(actual)}`;
-  }
 
   return actual.toDateString();
 };
 
-export const getTime = (date: string) => {
-  const actual = new Date(date);
-  return formatAMPM(actual);
-};
+export const getTime = (date: string) => formatAMPM(new Date(date));
 
 export const getDate = (dateStr: string) => {
   const date = new Date(dateStr);

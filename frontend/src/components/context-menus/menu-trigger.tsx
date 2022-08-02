@@ -1,20 +1,26 @@
-import { ContextMenuTrigger } from 'react-contextmenu';
+import { ContextMenuTrigger } from "react-contextmenu";
 
 interface TriggerProps {
   id: string;
   children: React.ReactNode;
-  mouseButton?: 'right' | 'left';
+  mouseButton?: "right" | "left";
+  holdToDisplay?: number;
 }
 
-export const MenuTrigger: React.FC<TriggerProps> = (props) => {
+export const MenuTrigger: React.FC<TriggerProps> = ({
+  id,
+  mouseButton,
+  children,
+  holdToDisplay,
+}) => {
   return (
     /* @ts-expect-error */
     <ContextMenuTrigger
-      mouseButton={props.mouseButton === 'left' ? 0 : 2}
-      holdToDisplay={-1}
-      id={props.id}
+      mouseButton={mouseButton === "left" ? 0 : 2}
+      holdToDisplay={holdToDisplay}
+      id={id}
     >
-      {props.children}
+      {children}
     </ContextMenuTrigger>
   );
 };

@@ -2,7 +2,6 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { NitroImage } from "src/components/images/tiny-icons/nitro-image";
 import { UserRaisingHand } from "src/components/images/tiny-icons/user-raising-hand";
-import { UserImage } from "src/components/user-image";
 import { useAppSelector } from "src/redux/hooks";
 import { Container, CloseIcon } from './styles';
 

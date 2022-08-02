@@ -35,11 +35,10 @@ const ChannelPanel: React.FC = () => {
   return (
     <Container>
       <ScrollPanel
-        firstMsgRef={firstMessageRef}
+        stickyBottom
         wrappedRef={scrollbarRef}
         loaderRef={loaderRef}
-        startAtBottom
-        stickyBottom
+        firstMsgRef={firstMessageRef}
         onScroll={onScroll}
       >
         {loadedAllMessages && (
