@@ -1,6 +1,3 @@
-import { styleContent } from "./res/styles";
-import { DiscordTips } from "./res/tips";
-
 function domReady(
   condition: DocumentReadyState[] = ["complete", "interactive"]
 ) {
@@ -33,33 +30,33 @@ const safeDOM = {
 function useLoading() {
   const oStyle = document.createElement("style");
   const oDiv = document.createElement("div");
-  const script = document.createElement("script");
-  const randomIndex = Math.floor(Math.random() * DiscordTips.length);
 
-  script.src = "scipts/trigger-video.js";
-  oStyle.id = "app-loading-style";
-  oStyle.innerHTML = styleContent;
+  oStyle.innerHTML = `
+    .preload {
+      width: 100vw;
+      height: 100vh;
+      background-color: #2f3136;
+      z-index: 3000;
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+    }
+  `;
+
   oDiv.innerHTML = `
-    <div class="background-spinner">
-      <video id="vid" class="loading-spinner" autoplay="autoplay" muted loop>
-        <source src="/assets/videos/loading-spinner.webm" />
-        <source src="/assets/videos/loading-spinner.mp4" type="video/mp4" />
-      </video>
-    <h4 class="title">Did you know</h4>
-      <p class="tip">${DiscordTips[randomIndex]}</p>
-    </div>
+    <div class="preload" />
   `;
 
   return {
     appendLoading() {
       safeDOM.append(document.head, oStyle);
       safeDOM.append(document.body, oDiv);
-      safeDOM.append(document.head, script);
     },
     removeLoading() {
       safeDOM.remove(document.head, oStyle);
       safeDOM.remove(document.body, oDiv);
-      safeDOM.remove(document.head, script);
     },
   };
 }

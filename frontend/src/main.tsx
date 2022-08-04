@@ -5,6 +5,9 @@ import { Provider } from "react-redux";
 import GlobalStyles from "./styled-components/GlobalStyles";
 import { store } from "./redux/store";
 import "./services/event-service";
+import { buildAssetsRoot } from "./services/url-service";
+
+buildAssetsRoot();
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

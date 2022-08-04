@@ -30,7 +30,7 @@ export const PendingRequests: React.FC = () => {
 
   return (
     <Container>
-      <WampusImage src='/assets/wampus/wampus_only.svg' alt="add friend" />
+      <WampusImage src={`${ASSETS_PATH}/wampus/wampus_only.svg`} alt="add friend" />
       <WampusMessage>
         There are no pending friend requests. Here&apos;s Wampus for now.
       </WampusMessage>

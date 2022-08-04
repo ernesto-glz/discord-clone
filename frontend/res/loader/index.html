@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="main.css" />
+    <title>Loading Window</title>
+  </head>
+  <body>
+    <div class="LoaderWrapper">
+      <video class="loading-spinner" autoplay="autoplay" muted loop>
+        <source src="../assets/videos/loading-spinner.webm" />
+        <source src="../assets/videos/loading-spinner.mp4" type="video/mp4" />
+      </video>
+      <div id="messages">Checking for Updates!</div>
+      <div class="progress" id="myProgressBar">
+        <div id="progress-template" class="progress-template d-none">
+          <div class="progress-fill"></div>
+          <p>Downloading Update!</p>
+          <p id="speed"></p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

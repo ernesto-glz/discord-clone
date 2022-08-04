@@ -5,7 +5,7 @@ export default createGlobalStyle`
     --tertiary: rgb(32,34,37);
     --quinary: #393d42;
     --senary: #828386;
-    
+
     --white: #fff;
     --gray: #8a8c90;
     --green: #3ba55d;
@@ -40,7 +40,7 @@ export default createGlobalStyle`
     --text-input-border: rgba(0,0,0,0.3);
     --text-link: hsl(197, calc(var(--saturation-factor, 1) * 100%), 47.8%);
     --text-danger: hsl(359, calc(var(--saturation-factor, 1) * 82%), 73.9%);
-    
+
     --brand-experiment: hsl(235, calc(var(--saturation-factor, 1) * 85.6%), 64.7%);
     --brand-experiment-560: hsl(235, calc(var(--saturation-factor, 1) * 51.4%), 52.4%);
     --info-danger-foreground: hsl(359,calc(var(--saturation-factor, 1)*82.6%), 59.4%);

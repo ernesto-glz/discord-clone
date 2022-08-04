@@ -1,0 +1,70 @@
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Rubik", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+}
+
+.loading-spinner {
+  width: 200px;
+  height: 200px;
+}
+
+.LoaderWrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-items: flex-start;
+  flex-direction: column;
+  box-sizing: border-box;
+  background-color: #2a2d32;
+  padding-top: 25px;
+  -webkit-app-region: drag;
+}
+
+#messages {
+  color: white;
+  text-align: center;
+}
+
+#messages {
+  text-transform: uppercase;
+  font-style: italic;
+  font-size: 15px;
+}
+
+.progress {
+  width: 200px;
+}
+
+p {
+  text-transform: uppercase;
+  font-style: italic;
+  font-size: 15px;
+  text-align: center;
+  color: #fff;
+}
+
+.progress-template {
+  width: 100%;
+  height: 10px;
+  border-radius: 5px;
+  background: #747474a8;
+  transition: width 0.5s;
+}
+
+.progress-fill {
+  height: 10px;
+  width: 0%;
+  border-radius: 5px;
+  background: #009578;
+  transition: width 0.5s;
+}
+
+.d-none {
+  display: none;
+}

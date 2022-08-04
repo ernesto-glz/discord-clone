@@ -18,15 +18,31 @@ export const ROOT_PATH = {
   public: join(__dirname, app.isPackaged ? "../.." : "../../../res"),
 };
 
-let win: BrowserWindow | null = null;
+let mainWindow: BrowserWindow | null = null;
+let loadingWindow: BrowserWindow | null = null;
 // Here, you can also use other preload
 const preload = join(__dirname, "../preload/index.js");
 // 🚧 Use ['ENV_NAME'] avoid vite:define plugin
 const url = `http://${process.env["VITE_DEV_SERVER_HOST"]}:${process.env["VITE_DEV_SERVER_PORT"]}`;
 const indexHtml = join(ROOT_PATH.dist, "index.html");
 
-async function createWindow() {
-  win = new BrowserWindow({
+async function createLoadingWindow() {
+  loadingWindow = new BrowserWindow({
+    title: "Loading Window",
+    minWidth: 300,
+    minHeight: 350,
+    width: 300,
+    height: 350,
+    frame: false,
+  });
+  loadingWindow.setResizable(false);
+  loadingWindow.removeMenu();
+
+  await loadingWindow.loadFile(join(ROOT_PATH.public, "/loader/index.html"));
+}
+
+async function createMainWindow() {
+  mainWindow = new BrowserWindow({
     title: "Main window",
     icon: join(ROOT_PATH.public, "favicon.svg"),
     webPreferences: {
@@ -40,68 +56,51 @@ async function createWindow() {
     minHeight: 500,
   });
 
-  win.removeMenu();
+  mainWindow.removeMenu();
+  loadingWindow.close();
 
   if (app.isPackaged) {
-    win.loadFile(indexHtml);
-    win.webContents.openDevTools({ mode: "undocked" });
+    mainWindow.loadFile(indexHtml);
+    mainWindow.webContents.openDevTools({ mode: "undocked" });
   } else {
-    win.loadURL(url);
-    win.webContents.openDevTools({ mode: "undocked" });
+    mainWindow.loadURL(url);
+    mainWindow.webContents.openDevTools({ mode: "undocked" });
   }
 
   // Test actively push message to the Electron-Renderer
-  win.webContents.on("did-finish-load", () => {
-    win?.webContents.send("main-process-message", new Date().toLocaleString());
+  mainWindow.webContents.on("did-finish-load", () => {
+    mainWindow?.webContents.send(
+      "main-process-message",
+      new Date().toLocaleString()
+    );
   });
 
   // Make all links open with the browser, not with the application
-  win.webContents.setWindowOpenHandler(({ url }) => {
+  mainWindow.webContents.setWindowOpenHandler(({ url }) => {
     if (url.startsWith("https:")) shell.openExternal(url);
     return { action: "deny" };
   });
 }
 
-app.whenReady().then(createWindow);
+app.whenReady().then(() => {
+  createLoadingWindow().then(() => {
+    setTimeout(() => createMainWindow(), 3000);
+  });
+});
 
 app.on("window-all-closed", () => {
-  win = null;
+  mainWindow = null;
   if (process.platform !== "darwin") app.quit();
 });
 
 app.on("second-instance", () => {
-  if (win) {
+  if (mainWindow) {
     // Focus on the main window if the user tried to open another
-    if (win.isMinimized()) win.restore();
-    win.focus();
-  }
-});
-
-app.on("activate", () => {
-  const allWindows = BrowserWindow.getAllWindows();
-  if (allWindows.length) {
-    allWindows[0].focus();
-  } else {
-    createWindow();
+    if (mainWindow.isMinimized()) mainWindow.restore();
+    mainWindow.focus();
   }
 });
 
 ipcMain.handle("open-devtools", () => {
-  win.webContents.openDevTools();
-});
-
-// new window example arg: new windows url
-ipcMain.handle("open-win", (event, arg) => {
-  const childWindow = new BrowserWindow({
-    webPreferences: {
-      preload,
-    },
-  });
-
-  if (app.isPackaged) {
-    childWindow.loadFile(indexHtml, { hash: arg });
-  } else {
-    childWindow.loadURL(`${url}/#${arg}`);
-    // childWindow.webContents.openDevTools({ mode: "undocked", activate: true })
-  }
+  mainWindow.webContents.openDevTools();
 });

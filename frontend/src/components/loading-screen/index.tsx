@@ -10,8 +10,8 @@ export const LoadingScreen: React.FC = () => {
     <PageWrapper>
       <Container isVisible={true}>
         <LoadingSpinner autoPlay muted loop>
-          <source src="/assets/videos/loading-spinner.webm" />
-          <source src="/assets/videos/loading-spinner.mp4" type="video/mp4" />
+          <source src={`${ASSETS_PATH}/videos/loading-spinner.webm`} />
+          <source src={`${ASSETS_PATH}/videos/loading-spinner.mp4`} type="video/mp4" />
         </LoadingSpinner>
         <h4>Did you know</h4>
         <p>{DiscordTips[randomTip]}</p>
