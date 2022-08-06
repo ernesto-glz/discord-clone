@@ -57,8 +57,6 @@ export const Message = styled.div`
   word-break: break-all;
   padding-right: 40px;
   user-select: text;
-  -moz-user-select: text;
-  -webkit-user-select: text;
   &.isExtra {
     margin-left: 57px;
   }

@@ -1,21 +1,13 @@
 import React, { FormEvent, useEffect, useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useInputValue } from 'src/hooks/useInputValue';
-import { Button } from 'src/styled-components/button.styled';
 import PageWrapper from '../page-wrapper';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import { findError } from 'src/utils/errors';
 import { PulseLoader } from 'react-spinners';
-import {
-  Form,
-  FormBody,
-  FormHeader,
-  FormFooter,
-  Background,
-  FormDivider
-} from 'src/styled-components/auth';
 import { registerUser } from 'src/redux/states/auth';
-import { Input } from 'src/components/input/input';
+import { Input } from 'src/components/UI/input/input';
+import { Button } from 'src/components/UI/button/button';
 
 export interface GeneralFormProps {
   isRegisterPage: boolean;
@@ -37,7 +29,7 @@ const RegisterPage: React.FC = () => {
     dispatch(registerUser({
       username: username.value,
       password: password.value,
-      email: email.value
+      email: email.value,
     }));
   };
 
@@ -51,35 +43,35 @@ const RegisterPage: React.FC = () => {
     };
   }, []);
 
-  return (user) ? (
+  return user ? (
     <Navigate to={'/channels/@me'} />
   ) : (
     <PageWrapper pageTitle={'Discord Clone | Register'}>
-      <Background>
-        <Form isRegisterPage onSubmit={onSubmit}>
-          <FormHeader>
+      <section className="auth-bg">
+        <form className="auth-form register" onSubmit={onSubmit}>
+          <div className="form-header">
             <h3>Create an account!</h3>
-          </FormHeader>
-          <FormBody>
+          </div>
+          <div className='form-body'>
             <Input
               error={findError(errors, 'EMAIL')}
               handler={email}
               title="email"
             />
-            <FormDivider />
+            <div className="mb-20" />
             <Input
               error={findError(errors, 'USERNAME')}
               handler={username}
               title="username"
             />
-            <FormDivider />
+            <div className="mb-20" />
             <Input
               error={findError(errors, 'PASSWORD')}
               handler={password}
               title="password"
               type="password"
             />
-            <FormDivider />
+            <div className="mb-20" />
             {loading ? (
               <Button disabled>
                 <PulseLoader color="white" size={7} />
@@ -87,14 +79,14 @@ const RegisterPage: React.FC = () => {
             ) : (
               <Button>Continue</Button>
             )}
-            <FormFooter>
+            <div className="form-footer">
               <button type="button" onClick={() => navigate('/login')}>
                 Already have an account ?
               </button>
-            </FormFooter>
-          </FormBody>
-        </Form>
-      </Background>
+            </div>
+          </div>
+        </form>
+      </section>
     </PageWrapper>
   );
 };

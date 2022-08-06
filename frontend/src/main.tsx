@@ -4,8 +4,9 @@ import App from "./app";
 import { Provider } from "react-redux";
 import GlobalStyles from "./styled-components/GlobalStyles";
 import { store } from "./redux/store";
-import "./services/event-service";
 import { buildAssetsRoot } from "./services/url-service";
+import "./services/event-service";
+import "../res/css/index.scss";
 
 buildAssetsRoot();
 

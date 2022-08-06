@@ -1,14 +1,12 @@
-import { QRBorder, QRContainer, QRDescription, QRTitle } from './styles';
-
 export const QRCode = () => (
-  <QRContainer>
-    <QRBorder>
+  <div className="qr-container">
+    <div className="qr-border">
       <img alt="Qr code" src={`${ASSETS_PATH}/qr_code.png`} loading="lazy" />
-    </QRBorder>
-    <QRTitle>Log in with QR Code</QRTitle>
-    <QRDescription>
+    </div>
+    <h3 className="qr-title">Log in with QR Code</h3>
+    <p className="qr-desc">
       Scan this with the <span>Discord mobile</span> <span>app</span> to log in
       instantly.
-    </QRDescription>
-  </QRContainer>
+    </p>
+  </div>
 );

@@ -1,0 +1,36 @@
+.base-input {
+  border: none;
+  padding: 10px;
+  height: 40px;
+  font-size: 16px;
+  box-sizing: border-box;
+  border-radius: 3px;
+  color: $text-normal;
+  width: 100%;
+  background-color: $background-tertiary;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.input-title {
+  color: $header-secondary;
+  font-size: 12px;
+  line-height: 16px;
+  margin-bottom: 10px;
+
+  &.error {
+    color: $text-danger;
+  }
+
+  > .title {
+    text-transform: uppercase;
+  }
+}
+
+.input-error {
+  color: $text-danger;
+  font-size: 13px;
+  font-weight: 600;
+  font-style: italic;
+  text-transform: none;
+  margin-left: 4px;
+}

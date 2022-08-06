@@ -6,7 +6,7 @@ import { changeUsername } from 'src/redux/states/auth';
 import { useInputValue } from 'src/hooks/useInputValue';
 import { PulseLoader } from 'react-spinners';
 import { ErrorObject, findError } from 'src/utils/errors';
-import { Input } from 'src/components/input/input';
+import { Input } from 'src/components/UI/input/input';
 import {
   CloseIcon,
   EditModalBase,

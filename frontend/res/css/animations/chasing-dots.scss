@@ -13,114 +13,93 @@
   position: absolute;
   top: 0;
   left: 0;
-  -webkit-animation: spinner-wandering-cubes-E8DV84 1.8s ease-in-out infinite;
   animation: spinner-wandering-cubes-E8DV84 1.8s ease-in-out infinite;
-}
-.wanderingCubesItem-3Us-UG:last-child {
-  -webkit-animation-delay: -0.9s;
-  animation-delay: -0.9s;
+
+  &:last-child {
+    animation-delay: -0.9s;
+  }
 }
 
 @-webkit-keyframes spinner-wandering-cubes-E8DV84 {
   25% {
-    -webkit-transform: translateX(22px) rotate(-90deg) scale(0.5);
     transform: translateX(22px) rotate(-90deg) scale(0.5);
   }
   50% {
-    -webkit-transform: translateX(22px) translateY(22px) rotate(-180deg);
     transform: translateX(22px) translateY(22px) rotate(-180deg);
   }
   75% {
-    -webkit-transform: translateX(0) translateY(22px) rotate(-270deg) scale(0.5);
     transform: translateX(0) translateY(22px) rotate(-270deg) scale(0.5);
   }
   to {
-    -webkit-transform: rotate(-1turn);
     transform: rotate(-1turn);
   }
 }
 @keyframes spinner-wandering-cubes-E8DV84 {
   25% {
-    -webkit-transform: translateX(22px) rotate(-90deg) scale(0.5);
     transform: translateX(22px) rotate(-90deg) scale(0.5);
   }
   50% {
-    -webkit-transform: translateX(22px) translateY(22px) rotate(-180deg);
     transform: translateX(22px) translateY(22px) rotate(-180deg);
   }
   75% {
-    -webkit-transform: translateX(0) translateY(22px) rotate(-270deg) scale(0.5);
     transform: translateX(0) translateY(22px) rotate(-270deg) scale(0.5);
   }
   to {
-    -webkit-transform: rotate(-1turn);
     transform: rotate(-1turn);
   }
 }
 @-webkit-keyframes spinner-chasing-dots-rotate-1FNFlo {
   to {
-    -webkit-transform: rotate(1turn);
     transform: rotate(1turn);
   }
 }
 @keyframes spinner-chasing-dots-rotate-1FNFlo {
   to {
-    -webkit-transform: rotate(1turn);
     transform: rotate(1turn);
   }
 }
 @-webkit-keyframes spinner-chasing-dots-bounce-1u5AiH {
   0%,
   to {
-    -webkit-transform: scale(0);
     transform: scale(0);
   }
   50% {
-    -webkit-transform: scale(1);
     transform: scale(1);
   }
 }
 @keyframes spinner-chasing-dots-bounce-1u5AiH {
   0%,
   to {
-    -webkit-transform: scale(0);
     transform: scale(0);
   }
   50% {
-    -webkit-transform: scale(1);
     transform: scale(1);
   }
 }
 @-webkit-keyframes spinner-pulsing-ellipsis-Zju_Ib {
   0% {
-    -webkit-transform: scale(1);
     transform: scale(1);
     opacity: 1;
   }
   50% {
-    -webkit-transform: scale(0.8);
     transform: scale(0.8);
     opacity: 0.3;
   }
   to {
-    -webkit-transform: scale(1);
     transform: scale(1);
     opacity: 1;
   }
 }
 @keyframes spinner-pulsing-ellipsis-Zju_Ib {
   0% {
-    -webkit-transform: scale(1);
     transform: scale(1);
     opacity: 1;
   }
   50% {
-    -webkit-transform: scale(0.8);
     transform: scale(0.8);
     opacity: 0.3;
   }
   to {
-    -webkit-transform: scale(1);
     transform: scale(1);
     opacity: 1;
   }
@@ -149,13 +128,11 @@
 }
 @-webkit-keyframes spinner-spinning-circle-rotate-377lhj {
   to {
-    -webkit-transform: rotate(1turn);
     transform: rotate(1turn);
   }
 }
 @keyframes spinner-spinning-circle-rotate-377lhj {
   to {
-    -webkit-transform: rotate(1turn);
     transform: rotate(1turn);
   }
 }

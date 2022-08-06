@@ -7,7 +7,7 @@ import Modal from '../../modal';
 import { DisableButton } from '../styles';
 import { Body, CancelButton, EditModalBase, Footer, Header } from './styles';
 import { ErrorObject, findError } from 'src/utils/errors';
-import { Input } from 'src/components/input/input';
+import { Input } from 'src/components/UI/input/input';
 
 export const DeleteAccount: React.FC = () => {
   const [errors, setErrors] = useState<ErrorObject[]>([]);

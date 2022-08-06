@@ -1,0 +1,88 @@
+.auth-form {
+  padding: 32px;
+  font-size: 18px;
+  box-sizing: border-box;
+  color: #72767d;
+  background-color: $background-primary;
+  border-radius: 5px;
+
+  &.login {
+    width: 784px;
+    display: flex;
+    justify-content: space-between;
+
+    > .left-side {
+      width: 100%;
+      padding-right: 50px;
+    }
+  }
+
+  &.register {
+    width: 450px;
+  }
+
+  @media (max-width: 830px) {
+    max-width: 480px;
+  }
+}
+
+.form-header {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  > h3 {
+    color: $header-primary;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 30px;
+  }
+  > div {
+    font-size: 16px;
+    line-height: 20px;
+    color: $header-secondary;
+  }
+}
+
+.form-body {
+  width: 100%;
+  text-align: left;
+  margin-top: 20px;
+
+  > .forgot-button {
+    color: $text-link;
+    display: block;
+    padding-left: 0;
+    padding-right: 0;
+    margin-top: 6px;
+    position: relative;
+    box-sizing: border-box;
+    font-size: 14px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+}
+
+.form-footer {
+  margin-top: 6px;
+  > span {
+    font-size: 14px;
+    line-height: 16px;
+  }
+  > button {
+    color: $text-link;
+    display: inline-block;
+    margin-left: 4px;
+    margin-bottom: 0;
+    vertical-align: bottom;
+    padding: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 1px;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

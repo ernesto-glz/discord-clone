@@ -8,7 +8,6 @@ import ServerList from 'src/components/server/server-list';
 import ServerName from 'src/components/server/server-name';
 import UserInfo from 'src/components/user-info';
 import { useAppDispatch } from 'src/redux/hooks';
-import { FriendsContainer } from 'src/styled-components/app-container';
 import PageWrapper from './page-wrapper';
 import { actions as ui } from 'src/redux/states/ui';
 
@@ -25,7 +24,7 @@ const FriendsPage: React.FC = () => {
 
   return (
     <PageWrapper>
-      <FriendsContainer>
+      <section className='friends-section'>
         <UserInfo />
         <ServerName />
         <ServerList />
@@ -33,7 +32,7 @@ const FriendsPage: React.FC = () => {
         <RightPanel />
         <FriendsPageWrapper page={page} />
         <FriendsHeader pageState={[page, setPage]} />
-      </FriendsContainer>
+      </section>
     </PageWrapper>
   );
 };

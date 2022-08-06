@@ -4,7 +4,6 @@ import ServerName from 'src/components/server/server-name';
 import PageWrapper from './page-wrapper';
 import { ChannelHeader } from 'src/components/channel/channel-header/channel-header';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
-import { AppGridContainer } from 'src/styled-components/app-container';
 import ServerList from 'src/components/server/server-list';
 import UserInfo from 'src/components/user-info';
 import ChannelList from 'src/components/channel/channel-list';
@@ -24,14 +23,14 @@ export const GuildPage: React.FC = () => {
 
   return (ui.activeGuild) ? (
     <PageWrapper pageTitle={`${ui.activeChannel?.name} - Discord Clone` ?? 'Discord Clone'}>
-      <AppGridContainer>
+      <section className='app-section'>
         <UserInfo />
         <ServerList />
         <ServerName />
         <ChannelList />
         {ui.activeChannel && <ChannelPanel /> }
         <ChannelHeader />
-      </AppGridContainer>
+      </section>
     </PageWrapper>
   ) : null;
 };

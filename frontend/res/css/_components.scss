@@ -1,0 +1,10 @@
+/* General */
+@import './components/general.scss';
+
+/* UI */
+@import './components/UI/input/base-input.scss';
+@import './components/UI/button/base-button.scss';
+
+/* Auth */
+@import './components/auth/auth.scss';
+@import './components/auth/auth-form.scss';
