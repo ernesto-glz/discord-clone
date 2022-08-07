@@ -1,6 +1,5 @@
 import { Close } from '@styled-icons/material';
 import styled from 'styled-components';
-import { ErrorProps } from './edit-username';
 
 export const EditModalBase = styled.div`
   opacity: 1;
@@ -74,17 +73,6 @@ export const Body = styled.div`
     display: flex;
     flex-direction: column;
     gap: 10px;
-  }
-`;
-
-export const BodyItem = styled.div<ErrorProps>`
-  > h5 {
-    margin-bottom: 8px;
-    color: ${(props) => props.errorOcurred ? 'var(--text-danger)' : 'var(--header-secondary)'};
-    font-weight: 600;
-    text-transform: uppercase;
-    font-size: 12px;
-    line-height: 16px;
   }
 `;
 

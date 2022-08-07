@@ -60,7 +60,6 @@ export const UserSettings: React.FC = () => {
     <Modal
       background={false}
       name="UserSettings"
-      animated
       animationVariant="BigToSmall"
     >
       <SettingsContainer>

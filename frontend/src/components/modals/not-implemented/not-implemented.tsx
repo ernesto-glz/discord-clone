@@ -10,7 +10,7 @@ export const NotImplemented: React.FC = () => {
   const onClick = () => dispatch(ui.closedModal('NotImplemented'));
 
   return (
-    <Modal name="NotImplemented" background={true} animated>
+    <Modal name="NotImplemented" background={true}>
       <Base>
         <Header>
           <div className="title">Sorry!</div>

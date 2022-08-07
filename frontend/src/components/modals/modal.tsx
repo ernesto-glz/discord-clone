@@ -1,11 +1,11 @@
-import React from 'react';
-import ReactModal from 'react-modal';
+import React, { MouseEventHandler, useRef } from 'react';
+import ReactDOM from 'react-dom';
 import { motion } from 'framer-motion';
-import { useAppSelector } from 'src/redux/hooks';
+import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import { Animations } from 'src/config/constants';
+import { actions as ui } from 'src/redux/states/ui';
 
 interface Props {
-  animated?: boolean;
   name: string;
   background?: boolean;
   animationVariant?: keyof typeof Animations;
@@ -13,34 +13,57 @@ interface Props {
 }
 
 const Modal: React.FC<Props> = ({
-  animated,
   name,
   background,
   animationVariant,
-  children
+  children,
 }) => {
-  const isOpen = !!useAppSelector((s) => s.ui.openModals?.find((n) => n === name));
+  const modalRef = useRef<HTMLDivElement>(null);
+  const isOpen = !!useAppSelector((s) =>
+    s.ui.openModals?.find((n) => n === name)
+  );
+  const dispatch = useAppDispatch();
 
-  return (
-    <ReactModal
-      className={background ? 'bg-modal' : 'bg-modal-none'}
-      appElement={document.querySelector('#root') as HTMLDivElement}
-      isOpen={isOpen}
-    >
-      {animated ? (
+  const handleClick: MouseEventHandler<HTMLDivElement> = (ev) => {
+    // Click outside modal
+    if (modalRef.current && !modalRef.current.contains(ev.target as any)) {
+      dispatch(ui.closedModal(name));
+    }
+  };
+
+  if (background) {
+    return isOpen
+      ? ReactDOM.createPortal(
+          <div onMouseUp={handleClick} className="base-modal bg-modal">
+            <motion.div
+              ref={modalRef}
+              initial="initial"
+              animate="visible"
+              exit="exit"
+              variants={Animations[animationVariant ?? 'SmallToBig']}
+            >
+              {children}
+            </motion.div>
+          </div>,
+          document.getElementById('root')!
+        )
+      : null;
+  }
+
+  return isOpen
+    ? ReactDOM.createPortal(
         <motion.div
-          initial="medium"
+          className="base-modal bg-modal-none"
+          initial="initial"
           animate="visible"
-          exit="hidden"
+          exit="exit"
           variants={Animations[animationVariant ?? 'SmallToBig']}
         >
           {children}
-        </motion.div>
-      ) : (
-        <React.Fragment>{children}</React.Fragment>
-      )}
-    </ReactModal>
-  );
+        </motion.div>,
+        document.getElementById('root')!
+      )
+    : null;
 };
 
 export default Modal;

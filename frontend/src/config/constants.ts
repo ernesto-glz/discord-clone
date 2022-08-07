@@ -20,7 +20,7 @@ export const DiscordTips = [
 
 export const Animations = {
   'BigToSmall': {
-    medium: {
+    initial: {
       scale: 1.1
     },
     visible: {
@@ -29,16 +29,16 @@ export const Animations = {
         duration: 0.2
       }
     },
-    hidden: {
+    exit: {
       scale: 2,
       opacity: 0,
       transition: {
-        duration: 4
+        duration: 2
       }
     }
   },
   'SmallToBig': {
-    medium: {
+    initial: {
       scale: 0.75
     },
     visible: {

@@ -16,7 +16,7 @@ export const LogoutConfirm: React.FC = () => {
   };
 
   return (
-    <Modal background={true} name="LogoutConfirm" animated>
+    <Modal background={true} name="LogoutConfirm">
       <Base>
         <Header>
           <div className="title">Log Out</div>

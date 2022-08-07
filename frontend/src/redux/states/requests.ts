@@ -41,13 +41,16 @@ export const createRequest = (payload: any) => (dispatch: Dispatch) => {
       );
     },
     errorCallback: (error) => {
-      const errorMessage = error.response?.data?.message ?? 'Unknown error';
-      events.emit('REQUEST_CREATE_FAILED', errorMessage);
+      const response = error.response;
+      if (!response?.data) return;
+
+      const errors = response.data?.errors;
+      events.emit('REQUEST_CREATE_FAILED', errors[0]?.message ?? response.data);
     }
   }))
 }
 
-export const removeRequest = (requestId: string) => (dispatch: Dispatch, getState: () => Store.AppState) => {
+export const removeRequest = (requestId: string) => (dispatch: Dispatch) => {
   dispatch(api.restCallBegan({
     onSuccess: [],
     url: `/requests/${requestId}`,

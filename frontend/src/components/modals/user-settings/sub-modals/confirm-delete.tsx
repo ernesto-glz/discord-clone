@@ -1,70 +1,46 @@
-import React, { useEffect, useState } from 'react';
-import { useInputValue } from 'src/hooks/useInputValue';
-import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
-import { deleteAccount } from 'src/redux/states/auth';
-import { actions as ui } from 'src/redux/states/ui';
-import Modal from '../../modal';
+import React from 'react';
+import { useAppSelector } from 'src/redux/hooks';
 import { DisableButton } from '../styles';
 import { Body, CancelButton, EditModalBase, Footer, Header } from './styles';
-import { ErrorObject, findError } from 'src/utils/errors';
-import { Input } from 'src/components/UI/input/input';
+import { findError } from 'src/utils/errors';
+import { FormInput } from 'src/components/UI/input/form-input';
+import { useDeleteAccount } from 'src/hooks/user/useDeleteAccount';
+import Modal from '../../modal';
 
 export const DeleteAccount: React.FC = () => {
-  const [errors, setErrors] = useState<ErrorObject[]>([]);
-  const password = useInputValue();
+  const { onSubmit, errors, register, handleClose } = useDeleteAccount();
   const user = useAppSelector((s) => s.auth.user);
-  const dispatch = useAppDispatch();
 
-  const handleClose = () => {
-    dispatch(ui.closedModal('DeleteAccount'));
-  };
-
-  const accept = () => dispatch(deleteAccount({ password: password.value }));
-
-  useEffect(() => {
-    const onFail = (errs: ErrorObject[]) => {
-      setErrors(errs);
-    };
-    events.on('ACCOUNT_DELETE_FAILED', onFail);
-
-    return () => {
-      events.off('ACCOUNT_DELETE_FAILED', onFail);
-    };
-  }, []);
-
-  const onKeyUp = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') accept();
-  };
-
-  return (user) ? (
-    <Modal name="DeleteAccount" background={true} animated>
-      <EditModalBase>
-        <Header>
-          <div className="title">Delete Account</div>
-          <div className="description delete">
-            Are you sure that you want to delete your account? This will
-            immediately log you out of your account and you will not be able to
-            log in again.
-          </div>
-        </Header>
-        <Body>
-          <Input
-            onKeyUp={onKeyUp}
-            error={findError(errors, 'PASSWORD')}
-            handler={password}
-            title="Password"
-            type="password"
-          />
-        </Body>
-        <Footer>
-          <CancelButton onClick={handleClose} className="button">
-            Cancel
-          </CancelButton>
-          <DisableButton onClick={accept} className="button">
-            Delete
-          </DisableButton>
-        </Footer>
-      </EditModalBase>
+  return user ? (
+    <Modal name="DeleteAccount" background={true}>
+      <form onSubmit={onSubmit}>
+        <EditModalBase>
+          <Header>
+            <div className="title">Delete Account</div>
+            <div className="description delete">
+              Are you sure that you want to delete your account? This will
+              immediately log you out of your account and you will not be able
+              to log in again.
+            </div>
+          </Header>
+          <Body>
+            <FormInput
+              error={findError(errors, 'PASSWORD')}
+              {...register('password')}
+              title="Password"
+              type="password"
+            />
+          </Body>
+          <Footer>
+            <CancelButton type='button' onClick={handleClose} className="button">
+              Cancel
+            </CancelButton>
+            <DisableButton type="submit" className="button">
+              Delete
+            </DisableButton>
+          </Footer>
+        </EditModalBase>
+      </form>
     </Modal>
   ) : null;
 };

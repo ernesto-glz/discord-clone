@@ -18,6 +18,7 @@ body,
   background-color: $background-primary;
   text-rendering: optimizeLegibility;
   forced-color-adjust: none;
+  overflow: hidden;
 }
 
 *,
@@ -97,6 +98,18 @@ code {
     background-color: transparent !important;
     box-sizing: border-box;
   }
+}
+
+.base-modal {
+  position: absolute;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: transparent;
+  box-sizing: border-box;
+  overflow: hidden !important;
 }
 
 .bg-modal {

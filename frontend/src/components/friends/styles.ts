@@ -15,13 +15,16 @@ export const Container = styled.div`
 `;
 
 export const WampusImage = styled.img`
-  width: 25rem;
+  width: 24rem;
   height: 15rem;
+  user-select: none;
+  user-drag: none;
 `;
 
 export const WampusMessage = styled.div`
-  font-size: 18px;
-  color: var(--gray);
+  font-size: 16px;
+  color: var(--text-muted);
+  font-weight: 300;
 `;
 
 export const FlexColumnContainer = styled.div`
@@ -38,7 +41,6 @@ export const FlexColumnContainer = styled.div`
 export const FriendHeader = styled.header`
   border-bottom: 1px solid var(--background-modifier-accent);
   width: 100%;
-  height: 150px;
   padding: 20px 30px;
   > h2 {
     font-size: 16px;
@@ -49,8 +51,8 @@ export const FriendHeader = styled.header`
   > form > div {
     font-size: 14px;
     line-height: 20px;
-    font-weight: 400;
-    color: var(--gray);
+    font-weight: 300;
+    color: var(--header-secondary);
   }
   > form > .Error {
     color: var(--text-danger);
@@ -67,6 +69,7 @@ export const HeaderContainer = styled.div<AddInputProps>`
   width: 100%;
   margin-top: 16px;
   padding: 0 12px;
+  padding-left: 2px;
   position: relative;
   border-radius: 8px;
   border: 1px solid;
@@ -83,7 +86,7 @@ export const HeaderContainer = styled.div<AddInputProps>`
     margin-right: 16px;
     padding: 4px 0;
     z-index: 1;
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 500;
     letter-spacing: 0.04em;
     line-height: 20px;
@@ -222,4 +225,11 @@ export const MessageIcon = styled(Message)`
 export const DotsIcon = styled(DotsVerticalRounded)`
   width: 20px;
   color: var(--header-secondary);
+`;
+
+export const AddFriendResponse = styled.div`
+  &.displayed {
+    margin-top: 10px;
+    margin-bottom: -10px;
+  }
 `;

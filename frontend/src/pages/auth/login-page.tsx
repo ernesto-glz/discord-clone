@@ -1,48 +1,23 @@
-import { useInputValue } from 'src/hooks/useInputValue';
+import React from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
-import React, { FormEvent, useEffect, useState } from 'react';
 import { QRCode } from 'src/components/auth/qr-code';
-import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
-import { loginUser } from 'src/redux/states/auth';
-import PageWrapper from '../page-wrapper';
+import { useAppSelector } from 'src/redux/hooks';
 import { findError } from 'src/utils/errors';
 import { PulseLoader } from 'react-spinners';
-import { Input } from 'src/components/UI/input/input';
+import { FormInput } from 'src/components/UI/input/form-input';
 import { Button } from 'src/components/UI/button/button';
+import { useLogin } from 'src/hooks/auth/useLogin';
+import PageWrapper from '../page-wrapper';
 
-export interface InputTitleProps {
-  error: null | undefined | string;
+export interface LoginValues {
+  email: string;
+  password: string;
 }
 
 const LoginPage: React.FC = () => {
+  const { onSubmit, errors, loading, register } = useLogin();
   const user = useAppSelector((s) => s.auth.user);
-  const [errors, setErrors] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const email = useInputValue();
-  const password = useInputValue();
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
-  const onSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    dispatch(loginUser({ email: email.value, password: password.value }));
-  };
-
-  useEffect(() => {
-    if (user) return navigate('/channels/@me');
-  }, [user]);
-
-  useEffect(() => {
-    events.on('LOGIN_FAILED', (e: any) => {
-      setErrors(e);
-      setLoading(false);
-    });
-
-    return () => {
-      events.off('LOGIN_FAILED', () => {});
-    };
-  }, []);
 
   return user ? (
     <Navigate to={'/channels/@me'} />
@@ -56,15 +31,15 @@ const LoginPage: React.FC = () => {
               <div>We&apos;re so excited to see you again!</div>
             </div>
             <div className="form-body">
-              <Input
+              <FormInput
                 error={findError(errors, 'EMAIL')}
-                handler={email}
+                {...register('email')}
                 title="Email"
               />
               <div className="mb-20" />
-              <Input
+              <FormInput
                 error={findError(errors, 'PASSWORD')}
-                handler={password}
+                {...register('password')}
                 title="password"
                 type="password"
               />
