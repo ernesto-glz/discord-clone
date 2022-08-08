@@ -8,3 +8,14 @@
 /* Auth */
 @import './components/auth/auth.scss';
 @import './components/auth/auth-form.scss';
+
+/* Structures */
+@import './components/structures/HeaderPanel.scss';
+
+/* Views */
+@import './components/views/LoadingScreen.scss';
+@import './components/views/friends/FriendsPanel.scss';
+@import './components/views/friends/HeaderButton.scss';
+@import './components/views/friends/AddFriend.scss';
+@import './components/views/friends/FriendsList.scss';
+@import './components/views/friends/ListItemActions.scss';

@@ -16,7 +16,7 @@ export default defineConfig({
   publicDir: join(__dirname, "res"),
   resolve: {
     alias: {
-      'assets': join(__dirname, "res/assets"),
+      'assets': join(__dirname, "res"),
       'src': join(__dirname, "src"),
     },
   },

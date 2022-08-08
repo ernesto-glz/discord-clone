@@ -1,0 +1,46 @@
+.header-button {
+  background-color: transparent;
+  color: hsl(0, calc($saturation-factor * 0%), 100%);
+  min-width: 40px;
+  border-radius: 4px;
+  margin: 0 8px;
+  padding: 2px 8px;
+  font-size: 16px;
+  line-height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $background-modifier-hover;
+  }
+
+  &[data-active='true'] {
+    background-color: $background-modifier-selected;
+    cursor: default;
+  }
+}
+
+.add-friend-button {
+  background-color: hsl(139, calc($saturation-factor * 47.3%), 43.9%);
+  color: hsl(0, calc($saturation-factor * 0%), 100%);
+  min-width: 40px;
+  border-radius: 4px;
+  margin: 0 8px;
+  padding: 2px 8px;
+  font-size: 16px;
+  line-height: 20px;
+  cursor: pointer;
+
+  &[data-active='true'] {
+    background-color: transparent;
+    color: hsl(139, calc($saturation-factor * 47.3%), 43.9%);
+  }
+
+  &:hover {
+    &[data-active='true'] {
+      background-color: $background-modifier-hover;
+    }
+  }
+}

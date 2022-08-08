@@ -1,31 +1,35 @@
 import React from 'react';
-import { Title, AIcon, Container, FileIcon, HelpIcon } from './styles';
 import { OfflineStatus } from 'src/components/images/user-status/offline';
 import { OnlineStatus } from 'src/components/images/user-status/online';
 import { getUserById } from 'src/redux/states/users';
 import { useAppSelector } from 'src/redux/hooks';
+import {
+  FileTray as FileIcon,
+  HelpCircle as HelpIcon,
+} from '@styled-icons/ionicons-solid';
+import { AlternateEmail } from '@styled-icons/material';
 
 export const ChannelHeader: React.FC = () => {
   const { activeChannel } = useAppSelector((s) => s.ui);
   const user = useAppSelector(getUserById(activeChannel?.dmUserId ?? ''));
   const isOnline = user?.status === 'ONLINE';
 
-  return (
-    <Container>
-      <div className="channel-info">
-        <AIcon />
-        <Title style={{ marginBottom: 3 }}>{user?.username ?? 'Unknown'}</Title>
+  return user ? (
+    <div className="header-container">
+      <div className="menu-options">
+        <AlternateEmail className="type-indicator" />
+        <h1 className="title">{user.username}</h1>
         {isOnline ? (
-          <OnlineStatus styles={{ marginLeft: 6, marginTop: 2 }} />
+          <OnlineStatus styles={{ marginLeft: 6 }} />
         ) : (
-          <OfflineStatus styles={{ marginLeft: 6, marginTop: 2 }} />
+          <OfflineStatus styles={{ marginLeft: 6 }} />
         )}
       </div>
 
-      <div className="actions">
-        <FileIcon />
-        <HelpIcon />
+      <div className="menu-actions">
+        <FileIcon className="menu-image" />
+        <HelpIcon className="menu-image" />
       </div>
-    </Container>
-  );
+    </div>
+  ) : null;
 };

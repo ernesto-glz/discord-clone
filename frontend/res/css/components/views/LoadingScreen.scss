@@ -1,11 +1,4 @@
-import styled from 'styled-components';
-
-export interface LoadingProps {
-  isVisible: boolean;
-}
-
-export const Container = styled.div<LoadingProps>`
-  display: ${(props) => (props.isVisible ? 'visible' : 'none !important')};
+div.loading-screen {
   box-sizing: border-box;
   width: 100vw;
   height: 100vh;
@@ -20,12 +13,14 @@ export const Container = styled.div<LoadingProps>`
   right: 0;
   left: 0;
   bottom: 0;
-  > h4 {
+
+  > h4.title {
     text-transform: uppercase;
     font-size: 13px;
     line-height: 20px;
   }
-  > p {
+
+  > p.tip {
     margin-top: 5px;
     max-width: 300px;
     color: var(--header-secondary);
@@ -33,9 +28,9 @@ export const Container = styled.div<LoadingProps>`
     line-height: 21px;
     text-align: center;
   }
-`;
 
-export const LoadingSpinner = styled.video`
-  width: 200px;
-  height: 200px;
-`;
+  > video.spinner {
+    width: 200px;
+    height: 200px;
+  }
+}

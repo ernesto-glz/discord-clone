@@ -39,10 +39,10 @@ export const WSListeners: React.FC = () => {
         dispatch(meta.timeout());
         dispatch(auth.loggedOut());
       }
-      
+
       if (Object.values(AuthErrors).indexOf(error.message) < 0)
         return console.log('[WS]: Connection to the server lost.');
-      
+
       dispatch(logoutUser());
       navigate('/login', { replace: true })
     });
@@ -60,12 +60,12 @@ export const WSListeners: React.FC = () => {
       const channel = state().channels.find((c) => c.id === channelId);
       const isDisplayedChannel = activeDMCS.includes(channelId);
       const DMS = !activeDMCS.includes(channelId) ? [...activeDMCS, channelId] : [...activeDMCS];
-      
+
       if (channel!.type === 'DM' && sender !== selfId && !isDisplayedChannel) {
         dispatch(auth.updatedUser({ activeDMCS: DMS }));
       }
 
-      if (!activeChannel 
+      if (!activeChannel
           || activeChannel.id !== channelId
           || document.visibilityState === 'hidden')
         playSound('NEW_MESSAGE');
@@ -76,7 +76,7 @@ export const WSListeners: React.FC = () => {
     ws.on('CHANNEL_DISPLAY', ({ channelId }: WS.Args.ChannelUpdate) => {
       const { activeDMCS } = state().auth.user!;
       const data = [...activeDMCS, channelId];
-      
+
       if (!activeDMCS.find((a) => a === channelId))
         dispatch(auth.updatedUser({ activeDMCS: data }));
 
@@ -86,9 +86,9 @@ export const WSListeners: React.FC = () => {
       const { activeDMCS } = state().auth.user!;
       const filtered = activeDMCS.filter((cId) => cId !== channelId);
       const activeChannel = state().ui.activeChannel;
-      
+
       dispatch(auth.updatedUser({ activeDMCS: filtered }));
-      
+
       if (activeChannel?.id === channelId)
         navigate('/channels/@me');
     });
@@ -125,11 +125,11 @@ export const WSListeners: React.FC = () => {
       const dmChannel = state().channels.find((c) => c.dmUserId === args.userId);
 
       dispatch(users.updated(args));
-      if (isSelf) 
+      if (isSelf)
         dispatch(auth.updatedUser(args.partialUser));
       if (dmChannel) {
         const user = state().users.find((u) => u.id === args.userId)!;
-        dispatch(channels.updated({ 
+        dispatch(channels.updated({
           id: dmChannel.id,
           avatar: user.avatar,
           name: user.username

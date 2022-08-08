@@ -15,14 +15,15 @@ export declare namespace Store {
       activeChannel: Entity.Channel | null;
       activeGuild: string | null;
       openModals?: string[];
+      friendsSection: 'ONLINE' | 'ALL' | 'PENDING' | 'ADD';
     };
     users: Entity.User[];
     messages: {
       list: Entity.Message[];
-      total: { [channelId: string]: number; };
+      total: { [channelId: string]: number };
     };
     friends: string[];
     requests: RequestTypes.Populated[];
-    typing: { userId: string, channelId: string, timer: NodeJS.Timer }[];
+    typing: { userId: string; channelId: string; timer: NodeJS.Timer }[];
   }
 }

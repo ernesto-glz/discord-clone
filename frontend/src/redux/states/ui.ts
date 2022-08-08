@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Entity } from '@discord/types'
+import { Entity } from '@discord/types';
 import { Store } from 'types/store';
 
 export interface PageSwitch {
@@ -9,7 +9,9 @@ export interface PageSwitch {
 
 export const slice = createSlice({
   name: 'ui',
-  initialState: {} as Store.AppState['ui'],
+  initialState: {
+    friendsSection: 'ONLINE',
+  } as Store.AppState['ui'],
   reducers: {
     pageSwitched: (ui, { payload }: PayloadAction<PageSwitch>) => {
       ui.activeChannel = payload.channel;
@@ -17,8 +19,7 @@ export const slice = createSlice({
     },
     openedModal: (ui, { payload }) => {
       ui.openModals ??= [];
-      if (ui.openModals.includes(payload))
-        return;  
+      if (ui.openModals.includes(payload)) return;
       ui.openModals.push(payload);
     },
     closedModal: (ui, { payload }) => {
@@ -31,8 +32,11 @@ export const slice = createSlice({
     },
     closedAllModals: (ui) => {
       ui.openModals = [];
-    }
-  }
+    },
+    sectionSwitched: (ui, { payload }) => {
+      ui.friendsSection = payload;
+    },
+  },
 });
 
 export const actions = slice.actions;

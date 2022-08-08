@@ -1,7 +1,5 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { NitroImage } from "src/components/images/tiny-icons/nitro-image";
-import { UserRaisingHand } from "src/components/images/tiny-icons/user-raising-hand";
 import { useAppSelector } from "src/redux/hooks";
 import { Container, CloseIcon } from './styles';
 
@@ -17,15 +15,15 @@ export const GenericButton: React.FC<Props> = ({ genericImage, displayName }) =>
       navigate(`/channels/${activeGuild}`);
     }
   };
-  
+
   return (
     <Container className={isActive ? 'active' : ''}>
       <div onClick={onClick}>
         {genericImage === 'FRIEND' && (
-          <UserRaisingHand width="24" height="32" fill="currentColor" />
+          <img src={`${ASSETS_PATH}img/user-raising-hand.svg`} />
         )}
         {genericImage === 'NITRO' && (
-          <NitroImage width="24" height="32" fill="currentColor" />
+          <img src={`${ASSETS_PATH}img/discord-nitro.svg`} />
         )}
         <span>{displayName}</span>
       </div>

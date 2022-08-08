@@ -2,15 +2,6 @@ import classNames from 'classnames';
 import React, { useState } from 'react';
 import { AddFriendInput } from 'src/components/UI/input/add-friend-input';
 import { Result, useAddFriend } from 'src/hooks/friends/useAddFriend';
-import {
-  Container,
-  FlexColumnContainer,
-  WampusImage,
-  WampusMessage,
-  FriendHeader,
-  HeaderContainer,
-  AddFriendResponse,
-} from '../styles';
 
 export interface AddInputProps {
   focus: boolean;
@@ -22,48 +13,55 @@ export const AddFriend: React.FC = () => {
   const [focused, setFocused] = useState(false);
 
   return (
-    <FlexColumnContainer>
-      <FriendHeader>
-        <h2>Add Friend</h2>
-        <form onSubmit={onSubmit} autoComplete="off">
-          <div>
+    <div className="friends-panel">
+      <div className="add-friend">
+        <h2 className="title">Add Friend</h2>
+        <form
+          className="add-friend-form"
+          onSubmit={onSubmit}
+          autoComplete="off"
+        >
+          <p className="advertise">
             You can add a friend with their Discord Tag. It's cAsE sEnSitIvE!
-          </div>
-          <HeaderContainer state={result} focus={focused}>
+          </p>
+          <div
+            className="input-container"
+            data-status={result.type}
+            data-focused={focused}
+          >
             <div className="inputWrapper">
               <AddFriendInput
-                type="text"
                 maxLength={40}
                 {...register('target')}
                 autoFocus
                 onFocus={() => setFocused(true)}
                 onBlur={() => setFocused(false)}
                 placeholder="Enter a Username#0000"
-                onChange={resetStatus}
+                onKeyDown={resetStatus}
               />
             </div>
-            <button type="submit">
-              <div>Send Friend Request</div>
+            <button className="button send" type="submit">
+              Send Friend Request
             </button>
-          </HeaderContainer>
-          <AddFriendResponse
-            className={classNames(result.type, {
+          </div>
+          <div
+            className={classNames('response', result.type, {
               displayed: !!result.message,
             })}
           >
             {result.message}
-          </AddFriendResponse>
+          </div>
         </form>
-      </FriendHeader>
-      <Container>
-        <WampusImage
-          src={`${ASSETS_PATH}/wampus/wampus_king.svg`}
-          alt="add friend"
+      </div>
+      <div className="friends-panel center">
+        <img
+          className="wampus-image"
+          src={`${ASSETS_PATH}img/wampus/wampus_king.svg`}
         />
-        <WampusMessage>
-          Wumpus is waiting on friends. You don’t have to though!
-        </WampusMessage>
-      </Container>
-    </FlexColumnContainer>
+        <p className="wampus-message">
+          Wumpus is waiting on friends. You don't have to though!
+        </p>
+      </div>
+    </div>
   );
 };

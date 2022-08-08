@@ -1,6 +1,5 @@
 export const DiscordLogo = () => (
   <svg
-    className="homeIcon"
     aria-hidden="false"
     width="28"
     height="20"

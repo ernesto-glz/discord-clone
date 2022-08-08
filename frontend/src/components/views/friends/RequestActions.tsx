@@ -2,12 +2,7 @@ import React from 'react';
 import { Entity, RequestTypes } from '@discord/types';
 import { useAppDispatch } from 'src/redux/hooks';
 import { removeRequest, acceptRequest } from 'src/redux/states/requests';
-import {
-  AcceptIcon,
-  ActionButton,
-  CancelIcon,
-  RequestActions
-} from '../styles';
+import { Close, Check } from '@styled-icons/material';
 
 interface Props {
   request: RequestTypes.Populated;
@@ -27,21 +22,15 @@ export const RequestActionsItem: React.FC<Props> = ({ request, type }) => {
   };
 
   return (
-    <RequestActions>
-      {type === 'OUTGOING' ? (
-        <ActionButton onClick={handleCancel}>
-          <CancelIcon className="cancel" />
-        </ActionButton>
-      ) : (
-        <>
-          <ActionButton onClick={handleAccept}>
-            <AcceptIcon className="accept" />
-          </ActionButton>
-          <ActionButton onClick={handleCancel}>
-            <CancelIcon className="cancel" />
-          </ActionButton>
-        </>
+    <div className="flex">
+      {type === 'INCOMING' && (
+        <div className="action-button" onClick={handleAccept}>
+          <Check className="accept action-icon" />
+        </div>
       )}
-    </RequestActions>
+      <div className="action-button" onClick={handleCancel}>
+        <Close className="cancel action-icon" />
+      </div>
+    </div>
   );
 };

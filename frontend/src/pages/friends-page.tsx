@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import ChannelList from 'src/components/channel/channel-list';
-import FriendsPageWrapper from 'src/components/friends';
-import FriendsHeader from 'src/components/friends/friend-header';
+import FriendsPanel from 'src/components/structures/FriendsPanel';
+import FriendsHeader from 'src/components/views/friends/FriendsHeader';
 import RightPanel from 'src/components/right-pannel';
 import ServerList from 'src/components/server/server-list';
 import ServerName from 'src/components/server/server-name';
@@ -11,27 +11,24 @@ import { useAppDispatch } from 'src/redux/hooks';
 import PageWrapper from './page-wrapper';
 import { actions as ui } from 'src/redux/states/ui';
 
-export type Pages = 'ONLINE' | 'ALL' | 'PENDING' | 'ADD';
-
 const FriendsPage: React.FC = () => {
   const { channelId, guildId }: any = useParams();
-  const [page, setPage] = useState<Pages>('ONLINE');
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(ui.pageSwitched({ guild: guildId ?? '@me', channel: null }))
+    dispatch(ui.pageSwitched({ guild: guildId ?? '@me', channel: null }));
   }, [channelId]);
 
   return (
     <PageWrapper>
-      <section className='friends-section'>
+      <section className="friends-section">
         <UserInfo />
         <ServerName />
         <ServerList />
         <ChannelList />
         <RightPanel />
-        <FriendsPageWrapper page={page} />
-        <FriendsHeader pageState={[page, setPage]} />
+        <FriendsPanel />
+        <FriendsHeader />
       </section>
     </PageWrapper>
   );

@@ -1,5 +1,4 @@
 import React from 'react';
-import { CopyIdImage } from '../../images/tiny-icons/copy-id-image';
 import { LinkImage, Separator } from '../styles';
 import { Entity } from '@discord/types';
 import { ContextMenu } from '../context-menu';
@@ -21,7 +20,7 @@ const UserMenu: React.FC<Props> = ({ user }) => {
         <Separator />
         <ContextItem key={user.id} onClick={() => copyToClipboard(user.id)}>
           <p className="childLeft">Copy ID</p>
-          <CopyIdImage className="childRight" />
+          <img src={`${ASSETS_PATH}img/id.svg`} className="childRight" />
         </ContextItem>
       </div>
     </ContextMenu>

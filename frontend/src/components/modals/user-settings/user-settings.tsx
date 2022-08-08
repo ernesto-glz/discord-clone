@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { LogoutImage } from 'src/components/images/tiny-icons/logout-image';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import { actions as ui } from 'src/redux/states/ui';
 import Modal from '../modal';
@@ -73,7 +72,7 @@ export const UserSettings: React.FC = () => {
                 <Item name="Friend Requests" option="Requests" />
                 <Separator />
                 <NavItem onClick={openLogoutConfirm} isActive={false}>
-                  Log Out <LogoutImage />
+                  Log Out <img src={`${ASSETS_PATH}img/exit-arrow.svg`} />
                 </NavItem>
                 <Separator />
               </NavList>

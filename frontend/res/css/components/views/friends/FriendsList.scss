@@ -1,0 +1,62 @@
+.friends-panel {
+  > h2.list-title {
+    margin: 16px 20px 8px 30px;
+    color: $header-secondary;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0.02em;
+  }
+
+  > ul.list-body {
+    height: 100%;
+    overflow: hidden scroll;
+    margin-top: 8px;
+    list-style: none;
+
+    > li.list-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      justify-content: space-between;
+      cursor: pointer;
+      min-height: 62px;
+      margin-left: 30px;
+      margin-right: 20px;
+      padding: 0px 10px;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 18px;
+
+      &:hover {
+        background: $background-modifier-hover;
+        box-shadow: none;
+        border-radius: 8px;
+        border-color: transparent;
+      }
+
+      &:first-child {
+        border-top: 1px solid $background-modifier-accent;
+      }
+
+      &:not(:last-child) {
+        border-bottom: 1px solid $background-modifier-accent;
+      }
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--tertiary);
+      min-height: 40px;
+      border-radius: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: var(--background-secondary);
+      min-height: 40px;
+    }
+
+    &::-webkit-scrollbar {
+      width: 15px;
+      border-radius: 8px;
+    }
+  }
+}

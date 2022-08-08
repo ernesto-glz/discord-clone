@@ -1,0 +1,57 @@
+.header-container {
+  grid-area: CI;
+  display: flex;
+  padding: 0 17px;
+  background-color: $background-primary;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 0px 0px;
+}
+
+.menu-options {
+  flex: 1;
+  display: flex;
+  align-items: center;
+
+  > h1.title {
+    margin-left: 9px;
+    font-size: 16px;
+    font-weight: bold;
+    color: $white;
+    letter-spacing: 0.02em;
+    margin-bottom: 2px;
+  }
+
+  > div.divider {
+    height: 24px;
+    width: 1px;
+    background-color: $white;
+    opacity: 0.2;
+    margin: 0 13px;
+  }
+
+  > img.user-raising-hand {
+    filter: invert(0.4);
+  }
+
+  > svg.type-indicator {
+    fill: $symbol;
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.menu-actions {
+  display: flex;
+  align-items: center;
+}
+
+.menu-image {
+  width: 25px;
+  height: 25px;
+  color: $gray;
+  transition: 0.2s;
+  margin: auto 6px;
+  cursor: pointer;
+  &:hover {
+    color: $white;
+  }
+}

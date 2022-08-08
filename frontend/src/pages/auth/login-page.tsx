@@ -28,7 +28,7 @@ const LoginPage: React.FC = () => {
           <div className="left-side">
             <div className="form-header">
               <h3>Welcome back!</h3>
-              <div>We&apos;re so excited to see you again!</div>
+              <div>We're so excited to see you again!</div>
             </div>
             <div className="form-body">
               <FormInput
