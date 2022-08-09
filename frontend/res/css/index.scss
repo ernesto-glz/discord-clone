@@ -3,6 +3,7 @@
 @import './spacing';
 @import './animations';
 @import './components';
+@import './syntax';
 
 * {
   margin: 0;
@@ -26,7 +27,6 @@ button,
 input {
   border: 0;
   outline: 0;
-  font-family: $font-family-primary;
 }
 
 a {
@@ -49,8 +49,6 @@ pre {
   margin-top: 10px;
 
   code {
-    font-size: 0.875rem;
-    line-height: 1.125rem;
     text-indent: 0;
     width: 100%;
     white-space: pre-wrap;
@@ -70,7 +68,9 @@ code {
   padding: 0.2em;
   margin: -0.2em 0;
   border-radius: 3px;
-  font-size: 85%;
+  font-size: 0.875rem;
+  line-height: 1.125rem;
+  font-weight: 500;
   font-family: var(--font-family-code);
   text-indent: 0;
   border: none;
@@ -81,6 +81,7 @@ code {
 
 .App {
   background-color: $background-primary;
+  font-family: $font-family-primary;
   min-height: 100vh;
   width: 100vw;
   font-size: calc(10px + 2vmin);
