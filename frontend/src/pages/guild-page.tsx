@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import ChannelPanel from 'src/components/channel/channel-panel';
+import ChannelPanel from 'src/components/structures/ChannelPanel';
 import ServerName from 'src/components/server/server-name';
 import PageWrapper from './page-wrapper';
 import { ChannelHeader } from 'src/components/channel/channel-header/channel-header';

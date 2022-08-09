@@ -1,14 +1,13 @@
 import React, { useEffect, useMemo, useRef } from 'react';
-import Message from '../../message';
+import Message from '../message';
 import { fetchMessages, getChannelMessages } from 'src/redux/states/messages';
-import { MessageInput } from '../../message-input';
-import { ChannelWelcome } from '../channel-welcome';
+import { MessageInput } from '../views/channel/MessageInput';
+import { DMChannelWelcome } from '../views/channel/DMChannelWelcome';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import { Entity } from '@discord/types';
-import { Container } from './styles';
 import { ScrollPanel } from 'src/components/structures/ScrollPanel';
 import { getAvatarUrl } from 'src/utils/utils';
-import { SkeletonLoader } from './skeleton-loader';
+import { SkeletonLoader } from './SkeletonLoader';
 
 const ChannelPanel: React.FC = () => {
   const scrollbarRef = useRef<HTMLDivElement>(null);
@@ -33,7 +32,7 @@ const ChannelPanel: React.FC = () => {
   };
 
   return (
-    <Container>
+    <div className='channel-panel'>
       <ScrollPanel
         stickyBottom
         wrappedRef={scrollbarRef}
@@ -42,7 +41,7 @@ const ChannelPanel: React.FC = () => {
         onScroll={onScroll}
       >
         {loadedAllMessages && (
-          <ChannelWelcome imageUrl={getAvatarUrl(channel)} username={channel.name!} />
+          <DMChannelWelcome imageUrl={getAvatarUrl(channel)} username={channel.name!} />
         )}
         {!loadedAllMessages && (
           <SkeletonLoader wrappedRef={loaderRef} />
@@ -68,10 +67,10 @@ const ChannelPanel: React.FC = () => {
 
       <MessageInput
         scrollbarRef={scrollbarRef}
-        activeChannel={channel}
+        channel={channel}
         placeholder={`Message @${channel.name!}`}
       />
-    </Container>
+    </div>
   );
 };
 

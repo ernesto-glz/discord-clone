@@ -2,7 +2,6 @@ import React, { useMemo, useState } from 'react';
 import { UserImage } from 'src/components/user-image';
 import MessageMenu from 'src/components/context-menus/message-menu/message-menu';
 import UserMenu from 'src/components/context-menus/user-menu/user-menu';
-import { FormatService } from 'src/services/format-service';
 import { Entity } from '@discord/types';
 import { getUserById } from 'src/redux/states/users';
 import { useAppSelector } from 'src/redux/hooks';
@@ -22,6 +21,7 @@ import {
 } from 'src/utils/date';
 import { MenuTrigger } from 'src/components/context-menus/menu-trigger';
 import { getChannelMessages } from 'src/redux/states/messages';
+import { toHTML } from 'discord-markdown';
 
 export interface Props {
   message: Entity.Message;
@@ -40,9 +40,7 @@ const Message: React.FC<Props> = ({ message, wrappedRef }) => {
   const author = useAppSelector(getUserById(message.sender)) as Entity.User;
   const [focused, setFocused] = useState(false);
 
-  const messageHTML = message.content
-    ? new FormatService().toHTML(message.content)
-    : '';
+  const messageHTML = toHTML(message.content);
 
   const isExtra = () => {
     const index = messages.findIndex((m) => m.id === message.id);

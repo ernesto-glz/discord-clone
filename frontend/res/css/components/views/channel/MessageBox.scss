@@ -1,0 +1,71 @@
+.slate-textArea {
+  position: relative;
+  flex: 1;
+  outline: none;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  font-size: 16px;
+  line-height: 1.25rem;
+  max-height: 50vh;
+  padding-bottom: 11px;
+  padding-top: 12px;
+  caret-color: $text-normal;
+  text-align: left;
+  word-break: break-word;
+  padding-right: 10px;
+}
+
+.message-box-left {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  height: 44px;
+  width: 40px;
+  > svg.option {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    color: $interactive-normal;
+    &:hover {
+      color: $text-normal;
+    }
+  }
+}
+
+.message-box-right {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  height: 44px;
+  margin-right: 4px;
+}
+
+.typing-users {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 3px;
+  font-size: 14px;
+  padding-left: 4px;
+  color: $text-normal;
+  > strong {
+    color: #fff;
+  }
+}
+
+.placeholder {
+  flex: 1;
+  font-size: 16px;
+  line-height: 1.25rem;
+  max-height: 50vh;
+  padding-bottom: 11px;
+  padding-top: 11px;
+  padding-right: 11px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  color: $channel-text-area-placeholder;
+  user-select: none;
+  margin-left: 72px;
+}

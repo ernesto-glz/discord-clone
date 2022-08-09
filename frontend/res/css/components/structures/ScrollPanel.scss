@@ -1,0 +1,25 @@
+.messages-wrapper {
+  min-height: 0;
+  flex: 1 1 auto;
+  overflow: hidden;
+
+  > div.messages {
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
+}
+
+div.start-from-bottom {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+ol.messages-list {
+  min-height: 0;
+  > div.divider {
+    height: 30px;
+  }
+}

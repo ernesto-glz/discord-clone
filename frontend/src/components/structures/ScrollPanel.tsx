@@ -1,7 +1,6 @@
 import { UIEventHandler, useEffect, useRef, useState } from 'react';
 import { useAppSelector } from 'src/redux/hooks';
 import { getChannelMessages } from 'src/redux/states/messages';
-import { Messages, MessagesContainer, MessagesWrapper } from '../channel/channel-panel/styles';
 
 export interface Props {
   /* stickyBottom: if set to true, then once the user hits the bottom of
@@ -42,7 +41,7 @@ export const ScrollPanel: React.FC<Props> = ({
   wrappedRef,
   firstMsgRef,
   loaderRef,
-  children
+  children,
 }) => {
   const [stuckAtBottom, setStuckAtBottom] = useState(false);
   const [isFilling, setIsFilling] = useState(false);
@@ -53,15 +52,19 @@ export const ScrollPanel: React.FC<Props> = ({
   const isAtBottom = () => {
     const sn = wrappedRef.current!;
     return sn.scrollHeight - (sn.scrollTop + sn.clientHeight) <= 1;
-  }
+  };
 
   const handleScroll = async (ev: React.UIEvent<HTMLDivElement>) => {
     const loader = loaderRef.current;
-    
+
     if (isAtBottom() && stickyBottom && !stuckAtBottom) setStuckAtBottom(true);
     else if (!isAtBottom() && stuckAtBottom) setStuckAtBottom(false);
 
-    if (!loader || isFilling || wrappedRef.current!.scrollTop > loader.scrollHeight) 
+    if (
+      !loader ||
+      isFilling ||
+      wrappedRef.current!.scrollTop > loader.scrollHeight
+    )
       return;
 
     setIsFilling(true);
@@ -70,7 +73,7 @@ export const ScrollPanel: React.FC<Props> = ({
 
   const scrollToBottom = () => {
     const scroll = wrappedRef.current!;
-    scroll.scrollTop = scroll.scrollHeight; 
+    scroll.scrollTop = scroll.scrollHeight;
   };
 
   useEffect(() => {
@@ -92,16 +95,24 @@ export const ScrollPanel: React.FC<Props> = ({
     });
 
     resizeNotifier.observe(wrappedRef.current!);
-    return () => { resizeNotifier.disconnect(); }
+    return () => {
+      resizeNotifier.disconnect();
+    };
   }, [stuckAtBottom]);
 
   return (
-    <MessagesWrapper>
-      <section ref={wrappedRef} onScroll={handleScroll} className="scrollerBase scroller messages">
-        <MessagesContainer>
-          <Messages ref={itemList}>{children}</Messages>
-        </MessagesContainer>
-      </section>
-    </MessagesWrapper>
+    <div className="messages-wrapper">
+      <div
+        ref={wrappedRef}
+        onScroll={handleScroll}
+        className="scrollerBase scroller messages"
+      >
+        <div className="start-from-bottom">
+          <ol className="messages-list" ref={itemList}>
+            {children}
+          </ol>
+        </div>
+      </div>
+    </div>
   );
 };

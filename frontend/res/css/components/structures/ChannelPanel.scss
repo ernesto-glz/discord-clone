@@ -1,0 +1,32 @@
+.channel-panel {
+  grid-area: CP;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  box-sizing: border-box;
+  max-height: calc(100vh - 46px);
+}
+
+.message-box {
+  padding-left: 16px;
+  padding-right: 16px;
+  position: relative;
+  margin-top: -8px;
+  > div.input-wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background-color: $channeltextarea-background;
+    border-radius: 7px;
+    margin-bottom: 24px;
+    padding-right: 2px;
+    max-height: 50vh;
+    > div {
+      display: flex;
+      width: 100%;
+      padding-left: 16px;
+      overflow: hidden scroll;
+    }
+  }
+}

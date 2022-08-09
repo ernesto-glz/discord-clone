@@ -6,7 +6,6 @@ $senary: #828386;
 $white: #fff;
 $gray: #8a8c90;
 $green: #3ba55d;
-$chat-input: rgb(64,68,75);
 $symbol: #74777a;
 $notification: #f84a4b;
 $discord: #6e86d6;
@@ -46,3 +45,6 @@ $interactive-normal: #b9bbbe;
 $channel-text-area-placeholder: #72767d;
 $channels-default: #96989d;
 
+
+$channel-text-area-placeholder: hsl(218,calc($saturation-factor * 4.6%),46.9%);
+$channeltextarea-background: hsl(218,calc($saturation-factor * 7.9%),27.3%);

@@ -1,4 +1,4 @@
-import SkeletonMessage from '../../message/skeleton-message';
+import SkeletonMessage from '../message/skeleton-message';
 
 interface SkeletonLoaderProps {
   wrappedRef: React.RefObject<any>;

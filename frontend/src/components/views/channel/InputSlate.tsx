@@ -1,4 +1,4 @@
-export const InputHelper = () => {
+export const InputSlate = () => {
   // This component is only used to make the scrollbar appear
   // when the maximum height of the input is reached.
   return (
