@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { PulseLoader } from 'react-spinners';
 import { startTyping, stopTyping } from 'src/redux/states/typing';
 import { InputSlate } from './InputSlate';
@@ -8,6 +8,7 @@ import { createMessage } from 'src/redux/states/messages';
 import { useScrollbarState } from 'src/hooks/useScrollbarState';
 import { PlusCircleFill } from '@styled-icons/bootstrap';
 import useTypingUsers from 'src/hooks/useTypingUsers';
+import { useResizeObserver } from 'src/hooks/useResizeObserver';
 
 interface Props {
   placeholder: string;
@@ -16,11 +17,21 @@ interface Props {
 }
 
 export const MessageInput: React.FC<Props> = (props) => {
+  const { scrollbarRef } = props;
   const [content, setContent] = useState('');
   const messageBoxRef = useRef<HTMLDivElement>(null);
-  const dispatch = useAppDispatch();
   const { typingUsers } = useTypingUsers();
   const { stuckAtBottom } = useScrollbarState();
+  const dispatch = useAppDispatch();
+  useResizeObserver(
+    () => {
+      const scrollbar = scrollbarRef.current!;
+      if (!stuckAtBottom) return;
+      scrollbar.scroll({ top: scrollbar.scrollHeight });
+    },
+    messageBoxRef.current!,
+    [stuckAtBottom]
+  );
 
   const onChange = (ev: React.KeyboardEvent<HTMLDivElement>) => {
     const textContent = ev.currentTarget.textContent!.trim();
@@ -41,20 +52,6 @@ export const MessageInput: React.FC<Props> = (props) => {
     setContent('');
     messageBoxRef.current!.textContent = '';
   };
-
-  useEffect(() => {
-    const resizeObserver = new ResizeObserver(() => {
-      if (!stuckAtBottom) return;
-      props.scrollbarRef.current!.scroll({
-        top: props.scrollbarRef.current?.scrollHeight,
-      });
-    });
-
-    resizeObserver.observe(messageBoxRef.current!);
-    return () => {
-      resizeObserver.disconnect();
-    };
-  }, [stuckAtBottom]);
 
   return (
     <div className="message-box">
