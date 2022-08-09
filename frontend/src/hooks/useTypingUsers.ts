@@ -1,7 +1,7 @@
 import { useAppSelector } from 'src/redux/hooks';
 import { getTypersInChannel } from 'src/redux/states/typing';
 
-const useTypingUsers = () => {
+export const useTypingUsers = () => {
   const users = useAppSelector((s) => s.users);
   const selfUser = useAppSelector((s) => s.auth.user)!;
   const channel = useAppSelector((s) => s.ui.activeChannel)!;
@@ -14,5 +14,3 @@ const useTypingUsers = () => {
 
   return { typingUsers };
 };
-
-export default useTypingUsers;

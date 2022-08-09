@@ -7,8 +7,9 @@ import { useAppDispatch } from 'src/redux/hooks';
 import { createMessage } from 'src/redux/states/messages';
 import { useScrollbarState } from 'src/hooks/useScrollbarState';
 import { PlusCircleFill } from '@styled-icons/bootstrap';
-import useTypingUsers from 'src/hooks/useTypingUsers';
 import { useResizeObserver } from 'src/hooks/useResizeObserver';
+import { findCodeBlocks, getCaretOffset } from 'src/utils/dom';
+import { useTypingUsers } from 'src/hooks/useTypingUsers';
 
 interface Props {
   placeholder: string;
@@ -17,7 +18,8 @@ interface Props {
 }
 
 export const MessageInput: React.FC<Props> = (props) => {
-  const { scrollbarRef } = props;
+  const [canSend, setCandSend] = useState(true);
+  const { scrollbarRef, channel } = props;
   const [content, setContent] = useState('');
   const messageBoxRef = useRef<HTMLDivElement>(null);
   const { typingUsers } = useTypingUsers();
@@ -33,20 +35,36 @@ export const MessageInput: React.FC<Props> = (props) => {
     [stuckAtBottom]
   );
 
-  const onChange = (ev: React.KeyboardEvent<HTMLDivElement>) => {
-    const textContent = ev.currentTarget.textContent!.trim();
-    setContent(textContent);
+  const onInput = (ev: React.KeyboardEvent<HTMLDivElement>) => {
+    const contentWithLinkeBreaks = ev.target.innerText;
+    const contentWithoutLineBreaks = ev.currentTarget.textContent!;
+
+    /* Use content without line-breaks to get codeBlocks
+     * in favor of avoid wrong index.
+     */
+    const codeBlocks = findCodeBlocks(contentWithoutLineBreaks);
+    const caretOffset = getCaretOffset(messageBoxRef.current!);
+
+    for (const block of codeBlocks) {
+      if (block.type === 'opening' && caretOffset > block.endIndex)
+        setCandSend(false);
+      if (block.type === 'closing' && caretOffset > block.endIndex)
+        setCandSend(true);
+    }
+
+    if (!codeBlocks.length && !canSend) setCandSend(true);
+
+    setContent(contentWithLinkeBreaks);
     dispatch(startTyping(props.channel.id));
   };
 
   const onKeyDown = async (ev: React.KeyboardEvent<HTMLDivElement>) => {
-    // Only expand when shift is pressed
-    if (ev.key === 'Enter' && !ev.shiftKey) ev.preventDefault();
+    if (ev.key === 'Enter' && !ev.shiftKey && canSend) ev.preventDefault();
 
     const emptyMessage = content.replaceAll('\n', '');
-    if (ev.key !== 'Enter' || !emptyMessage || ev.shiftKey) return;
+    if (ev.key !== 'Enter' || !emptyMessage || ev.shiftKey || !canSend) return;
 
-    dispatch(createMessage({ channelId: props.channel.id, content }));
+    dispatch(createMessage({ channelId: channel.id, content: content.trim() }));
     dispatch(stopTyping(props.channel.id));
 
     setContent('');
@@ -69,15 +87,16 @@ export const MessageInput: React.FC<Props> = (props) => {
             ref={messageBoxRef}
             autoCorrect="off"
             onKeyDown={onKeyDown}
-            onInput={onChange}
+            onInput={onInput}
             defaultValue={content}
-            contentEditable={true}
-            spellCheck={false}
-            suppressContentEditableWarning={true}
             dir="auto"
+            aria-multiline="true"
             data-slate-editor="true"
             data-slate-node="value"
             className="slate-textArea"
+            spellCheck={false}
+            contentEditable={true}
+            suppressContentEditableWarning={true}
           >
             <InputSlate />
           </div>
