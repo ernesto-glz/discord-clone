@@ -13,7 +13,7 @@ import {
 import { PulseLoader } from 'react-spinners';
 import { findError } from 'src/utils/errors';
 import { useChangePassword } from 'src/hooks/user/useChangePassword';
-import { FormInput } from 'src/components/UI/input/form-input';
+import { FormInput } from 'src/components/views/elements/FormInput';
 import Modal from '../../modal';
 
 export const ChangePassword: React.FC = () => {

@@ -1,13 +1,13 @@
 import React from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { QRCode } from 'src/components/auth/qr-code';
 import { useAppSelector } from 'src/redux/hooks';
 import { findError } from 'src/utils/errors';
 import { PulseLoader } from 'react-spinners';
-import { FormInput } from 'src/components/UI/input/form-input';
-import { Button } from 'src/components/UI/button/button';
+import { FormInput } from 'src/components/views/elements/FormInput';
+import { Button } from 'src/components/views/elements/Button';
 import { useLogin } from 'src/hooks/auth/useLogin';
 import PageWrapper from '../page-wrapper';
+import { QRCode } from 'src/components/views/auth/QRCode';
 
 export interface LoginValues {
   email: string;

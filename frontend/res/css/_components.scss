@@ -1,18 +1,11 @@
 /* General */
 @import './components/general.scss';
 
-/* UI */
-@import './components/UI/input/base-input.scss';
-@import './components/UI/button/base-button.scss';
-
-/* Auth */
-@import './components/auth/auth.scss';
-@import './components/auth/auth-form.scss';
-
 /* Structures */
 @import './components/structures/HeaderPanel.scss';
 @import './components/structures/ChannelPanel.scss';
 @import './components/structures/ScrollPanel.scss';
+@import './components/structures/RightPanel.scss';
 
 /* Views */
 @import './components/views/LoadingScreen.scss';
@@ -23,3 +16,9 @@
 @import './components/views/friends/ListItemActions.scss';
 @import './components/views/channel/MessageBox.scss';
 @import './components/views/channel/ChannelWelcome.scss';
+@import './components/views/auth/AuthForm.scss';
+@import './components/views/auth/Auth.scss';
+
+/* Elements */
+@import './components/views/elements/Input.scss';
+@import './components/views/elements/Button.scss';

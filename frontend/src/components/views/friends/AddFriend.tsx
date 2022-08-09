@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React, { useState } from 'react';
-import { AddFriendInput } from 'src/components/UI/input/add-friend-input';
+import { AddFriendInput } from './AddFriendInput';
 import { Result, useAddFriend } from 'src/hooks/friends/useAddFriend';
 
 export interface AddInputProps {

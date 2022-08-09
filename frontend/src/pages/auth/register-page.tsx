@@ -4,8 +4,8 @@ import PageWrapper from '../page-wrapper';
 import { useAppSelector } from 'src/redux/hooks';
 import { findError } from 'src/utils/errors';
 import { PulseLoader } from 'react-spinners';
-import { Button } from 'src/components/UI/button/button';
-import { FormInput } from 'src/components/UI/input/form-input';
+import { Button } from 'src/components/views/elements/Button';
+import { FormInput } from 'src/components/views/elements/FormInput';
 import { useRegister } from 'src/hooks/auth/useRegister';
 
 const RegisterPage: React.FC = () => {

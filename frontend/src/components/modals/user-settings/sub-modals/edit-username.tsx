@@ -13,7 +13,7 @@ import {
   DoneButton,
   CancelButton,
 } from './styles';
-import { FormInput } from 'src/components/UI/input/form-input';
+import { FormInput } from 'src/components/views/elements/FormInput';
 import { useChangeUsername } from 'src/hooks/user/useChangeUsername';
 
 export const EditUsername: React.FC = () => {
