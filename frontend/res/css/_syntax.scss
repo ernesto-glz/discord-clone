@@ -1,3 +1,42 @@
+code {
+  padding: 0.2em;
+  margin: -0.2em 0;
+  border-radius: 3px;
+  font-size: 0.875rem;
+  line-height: 1.125rem;
+  font-weight: 500;
+  font-family: $font-family-code;
+  text-indent: 0;
+  border: none;
+  white-space: pre-wrap;
+  background: $background-secondary;
+  color: $text-normal;
+}
+
+pre {
+  box-sizing: border-box;
+  max-width: 90%;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  margin-top: 10px;
+
+  code {
+    text-indent: 0;
+    width: 100%;
+    white-space: pre-wrap;
+    scrollbar-width: thin;
+    scrollbar-color: $background-tertiary $background-secondary;
+    background: $background-secondary;
+    border: 1px solid $background-tertiary;
+    display: block;
+    overflow-x: auto;
+    padding: 0.5em;
+    border-radius: 4px;
+    color: $header-secondary;
+  }
+}
+
 .hljs {
   display: block;
   overflow-x: auto;

@@ -29,52 +29,16 @@ input {
   outline: 0;
 }
 
+input, button {
+  font-family: $font-family-primary;
+}
+
 a {
   color: var(--text-link);
   text-decoration: none;
 
   &:hover {
     text-decoration: underline;
-  }
-}
-
-code {
-  padding: 0.2em;
-  margin: -0.2em 0;
-  border-radius: 3px;
-  font-size: 0.875rem;
-  line-height: 1.125rem;
-  font-weight: 500;
-  font-family: var(--font-family-code);
-  text-indent: 0;
-  border: none;
-  white-space: pre-wrap;
-  background: $background-secondary;
-  color: var(--text-normal);
-}
-
-pre {
-  box-sizing: border-box;
-  max-width: 90%;
-  border-radius: 4px;
-  font-family: var(--font-family-code);
-  font-size: 0.75rem;
-  line-height: 1rem;
-  margin-top: 10px;
-
-  code {
-    text-indent: 0;
-    width: 100%;
-    white-space: pre-wrap;
-    scrollbar-width: thin;
-    scrollbar-color: var(--background-tertiary) var(--background-secondary);
-    background: var(--background-secondary);
-    border: 1px solid var(--background-tertiary);
-    display: block;
-    overflow-x: auto;
-    padding: 0.5em;
-    border-radius: 4px;
-    color: var(--header-secondary);
   }
 }
 

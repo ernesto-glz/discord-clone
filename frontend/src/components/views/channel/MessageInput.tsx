@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { ClipboardEvent, useRef, useState } from 'react';
 import { PulseLoader } from 'react-spinners';
 import { startTyping, stopTyping } from 'src/redux/states/typing';
 import { InputSlate } from './InputSlate';
@@ -71,6 +71,17 @@ export const MessageInput: React.FC<Props> = (props) => {
     messageBoxRef.current!.textContent = '';
   };
 
+  const onPaste = (ev: ClipboardEvent<HTMLDivElement>) => {
+    // cancel paste
+    ev.preventDefault();
+
+    // get text representation of clipboard
+    const text = ev.clipboardData.getData('text/plain');
+
+    // insert text manually
+    document.execCommand('insertHTML', false, text);
+  };
+
   return (
     <div className="message-box">
       <div className="input-wrapper">
@@ -88,6 +99,7 @@ export const MessageInput: React.FC<Props> = (props) => {
             autoCorrect="off"
             onKeyDown={onKeyDown}
             onInput={onInput}
+            onPaste={onPaste}
             defaultValue={content}
             dir="auto"
             aria-multiline="true"

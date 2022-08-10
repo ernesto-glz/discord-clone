@@ -13,7 +13,6 @@ import {
 } from 'src/utils/date';
 import { getChannelMessages } from 'src/redux/states/messages';
 import { toHTML } from 'discord-markdown';
-import HighLight from 'react-highlight';
 import classNames from 'classnames';
 
 export interface Props {
@@ -76,9 +75,10 @@ const Message: React.FC<Props> = ({ message, wrappedRef }) => {
               <time>{dateFormatted(message.createdAt) ?? 'Unknown Date'}</time>
             </div>
           )}
-          <HighLight className="message-content" innerHTML={true}>
-            {messageHTML}
-          </HighLight>
+          <div
+            className="message-content"
+            dangerouslySetInnerHTML={{ __html: messageHTML }}
+          />
         </div>
       </li>
     </React.Fragment>
