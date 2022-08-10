@@ -20,7 +20,7 @@ export interface Props {
 
   /* firstMsgRef: ref used to handle load messages
    */
-  firstMsgRef: React.RefObject<HTMLDivElement>;
+  firstMsgRef: React.RefObject<HTMLLIElement>;
 
   /* firstMsgRef: ref used to track and trigger loadMoreMessages()
    */

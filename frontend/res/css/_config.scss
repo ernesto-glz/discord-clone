@@ -32,7 +32,7 @@ $header-primary: #fff;
 $header-secondary: #b9bbbe;
 
 $text-normal: #DCDDDE;
-$text-muted: #a3a6aa;
+$text-muted: hsl(214,calc(var(--saturation-factor, 1)*4%),65.3%);
 $text-input-border: rgba(0,0,0,0.3);
 $text-link: hsl(197, calc($saturation-factor * 100%), 47.8%);
 $text-danger: hsl(359, calc($saturation-factor * 82%), 73.9%);
@@ -48,3 +48,6 @@ $channels-default: #96989d;
 
 $channel-text-area-placeholder: hsl(218,calc($saturation-factor * 4.6%),46.9%);
 $channeltextarea-background: hsl(218,calc($saturation-factor * 7.9%),27.3%);
+
+$interactive-muted: hsl(217,calc($saturation-factor * 7.6%),33.5%);
+$interactive-active: hsl(0,calc(var(--saturation-factor, 1)*0%),100%);

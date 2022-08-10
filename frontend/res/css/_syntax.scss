@@ -1,32 +1,29 @@
 .hljs {
   display: block;
+  overflow-x: auto;
+  padding: 0.5em;
   border-radius: 4px;
-  -webkit-text-size-adjust: none;
-  -moz-text-size-adjust: none;
-  -ms-text-size-adjust: none;
+  color: $header-secondary;
   text-size-adjust: none;
 }
-
 .hljs-comment,
 .hljs-quote {
-  color: red;
+  color: $interactive-muted;
 }
-
 .hljs-addition,
 .hljs-keyword,
 .hljs-selector-tag {
   color: #859900;
 }
-
 .hljs-doctag,
 .hljs-literal,
+.hljs-meta.hljs-meta-string,
 .hljs-meta .hljs-meta-string,
 .hljs-number,
 .hljs-regexp,
 .hljs-string {
   color: #2aa198;
 }
-
 .hljs-name,
 .hljs-section,
 .hljs-selector-class,
@@ -34,19 +31,18 @@
 .hljs-title {
   color: #268bd2;
 }
-
 .hljs-attr,
-.hljs-attribute,
+.hljs-class.hljs-title,
 .hljs-class .hljs-title,
 .hljs-template-variable,
 .hljs-type,
 .hljs-variable {
   color: #b58900;
 }
-
 .hljs-bullet,
 .hljs-link,
 .hljs-meta,
+.hljs-meta.hljs-keyword,
 .hljs-meta .hljs-keyword,
 .hljs-selector-attr,
 .hljs-selector-pseudo,
@@ -54,20 +50,93 @@
 .hljs-symbol {
   color: #cb4b16;
 }
-
 .hljs-built_in,
 .hljs-deletion {
   color: #dc322f;
 }
-
 .hljs-formula {
   background: #073642;
 }
-
 .hljs-emphasis {
   font-style: italic;
 }
-
 .hljs-strong {
   font-weight: 700;
+}
+.hljs-ansi-control-sequence {
+  display: none;
+}
+.hljs-ansi-style-bold {
+  font-weight: 700;
+}
+.hljs-ansi-style-underline {
+  text-decoration: underline;
+}
+.hljs-ansi-foreground-black {
+  color: $interactive-muted;
+}
+.hljs-ansi-foreground-black .hljs-ansi-background-black,
+.hljs-ansi-foreground-black .hljs-ansi-background-blue,
+.hljs-ansi-foreground-black .hljs-ansi-background-cyan,
+.hljs-ansi-foreground-black .hljs-ansi-background-green,
+.hljs-ansi-foreground-black .hljs-ansi-background-magenta,
+.hljs-ansi-foreground-black .hljs-ansi-background-red,
+.hljs-ansi-foreground-black .hljs-ansi-background-white,
+.hljs-ansi-foreground-black .hljs-ansi-background-yellow {
+  color: #073642;
+}
+.hljs-ansi-foreground-red {
+  color: #dc322f;
+}
+.hljs-ansi-foreground-green {
+  color: #859900;
+}
+.hljs-ansi-foreground-yellow {
+  color: #b58900;
+}
+.hljs-ansi-foreground-blue {
+  color: #268bd2;
+}
+.hljs-ansi-foreground-magenta {
+  color: #d33682;
+}
+.hljs-ansi-foreground-cyan {
+  color: #2aa198;
+}
+.hljs-ansi-foreground-white {
+  color: $interactive-active;
+}
+.hljs-ansi-foreground-white .hljs-ansi-background-black,
+.hljs-ansi-foreground-white .hljs-ansi-background-blue,
+.hljs-ansi-foreground-white .hljs-ansi-background-cyan,
+.hljs-ansi-foreground-white .hljs-ansi-background-green,
+.hljs-ansi-foreground-white .hljs-ansi-background-magenta,
+.hljs-ansi-foreground-white .hljs-ansi-background-red,
+.hljs-ansi-foreground-white .hljs-ansi-background-white,
+.hljs-ansi-foreground-white .hljs-ansi-background-yellow {
+  color: #eee8d5;
+}
+.hljs-ansi-background-black {
+  background-color: #002b36;
+}
+.hljs-ansi-background-red {
+  background-color: #cb4b16;
+}
+.hljs-ansi-background-green {
+  background-color: #586e75;
+}
+.hljs-ansi-background-yellow {
+  background-color: #657b83;
+}
+.hljs-ansi-background-blue {
+  background-color: #839496;
+}
+.hljs-ansi-background-magenta {
+  background-color: #6c71c4;
+}
+.hljs-ansi-background-cyan {
+  background-color: #93a1a1;
+}
+.hljs-ansi-background-white {
+  background-color: #fdf6e3;
 }

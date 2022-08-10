@@ -41,12 +41,10 @@ export const getTime = (date: string) => formatAMPM(new Date(date));
 
 export const getDate = (dateStr: string) => {
   const date = new Date(dateStr);
-  return `
-    ${date.toLocaleDateString("en-us", {
+  return `${date.toLocaleDateString("en-us", {
       month: "long",
       day: "numeric",
-    })}, ${date.getFullYear()}
-  `;
+    })}, ${date.getFullYear()}`;
 };
 
 export const isExtraForTime = (prevDate: string, newDate: string) => {

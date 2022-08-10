@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useRef } from 'react';
-import Message from '../message';
 import { fetchMessages, getChannelMessages } from 'src/redux/states/messages';
 import { MessageInput } from '../views/channel/MessageInput';
 import { DMChannelWelcome } from '../views/channel/DMChannelWelcome';
@@ -8,10 +7,11 @@ import { Entity } from '@discord/types';
 import { ScrollPanel } from 'src/components/structures/ScrollPanel';
 import { getAvatarUrl } from 'src/utils/utils';
 import { SkeletonLoader } from './SkeletonLoader';
+import Message from '../views/messages/Message';
 
 const ChannelPanel: React.FC = () => {
   const scrollbarRef = useRef<HTMLDivElement>(null);
-  const firstMessageRef = useRef<HTMLDivElement>(null);
+  const firstMessageRef = useRef<HTMLLIElement>(null);
   const loaderRef = useRef<HTMLDivElement>(null);
   const channel = useAppSelector((s) => s.ui.activeChannel)!;
   const msgCount = useAppSelector((s) => s.messages.total[channel.id]);
