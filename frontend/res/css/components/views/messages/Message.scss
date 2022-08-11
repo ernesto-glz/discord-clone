@@ -1,4 +1,5 @@
 .chat-message {
+  position: relative;
   display: flex;
   align-items: flex-start;
   margin-right: 4px;
@@ -10,6 +11,7 @@
   padding-right: 0px;
 
   > .message-date {
+    opacity: 0;
     color: $gray;
     font-size: 11px;
     width: 56px;
@@ -27,6 +29,10 @@
 
   &:hover {
     background-color: $background-message-hover;
+    > .message-toolbar,
+    .message-date {
+      opacity: 1;
+    }
   }
 }
 

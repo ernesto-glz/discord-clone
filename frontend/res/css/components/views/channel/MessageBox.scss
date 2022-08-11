@@ -10,6 +10,7 @@
   padding-bottom: 11px;
   padding-top: 12px;
   caret-color: $text-normal;
+  color: $text-normal;
   text-align: left;
   word-break: break-word;
   padding-right: 10px;
@@ -68,4 +69,16 @@
   color: $channel-text-area-placeholder;
   user-select: none;
   margin-left: 72px;
+}
+
+.editing-info {
+  margin-top: -15px;
+  margin-bottom: 10px;
+  font-size: 13px;
+  font-weight: 300;
+  padding-left: 4px;
+  color: $text-normal;
+  > a {
+    cursor: pointer;
+  }
 }

@@ -9,6 +9,7 @@ export declare namespace WS {
     CHANNEL_HIDE: Params.ChannelUpdate;
     CHANNEL_DISPLAY: Params.ChannelUpdate;
     MESSAGE_CREATE: Params.MessageCreate;
+    MESSAGE_UPDATE: Params.MessageUpdate;
     TYPING_START: Params.Typing;
     TYPING_STOP: Params.Typing;
     USER_UPDATE: Args.UserUpdate;
@@ -33,6 +34,8 @@ export declare namespace WS {
     CHANNEL_DISPLAY: Args.ChannelUpdate;
     /* Called when a message is created  */
     MESSAGE_CREATE: Args.MessageCreate;
+    /* Called when a message is updated  */
+    MESSAGE_UPDATE: Args.MessageUpdate;
     /* Called when a user in room start typing  */
     TYPING_START: Args.Typing;
     /* Called when a user in room stop typing  */
@@ -53,6 +56,11 @@ export declare namespace WS {
     export interface MessageCreate {
       channelId: string;
       content: string;
+    }
+
+    export interface MessageUpdate {
+      messageId: string;
+      content?: string;
     }
 
     export interface Typing {
@@ -102,6 +110,11 @@ export declare namespace WS {
       channelId: string;
       guildId: string;
       content: string;
+    }
+
+    export interface MessageUpdate {
+      messageId: string;
+      partialMessage: Entity.Message;
     }
 
     export interface Typing {

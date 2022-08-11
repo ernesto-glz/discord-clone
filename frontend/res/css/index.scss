@@ -65,6 +65,7 @@ a {
 }
 
 .base-modal {
+  font-family: $font-family-primary;
   position: absolute;
   z-index: 9999;
   top: 0;
@@ -153,4 +154,8 @@ a {
 
 .flex {
   display: flex;
+}
+
+.relative {
+  position: relative;
 }

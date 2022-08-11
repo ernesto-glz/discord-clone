@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { UserImage } from 'src/components/user-image';
 import { Entity } from '@discord/types';
 import { getUserById } from 'src/redux/states/users';
@@ -14,6 +14,8 @@ import {
 import { getChannelMessages } from 'src/redux/states/messages';
 import { toHTML } from 'discord-markdown';
 import classNames from 'classnames';
+import { MessageToolbar } from './MessageToolbar';
+import { MessageBox } from '../MessageBox/MessageBox';
 
 export interface Props {
   message: Entity.Message;
@@ -29,7 +31,7 @@ const Message: React.FC<Props> = ({ message, wrappedRef }) => {
     [messages]
   );
   const author = useAppSelector(getUserById(message.sender)) as Entity.User;
-  const [focused, setFocused] = useState(false);
+  const editingMessageId = useAppSelector((s) => s.ui.editingMessageId);
 
   const messageHTML = toHTML(message.content);
 
@@ -57,14 +59,13 @@ const Message: React.FC<Props> = ({ message, wrappedRef }) => {
       {isActuallyNewDay() && <MessageDivider date={message.createdAt!} />}
       <li
         ref={wrappedRef}
-        onMouseOver={() => setFocused(true)}
-        onMouseLeave={() => setFocused(false)}
         className={classNames('chat-message', { isExtra: isActuallyExtra })}
       >
+        <div className="message-toolbar">
+          <MessageToolbar message={message} />
+        </div>
         {isActuallyExtra ? (
-          <p className="message-date">
-            {focused ? getTime(message.createdAt) : ''}
-          </p>
+          <p className="message-date">{getTime(message.createdAt)}</p>
         ) : (
           <UserImage imageUrl={getAvatarUrl(author)} customSize={40} />
         )}
@@ -75,10 +76,14 @@ const Message: React.FC<Props> = ({ message, wrappedRef }) => {
               <time>{dateFormatted(message.createdAt) ?? 'Unknown Date'}</time>
             </div>
           )}
-          <div
-            className="message-content"
-            dangerouslySetInnerHTML={{ __html: messageHTML }}
-          />
+          {editingMessageId === message.id ? (
+            <MessageBox editMode={true} content={message.content} />
+          ) : (
+            <div
+              className="message-content"
+              dangerouslySetInnerHTML={{ __html: messageHTML }}
+            />
+          )}
         </div>
       </li>
     </React.Fragment>

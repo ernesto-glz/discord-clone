@@ -1,16 +1,29 @@
-import { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
+import { useScrollbarState } from './useScrollbarState';
 
-export const useResizeObserver = (fn: () => any, elm: HTMLElement, deps: any) => {
-  const observer = useMemo(() => new ResizeObserver(() => fn()), []);
+interface Props {
+  scrollbarRef?: React.RefObject<HTMLDivElement>;
+}
+
+export const useResizeObserver = ({ scrollbarRef }: Props) => {
+  const { stuckAtBottom } = useScrollbarState();
+  const observer = useMemo(() => new ResizeObserver(() => {
+    if (!scrollbarRef) return;
+
+    const scrollbar = scrollbarRef.current!;
+    if (!stuckAtBottom) return;
+
+    scrollbar.scroll({ top: scrollbar.scrollHeight });
+  }), []);
 
   useEffect(() => {
-    if (!elm) return;
-    observer.observe(elm);
+    if (!scrollbarRef?.current) return;
+    observer.observe(scrollbarRef.current);
 
     return () => {
       observer.disconnect();
     };
-  }, [fn, elm, deps]);
+  }, [stuckAtBottom]);
 
   return { observer };
 };

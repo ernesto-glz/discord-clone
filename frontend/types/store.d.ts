@@ -16,6 +16,7 @@ export declare namespace Store {
       activeGuild: string | null;
       openModals?: string[];
       friendsSection: 'ONLINE' | 'ALL' | 'PENDING' | 'ADD';
+      editingMessageId?: string;
     };
     users: Entity.User[];
     messages: {

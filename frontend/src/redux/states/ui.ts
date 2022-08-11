@@ -36,6 +36,12 @@ export const slice = createSlice({
     sectionSwitched: (ui, { payload }) => {
       ui.friendsSection = payload;
     },
+    startedEditingMessage: (state, { payload }) => {
+      state.editingMessageId = payload;
+    },
+    stoppedEditingMessage: (state) => {
+      delete state.editingMessageId;
+    },
   },
 });
 

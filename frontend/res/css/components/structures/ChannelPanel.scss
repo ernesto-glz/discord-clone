@@ -11,8 +11,16 @@
 .message-box {
   padding-left: 16px;
   padding-right: 16px;
-  position: relative;
   margin-top: -8px;
+  z-index: 1;
+
+  &.editMode {
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-top: 10px;
+    max-width: 95%;
+  }
+
   > div.input-wrapper {
     width: 100%;
     display: flex;

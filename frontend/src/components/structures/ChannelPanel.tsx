@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import { fetchMessages, getChannelMessages } from 'src/redux/states/messages';
-import { MessageInput } from '../views/channel/MessageInput';
+import { MessageBox } from '../views/MessageBox/MessageBox';
 import { DMChannelWelcome } from '../views/channel/DMChannelWelcome';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import { Entity } from '@discord/types';
@@ -8,6 +8,7 @@ import { ScrollPanel } from 'src/components/structures/ScrollPanel';
 import { getAvatarUrl } from 'src/utils/utils';
 import { SkeletonLoader } from './SkeletonLoader';
 import Message from '../views/messages/Message';
+import { useStopEditing } from 'src/hooks/channel/useStopEditing';
 
 const ChannelPanel: React.FC = () => {
   const scrollbarRef = useRef<HTMLDivElement>(null);
@@ -18,11 +19,9 @@ const ChannelPanel: React.FC = () => {
   const messages = useAppSelector(getChannelMessages(channel.id));
   const loadedAllMessages = useMemo(() => messages.length >= msgCount, [messages]);
   const dispatch = useAppDispatch();
+  const {} = useStopEditing();
 
   useEffect(() => {
-    const input = document.querySelector('#messageInput') as HTMLDivElement;
-    input.focus();
-
     dispatch(fetchMessages({ channelId: channel.id, back: 40 }));
   }, [channel.id]);
 
@@ -65,11 +64,7 @@ const ChannelPanel: React.FC = () => {
         <div className="divider" />
       </ScrollPanel>
 
-      <MessageInput
-        scrollbarRef={scrollbarRef}
-        channel={channel}
-        placeholder={`Message @${channel.name!}`}
-      />
+      <MessageBox scrollbarRef={scrollbarRef} />
     </div>
   );
 };

@@ -1,3 +1,4 @@
+import { Entity } from '@discord/types';
 import { createSelector, createSlice, Dispatch } from '@reduxjs/toolkit';
 import { notInArray } from 'src/utils/utils';
 import { Store } from 'types/store';
@@ -18,7 +19,11 @@ export const slice = createSlice({
     },
     created: (messages, { payload: message }) => {
       messages.list.push(message);
-    }
+    },
+    updated: ({ list }, { payload }) => {
+      const message = list.find(m => m.id === payload.messageId);
+      Object.assign(message, payload.partialMessage);
+    },
   }
 });
 
@@ -46,3 +51,10 @@ export const createMessage = (data: any) => (dispatch: Dispatch) => {
     data
   }));
 };
+
+export const updateMessage = (id: string, payload: Partial<Entity.Message>) => (dispatch: Dispatch) => {
+  dispatch(api.wsCallBegan({
+    event: 'MESSAGE_UPDATE',
+    data: { messageId: id, ...payload },
+  }));
+}

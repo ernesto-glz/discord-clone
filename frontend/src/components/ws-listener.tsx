@@ -73,6 +73,9 @@ export const WSListeners: React.FC = () => {
       dispatch(messages.created(message));
       dispatch(auth.updatedUser({ activeDMCS: moveToStart(DMS, channel!.id) }))
     });
+    ws.on('MESSAGE_UPDATE', (args: WS.Args.MessageUpdate) => {
+      dispatch(messages.updated(args));
+    })
     ws.on('CHANNEL_DISPLAY', ({ channelId }: WS.Args.ChannelUpdate) => {
       const { activeDMCS } = state().auth.user!;
       const data = [...activeDMCS, channelId];
