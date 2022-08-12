@@ -3,8 +3,8 @@ import { useAppSelector } from 'src/redux/hooks';
 import { getChannelMessages } from 'src/redux/states/messages';
 import { DMChannelWelcome } from '../views/channel/DMChannelWelcome';
 import { getAvatarUrl } from 'src/utils/utils';
-import InfiniteScroll from 'react-infinite-scroll-component';
 import { ChannelMessagesLoader } from '../views/channel/ChannelMessagesLoader';
+import InfiniteScroll from './InfiniteScroll';
 
 export interface Props extends React.ComponentProps<'div'> {
   wrappedRef: React.RefObject<any>;
@@ -26,7 +26,7 @@ export const ScrollPanel: React.FC<Props> = (props) => {
   const loadedAllMessages = messages.length >= msgCount;
 
   return (
-    <div id="mytarget" className="messages-wrapper">
+    <div className="messages-wrapper">
       <div
         ref={wrappedRef}
         id="channelScroller"
