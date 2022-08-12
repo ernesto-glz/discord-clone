@@ -4,15 +4,13 @@ import {
   HelpCircle as HelpIcon,
 } from '@styled-icons/ionicons-solid';
 import { HeaderButton } from './HeaderButton';
+import { Image } from '../elements/Image';
 
 const FriendsHeader: React.FC = () => {
   return (
     <div className="header-container">
       <div className="menu-options">
-        <img
-          src={`${ASSETS_PATH}img/user-raising-hand.svg`}
-          className="user-raising-hand"
-        />
+        <Image src="/img/user-raising-hand.svg" className="user-raising-hand" />
         <h1 className="title">Friends</h1>
         <div className="divider" />
         <HeaderButton section="ONLINE" name="Online" />

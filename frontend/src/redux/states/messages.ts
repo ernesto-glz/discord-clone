@@ -21,7 +21,7 @@ export const slice = createSlice({
       messages.list.push(message);
     },
     updated: ({ list }, { payload }) => {
-      const message = list.find(m => m.id === payload.messageId);
+      const message = list.find(m => m.id === payload.messageId) as Entity.Message;
       Object.assign(message, payload.partialMessage);
     },
   }

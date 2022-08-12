@@ -5,6 +5,7 @@ import { useAppSelector } from 'src/redux/hooks';
 import { ContextMenu } from '../context-menu';
 import { ContextItem } from '../context-item';
 import { copyToClipboard } from 'src/utils/utils';
+import { Image } from 'src/components/views/elements/Image';
 
 interface Props {
   message: Entity.Message;
@@ -25,7 +26,7 @@ const MessageMenu: React.FC<Props> = ({ message }) => {
         <Separator />
         <ContextItem key={message.id} onClick={() => copyToClipboard(message.id)}>
           <p className="childLeft">Copy ID</p>
-          <img src={`${ASSETS_PATH}img/id.svg`} className="childRight" />
+          <Image src='/img/id.svg' className="childRight" />
         </ContextItem>
       </div>
     </ContextMenu>

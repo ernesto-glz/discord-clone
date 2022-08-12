@@ -2,6 +2,7 @@ import React from 'react';
 import { FriendListItem } from './FriendListItem';
 import { getFriendUsers } from 'src/redux/states/users';
 import { useAppSelector } from 'src/redux/hooks';
+import { Image } from '../elements/Image';
 
 interface Props {
   justOnline?: boolean;
@@ -31,18 +32,12 @@ export const FriendsList: React.FC<Props> = ({ justOnline }) => {
     <React.Fragment>
       {justOnline ? (
         <div className="friends-panel center">
-          <img
-            className="wampus-image"
-            src={`${ASSETS_PATH}img/wampus/wampus_sleeping.svg`}
-          />
+          <Image className="wampus-image" src="/img/wampus/wampus_sleeping.svg" />
           <p className="wampus-message">No one's around to play with Wumpus.</p>
         </div>
       ) : (
         <div className="friends-panel center">
-          <img
-            className="wampus-image"
-            src={`${ASSETS_PATH}img/wampus/wampus_king.svg`}
-          />
+          <Image className="wampus-image" src="/img/wampus/wampus_king.svg" />
           <p className="wampus-message">No friends, only Wampus.</p>
         </div>
       )}

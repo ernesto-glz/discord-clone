@@ -9,8 +9,8 @@ export const LoadingScreen: React.FC = () => {
     <PageWrapper>
       <div className='loading-screen'>
         <video className='spinner' autoPlay muted loop>
-          <source src={`${ASSETS_PATH}media/loading-spinner.webm`} />
-          <source src={`${ASSETS_PATH}media/loading-spinner.mp4`} type="video/mp4" />
+          <source src={_r('/media/loading-spinner.webm')} />
+          <source src={_r('/media/loading-spinner.mp4')} type="video/mp4" />
         </video>
         <h4 className='title'>Did you know</h4>
         <p className='tip'>{DiscordTips[randomTip]}</p>

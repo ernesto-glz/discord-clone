@@ -1,7 +1,9 @@
+import { Image } from "../elements/Image";
+
 export const QRCode = () => (
   <div className="qr-container">
     <div className="qr-border">
-      <img alt="Qr code" src={`${ASSETS_PATH}img/qr_code.png`} loading="lazy" />
+      <Image alt="Qr code" src="/img/qr_code.png" loading="lazy" />
     </div>
     <h3 className="qr-title">Log in with QR Code</h3>
     <p className="qr-desc">

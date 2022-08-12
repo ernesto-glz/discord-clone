@@ -1,6 +1,7 @@
 import React from 'react';
 import { RequestItem } from './RequestItem';
 import { useAppSelector } from 'src/redux/hooks';
+import { Image } from '../elements/Image';
 
 export const PendingRequests: React.FC = () => {
   const requests = useAppSelector((s) => s.requests);
@@ -20,10 +21,7 @@ export const PendingRequests: React.FC = () => {
 
   return (
     <div className="friends-panel center">
-      <img
-        className="wampus-image"
-        src={`${ASSETS_PATH}img/wampus/wampus_only.svg`}
-      />
+      <Image className="wampus-image" src="/img/wampus/wampus_only.svg" />
       <p className="wampus-message">
         There are no pending friend requests. Here's Wampus for now.
       </p>

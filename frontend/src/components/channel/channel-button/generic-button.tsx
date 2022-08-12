@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { Image } from "src/components/views/elements/Image";
 import { useAppSelector } from "src/redux/hooks";
 import { Container, CloseIcon } from './styles';
 
@@ -20,10 +21,10 @@ export const GenericButton: React.FC<Props> = ({ genericImage, displayName }) =>
     <Container className={isActive ? 'active' : ''}>
       <div onClick={onClick}>
         {genericImage === 'FRIEND' && (
-          <img src={`${ASSETS_PATH}img/user-raising-hand.svg`} />
+          <Image src='/img/user-raising-hand.svg' />
         )}
         {genericImage === 'NITRO' && (
-          <img src={`${ASSETS_PATH}img/discord-nitro.svg`} />
+          <Image src='/img/discord-nitro.svg' />
         )}
         <span>{displayName}</span>
       </div>

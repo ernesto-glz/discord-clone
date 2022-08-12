@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import React, { useState } from 'react';
 import { AddFriendInput } from './AddFriendInput';
 import { Result, useAddFriend } from 'src/hooks/friends/useAddFriend';
+import { Image } from '../elements/Image';
 
 export interface AddInputProps {
   focus: boolean;
@@ -54,10 +55,7 @@ export const AddFriend: React.FC = () => {
         </form>
       </div>
       <div className="friends-panel center">
-        <img
-          className="wampus-image"
-          src={`${ASSETS_PATH}img/wampus/wampus_king.svg`}
-        />
+        <Image className="wampus-image" src="/img/wampus/wampus_king.svg" />
         <p className="wampus-message">
           Wumpus is waiting on friends. You don't have to though!
         </p>

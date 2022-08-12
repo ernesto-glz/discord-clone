@@ -1,5 +1,5 @@
 declare global {
   var events: EventEmitter;
-  var ASSETS_PATH: string;
+  var _r: ResolvePathFunction;
 }
 export {};
