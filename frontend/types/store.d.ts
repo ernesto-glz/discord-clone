@@ -17,6 +17,7 @@ export declare namespace Store {
       openModals?: string[];
       friendsSection: 'ONLINE' | 'ALL' | 'PENDING' | 'ADD';
       editingMessageId?: string;
+      lastScrollbarPos: { [channelId: string]: number };
     };
     users: Entity.User[];
     messages: {

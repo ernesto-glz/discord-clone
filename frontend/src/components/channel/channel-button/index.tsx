@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { UserImage } from 'src/components/user-image';
 import { ws } from 'src/ws/websocket';
 import { CloseIcon, Container } from './styles';
-import { useAppSelector } from 'src/redux/hooks';
+import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import { Entity } from '@discord/types';
 import { getAvatarUrl } from 'src/utils/utils';
+import { actions as ui } from 'src/redux/states/ui';
 
 export type Props = { channel: Entity.Channel }
 
@@ -18,9 +19,16 @@ const ChannelButton: React.FC<Props> = ({ channel }) => {
   const [isVisible, setIsVisible] = useState(false);
   const users = useAppSelector((s) => s.users);
   const isOnline = users.find((u) => u.id === channel.dmUserId)?.status === 'ONLINE';
-  const { activeGuild, activeChannel } = useAppSelector((s) => s.ui); 
+  const { activeGuild, activeChannel } = useAppSelector((s) => s.ui);
+  const dispatch = useAppDispatch();
 
   const goToChannel = () => {
+    // save scrollbar position before navigate
+    if (activeChannel) {
+      const position = document.getElementById('channelScroller')?.scrollTop;
+      dispatch(ui.setLastScrollbarPos({ channelId: activeChannel.id, position }));
+    }
+
     if (channel.id !== activeChannel?.id) {
       navigate(`/channels/${activeGuild}/${channel.id}`);
     }
@@ -40,7 +48,7 @@ const ChannelButton: React.FC<Props> = ({ channel }) => {
         />
         <span>{channel.name ?? 'Unknown'}</span>
       </div>
-      {/* 
+      {/*
       {!channelId && notifications > 0 && (
         <NotificationMark>
           <div className="notification">{notifications}</div>

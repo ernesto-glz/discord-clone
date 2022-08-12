@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useAppSelector } from 'src/redux/hooks';
 import { getChannelMessages } from 'src/redux/states/messages';
 import { DMChannelWelcome } from '../views/channel/DMChannelWelcome';
@@ -24,6 +24,12 @@ export const ScrollPanel: React.FC<Props> = (props) => {
   const messages = useAppSelector(getChannelMessages(channel.id));
   const msgCount = useAppSelector((s) => s.messages.total[channel.id]);
   const loadedAllMessages = messages.length >= msgCount;
+  const scrollPosition = useAppSelector((s) => s.ui.lastScrollbarPos[channel.id]);
+
+  useEffect(() => {
+    if (!scrollPosition) return;
+    wrappedRef.current.scrollTo(0, scrollPosition);
+  }, [channel.id]);
 
   return (
     <div className="messages-wrapper">
