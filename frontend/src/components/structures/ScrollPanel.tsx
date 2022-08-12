@@ -1,117 +1,54 @@
-import { UIEventHandler, useEffect, useRef, useState } from 'react';
+import React from 'react';
 import { useAppSelector } from 'src/redux/hooks';
 import { getChannelMessages } from 'src/redux/states/messages';
+import { DMChannelWelcome } from '../views/channel/DMChannelWelcome';
+import { getAvatarUrl } from 'src/utils/utils';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { ChannelMessagesLoader } from '../views/channel/ChannelMessagesLoader';
 
-export interface Props {
-  /* stickyBottom: if set to true, then once the user hits the bottom of
-   * the list, any new children added to the list will cause the list to
-   * scroll down to show the new element, rather than preserving the
-   * existing view.
-   */
-  stickyBottom?: boolean;
-
-  /* className: classnames to add to the top-level div
-   */
-  className?: string;
-
-  /* wrappedRef: ref used to handle scrollBar
-   */
+export interface Props extends React.ComponentProps<'div'> {
   wrappedRef: React.RefObject<any>;
-
-  /* firstMsgRef: ref used to handle load messages
-   */
-  firstMsgRef: React.RefObject<HTMLLIElement>;
-
-  /* firstMsgRef: ref used to track and trigger loadMoreMessages()
-   */
-  loaderRef: React.RefObject<HTMLDivElement>;
-
-  /* onScroll: a callback which is called whenever any scroll happens.
-   */
-  onScroll?: UIEventHandler<HTMLDivElement>;
-
-  /* children: the component to be wrapped
-   */
+  fetchMore: () => void;
   children: React.ReactNode;
 }
 
-export const ScrollPanel: React.FC<Props> = ({
-  stickyBottom = true,
-  onScroll = () => {},
-  wrappedRef,
-  firstMsgRef,
-  loaderRef,
-  children,
-}) => {
-  const [stuckAtBottom, setStuckAtBottom] = useState(false);
-  const [isFilling, setIsFilling] = useState(false);
-  const itemList = useRef<HTMLOListElement>(null);
+const alignBottom = {
+  overflow: 'hidden',
+  display: 'flex',
+  flexDirection: 'column-reverse',
+} as React.CSSProperties;
+
+export const ScrollPanel: React.FC<Props> = (props) => {
+  const { fetchMore, children, wrappedRef } = props;
   const channel = useAppSelector((s) => s.ui.activeChannel)!;
   const messages = useAppSelector(getChannelMessages(channel.id));
-
-  const isAtBottom = () => {
-    const sn = wrappedRef.current!;
-    return sn.scrollHeight - (sn.scrollTop + sn.clientHeight) <= 1;
-  };
-
-  const handleScroll = async (ev: React.UIEvent<HTMLDivElement>) => {
-    const loader = loaderRef.current;
-
-    if (isAtBottom() && stickyBottom && !stuckAtBottom) setStuckAtBottom(true);
-    else if (!isAtBottom() && stuckAtBottom) setStuckAtBottom(false);
-
-    if (
-      !loader ||
-      isFilling ||
-      wrappedRef.current!.scrollTop > loader.scrollHeight
-    )
-      return;
-
-    setIsFilling(true);
-    onScroll(ev);
-  };
-
-  const scrollToBottom = () => {
-    const scroll = wrappedRef.current!;
-    scroll.scrollTop = scroll.scrollHeight;
-  };
-
-  useEffect(() => {
-    firstMsgRef.current?.scrollIntoView({ block: 'center' });
-    setIsFilling(false);
-  }, [messages[0]]);
-
-  useEffect(() => {
-    if (!stuckAtBottom && isAtBottom()) setStuckAtBottom(true);
-    if (stickyBottom) scrollToBottom();
-  }, [messages[messages.length - 1], channel.id]);
-
-  useEffect(() => {
-    events.emit('UPDATE_STUCK_STATE', stuckAtBottom);
-
-    const resizeNotifier = new ResizeObserver(() => {
-      if (!stuckAtBottom || !stickyBottom) return;
-      scrollToBottom();
-    });
-
-    resizeNotifier.observe(wrappedRef.current!);
-    return () => {
-      resizeNotifier.disconnect();
-    };
-  }, [stuckAtBottom]);
+  const msgCount = useAppSelector((s) => s.messages.total[channel.id]);
+  const loadedAllMessages = messages.length >= msgCount;
 
   return (
-    <div className="messages-wrapper">
+    <div id="mytarget" className="messages-wrapper">
       <div
         ref={wrappedRef}
-        onScroll={handleScroll}
+        id="channelScroller"
         className="scrollerBase scroller messages"
       >
-        <div className="start-from-bottom">
-          <ol className="messages-list" ref={itemList}>
-            {children}
-          </ol>
-        </div>
+        <InfiniteScroll
+          dataLength={messages.length}
+          inverse={true}
+          next={() => fetchMore()}
+          hasMore={!loadedAllMessages}
+          loader={<ChannelMessagesLoader messages={messages} />}
+          style={alignBottom}
+          scrollableTarget="channelScroller"
+          endMessage={
+            <DMChannelWelcome
+              imageUrl={getAvatarUrl(channel)}
+              username={channel.name!}
+            />
+          }
+        >
+          <ol className="messages-list">{children}</ol>
+        </InfiniteScroll>
       </div>
     </div>
   );

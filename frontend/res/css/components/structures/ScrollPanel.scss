@@ -7,14 +7,10 @@
     height: 100%;
     overflow-x: hidden;
     overflow-y: scroll;
+    display: flex;
+    flex-direction: column-reverse;
+    will-change: unset;
   }
-}
-
-div.start-from-bottom {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
 }
 
 ol.messages-list {
@@ -22,4 +18,18 @@ ol.messages-list {
   > div.divider {
     height: 30px;
   }
+}
+
+.ChannelSpinner_Top {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.ChannelSpinner_Full {
+  height: calc(100vh - 140px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }

@@ -1,7 +1,7 @@
 import React, { ClipboardEvent, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import { startTyping, stopTyping } from 'src/redux/states/typing';
-import { InputSlate } from '../channel/InputSlate';
+import { InputSlate } from './InputSlate';
 import { findCodeBlocks, getCaretOffset, normalizeHtml } from 'src/utils/dom';
 import { getChannelMessages } from 'src/redux/states/messages';
 import { actions as ui } from 'src/redux/states/ui';

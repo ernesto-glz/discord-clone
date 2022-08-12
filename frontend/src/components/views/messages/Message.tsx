@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { UserImage } from 'src/components/user-image';
 import { Entity } from '@discord/types';
 import { getUserById } from 'src/redux/states/users';
@@ -24,12 +24,7 @@ export interface Props {
 
 const Message: React.FC<Props> = ({ message, wrappedRef }) => {
   const channel = useAppSelector((s) => s.ui.activeChannel)!;
-  const msgCount = useAppSelector((s) => s.messages.total[channel.id]);
   const messages = useAppSelector(getChannelMessages(channel.id));
-  const loadedAllMessages = useMemo(
-    () => messages.length >= msgCount,
-    [messages]
-  );
   const author = useAppSelector(getUserById(message.sender)) as Entity.User;
   const editingMessageId = useAppSelector((s) => s.ui.editingMessageId);
 
@@ -49,8 +44,7 @@ const Message: React.FC<Props> = ({ message, wrappedRef }) => {
   const isActuallyNewDay = () => {
     const index = messages.findIndex((m) => m.id === message.id);
     const prev = messages[index - 1];
-    if (!prev && loadedAllMessages) return true;
-    else if (!prev && !loadedAllMessages) return false;
+    if (!prev) return true;
     return isNewDay(new Date(prev.createdAt), new Date(message.createdAt));
   };
 
