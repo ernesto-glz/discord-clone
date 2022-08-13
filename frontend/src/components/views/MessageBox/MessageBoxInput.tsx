@@ -11,10 +11,11 @@ interface Props {
   boxInputRef: React.RefObject<HTMLDivElement>;
   saveMessage: () => void;
   scrollToBottom: () => void;
+  resetValue: () => void;
 }
 
 export const MessageBoxInput: React.FC<Props> = (props) => {
-  const { contentState, boxInputRef, saveMessage, scrollToBottom  } = props;
+  const { contentState, boxInputRef, saveMessage, scrollToBottom, resetValue } = props;
   const [canSend, setCandSend] = useState(true);
   const [content, setContent] = contentState;
   const user = useAppSelector((s) => s.auth.user)!;
@@ -73,6 +74,7 @@ export const MessageBoxInput: React.FC<Props> = (props) => {
     validateCanSend();
     const selfUserTyping = allUsersTyping.find((u) => u.userId === user.id);
     const emptyMessage = content.replaceAll('\n', '');
+    if (ev.key === 'Backspace' && !emptyMessage && content.length <= 1) resetValue();
     if (ev.key === 'Backspace' && !emptyMessage && selfUserTyping)
       dispatch(stopTyping(channel.id));
   }

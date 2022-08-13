@@ -25,13 +25,17 @@ export const MessageBox: React.FC<Props> = (props) => {
   const {} = useResizeObserver({ scrollbarRef });
   const dispatch = useAppDispatch();
 
+  const resetValue = () => {
+    setContent('');
+    messageBoxRef.current!.textContent = '';
+  }
+
   const saveMessage = () => {
     (editingMessageId)
       ? dispatch(updateMessage(editingMessageId, { content }))
       : dispatch(createMessage({ channelId: channel.id, content: content.trim() }));
 
-    setContent('');
-    messageBoxRef.current!.textContent = '';
+    resetValue();
     dispatch(ui.stoppedEditingMessage());
   };
 
@@ -61,6 +65,7 @@ export const MessageBox: React.FC<Props> = (props) => {
             contentState={[content, setContent]}
             saveMessage={saveMessage}
             scrollToBottom={scrollToBottom}
+            resetValue={resetValue}
           />
           <MessageBoxRightSide />
         </div>
