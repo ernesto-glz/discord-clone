@@ -1,6 +1,5 @@
 import React from 'react';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
-import { UserImage } from '../user-image';
 import { actions as ui } from 'src/redux/states/ui';
 
 import {
@@ -13,6 +12,7 @@ import {
   SettingsIcon
 } from './styles';
 import { getAvatarUrl } from 'src/utils/utils';
+import { BaseAvatar } from '../views/avatars/BaseAvatar';
 
 const UserInfo: React.FC = () => {
   const user = useAppSelector((s) => s.auth.user);
@@ -21,7 +21,7 @@ const UserInfo: React.FC = () => {
   return (user) ? (
     <Container>
       <Profile>
-        <UserImage
+        <BaseAvatar
           imageUrl={getAvatarUrl(user)}
           displayStatus={true}
           isOnline={true}

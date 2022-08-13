@@ -1,9 +1,9 @@
-import React, { useMemo, useState } from 'react';
-import { UserImage } from 'src/components/user-image';
+import React, { useMemo } from 'react';
 import { Profile, UserData } from 'src/components/user-info/styles';
 import { RequestTypes } from '@discord/types';
 import { RequestActionsItem } from './RequestActions';
 import { getAvatarUrl } from 'src/utils/utils';
+import { BaseAvatar } from '../avatars/BaseAvatar';
 
 interface Props {
   request: RequestTypes.Populated;
@@ -20,7 +20,7 @@ export const RequestItem: React.FC<Props> = ({ request, type }) => {
     <li className="list-item">
       <div>
         <Profile>
-          <UserImage imageUrl={getAvatarUrl(requestUser)} />
+          <BaseAvatar imageUrl={getAvatarUrl(requestUser)} />
           <UserData>
             <strong>
               {requestUser.username}

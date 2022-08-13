@@ -1,0 +1,15 @@
+.notificationBadge {
+  background-color: $status-danger;
+  width: 16px;
+  height: 16px;
+  padding-right: 1px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: hsl(0, calc(var(--saturation-factor, 1) * 0%), 100%);
+  flex: 0 0 auto;
+  padding-right: 1px;
+  font-size: 12px;
+  font-weight: 600;
+}

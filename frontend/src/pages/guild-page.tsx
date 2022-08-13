@@ -5,7 +5,7 @@ import PageWrapper from './page-wrapper';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import ServerList from 'src/components/server/server-list';
 import UserInfo from 'src/components/user-info';
-import ChannelList from 'src/components/channel/channel-list';
+import ChannelList from 'src/components/views/ChannelsList/DMChannelsList';
 import { actions as uiActions } from 'src/redux/states/ui';
 import { useParams } from 'react-router-dom';
 import { getChannel } from 'src/redux/states/channels';

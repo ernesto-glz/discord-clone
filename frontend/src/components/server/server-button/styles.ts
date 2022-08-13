@@ -45,18 +45,18 @@ export const Button = styled.button<Props>`
     background-color: var(--notification);
     width: auto;
     height: 16px;
-    padding: 0 4px;
+    padding: 0 5px;
     position: absolute;
     bottom: -4px;
     right: -4px;
-    border-radius: 12px;
-    border: 4px solid var(--background-secondary);
-    text-align: right;
-    font-size: 13px;
-    font-weight: bold;
+    border-radius: 999px;
+    border: 4px solid var(--background-tertiary);
+    font-size: 12px;
+    font-weight: 600;
     color: var(--white);
-    display: ${(props) =>
-      props.mentions && props.mentions > 0 ? 'inline' : 'none'};
+    display: ${(props) => props.mentions && props.mentions > 0 ? 'flex' : 'none'};
+    justify-content: center;
+    align-items: center;
   }
 
   transition: border-radius 0.2s, background-color 0.2s;

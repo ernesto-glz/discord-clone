@@ -1,5 +1,4 @@
 import React from 'react';
-import { UserImage } from 'src/components/user-image';
 import { Entity } from '@discord/types';
 import { getUserById } from 'src/redux/states/users';
 import { useAppSelector } from 'src/redux/hooks';
@@ -16,6 +15,7 @@ import { toHTML } from 'discord-markdown';
 import classNames from 'classnames';
 import { MessageToolbar } from './MessageToolbar';
 import { MessageBox } from '../MessageBox/MessageBox';
+import { BaseAvatar } from '../avatars/BaseAvatar';
 
 export interface Props {
   message: Entity.Message;
@@ -64,7 +64,7 @@ const Message: React.FC<Props> = ({ message, wrappedRef }) => {
         {isActuallyExtra ? (
           <p className="message-date">{getTime(message.createdAt)}</p>
         ) : (
-          <UserImage imageUrl={getAvatarUrl(author)} customSize={40} />
+          <BaseAvatar imageUrl={getAvatarUrl(author)} customSize={40} />
         )}
         <div className="message-wrapper">
           {!isActuallyExtra && (

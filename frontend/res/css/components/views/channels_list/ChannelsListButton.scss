@@ -1,0 +1,79 @@
+.channels-list-button {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+  padding: 1px 10px;
+  padding-right: 6px;
+  border-radius: 5px;
+  background-color: transparent;
+  transition: background-color 0.2s;
+  height: 42px;
+
+  > a {
+    text-decoration: none !important;
+    display: flex;
+    align-items: center;
+    flex: 1 1 auto;
+
+    > .avatarWithText {
+      display: flex;
+      align-items: center;
+      flex-grow: 1;
+      height: 42px;
+    }
+  }
+
+  &.active {
+    background-color: var(--background-modifier-selected);
+    .channelName {
+      color: $white;
+    }
+    &.generic {
+      background-color: $background-modifier-hover;
+    }
+  }
+
+  &:hover {
+    background-color: $background-modifier-hover;
+    .channelName {
+      color: var(--interactive-hover);
+    }
+    .channelButton-close {
+      opacity: 1;
+    }
+    a {
+      color: $interactive-hover !important;
+    }
+    &.generic {
+      .channelName {
+        color: $white;
+      }
+    }
+  }
+}
+
+.channelAvatar {
+  margin-right: 12px;
+}
+
+.channelName {
+  display: flex;
+  align-items: center;
+  color: $channels-default;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 500;
+}
+
+.channelButton-close {
+  opacity: 0;
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+  color: $interactive-normal;
+  transition: color 0.2s;
+  &:hover {
+    color: $white;
+  }
+}

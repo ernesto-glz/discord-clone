@@ -53,3 +53,4 @@ $interactive-muted: hsl(217,calc($saturation-factor * 7.6%),33.5%);
 $interactive-active: hsl(0,calc($saturation-factor*0%),100%);
 $interactive-hover: hsl(210,calc($saturation-factor*2.9%),86.7%);
 $elevation-stroke: 0 0 0 1px hsla(240,calc($saturation-factor*11.1%),1.8%,0.15);
+$status-danger: hsl(359,calc($saturation-factor*82.6%),59.4%);

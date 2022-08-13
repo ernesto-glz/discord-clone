@@ -31,6 +31,11 @@ export const ScrollPanel: React.FC<Props> = (props) => {
     wrappedRef.current.scrollTo(0, scrollPosition);
   }, [channel.id]);
 
+  // Break save position of scrollbar
+  // useEffect(() => {
+  //   wrappedRef.current.scrollTo(0, 0);
+  // }, [messages[messages.length -1]])
+
   return (
     <div className="messages-wrapper">
       <div

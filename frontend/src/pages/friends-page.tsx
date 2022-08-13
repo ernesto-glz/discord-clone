@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import ChannelList from 'src/components/channel/channel-list';
+import ChannelList from 'src/components/views/ChannelsList/DMChannelsList';
 import FriendsPanel from 'src/components/structures/FriendsPanel';
 import FriendsHeader from 'src/components/views/friends/FriendsHeader';
 import RightPanel from 'src/components/structures/RightPanel';

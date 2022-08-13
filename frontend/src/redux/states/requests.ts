@@ -1,4 +1,4 @@
-import { createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit';
+import { createSelector, createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit';
 import { RequestTypes, WS } from '@discord/types';
 import { notInArray } from 'src/utils/utils';
 import { Store } from 'types/store';
@@ -74,4 +74,11 @@ export const acceptRequest = (request: RequestTypes.Populated) => (dispatch: Dis
       data: { request, friendId: data.friendId, channel: data.channel }
     }))
   }));
+};
+
+export const getIncomingRequests = () => {
+  return createSelector(
+    (state: Store.AppState) => state.requests,
+    (requests) => requests.filter((r) => r.type === 'INCOMING')
+  );
 };
