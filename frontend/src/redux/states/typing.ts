@@ -1,5 +1,5 @@
 import { createSelector, createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit';
-import { lessThan } from 'src/utils/date';
+import { getDiffInSeconds, lessThan } from 'src/utils/date';
 import { WS } from '@discord/types';
 import { Store } from 'types/store';
 import { actions as api } from './api';
@@ -40,9 +40,9 @@ export const getTypersInChannel = (channelId: string) => createSelector(
 let lastTypedAt: Date;
 
 export const startTyping = (channelId: string) => (dispatch: Dispatch) => {
-  // Set Message delay
-  const now = new Date();
-  if (lastTypedAt && !lessThan(lastTypedAt, now, 5)) return;
+  const secondsAgo = getDiffInSeconds(new Date(), lastTypedAt);
+
+  if (lastTypedAt && secondsAgo < 5) return;
   lastTypedAt = new Date();
 
   dispatch(api.wsCallBegan({

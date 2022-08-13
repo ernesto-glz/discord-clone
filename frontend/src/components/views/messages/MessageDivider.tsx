@@ -1,10 +1,10 @@
 import React from 'react';
-import { getDate } from 'src/utils/date';
+import { format } from 'date-fns';
 
 type Props = { date: string };
 
 export const MessageDivider: React.FC<Props> = ({ date }) => {
-  const dateString = getDate(date);
+  const dateString = format(new Date(date), 'MMMM dd, yyy');
 
   return (
     <div className="message-divider" role="separator" aria-label={dateString}>

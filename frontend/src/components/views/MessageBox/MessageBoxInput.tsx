@@ -1,6 +1,6 @@
 import React, { ClipboardEvent, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
-import { startTyping, stopTyping } from 'src/redux/states/typing';
+import { getTypersInChannel, startTyping, stopTyping } from 'src/redux/states/typing';
 import { InputSlate } from './InputSlate';
 import { findCodeBlocks, getCaretOffset, normalizeHtml } from 'src/utils/dom';
 import { getChannelMessages } from 'src/redux/states/messages';
@@ -17,8 +17,10 @@ export const MessageBoxInput: React.FC<Props> = (props) => {
   const { contentState, boxInputRef, saveMessage, scrollToBottom  } = props;
   const [canSend, setCandSend] = useState(true);
   const [content, setContent] = contentState;
+  const user = useAppSelector((s) => s.auth.user)!;
   const channel = useAppSelector((s) => s.ui.activeChannel)!;
   const messages = useAppSelector(getChannelMessages(channel.id));
+  const allUsersTyping = useAppSelector(getTypersInChannel(channel.id))
   const selfUser = useAppSelector((s) => s.auth.user)!;
   const lastMessage = messages[messages.length -1];
   const dispatch = useAppDispatch();
@@ -48,7 +50,6 @@ export const MessageBoxInput: React.FC<Props> = (props) => {
     dispatch(startTyping(channel.id));
   };
 
-  // TODO: Stoptyping when content is empty.
   const onKeyDown = async (ev: React.KeyboardEvent<HTMLDivElement>) => {
     if (ev.key === 'Enter' && !ev.shiftKey && canSend) ev.preventDefault();
 
@@ -68,7 +69,13 @@ export const MessageBoxInput: React.FC<Props> = (props) => {
     saveMessage();
   };
 
-  const onKeyUp = () => validateCanSend();
+  const onKeyUp = (ev: React.KeyboardEvent<HTMLDivElement>) => {
+    validateCanSend();
+    const selfUserTyping = allUsersTyping.find((u) => u.userId === user.id);
+    const emptyMessage = content.replaceAll('\n', '');
+    if (ev.key === 'Backspace' && !emptyMessage && selfUserTyping)
+      dispatch(stopTyping(channel.id));
+  }
 
   const onPaste = (ev: ClipboardEvent<HTMLDivElement>) => {
     ev.preventDefault();

@@ -6,10 +6,10 @@ import { useAppSelector } from 'src/redux/hooks';
 import { getAvatarUrl } from 'src/utils/utils';
 import { MessageDivider } from 'src/components/views/messages/MessageDivider';
 import {
-  dateFormatted,
+  formatDate,
+  getDiffInDays,
+  getDiffInMinutes,
   getTime,
-  isExtraForTime,
-  isNewDay,
 } from 'src/utils/date';
 import { getChannelMessages } from 'src/redux/states/messages';
 import { toHTML } from 'discord-markdown';
@@ -36,8 +36,10 @@ const Message: React.FC<Props> = ({ message, wrappedRef }) => {
 
     if (!prev) return false;
 
-    const minSince = isExtraForTime(prev.createdAt, message.createdAt);
-    return minSince && prev.sender === message.sender;
+    const minSince = getDiffInMinutes(message.createdAt, prev.createdAt);
+    const minsToSeparate = 5;
+
+    return minSince < minsToSeparate && prev.sender === message.sender;
   };
 
   const isActuallyExtra = isExtra();
@@ -45,7 +47,8 @@ const Message: React.FC<Props> = ({ message, wrappedRef }) => {
     const index = messages.findIndex((m) => m.id === message.id);
     const prev = messages[index - 1];
     if (!prev) return true;
-    return isNewDay(new Date(prev.createdAt), new Date(message.createdAt));
+
+    return getDiffInDays(message.createdAt, prev.createdAt) > 0;
   };
 
   return (
@@ -67,7 +70,7 @@ const Message: React.FC<Props> = ({ message, wrappedRef }) => {
           {!isActuallyExtra && (
             <div className="message-header">
               <span>{author.username}</span>
-              <time>{dateFormatted(message.createdAt) ?? 'Unknown Date'}</time>
+              <time>{formatDate(message.createdAt) ?? 'Unknown Date'}</time>
             </div>
           )}
           {editingMessageId === message.id ? (
