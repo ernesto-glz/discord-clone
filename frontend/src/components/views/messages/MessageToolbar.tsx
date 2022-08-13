@@ -2,7 +2,7 @@ import React from 'react';
 import { Pencil } from '@styled-icons/boxicons-solid';
 import { TrashFill } from '@styled-icons/bootstrap';
 import { Entity } from '@discord/types';
-import { useAppDispatch } from 'src/redux/hooks';
+import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import { actions as ui } from 'src/redux/states/ui';
 
 interface Props {
@@ -10,9 +10,10 @@ interface Props {
 }
 
 export const MessageToolbar: React.FC<Props> = ({ message }) => {
+  const self = useAppSelector((s) => s.auth.user)!;
   const dispatch = useAppDispatch();
 
-  return (
+  return (self.id === message.sender) ? (
     <div className="messageToolbar-container">
       <div
         className="toolbar-button"
@@ -24,5 +25,5 @@ export const MessageToolbar: React.FC<Props> = ({ message }) => {
         <TrashFill className="dangerous" />
       </div>
     </div>
-  );
+  ) : null;
 };

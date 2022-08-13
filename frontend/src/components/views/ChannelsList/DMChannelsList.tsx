@@ -5,6 +5,7 @@ import { useAppSelector } from 'src/redux/hooks';
 import { GenericListButton } from './GenericListButton';
 import { getDMChannels } from 'src/redux/states/channels';
 import { Add } from '@styled-icons/material';
+import { EmptyDMS } from 'src/components/images/EmptyDMS';
 
 const ChannelList: React.FC = () => {
   const DMChannels = useAppSelector(getDMChannels());
@@ -19,10 +20,15 @@ const ChannelList: React.FC = () => {
         <Add />
       </div>
 
-      {DMChannels.length > 0 &&
+      {DMChannels.length > 0 ? (
         DMChannels.map((channel: Entity.Channel) => (
           <ChannelButton channel={channel} key={channel.id} />
-        ))}
+        ))
+      ) : (
+        <div style={{ width: '100%' }}>
+          <EmptyDMS />
+        </div>
+      )}
     </div>
   );
 };
