@@ -9,13 +9,13 @@ export default class implements WSEvent<'FRIEND_REQUEST_ACCEPT'> {
 
   public async invoke(ws: WSGateway, client: Socket, { request, friendId, channel }: WS.Params.RequestAccept) {
     const selfId = ws.sessions.userId(client);
-    const [fromInstances, toInstances] = app.sessions.getInstancesFromRequest(request);
+    const [senderSessions, receiverSessions] = app.sessions.getSessionsFromRequest(request);
     
-    this.joinRooms(ws, client, { channel, from: fromInstances });
+    this.joinRooms(ws, client, { channel, from: senderSessions });
 
     return [{
       emit: 'NEW_FRIEND' as const,
-      to: fromInstances ?? [],
+      to: senderSessions,
       send: {
         requestId: request.id,
         channel: await app.channels.fillInfo(channel, friendId),
@@ -23,7 +23,7 @@ export default class implements WSEvent<'FRIEND_REQUEST_ACCEPT'> {
       }
     }, {
       emit: 'NEW_FRIEND' as const,
-      to: toInstances ?? [],
+      to: receiverSessions,
       send: {
         requestId: request.id,
         channel: await app.channels.fillInfo(channel, selfId),

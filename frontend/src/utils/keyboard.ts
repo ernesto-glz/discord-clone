@@ -38,5 +38,13 @@ export const allowedKeys = [
   '9',
 ];
 
-export const actionKeys = ['Backspace', 'Enter'];
+export const actionKeys = [
+  'Backspace',
+  'Enter',
+  'Shift',
+  'ArrowLeft',
+  'ArrowRight',
+  'ArrowUp',
+  'ArrowDown',
+];
 export const numberKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];

@@ -13,18 +13,13 @@ interface Props {
 
 export const FriendListItem: React.FC<Props> = ({ friend }) => {
   const users = useAppSelector((s) => s.users);
-  const isOnline =
-    users.find((u) => u.id === friend.id)?.status === 'ONLINE' ?? false;
-  const [showDiscriminator, setShowDiscriminator] = useState(false);
+  const isOnline = users.find((u) => u.id === friend.id)?.status === 'ONLINE';
   const dispatch = useAppDispatch();
 
+  const onClick = () => dispatch(displayChannel(friend.id));
+
   return (
-    <li
-      className="list-item"
-      onMouseOver={() => setShowDiscriminator(true)}
-      onMouseLeave={() => setShowDiscriminator(false)}
-      onClick={() => dispatch(displayChannel(friend.id))}
-    >
+    <li className="list-item" onClick={onClick}>
       <div>
         <Profile>
           <UserImage
@@ -35,7 +30,9 @@ export const FriendListItem: React.FC<Props> = ({ friend }) => {
           <UserData>
             <strong>
               {friend.username}
-              <span>{showDiscriminator && `#${friend.discriminator}`}</span>
+              <span className="discriminator" style={{ opacity: 0 }}>
+                #{friend.discriminator}
+              </span>
             </strong>
 
             <span className="userStatus">

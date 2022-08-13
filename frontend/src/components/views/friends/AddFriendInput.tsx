@@ -1,6 +1,6 @@
 import React from 'react';
 import { allowedKeys } from 'src/utils/keyboard';
-import { actionKeys, numberKeys } from '../../../utils/keyboard';
+import { actionKeys, numberKeys } from 'src/utils/keyboard';
 
 interface FormProps extends React.ComponentProps<'input'> {
   error?: string;
@@ -9,36 +9,34 @@ interface FormProps extends React.ComponentProps<'input'> {
 export const AddFriendInput = React.forwardRef<HTMLInputElement, FormProps>(
   (props, ref) => {
     const onKeyDown = (ev: React.KeyboardEvent<HTMLInputElement>) => {
-      const currentVal = ev.currentTarget.value;
+      // TODO: Refactor this code
+      const currentVal = ev.target.value;
       const keyValue = ev.key.toString();
-      const [isNumeric, isAllowedKey] = [
+      const [isNumeric, isAllowedKey, isActionKey] = [
         numberKeys.includes(keyValue),
-        allowedKeys.includes(keyValue.toLowerCase()) ||
-          actionKeys.includes(keyValue),
+        allowedKeys.includes(keyValue.toLowerCase()) || actionKeys.includes(keyValue),
+        actionKeys.includes(keyValue)
       ];
 
+      const tagIndex = currentVal.indexOf('#');
+      const caretOffset = ev.target.selectionStart!;
+      const tagIncluded = tagIndex !== -1;
+      const [, discriminator] = currentVal.split('#');
+
       if (!isAllowedKey) ev.preventDefault();
-      else if (
-        currentVal.includes('#') &&
-        !isNumeric &&
-        !actionKeys.includes(keyValue)
-      )
-        ev.preventDefault();
-      else if (props.onKeyDown) {
-        props.onKeyDown(ev);
-      }
+      else if (tagIncluded && caretOffset -1 < tagIndex && isAllowedKey) return;
+      else if (discriminator?.length >= 4 && !isActionKey) ev.preventDefault();
+      else if (tagIncluded && !isNumeric && !isActionKey) ev.preventDefault();
     };
 
     return (
-      <div className="input-wrapper">
-        <input
-          ref={ref}
-          {...props}
-          onKeyDown={onKeyDown}
-          className="add-friend-input"
-          autoComplete="off"
-        />
-      </div>
+      <input
+        ref={ref}
+        {...props}
+        onKeyDown={onKeyDown}
+        className="add-friend-input"
+        autoComplete="off"
+      />
     );
   }
 );

@@ -47,13 +47,11 @@ const LoginPage: React.FC = () => {
                 Forgot your password?
               </button>
               <div className="mb-20" />
-              {loading ? (
-                <Button disabled>
-                  <PulseLoader color="white" size={7} />
-                </Button>
-              ) : (
-                <Button>Login</Button>
-              )}
+
+              <Button disabled={loading}>
+                {loading ? <PulseLoader color="white" size={7} /> : 'Login'}
+              </Button>
+
               <div className="form-footer">
                 <span>Need an account?</span>
                 <button type="button" onClick={() => navigate('/register')}>

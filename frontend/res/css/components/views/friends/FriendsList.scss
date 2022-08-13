@@ -32,15 +32,15 @@
         box-shadow: none;
         border-radius: 8px;
         border-color: transparent;
+        .discriminator {
+          opacity: 1 !important;
+        }
+        .action-button {
+          background-color: $background-tertiary;
+        }
       }
 
-      &:first-child {
-        border-top: 1px solid $background-modifier-accent;
-      }
-
-      &:not(:last-child) {
-        border-bottom: 1px solid $background-modifier-accent;
-      }
+      border-top: 1px solid $background-modifier-accent;
     }
 
     &::-webkit-scrollbar-thumb {

@@ -42,13 +42,11 @@ const RegisterPage: React.FC = () => {
               type="password"
             />
             <div className="mb-20" />
-            {loading ? (
-              <Button disabled>
-                <PulseLoader color="white" size={7} />
-              </Button>
-            ) : (
-              <Button>Continue</Button>
-            )}
+
+            <Button disabled={loading}>
+              {loading ? <PulseLoader color="white" size={7} /> : 'Continue'}
+            </Button>
+
             <div className="form-footer">
               <button type="button" onClick={() => navigate('/login')}>
                 Already have an account ?

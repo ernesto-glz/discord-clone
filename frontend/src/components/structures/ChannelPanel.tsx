@@ -30,7 +30,6 @@ const ChannelPanel: React.FC = () => {
         ))}
         <div className="divider" />
       </ScrollPanel>
-
       <MessageBox scrollbarRef={scrollbarRef} />
     </div>
   );

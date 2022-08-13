@@ -1,8 +1,9 @@
+import { _r } from 'src/services/url-service'
 type Sound = 'STARTUP_JAPANESE' | 'NEW_MESSAGE';
 
 const urls = {
-  NEW_MESSAGE: '/assets/songs/message_notification.mp3',
-  STARTUP_JAPANESE: '/assets/songs/startup_japanese.mp3'
+  NEW_MESSAGE: _r('/media/message_notification.mp3'),
+  STARTUP_JAPANESE: _r('/media/startup_japanese.mp3')
 };
 
 export const playSound = (sound: Sound) => {

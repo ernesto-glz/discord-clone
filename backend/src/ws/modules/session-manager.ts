@@ -12,20 +12,20 @@ export class SessionManager extends Map<string, string> {
     return this.get(client.id);
   }
 
-  public getInstancesFromUserId(userId: string) {
+  public getSessions(userId: string) {
     return Array.from(this.entries())
       .filter(([, value]) => value === userId)
       .map(([key]) => key);
   }
 
   public isOnline(userId: string) {
-    return this.getInstancesFromUserId(userId)?.length ? true : false;
+    return this.getSessions(userId)?.length ? true : false;
   }
 
-  public getInstancesFromRequest(request: RequestTypes.Populated) {
+  public getSessionsFromRequest(request: RequestTypes.Populated) {
     const { from, to } = request;
-    const fromInstances = this.getInstancesFromUserId(from.id);
-    const toInstances = this.getInstancesFromUserId(to.id);
-    return [fromInstances, toInstances];
+    const senderSessions = this.getSessions(from.id);
+    const receiverSessions = this.getSessions(to.id);
+    return [senderSessions, receiverSessions];
   }
 }

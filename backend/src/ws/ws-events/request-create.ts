@@ -7,15 +7,15 @@ export default class implements WSEvent<'FRIEND_REQUEST_CREATE'> {
   public on = 'FRIEND_REQUEST_CREATE' as const;
 
   public async invoke(ws: WSGateway, client: Socket, { request }: WS.Params.RequestCreate) {
-    const [fromInstances, toInstances] = app.sessions.getInstancesFromRequest(request);
+    const [senderSessions, receiverSessions] = app.sessions.getSessionsFromRequest(request);
 
     return [{
       emit: this.on,
-      to: fromInstances,
+      to: senderSessions,
       send: { request: { ...request, type: 'OUTGOING' } }
     }, {
       emit: this.on,
-      to: toInstances,
+      to: receiverSessions,
       send: { request: { ...request, type: 'INCOMING' } }
     }];
   }

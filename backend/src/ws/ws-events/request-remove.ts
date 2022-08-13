@@ -7,15 +7,15 @@ export default class implements WSEvent<'FRIEND_REQUEST_REMOVE'> {
   public on = 'FRIEND_REQUEST_REMOVE' as const;
 
   public async invoke(ws: WSGateway, client: Socket, { request }: WS.Params.RequestRemove) {
-    const [fromInstances, toInstances] = app.sessions.getInstancesFromRequest(request);
+    const [senderSessions, receiverSessions] = app.sessions.getSessionsFromRequest(request);
 
     return [{
       emit: this.on,
-      to: fromInstances ?? [''],
+      to: senderSessions ?? [''],
       send: { requestId: request.id }
     }, {
       emit: this.on,
-      to: toInstances ?? [''],
+      to: receiverSessions ?? [''],
       send: { requestId: request.id }
     }];
   }

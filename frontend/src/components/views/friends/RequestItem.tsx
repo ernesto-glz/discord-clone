@@ -15,22 +15,17 @@ export const RequestItem: React.FC<Props> = ({ request, type }) => {
     () => (type === 'OUTGOING' ? request.to : request.from),
     [request]
   );
-  const [showDiscriminator, setShowDiscriminator] = useState(false);
 
   return (
-    <li
-      className="list-item"
-      onMouseOver={() => setShowDiscriminator(true)}
-      onMouseLeave={() => setShowDiscriminator(false)}
-    >
+    <li className="list-item">
       <div>
         <Profile>
           <UserImage imageUrl={getAvatarUrl(requestUser)} />
           <UserData>
             <strong>
               {requestUser.username}
-              <span>
-                {showDiscriminator && `#${requestUser.discriminator}`}
+              <span className="discriminator" style={{ opacity: 0 }}>
+                #{requestUser.discriminator}
               </span>
             </strong>
             <span>

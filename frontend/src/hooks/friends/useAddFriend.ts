@@ -56,5 +56,5 @@ export const useAddFriend = () => {
     };
   }, []);
 
-  return { onSubmit, result, register, resetStatus };
+  return { onSubmit, result, register, resetStatus, getValues };
 };

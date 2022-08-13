@@ -10,7 +10,7 @@ export interface AddInputProps {
 }
 
 export const AddFriend: React.FC = () => {
-  const { onSubmit, register, result, resetStatus } = useAddFriend();
+  const { onSubmit, register, result, resetStatus, getValues } = useAddFriend();
   const [focused, setFocused] = useState(false);
 
   return (
@@ -32,16 +32,20 @@ export const AddFriend: React.FC = () => {
           >
             <div className="inputWrapper">
               <AddFriendInput
-                maxLength={40}
+                maxLength={37}
                 {...register('target')}
                 autoFocus
                 onFocus={() => setFocused(true)}
                 onBlur={() => setFocused(false)}
                 placeholder="Enter a Username#0000"
-                onKeyDown={resetStatus}
+                onInput={resetStatus}
               />
             </div>
-            <button className="button send" type="submit">
+            <button
+              className="button send"
+              type="submit"
+              disabled={!getValues('target')}
+            >
               Send Friend Request
             </button>
           </div>
