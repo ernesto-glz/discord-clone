@@ -1,4 +1,5 @@
 import React from 'react';
+import { BaseAvatar } from 'src/components/views/avatars/BaseAvatar';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import { actions as ui } from 'src/redux/states/ui';
 import { getAvatarUrl } from 'src/utils/utils';
@@ -38,7 +39,7 @@ export const MyAccount: React.FC<Props> = ({ changeOption }) => {
         <div className="banner" />
         <UserInfoRegion>
           <UserAvatar>
-            <img src={getAvatarUrl(user)} />
+            <BaseAvatar customSize={80} imageUrl={getAvatarUrl(user)} />
           </UserAvatar>
           <ProfileUsername>
             <div className="userTag">

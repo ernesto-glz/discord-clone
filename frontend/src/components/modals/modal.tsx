@@ -34,7 +34,7 @@ const Modal: React.FC<Props> = ({
   if (background) {
     return isOpen
       ? ReactDOM.createPortal(
-          <div onMouseUp={handleClick} className="base-modal bg-modal">
+          <div onMouseDown={handleClick} className="base-modal bg-modal">
             <motion.div
               ref={modalRef}
               initial="initial"

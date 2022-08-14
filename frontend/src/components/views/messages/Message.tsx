@@ -64,11 +64,7 @@ const Message: React.FC<Props> = ({ message, wrappedRef }) => {
         {isActuallyExtra ? (
           <p className="message-date">{getTime(message.createdAt)}</p>
         ) : (
-          <BaseAvatar
-            imageUrl={getAvatarUrl(author)}
-            customSize={40}
-            customHeight={40}
-          />
+          <BaseAvatar imageUrl={getAvatarUrl(author)} customSize={40} />
         )}
         <div className="message-wrapper">
           {!isActuallyExtra && (
