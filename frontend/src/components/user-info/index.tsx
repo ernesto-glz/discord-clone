@@ -1,7 +1,6 @@
 import React from 'react';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import { actions as ui } from 'src/redux/states/ui';
-
 import {
   Container,
   Profile,

@@ -6,17 +6,18 @@ interface Props extends React.ComponentProps<'div'> {
   displayStatus?: boolean;
   isOnline?: boolean;
   customSize?: number;
+  customHeight?: number;
 }
 
 export const BaseAvatar: React.FC<Props> = (props) => {
-  const { imageUrl, displayStatus, isOnline = false, customSize } = props;
+  const { imageUrl, displayStatus, isOnline = false, customSize, customHeight } = props;
   return (
-    <div className={props.className + ' avatar-container'}>
+    <div className={'avatar-container ' + props.className}>
       <img
         className="base-avatar"
         src={imageUrl}
         alt="avatar"
-        style={{ width: customSize }}
+        style={{ width: customSize, height: customHeight }}
       />
 
       {displayStatus && (

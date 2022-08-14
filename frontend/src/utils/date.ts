@@ -7,8 +7,8 @@ import {
   isYesterday,
 } from 'date-fns';
 
-export const formatDate = (date: string | Date) => {
-  date = new Date(date);
+export const formatDate = (dateStr: string | Date) => {
+  const date = new Date(dateStr);
   if (isToday(date)) return `Today at ${format(date, 'hh:mm a')}`;
   if (isYesterday(date)) return `Yesterday at ${format(date, 'hh:mm a')}`;
   return format(date, 'MM/dd/yyy');
@@ -26,9 +26,4 @@ export function getDiffInMinutes(dateLeft: string, dateRight: string) {
 
 export function getDiffInSeconds(dateLeft: Date, dateRight: Date) {
   return differenceInSeconds(new Date(dateLeft), new Date(dateRight));
-}
-
-export function lessThan(prevDate: Date, newDate: Date, seconds: number) {
-  const difference = newDate.getSeconds() - prevDate.getSeconds();
-  return difference > seconds || newDate.getMinutes() !== prevDate.getMinutes();
 }

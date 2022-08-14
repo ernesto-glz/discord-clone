@@ -10,7 +10,7 @@ export const PendingRequests: React.FC = () => {
     return (
       <div className="friends-panel flex-column">
         <h2 className="list-title">PENDING - {requests.length}</h2>
-        <ul className="list-body scrollerBase scroller">
+        <ul className="list-body scrollerBase">
           {requests.map((request, i) => (
             <RequestItem request={request} key={i} type={request.type!} />
           ))}

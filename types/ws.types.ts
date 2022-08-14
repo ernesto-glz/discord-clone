@@ -86,7 +86,7 @@ export declare namespace WS {
     }
 
     export interface UserUpdate {
-      userId: string;
+      token: string;
       partialUser: {
         username?: string;
         discriminator?: string;

@@ -1,5 +1,5 @@
 import { WS } from '@discord/types';
-import { createAction } from '@reduxjs/toolkit';
+import { createAction, Dispatch } from '@reduxjs/toolkit';
 
 export interface APIArgs {
   data?: object;
@@ -24,3 +24,19 @@ export const actions = {
   wsCallSucceded: createAction<{}>('api/wsCallSucceeded'),
   wsCallFailed: createAction<{}>('api/wsCallFailed')
 };
+
+type Args = { hash: string, url: string };
+export const uploadFile = (file: File, callback?: (args: Args) => any) => (dispatch: Dispatch) => {
+  const formData = new FormData();
+  formData.append('file', file);
+
+  dispatch(actions.restCallBegan({
+    method: 'post',
+    url: '/upload',
+    data: formData,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+    callback,
+  }));
+}

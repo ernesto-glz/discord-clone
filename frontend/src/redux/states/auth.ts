@@ -62,7 +62,7 @@ export const loginUser = (credentials: Credentials) => (dispatch: Dispatch<any>)
     errorCallback: (error: any) => {
       const response = error.response;
       if (!response?.data) return;
-      
+
       const errors = response.data?.errors;
       events.emit('LOGIN_FAILED', errors ?? [{ message: response.data }]);
     }
@@ -81,7 +81,7 @@ export const registerUser = (payload: any) => (dispatch: Dispatch<any>) => {
     errorCallback: (error: any) => {
       const response = error.response;
       if (!response?.data) return;
-      
+
       const errors = response.data?.errors;
       events.emit('REGISTER_FAILED', errors ?? [{ message: response.data }]);
     }
@@ -103,14 +103,14 @@ export const changeUsername = (payload: any) => (dispatch: Dispatch) => {
     callback: (data) => {
       dispatch(api.wsCallBegan({
         event: 'USER_UPDATE',
-        data
+        data: { ...data, token: token() }
       }));
       events.emit('CHANGE_USERNAME_SUCCEEDED');
     },
     errorCallback: (error) => {
       const response = error.response;
       if (!response?.data) return;
-      
+
       const errors = response.data?.errors;
       events.emit('CHANGE_USERNAME_FAILED', errors ?? [{ message: response.data }]);
     }
@@ -128,7 +128,7 @@ export const changePassword = (payload: any) => (dispatch: Dispatch) => {
     errorCallback: (error) => {
       const response = error.response;
       if (!response?.data) return;
-      
+
       const errors = response.data?.errors;
       events.emit('CHANGE_PASSWORD_FAILED', errors ?? [{ message: response.data }]);
     }
@@ -143,14 +143,14 @@ export const deleteAccount = (payload: any) => (dispatch: Dispatch<any>) => {
     callback: (data) => {
       dispatch(api.wsCallBegan({
         event: 'USER_UPDATE',
-        data
+        data: { ...data, token: token() }
       }));
       dispatch(logoutUser());
     },
     errorCallback: (error) => {
       const response = error.response;
       if (!response?.data) return;
-      
+
       const errors = response.data?.errors;
       events.emit('ACCOUNT_DELETE_FAILED', errors ?? [{ message: response.data }])
     }

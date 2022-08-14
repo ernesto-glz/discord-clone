@@ -19,7 +19,7 @@ export const FriendsList: React.FC<Props> = ({ justOnline }) => {
         <h2 className="list-title">
           {justOnline ? 'ONLINE' : 'ALL FRIENDS'} - {users.length}
         </h2>
-        <ul className="list-body scrollerBase scroller">
+        <ul className="list-body scrollerBase">
           {users.map((user) => (
             <FriendListItem key={user.id} friend={user} />
           ))}

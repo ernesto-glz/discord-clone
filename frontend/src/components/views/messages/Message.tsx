@@ -4,18 +4,18 @@ import { getUserById } from 'src/redux/states/users';
 import { useAppSelector } from 'src/redux/hooks';
 import { getAvatarUrl } from 'src/utils/utils';
 import { MessageDivider } from 'src/components/views/messages/MessageDivider';
+import { getChannelMessages } from 'src/redux/states/messages';
+import { toHTML } from 'discord-markdown';
+import { MessageToolbar } from './MessageToolbar';
+import { MessageBox } from '../MessageBox/MessageBox';
+import { BaseAvatar } from '../avatars/BaseAvatar';
 import {
   formatDate,
   getDiffInDays,
   getDiffInMinutes,
   getTime,
 } from 'src/utils/date';
-import { getChannelMessages } from 'src/redux/states/messages';
-import { toHTML } from 'discord-markdown';
 import classNames from 'classnames';
-import { MessageToolbar } from './MessageToolbar';
-import { MessageBox } from '../MessageBox/MessageBox';
-import { BaseAvatar } from '../avatars/BaseAvatar';
 
 export interface Props {
   message: Entity.Message;
@@ -64,7 +64,11 @@ const Message: React.FC<Props> = ({ message, wrappedRef }) => {
         {isActuallyExtra ? (
           <p className="message-date">{getTime(message.createdAt)}</p>
         ) : (
-          <BaseAvatar imageUrl={getAvatarUrl(author)} customSize={40} />
+          <BaseAvatar
+            imageUrl={getAvatarUrl(author)}
+            customSize={40}
+            customHeight={40}
+          />
         )}
         <div className="message-wrapper">
           {!isActuallyExtra && (

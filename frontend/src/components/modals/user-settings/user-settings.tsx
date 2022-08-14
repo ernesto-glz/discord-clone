@@ -19,6 +19,7 @@ import {
   SidebarRegion,
   ToolsContainer
 } from './styles';
+import { UserProfile } from './UserProfile';
 
 export type Options = 'Account' | 'Profile' | 'Requests';
 export type ItemProps = { option: Options; name: string };
@@ -90,7 +91,7 @@ export const UserSettings: React.FC = () => {
                 {activeOption === 'Account' && (
                   <MyAccount changeOption={setActiveOption} />
                 )}
-                {activeOption === 'Profile' && <h1>Not implemented</h1>}
+                {activeOption === 'Profile' && <UserProfile />}
                 {activeOption === 'Requests' && <h1>Not Implemented</h1>}
               </div>
             </ContentWrapper>

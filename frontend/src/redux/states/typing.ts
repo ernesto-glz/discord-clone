@@ -1,5 +1,5 @@
 import { createSelector, createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit';
-import { getDiffInSeconds, lessThan } from 'src/utils/date';
+import { getDiffInSeconds } from 'src/utils/date';
 import { WS } from '@discord/types';
 import { Store } from 'types/store';
 import { actions as api } from './api';
