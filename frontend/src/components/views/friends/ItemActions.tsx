@@ -1,6 +1,6 @@
 import React, { MouseEvent } from 'react';
-import { useAppDispatch } from 'src/redux/hooks';
-import { displayChannel } from 'src/redux/states/channels';
+import { useAppDispatch } from 'src/store/hooks';
+import { displayChannel } from 'src/store/states/channels';
 import { Message as MessageIcon } from '@styled-icons/boxicons-solid';
 import { DotsVerticalRounded as DotsIcon } from '@styled-icons/boxicons-regular';
 

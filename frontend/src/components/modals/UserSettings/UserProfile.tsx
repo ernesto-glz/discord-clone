@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from 'src/components/views/elements/Button';
-import { useAppDispatch } from 'src/redux/hooks';
-import { actions as ui } from 'src/redux/states/ui';
+import { useAppDispatch } from 'src/store/hooks';
+import { actions as ui } from 'src/store/states/ui';
 import { EditAvatar } from '../EditAvatar/EditAvatar';
 import { UploadAvatar } from '../UploadAvatar/UploadAvatar';
 

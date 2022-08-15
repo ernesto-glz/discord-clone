@@ -1,6 +1,6 @@
-import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
+import { useAppDispatch, useAppSelector } from 'src/store/hooks';
 import { EditButton, ItemWrapper, Value } from './styles';
-import { actions as ui } from 'src/redux/states/ui';
+import { actions as ui } from 'src/store/states/ui';
 
 export const ListItemUsername = () => {
   const user = useAppSelector((s) => s.auth.user)!;

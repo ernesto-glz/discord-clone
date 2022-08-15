@@ -1,8 +1,8 @@
 import React from 'react';
 import { OfflineStatus } from 'src/components/images/user-status/offline';
 import { OnlineStatus } from 'src/components/images/user-status/online';
-import { getUserById } from 'src/redux/states/users';
-import { useAppSelector } from 'src/redux/hooks';
+import { getUserById } from 'src/store/states/users';
+import { useAppSelector } from 'src/store/hooks';
 import {
   FileTray as FileIcon,
   HelpCircle as HelpIcon,

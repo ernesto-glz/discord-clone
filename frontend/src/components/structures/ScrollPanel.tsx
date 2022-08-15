@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { useAppSelector } from 'src/redux/hooks';
-import { getChannelMessages } from 'src/redux/states/messages';
+import { useAppSelector } from 'src/store/hooks';
+import { getChannelMessages } from 'src/store/states/messages';
 import { DMChannelWelcome } from '../views/channel/DMChannelWelcome';
 import { getAvatarUrl } from 'src/utils/utils';
 import { ChannelMessagesLoader } from '../views/channel/ChannelMessagesLoader';

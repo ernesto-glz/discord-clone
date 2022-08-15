@@ -1,10 +1,10 @@
 import React from 'react';
 import { Entity } from '@discord/types';
-import { getUserById } from 'src/redux/states/users';
-import { useAppSelector } from 'src/redux/hooks';
+import { getUserById } from 'src/store/states/users';
+import { useAppSelector } from 'src/store/hooks';
 import { getAvatarUrl } from 'src/utils/utils';
 import { MessageDivider } from 'src/components/views/messages/MessageDivider';
-import { getChannelMessages } from 'src/redux/states/messages';
+import { getChannelMessages } from 'src/store/states/messages';
 import { toHTML } from 'discord-markdown';
 import { MessageToolbar } from './MessageToolbar';
 import { MessageBox } from '../MessageBox/MessageBox';

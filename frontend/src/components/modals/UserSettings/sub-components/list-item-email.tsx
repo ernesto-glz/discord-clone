@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useAppSelector } from 'src/redux/hooks';
+import { useAppSelector } from 'src/store/hooks';
 import { EditButton, ItemWrapper, Value } from './styles';
 
 export const ListItemEmail = () => {

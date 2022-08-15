@@ -1,10 +1,10 @@
 import React, { ClipboardEvent, useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
-import { getTypersInChannel, startTyping, stopTyping } from 'src/redux/states/typing';
+import { useAppDispatch, useAppSelector } from 'src/store/hooks';
+import { getTypersInChannel, startTyping, stopTyping } from 'src/store/states/typing';
 import { InputSlate } from './InputSlate';
 import { findCodeBlocks, getCaretOffset, normalizeHtml } from 'src/utils/dom';
-import { getChannelMessages } from 'src/redux/states/messages';
-import { actions as ui } from 'src/redux/states/ui';
+import { getChannelMessages } from 'src/store/states/messages';
+import { actions as ui } from 'src/store/states/ui';
 
 interface Props {
   contentState: [string, any];

@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
+import { useAppDispatch, useAppSelector } from 'src/store/hooks';
 import { useResizeObserver } from 'src/hooks/useResizeObserver';
 import { MessageBoxFooter } from './MessageBoxFooter';
 import { MessageBoxInput } from './MessageBoxInput';
 import { MessageBoxLeftSide } from './MessageBoxLeftSide';
 import { MessageBoxRightSide } from './MessageBoxRightSide';
-import { actions as ui } from 'src/redux/states/ui';
-import { createMessage, updateMessage } from 'src/redux/states/messages';
+import { actions as ui } from 'src/store/states/ui';
+import { createMessage, updateMessage } from 'src/store/states/messages';
 import classNames from 'classnames';
 import { replaceCaret } from 'src/utils/dom';
 

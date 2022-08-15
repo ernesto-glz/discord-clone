@@ -1,8 +1,8 @@
 import React from 'react';
 import { PulseLoader } from 'react-spinners';
 import { useTypingUsers } from 'src/hooks/useTypingUsers';
-import { useAppDispatch } from 'src/redux/hooks';
-import { actions as ui } from 'src/redux/states/ui';
+import { useAppDispatch } from 'src/store/hooks';
+import { actions as ui } from 'src/store/states/ui';
 
 interface Props {
   editMode?: boolean;

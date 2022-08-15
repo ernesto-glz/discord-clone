@@ -1,7 +1,7 @@
 import React, { FormEvent } from 'react';
 import { Close } from '@styled-icons/material';
-import { useAppDispatch } from 'src/redux/hooks';
-import { actions as ui } from 'src/redux/states/ui';
+import { useAppDispatch } from 'src/store/hooks';
+import { actions as ui } from 'src/store/states/ui';
 import Modal from './modal';
 
 interface Props {

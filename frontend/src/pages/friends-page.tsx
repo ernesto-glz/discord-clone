@@ -7,9 +7,9 @@ import RightPanel from 'src/components/structures/RightPanel';
 import ServerList from 'src/components/server/server-list';
 import ServerName from 'src/components/server/server-name';
 import UserInfo from 'src/components/user-info';
-import { useAppDispatch } from 'src/redux/hooks';
+import { useAppDispatch } from 'src/store/hooks';
 import PageWrapper from './page-wrapper';
-import { actions as ui } from 'src/redux/states/ui';
+import { actions as ui } from 'src/store/states/ui';
 
 const FriendsPage: React.FC = () => {
   const { channelId, guildId }: any = useParams();

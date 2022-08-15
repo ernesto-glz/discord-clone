@@ -1,7 +1,7 @@
 import React from 'react';
-import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
-import { getIncomingRequests } from 'src/redux/states/requests';
-import { actions as ui } from 'src/redux/states/ui';
+import { useAppDispatch, useAppSelector } from 'src/store/hooks';
+import { getIncomingRequests } from 'src/store/states/requests';
+import { actions as ui } from 'src/store/states/ui';
 
 interface Props {
   section: string;

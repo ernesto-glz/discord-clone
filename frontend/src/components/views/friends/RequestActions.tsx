@@ -1,7 +1,7 @@
 import React from 'react';
 import { Entity, RequestTypes } from '@discord/types';
-import { useAppDispatch } from 'src/redux/hooks';
-import { removeRequest, acceptRequest } from 'src/redux/states/requests';
+import { useAppDispatch } from 'src/store/hooks';
+import { removeRequest, acceptRequest } from 'src/store/states/requests';
 import { Close, Check } from '@styled-icons/material';
 
 interface Props {

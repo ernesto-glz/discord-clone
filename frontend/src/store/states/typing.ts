@@ -2,7 +2,6 @@ import { createSelector, createSlice, Dispatch, PayloadAction } from '@reduxjs/t
 import { getDiffInSeconds } from 'src/utils/date';
 import { WS } from '@discord/types';
 import { Store } from 'types/store';
-import { actions as api } from './api';
 
 const slice = createSlice({
   name: 'typing',
@@ -45,10 +44,10 @@ export const startTyping = (channelId: string) => (dispatch: Dispatch) => {
   if (lastTypedAt && secondsAgo < 5) return;
   lastTypedAt = new Date();
 
-  dispatch(api.wsCallBegan({
+  wsClient.call({
     event: 'TYPING_START',
     data: { channelId }
-  }));
+  });
 };
 
 export const stopTyping = (channelId: string) => (dispatch: Dispatch) => {
@@ -56,8 +55,8 @@ export const stopTyping = (channelId: string) => (dispatch: Dispatch) => {
   const now = new Date();
   lastTypedAt = new Date(now.getTime() - 50 * 1000);
 
-  dispatch(api.wsCallBegan({
+  wsClient.call({
     event: 'TYPING_STOP',
     data: { channelId }
-  }));
+  });
 };

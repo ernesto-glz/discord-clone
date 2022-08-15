@@ -1,5 +1,5 @@
-import { useAppSelector } from 'src/redux/hooks';
-import { getTypersInChannel } from 'src/redux/states/typing';
+import { useAppSelector } from 'src/store/hooks';
+import { getTypersInChannel } from 'src/store/states/typing';
 
 export const useTypingUsers = () => {
   const users = useAppSelector((s) => s.users);

@@ -1,7 +1,6 @@
 import { createSelector, createSlice, Dispatch } from '@reduxjs/toolkit';
 import { notInArray } from 'src/utils/utils';
 import { Store } from 'types/store';
-import { actions as api } from './api';
 
 export const slice = createSlice({
   name: 'channels',
@@ -22,19 +21,26 @@ export const actions = slice.actions;
 export default slice.reducer;
 
 export const displayChannel = (userId: string) => (dispatch: Dispatch) => {
-  dispatch(api.restCallBegan({
-    onSuccess: [],
+  const callback = (data) => {
+    wsClient.call({
+      event: 'CHANNEL_DISPLAY',
+      data: { channelId: data.channel.id }
+    });
+  };
+  restClient.call({
     url: '/channels',
-    data: { userId },
     method: 'post',
-    callback: (data) => {
-      dispatch( api.wsCallBegan({
-        event: 'CHANNEL_DISPLAY',
-        data: { channelId: data.channel.id }
-      }))
-    }
-  }))
+    data: { userId },
+    callback
+  });
 };
+
+export const hideChannel = (channelId: string) => (dispatch: Dispatch) => {
+  wsClient.call({
+    event: 'CHANNEL_HIDE',
+    data: { channelId }
+  });
+}
 
 export const getDMChannels = () => {
   return createSelector(

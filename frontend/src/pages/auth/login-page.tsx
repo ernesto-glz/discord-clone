@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { useAppSelector } from 'src/redux/hooks';
+import { useAppSelector } from 'src/store/hooks';
 import { findError } from 'src/utils/errors';
 import { PulseLoader } from 'react-spinners';
 import { FormInput } from 'src/components/views/elements/FormInput';

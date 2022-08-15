@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Image } from 'src/components/views/elements/Image';
-import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
-import { actions as ui } from 'src/redux/states/ui';
+import { useAppDispatch, useAppSelector } from 'src/store/hooks';
+import { actions as ui } from 'src/store/states/ui';
 import classNames from 'classnames';
-import { getIncomingRequests } from 'src/redux/states/requests';
+import { getIncomingRequests } from 'src/store/states/requests';
 
 type Props = { genericImage: 'FRIEND' | 'NITRO'; displayName: string };
 

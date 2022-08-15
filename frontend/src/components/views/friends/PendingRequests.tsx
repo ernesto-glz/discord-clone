@@ -1,6 +1,6 @@
 import React from 'react';
 import { RequestItem } from './RequestItem';
-import { useAppSelector } from 'src/redux/hooks';
+import { useAppSelector } from 'src/store/hooks';
 import { Image } from '../elements/Image';
 
 export const PendingRequests: React.FC = () => {

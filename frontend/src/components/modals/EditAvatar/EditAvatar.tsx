@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import Cropper from 'react-easy-crop';
-import { useAppDispatch } from 'src/redux/hooks';
-import { actions as ui } from 'src/redux/states/ui';
-import { uploadUserAvatar } from 'src/redux/states/users';
+import { useAppDispatch } from 'src/store/hooks';
+import { actions as ui } from 'src/store/states/ui';
+import { uploadUserAvatar } from 'src/store/states/users';
 import { getCroppedImg, PixelCrop } from 'src/utils/canvas';
 import { ModalBuilder } from '../ModalBuilder';
 

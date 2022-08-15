@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import Modal from '../modal';
 import { Base, Body, Button, Header } from './styles';
-import { actions as ui } from 'src/redux/states/ui';
+import { actions as ui } from 'src/store/states/ui';
 
 export const NotImplemented: React.FC = () => {
   const dispatch = useDispatch();

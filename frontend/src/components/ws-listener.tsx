@@ -1,23 +1,23 @@
 import React, { useEffect } from 'react';
-import { actions as meta } from 'src/redux/states/meta';
-import { actions as auth, logoutUser, ready } from 'src/redux/states/auth';
-import { actions as channels } from 'src/redux/states/channels';
-import { actions as requests } from 'src/redux/states/requests';
-import { actions as messages } from 'src/redux/states/messages';
-import { actions as typing } from 'src/redux/states/typing';
-import { actions as users } from 'src/redux/states/users';
-import { actions as ui } from 'src/redux/states/ui';
-import fetchEntities from 'src/redux/actions/fetch-entities';
+import { actions as meta } from 'src/store/states/meta';
+import { actions as auth, logoutUser, ready } from 'src/store/states/auth';
+import { actions as channels } from 'src/store/states/channels';
+import { actions as requests } from 'src/store/states/requests';
+import { actions as messages } from 'src/store/states/messages';
+import { actions as typing } from 'src/store/states/typing';
+import { actions as users } from 'src/store/states/users';
+import { actions as ui } from 'src/store/states/ui';
+import fetchEntities from 'src/store/actions/fetch-entities';
 import { useNavigate } from 'react-router-dom';
 import { playSound } from 'src/utils/sounds';
 import { WS, Entity } from '@discord/types';
-import { useAppDispatch } from 'src/redux/hooks';
+import { useAppDispatch } from 'src/store/hooks';
 import { AuthErrors } from 'src/config/constants';
-import { store } from 'src/redux/store';
-import { ws } from 'src/ws/websocket';
+import { store } from 'src/store/store';
 import { moveToStart } from 'src/utils/utils';
 
 export const WSListeners: React.FC = () => {
+  const ws = wsClient.client;
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 

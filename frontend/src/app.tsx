@@ -6,8 +6,8 @@ import LoginPage from "./pages/auth/login-page";
 import RegisterPage from "./pages/auth/register-page";
 import LogoutPage from "./pages/auth/logout-page";
 import FriendsPage from "./pages/friends-page";
-import { useAppDispatch } from "./redux/hooks";
-import { ready } from "./redux/states/auth";
+import { useAppDispatch } from "./store/hooks";
+import { ready } from "./store/states/auth";
 
 type Props = { children: React.ReactNode };
 

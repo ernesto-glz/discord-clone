@@ -2,7 +2,6 @@ import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { notInArray, token } from 'src/utils/utils';
 import { Store } from 'types/store';
 import { UserTypes, WS } from '@discord/types';
-import { actions as api, uploadFile } from './api';
 
 export const slice = createSlice({
   name: 'users',
@@ -36,13 +35,13 @@ export const getFriendUsers = () => {
 };
 
 export const updateSelf = (payload: Partial<UserTypes.Self>) => (dispatch) => {
-  dispatch(api.wsCallBegan({
+  wsClient.call({
     event: 'USER_UPDATE',
     data: { partialUser: { ...payload }, token: token() },
-  }));
+  });
 }
 
 export const uploadUserAvatar = (file: File) => (dispatch) => {
   const uploadCallback = async ({ url }) => dispatch(updateSelf({ avatar: url }));
-  dispatch(uploadFile(file, uploadCallback));
+  restClient.uploadFile(file, uploadCallback);
 }

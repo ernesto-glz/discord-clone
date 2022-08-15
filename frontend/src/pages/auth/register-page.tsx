@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import PageWrapper from '../page-wrapper';
-import { useAppSelector } from 'src/redux/hooks';
+import { useAppSelector } from 'src/store/hooks';
 import { findError } from 'src/utils/errors';
 import { PulseLoader } from 'react-spinners';
 import { Button } from 'src/components/views/elements/Button';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAppSelector } from 'src/redux/hooks';
+import { useAppSelector } from 'src/store/hooks';
 import ServerButton from '../server-button';
 import { Container, Separator } from './styles';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAppSelector } from 'src/redux/hooks';
+import { useAppSelector } from 'src/store/hooks';
 import { PulseLoader } from 'react-spinners';
 import { findError } from 'src/utils/errors';
 import { useChangePassword } from 'src/hooks/user/useChangePassword';

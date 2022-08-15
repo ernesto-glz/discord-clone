@@ -2,7 +2,6 @@ import { Entity } from '@discord/types';
 import { createSelector, createSlice, Dispatch } from '@reduxjs/toolkit';
 import { notInArray } from 'src/utils/utils';
 import { Store } from 'types/store';
-import { actions as api } from './api';
 
 export type FetchMessages = { channelId: string; back?: number };
 
@@ -39,22 +38,22 @@ export const fetchMessages = ({ channelId, back = 25 }: FetchMessages) => async 
   const { messages } = getState();
   if (messages.list.length === messages.total[channelId]) return;
 
-  dispatch(api.restCallBegan({
-    onSuccess: [actions.fetched.type],
+  restClient.call({
     url: `/channels/${channelId}/messages?back=${back}`,
-  }))
+    callback: (data) => dispatch(actions.fetched(data))
+  })
 };
 
 export const createMessage = (data: any) => (dispatch: Dispatch) => {
-  dispatch(api.wsCallBegan({
+  wsClient.call({
     event: 'MESSAGE_CREATE',
     data
-  }));
+  });
 };
 
 export const updateMessage = (id: string, payload: Partial<Entity.Message>) => (dispatch: Dispatch) => {
-  dispatch(api.wsCallBegan({
+  wsClient.call({
     event: 'MESSAGE_UPDATE',
     data: { messageId: id, ...payload },
-  }));
+  });
 }

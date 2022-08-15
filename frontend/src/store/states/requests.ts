@@ -2,7 +2,6 @@ import { createSelector, createSlice, Dispatch, PayloadAction } from '@reduxjs/t
 import { RequestTypes, WS } from '@discord/types';
 import { notInArray } from 'src/utils/utils';
 import { Store } from 'types/store';
-import { actions as api } from './api';
 
 export const slice = createSlice({
   name: 'requests',
@@ -25,55 +24,55 @@ export const actions = slice.actions;
 export default slice.reducer;
 
 export const createRequest = (payload: any) => (dispatch: Dispatch) => {
-  dispatch(api.restCallBegan({
+  const callback = (request) => {
+    const target = request.to;
+    wsClient.call({
+      event: 'FRIEND_REQUEST_CREATE',
+      data: { request }
+    });
+    events.emit(
+      'REQUEST_CREATE_SUCCEEDED',
+      `Friend request sent to ${target.username}#${target.discriminator}`
+    );
+  }
+
+  restClient.call({
     url: '/requests',
     method: 'post',
     data: payload,
-    callback: (request) => {
-      const target = request.to;
-      dispatch(api.wsCallBegan({
-        event: 'FRIEND_REQUEST_CREATE',
-        data: { request }
-      }));
-      events.emit(
-        'REQUEST_CREATE_SUCCEEDED',
-        `Friend request sent to ${target.username}#${target.discriminator}`
-      );
-    },
-    errorCallback: (error) => {
-      const response = error.response;
-      if (!response?.data) return;
-
-      const errors = response.data?.errors;
-      events.emit('REQUEST_CREATE_FAILED', errors[0]?.message ?? response.data);
-    }
-  }))
+    callback,
+    errorEvent: 'REQUEST_CREATE_FAILED'
+  });
 }
 
 export const removeRequest = (requestId: string) => (dispatch: Dispatch) => {
-  dispatch(api.restCallBegan({
-    onSuccess: [],
+  const callback = (request: RequestTypes.Populated) => {
+    wsClient.call({
+      event: 'FRIEND_REQUEST_REMOVE',
+      data: { request }
+    });
+  }
+
+  restClient.call({
     url: `/requests/${requestId}`,
     method: 'delete',
-    callback: (request: RequestTypes.Populated) => {
-      dispatch(api.wsCallBegan({
-        event: 'FRIEND_REQUEST_REMOVE',
-        data: { request }
-      }));
-    }
-  }));
+    callback
+  });
 };
 
 export const acceptRequest = (request: RequestTypes.Populated) => (dispatch: Dispatch) => {
-  dispatch(api.restCallBegan({
-    onSuccess: [],
-    url: `/requests/${request.id}`,
-    method: 'put',
-    callback: (data) => dispatch(api.wsCallBegan({
+  const callback = (data) => {
+    wsClient.call({
       event: 'FRIEND_REQUEST_ACCEPT',
       data: { request, friendId: data.friendId, channel: data.channel }
-    }))
-  }));
+    });
+  }
+
+  restClient.call({
+    url: `/requests/${request.id}`,
+    method: 'put',
+    callback
+  });
 };
 
 export const getIncomingRequests = () => {

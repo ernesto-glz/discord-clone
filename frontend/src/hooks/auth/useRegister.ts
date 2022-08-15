@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useAppDispatch } from 'src/redux/hooks';
-import { registerUser } from 'src/redux/states/auth';
+import { useAppDispatch } from 'src/store/hooks';
+import { registerUser } from 'src/store/states/auth';
 
 export interface Register {
   email: string;

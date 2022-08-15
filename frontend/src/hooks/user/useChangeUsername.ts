@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
+import { useAppDispatch, useAppSelector } from 'src/store/hooks';
 import { ErrorObject } from 'src/utils/errors';
-import { actions as ui } from 'src/redux/states/ui';
-import { changeUsername } from 'src/redux/states/auth';
+import { actions as ui } from 'src/store/states/ui';
+import { changeUsername } from 'src/store/states/auth';
 
 export interface ChangeUsername {
   newUsername: string;

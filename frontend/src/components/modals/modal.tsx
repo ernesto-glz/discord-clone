@@ -1,9 +1,9 @@
 import React, { MouseEvent, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
+import { useAppDispatch, useAppSelector } from 'src/store/hooks';
 import { Animations } from 'src/config/constants';
-import { actions as ui } from 'src/redux/states/ui';
+import { actions as ui } from 'src/store/states/ui';
 
 interface Props {
   name: string;

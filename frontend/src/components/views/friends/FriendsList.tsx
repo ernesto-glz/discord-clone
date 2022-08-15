@@ -1,7 +1,7 @@
 import React from 'react';
 import { FriendListItem } from './FriendListItem';
-import { getFriendUsers } from 'src/redux/states/users';
-import { useAppSelector } from 'src/redux/hooks';
+import { getFriendUsers } from 'src/store/states/users';
+import { useAppSelector } from 'src/store/hooks';
 import { Image } from '../elements/Image';
 
 interface Props {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Entity } from '@discord/types';
 import { LinkImage, Separator } from '../styles';
-import { useAppSelector } from 'src/redux/hooks';
+import { useAppSelector } from 'src/store/hooks';
 import { ContextMenu } from '../context-menu';
 import { ContextItem } from '../context-item';
 import { copyToClipboard } from 'src/utils/utils';

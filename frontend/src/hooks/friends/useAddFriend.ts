@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useAppDispatch } from 'src/redux/hooks';
-import { createRequest } from 'src/redux/states/requests';
+import { useAppDispatch } from 'src/store/hooks';
+import { createRequest } from 'src/store/states/requests';
 
 export interface AddFriend {
   target: string;

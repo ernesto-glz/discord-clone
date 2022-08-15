@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useAppDispatch } from 'src/redux/hooks';
-import { loginUser } from 'src/redux/states/auth';
+import { useAppDispatch } from 'src/store/hooks';
+import { loginUser } from 'src/store/states/auth';
 import { ErrorObject } from 'src/utils/errors';
 
 export interface Login {

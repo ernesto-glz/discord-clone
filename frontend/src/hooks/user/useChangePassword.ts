@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useAppDispatch } from 'src/redux/hooks';
+import { useAppDispatch } from 'src/store/hooks';
 import { ErrorObject } from 'src/utils/errors';
-import { actions as ui } from 'src/redux/states/ui';
-import { changePassword } from 'src/redux/states/auth';
+import { actions as ui } from 'src/store/states/ui';
+import { changePassword } from 'src/store/states/auth';
 
 export interface ChangePassword {
   currentPassword: string;

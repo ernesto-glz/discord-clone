@@ -2,13 +2,13 @@ import React, { useEffect } from 'react';
 import ChannelPanel from 'src/components/structures/ChannelPanel';
 import ServerName from 'src/components/server/server-name';
 import PageWrapper from './page-wrapper';
-import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
+import { useAppDispatch, useAppSelector } from 'src/store/hooks';
 import ServerList from 'src/components/server/server-list';
 import UserInfo from 'src/components/user-info';
 import ChannelList from 'src/components/views/ChannelsList/DMChannelsList';
-import { actions as uiActions } from 'src/redux/states/ui';
+import { actions as uiActions } from 'src/store/states/ui';
 import { useParams } from 'react-router-dom';
-import { getChannel } from 'src/redux/states/channels';
+import { getChannel } from 'src/store/states/channels';
 import { ChannelHeader } from 'src/components/views/channel/ChannelHader';
 
 export const GuildPage: React.FC = () => {

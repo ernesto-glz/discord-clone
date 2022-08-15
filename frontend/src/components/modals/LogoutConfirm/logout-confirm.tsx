@@ -1,8 +1,8 @@
 import React from 'react';
-import { useAppDispatch } from 'src/redux/hooks';
+import { useAppDispatch } from 'src/store/hooks';
 import Modal from '../modal';
 import { Base, Body, CancelButton, Header, LogoutButton } from './styles';
-import { actions as ui } from 'src/redux/states/ui';
+import { actions as ui } from 'src/store/states/ui';
 import { useNavigate } from 'react-router-dom';
 
 export const LogoutConfirm: React.FC = () => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { BaseAvatar } from 'src/components/views/avatars/BaseAvatar';
-import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
-import { actions as ui } from 'src/redux/states/ui';
+import { useAppDispatch, useAppSelector } from 'src/store/hooks';
+import { actions as ui } from 'src/store/states/ui';
 import { getAvatarUrl } from 'src/utils/utils';
 import { Button } from '../NotImplemented/styles';
 import {

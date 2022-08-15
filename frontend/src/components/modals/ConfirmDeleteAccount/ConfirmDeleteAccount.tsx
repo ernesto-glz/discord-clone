@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAppSelector } from 'src/redux/hooks';
+import { useAppSelector } from 'src/store/hooks';
 import { findError } from 'src/utils/errors';
 import { FormInput } from 'src/components/views/elements/FormInput';
 import { useDeleteAccount } from 'src/hooks/user/useDeleteAccount';

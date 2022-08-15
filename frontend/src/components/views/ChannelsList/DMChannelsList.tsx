@@ -1,9 +1,9 @@
 import React from 'react';
 import { Entity } from '@discord/types';
 import ChannelButton from './DMChannelButton';
-import { useAppSelector } from 'src/redux/hooks';
+import { useAppSelector } from 'src/store/hooks';
 import { GenericListButton } from './GenericListButton';
-import { getDMChannels } from 'src/redux/states/channels';
+import { getDMChannels } from 'src/store/states/channels';
 import { Add } from '@styled-icons/material';
 import { EmptyDMS } from 'src/components/images/EmptyDMS';
 

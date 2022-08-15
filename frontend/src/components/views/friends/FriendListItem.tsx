@@ -1,9 +1,9 @@
 import React from 'react';
 import { Profile, UserData } from 'src/components/user-info/styles';
-import { displayChannel } from 'src/redux/states/channels';
+import { displayChannel } from 'src/store/states/channels';
 import { FriendItemActions } from './ItemActions';
 import { Entity } from '@discord/types';
-import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
+import { useAppDispatch, useAppSelector } from 'src/store/hooks';
 import { getAvatarUrl } from 'src/utils/utils';
 import { BaseAvatar } from '../avatars/BaseAvatar';
 

@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from 'react';
-import { useAppDispatch } from 'src/redux/hooks';
-import { actions as ui } from 'src/redux/states/ui';
+import { useAppDispatch } from 'src/store/hooks';
+import { actions as ui } from 'src/store/states/ui';
 import { ImageAdd } from '@styled-icons/boxicons-solid';
 import { readFile } from 'src/utils/utils';
 import { ModalBuilder } from '../ModalBuilder';

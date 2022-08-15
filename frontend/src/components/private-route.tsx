@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import { useAppSelector } from 'src/redux/hooks';
+import { useAppSelector } from 'src/store/hooks';
 import { token } from 'src/utils/utils';
 import { LoadingScreen } from './views/LoadingScreen';
 

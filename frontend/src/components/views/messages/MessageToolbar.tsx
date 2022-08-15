@@ -2,8 +2,8 @@ import React from 'react';
 import { Pencil } from '@styled-icons/boxicons-solid';
 import { TrashFill } from '@styled-icons/bootstrap';
 import { Entity } from '@discord/types';
-import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
-import { actions as ui } from 'src/redux/states/ui';
+import { useAppDispatch, useAppSelector } from 'src/store/hooks';
+import { actions as ui } from 'src/store/states/ui';
 
 interface Props {
   message: Entity.Message;

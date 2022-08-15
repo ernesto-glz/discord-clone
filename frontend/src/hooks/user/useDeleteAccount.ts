@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useAppDispatch } from 'src/redux/hooks';
-import { deleteAccount } from 'src/redux/states/auth';
-import { actions as ui } from 'src/redux/states/ui';
+import { useAppDispatch } from 'src/store/hooks';
+import { deleteAccount } from 'src/store/states/auth';
+import { actions as ui } from 'src/store/states/ui';
 import { ErrorObject } from 'src/utils/errors';
 
 export interface DeleteAccount {

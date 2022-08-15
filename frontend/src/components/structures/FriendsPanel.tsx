@@ -2,7 +2,7 @@ import React from 'react';
 import { AddFriend } from '../views/friends/AddFriend';
 import { FriendsList } from '../views/friends/FriendsList';
 import { PendingRequests } from '../views/friends/PendingRequests';
-import { useAppSelector } from 'src/redux/hooks';
+import { useAppSelector } from 'src/store/hooks';
 
 const FriendsPanel: React.FC = () => {
   const section = useAppSelector((s) => s.ui.friendsSection);

@@ -1,6 +1,6 @@
 import { EditButton, ItemWrapper, Value } from './styles';
-import { actions as ui } from 'src/redux/states/ui';
-import { useAppDispatch } from 'src/redux/hooks';
+import { actions as ui } from 'src/store/states/ui';
+import { useAppDispatch } from 'src/store/hooks';
 
 export const ListItemPhone = () => {
   const dispatch = useAppDispatch();

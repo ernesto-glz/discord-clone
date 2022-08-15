@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
-import { fetchMessages, getChannelMessages } from 'src/redux/states/messages';
+import { fetchMessages, getChannelMessages } from 'src/store/states/messages';
 import { MessageBox } from '../views/MessageBox/MessageBox';
-import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
+import { useAppDispatch, useAppSelector } from 'src/store/hooks';
 import { Entity } from '@discord/types';
 import { ScrollPanel } from 'src/components/structures/ScrollPanel';
 import Message from '../views/messages/Message';
