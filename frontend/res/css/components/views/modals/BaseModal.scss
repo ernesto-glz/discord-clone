@@ -1,0 +1,95 @@
+.BaseModal {
+  opacity: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 4px;
+  margin: 0 auto;
+  position: relative;
+  background-color: $modal-background;
+  max-height: 720px;
+  min-height: 200px;
+
+  &.wSmall {
+    width: 440px;
+  }
+
+  &.wSmaller {
+    width: 225px;
+  }
+}
+
+.ModalHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 24px;
+  padding-bottom: 24px;
+
+  > .title {
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 30px;
+    color: $header-primary;
+  }
+
+  > .description {
+    color: $header-secondary;
+    margin-top: 8px;
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  > .delete {
+    color: hsl(0, calc($saturation-factor * 0%), 100%);
+    background-color: $status-warning-background;
+    margin: 5px 20px;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: -10px;
+  }
+}
+
+.ModalCloseBtn {
+  background-color: transparent;
+  cursor: pointer;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+
+  > .closeIcon {
+    color: $header-secondary;
+    width: 24px;
+    height: 24px;
+  }
+
+  &:hover {
+    > .closeIcon {
+      color: $header-primary !important;
+    }
+  }
+}
+
+.ModalBody {
+  width: 100%;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  > form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+.ModalFooter {
+  background-color: $background-secondary;
+  width: 100%;
+  padding: 16px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}

@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useRef } from 'react';
+import React, { MouseEvent, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { motion } from 'framer-motion';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
@@ -18,15 +18,24 @@ const Modal: React.FC<Props> = ({
   animationVariant,
   children,
 }) => {
+  const [clickedArea, setClickedArea] = useState<EventTarget>();
   const modalRef = useRef<HTMLDivElement>(null);
   const isOpen = !!useAppSelector((s) =>
     s.ui.openModals?.find((n) => n === name)
   );
   const dispatch = useAppDispatch();
 
-  const handleClick: MouseEventHandler<HTMLDivElement> = (ev) => {
+  const onMouseDown = (ev: MouseEvent<HTMLDivElement>) => {
+    setClickedArea(ev.target);
+  };
+
+  const onMouseUp = (ev: MouseEvent) => {
     // Click outside modal
-    if (modalRef.current && !modalRef.current.contains(ev.target as any)) {
+    if (
+      modalRef.current &&
+      !modalRef.current.contains(ev.target as any) &&
+      ev.target === clickedArea
+    ) {
       dispatch(ui.closedModal(name));
     }
   };
@@ -34,7 +43,11 @@ const Modal: React.FC<Props> = ({
   if (background) {
     return isOpen
       ? ReactDOM.createPortal(
-          <div onMouseDown={handleClick} className="base-modal bg-modal">
+          <div
+            onMouseDown={onMouseDown}
+            onMouseUp={onMouseUp}
+            className="base-modal bg-modal"
+          >
             <motion.div
               ref={modalRef}
               initial="initial"

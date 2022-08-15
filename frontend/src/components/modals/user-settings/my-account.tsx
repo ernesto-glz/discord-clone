@@ -3,7 +3,6 @@ import { BaseAvatar } from 'src/components/views/avatars/BaseAvatar';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import { actions as ui } from 'src/redux/states/ui';
 import { getAvatarUrl } from 'src/utils/utils';
-import { LogoutConfirm } from '../logout-confirm/logout-confirm';
 import { Button } from '../not-implemented/styles';
 import {
   AccountProfileCard,
@@ -22,9 +21,9 @@ import {
 import { ListItemEmail } from './sub-components/list-item-email';
 import { ListItemPhone } from './sub-components/list-item-phone';
 import { ListItemUsername } from './sub-components/list-item-username';
-import { ChangePassword } from './sub-modals/change-password';
-import { DeleteAccount } from './sub-modals/confirm-delete';
-import { EditUsername } from './sub-modals/edit-username';
+import { ChangePassword } from './sub-modals/ChangePassword';
+import { DeleteAccount } from './sub-modals/ConfirmDeleteAccount';
+import { EditUsername } from './sub-modals/EditUsername';
 import { Options } from './user-settings';
 
 type Props = { changeOption: (opt: Options) => void };
@@ -94,12 +93,13 @@ export const MyAccount: React.FC<Props> = ({ changeOption }) => {
           >
             Disable Account
           </DisableButton>
-          <DeleteButton
+          <button
             onClick={() => dispatch(ui.openedModal('DeleteAccount'))}
-            className="button"
+            className="button transparent-button"
+            data-variant="danger"
           >
             Delete Account
-          </DeleteButton>
+          </button>
         </div>
       </AccountRemovalSection>
       <EditUsername />

@@ -15,7 +15,54 @@
   &:disabled {
     cursor: not-allowed;
   }
+
   &:hover {
     background-color: $brand-experiment-560;
+  }
+}
+
+.transparent-button {
+  color: #fff;
+  background-color: transparent;
+  box-sizing: border-box;
+  width: auto;
+  height: 32px;
+  min-width: 60px;
+  min-height: 32px;
+  padding: 2px 24px;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &[data-variant='danger'] {
+    border: 1px solid hsl(359, calc($saturation-factor * 82.6%), 59.4%);
+    &:hover {
+      background-color: $button-danger-background;
+      text-decoration: none;
+    }
+  }
+}
+
+.contained-button {
+  color: #fff;
+  background: $brand-experiment;
+  box-sizing: border-box;
+  width: auto;
+  height: 32px;
+  min-width: 90px;
+  min-height: 32px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $brand-experiment-560;
+  }
+
+  &[data-variant='danger'] {
+    background-color: $button-danger-background;
+    &:hover {
+      background-color: $button-danger-background-hover;
+    }
   }
 }

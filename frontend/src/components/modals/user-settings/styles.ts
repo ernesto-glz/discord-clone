@@ -253,7 +253,7 @@ export const InfoList = styled.div`
   padding: 16px;
   margin: 8px 16px 16px;
   > .leftSIde {
-    
+
   }
 `;
 
