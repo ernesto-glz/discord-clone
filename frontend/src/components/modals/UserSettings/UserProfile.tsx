@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Button } from 'src/components/views/elements/Button';
 import { useAppDispatch } from 'src/redux/hooks';
 import { actions as ui } from 'src/redux/states/ui';
-import { EditAvatar } from './sub-modals/EditAvatar';
-import { UploadAvatar } from './sub-modals/UploadAvatar';
+import { EditAvatar } from '../EditAvatar/EditAvatar';
+import { UploadAvatar } from '../UploadAvatar/UploadAvatar';
 
 export const UserProfile: React.FC = () => {
   const [file, setFile] = useState<File>();

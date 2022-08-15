@@ -4,15 +4,7 @@ import { useAppDispatch } from 'src/redux/hooks';
 import { actions as ui } from 'src/redux/states/ui';
 import { uploadUserAvatar } from 'src/redux/states/users';
 import { getCroppedImg, PixelCrop } from 'src/utils/canvas';
-import Modal from '../../modal';
-import {
-  Body,
-  CancelButton,
-  DoneButton,
-  EditModalBase,
-  Footer,
-  Header,
-} from './styles';
+import { ModalBuilder } from '../ModalBuilder';
 
 interface Props {
   imageUrl: string;
@@ -39,9 +31,11 @@ export const EditAvatar: React.FC<Props> = ({ imageUrl, file }) => {
   };
 
   const closeModal = (alsoUploader = false) => {
-    alsoUploader && dispatch(ui.closedModal('UploadAvatar'));
     dispatch(ui.closedModal('EditAvatar'));
-  }
+    alsoUploader
+      ? dispatch(ui.closedModal('UploadAvatar'))
+      : dispatch(ui.openedModal('UploadAvatar'));
+  };
 
   const changeAvatarNormal = useCallback(async () => {
     dispatch(uploadUserAvatar(file));
@@ -60,12 +54,17 @@ export const EditAvatar: React.FC<Props> = ({ imageUrl, file }) => {
   }, [imageUrl, croppedAreaPixels]);
 
   return imageUrl ? (
-    <Modal name="EditAvatar" background={true}>
-      <EditModalBase className="EditAvatarModal">
-        <Header className="header">
+    <ModalBuilder
+      name="EditAvatar"
+      background={true}
+      size="medium"
+      header={
+        <div className="EditAvatarHeader">
           <div className="title">Edit Image</div>
-        </Header>
-        <Body>
+        </div>
+      }
+      body={
+        <React.Fragment>
           <Cropper
             classes={{
               containerClassName: 'CropperContainer',
@@ -96,29 +95,35 @@ export const EditAvatar: React.FC<Props> = ({ imageUrl, file }) => {
             role="slider"
             onChange={changeZoom}
           />
-        </Body>
-        <Footer className="space-between">
-          <CancelButton
+        </React.Fragment>
+      }
+      footer={
+        <div className="EditAvatarFooter space-between">
+          <button
             onClick={changeAvatarNormal}
             type="button"
-            className="button"
+            className="transparent-button button"
           >
             Skip
-          </CancelButton>
+          </button>
           <div className="right-side">
-            <CancelButton onClick={() => closeModal()} type="button" className="button">
+            <button
+              onClick={() => closeModal()}
+              type="button"
+              className="transparent-button button"
+            >
               Cancel
-            </CancelButton>
-            <DoneButton
+            </button>
+            <button
               onClick={changeAvatarCropped}
               type="submit"
-              className="button"
+              className="contained-button button"
             >
               Apply
-            </DoneButton>
+            </button>
           </div>
-        </Footer>
-      </EditModalBase>
-    </Modal>
+        </div>
+      }
+    />
   ) : null;
 };

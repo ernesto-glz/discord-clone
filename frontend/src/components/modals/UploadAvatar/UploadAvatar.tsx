@@ -3,7 +3,7 @@ import { useAppDispatch } from 'src/redux/hooks';
 import { actions as ui } from 'src/redux/states/ui';
 import { ImageAdd } from '@styled-icons/boxicons-solid';
 import { readFile } from 'src/utils/utils';
-import { ModalBuilder } from '../../ModalBuilder';
+import { ModalBuilder } from '../ModalBuilder';
 
 interface Props {
   imageState: [any, any];
@@ -21,8 +21,9 @@ export const UploadAvatar: React.FC<Props> = (props) => {
     const url = await readFile(file);
     setFile(file);
     setImageUrl(url);
-    dispatch(ui.openedModal('EditAvatar'));
     ev.target.value = '';
+    dispatch(ui.openedModal('EditAvatar'));
+    dispatch(ui.closedModal('UploadAvatar'));
   };
 
   return (

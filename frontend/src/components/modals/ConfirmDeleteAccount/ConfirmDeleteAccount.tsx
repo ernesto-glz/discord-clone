@@ -3,7 +3,7 @@ import { useAppSelector } from 'src/redux/hooks';
 import { findError } from 'src/utils/errors';
 import { FormInput } from 'src/components/views/elements/FormInput';
 import { useDeleteAccount } from 'src/hooks/user/useDeleteAccount';
-import { ModalBuilder } from '../../ModalBuilder';
+import { ModalBuilder } from '../ModalBuilder';
 
 export const DeleteAccount: React.FC = () => {
   const { onSubmit, errors, register, handleClose } = useDeleteAccount();

@@ -4,7 +4,7 @@ import { PulseLoader } from 'react-spinners';
 import { findError } from 'src/utils/errors';
 import { FormInput } from 'src/components/views/elements/FormInput';
 import { useChangeUsername } from 'src/hooks/user/useChangeUsername';
-import { ModalBuilder } from '../../ModalBuilder';
+import { ModalBuilder } from '../ModalBuilder';
 
 export const EditUsername: React.FC = () => {
   const { onSubmit, handleClose, errors, loading, register } =

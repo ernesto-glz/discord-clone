@@ -1,6 +1,6 @@
 import React, { MouseEvent, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import { Animations } from 'src/config/constants';
 import { actions as ui } from 'src/redux/states/ui';
@@ -12,41 +12,39 @@ interface Props {
   children: React.ReactNode;
 }
 
-const Modal: React.FC<Props> = ({
-  name,
-  background,
-  animationVariant,
-  children,
-}) => {
+const Modal: React.FC<Props> = (props) => {
+  const { name, background, animationVariant, children } = props;
   const [clickedArea, setClickedArea] = useState<EventTarget>();
   const modalRef = useRef<HTMLDivElement>(null);
-  const isOpen = !!useAppSelector((s) =>
-    s.ui.openModals?.find((n) => n === name)
-  );
+  const openModals = useAppSelector((s) => s.ui.openModals);
+  const isOpen = !!openModals?.find((modal) => modal === name);
   const dispatch = useAppDispatch();
 
   const onMouseDown = (ev: MouseEvent<HTMLDivElement>) => {
     setClickedArea(ev.target);
   };
 
+  // Handle click outside modal content area.
   const onMouseUp = (ev: MouseEvent) => {
-    // Click outside modal
-    if (
-      modalRef.current &&
-      !modalRef.current.contains(ev.target as any) &&
-      ev.target === clickedArea
-    ) {
+    const isSameArea = ev.target === clickedArea;
+    if (!modalRef.current) return;
+
+    if (!modalRef.current.contains(ev.target as any) && isSameArea)
       dispatch(ui.closedModal(name));
-    }
   };
 
   if (background) {
-    return isOpen
-      ? ReactDOM.createPortal(
-          <div
+    const modal = (
+      <AnimatePresence>
+        {isOpen ? (
+          <motion.div
             onMouseDown={onMouseDown}
             onMouseUp={onMouseUp}
-            className="base-modal bg-modal"
+            className="Modal SemiTransparentModalBg"
+            initial="initial"
+            animate="visible"
+            exit="exit"
+            variants={Animations['BgOpacity']}
           >
             <motion.div
               ref={modalRef}
@@ -55,28 +53,36 @@ const Modal: React.FC<Props> = ({
               exit="exit"
               variants={Animations[animationVariant ?? 'SmallToBig']}
             >
-              {children}
+              {React.Children.map(children, (child: any, i) =>
+                React.cloneElement(child, { key: `DiscordModal-${i}` })
+              )}
             </motion.div>
-          </div>,
-          document.getElementById('root')!
-        )
-      : null;
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
+    );
+    return ReactDOM.createPortal(modal, document.body);
   }
 
-  return isOpen
-    ? ReactDOM.createPortal(
+  const modal = (
+    <AnimatePresence>
+      {isOpen ? (
         <motion.div
-          className="base-modal bg-modal-none"
+          className="Modal TransparentModalBg"
           initial="initial"
           animate="visible"
           exit="exit"
-          variants={Animations[animationVariant ?? 'SmallToBig']}
+          variants={Animations['BigToSmall']}
         >
-          {children}
-        </motion.div>,
-        document.getElementById('root')!
-      )
-    : null;
+          {React.Children.map(children, (child: any, i) =>
+            React.cloneElement(child, { key: `DiscordModal-${i}` })
+          )}
+        </motion.div>
+      ) : null}
+    </AnimatePresence>
+  );
+
+  return ReactDOM.createPortal(modal, document.body);
 };
 
 export default Modal;

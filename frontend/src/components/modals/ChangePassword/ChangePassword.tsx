@@ -4,7 +4,7 @@ import { PulseLoader } from 'react-spinners';
 import { findError } from 'src/utils/errors';
 import { useChangePassword } from 'src/hooks/user/useChangePassword';
 import { FormInput } from 'src/components/views/elements/FormInput';
-import { ModalBuilder } from '../../ModalBuilder';
+import { ModalBuilder } from '../ModalBuilder';
 
 export const ChangePassword: React.FC = () => {
   const { onSubmit, errors, loading, register, handleClose } = useChangePassword();

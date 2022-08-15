@@ -20,6 +20,7 @@ body,
   text-rendering: optimizeLegibility;
   forced-color-adjust: none;
   overflow: hidden;
+  user-select: none;
 }
 
 *,
@@ -29,12 +30,13 @@ input {
   outline: 0;
 }
 
-input, button {
+input,
+button {
   font-family: $font-family-primary;
 }
 
 a {
-  color: var(--text-link);
+  color: $text-link;
   text-decoration: none;
 
   &:hover {
@@ -51,7 +53,6 @@ a {
   color: white;
   box-sizing: border-box;
   text-rendering: optimizeLegibility;
-  user-select: none;
   overflow: hidden;
 }
 
@@ -62,37 +63,6 @@ a {
     background-color: transparent !important;
     box-sizing: border-box;
   }
-}
-
-.base-modal {
-  font-family: $font-family-primary;
-  position: absolute;
-  z-index: 9999;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: transparent;
-  box-sizing: border-box;
-  overflow: hidden !important;
-}
-
-.bg-modal {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.85);
-}
-
-.bg-modal-none {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
 }
 
 .inputScroller {
@@ -130,6 +100,7 @@ a {
     border-radius: 8px;
   }
 }
+
 .scroller {
   &::-webkit-scrollbar-track {
     margin-bottom: 8px;

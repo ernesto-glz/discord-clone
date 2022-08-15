@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FormEvent } from 'react';
 import { Close } from '@styled-icons/material';
 import { useAppDispatch } from 'src/redux/hooks';
 import { actions as ui } from 'src/redux/states/ui';
@@ -24,11 +24,13 @@ const sizes = {
 
 export const ModalBuilder: React.FC<Props> = (props) => {
   const dispatch = useAppDispatch();
+
   const closeModal = () => dispatch(ui.closedModal(props.name));
+  const fakeOnSubmit = (ev: FormEvent) => ev.preventDefault();
 
   return (
     <Modal name={props.name} background={props.background}>
-      <form onSubmit={props.formHandler}>
+      <form onSubmit={props.formHandler ?? fakeOnSubmit}>
         <div className={`BaseModal ${sizes[props.size ?? 'small']}`}>
           {props.closeButton && (
             <button

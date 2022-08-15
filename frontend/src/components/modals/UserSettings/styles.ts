@@ -1,6 +1,6 @@
 import { Close } from '@styled-icons/material';
 import styled from 'styled-components';
-import { NavItemProps } from './user-settings';
+import { NavItemProps } from './UserSettings';
 
 export const SettingsContainer = styled.section`
   color: #fff;

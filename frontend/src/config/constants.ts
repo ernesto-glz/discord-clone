@@ -1,7 +1,13 @@
+import { Variants } from 'framer-motion';
+
+interface VariantsObject {
+  [key: string]: Variants;
+}
+
 export const AuthErrors = {
   INVALID_TOKEN: 'Invalid Token. Please log in again!',
   TOKEN_EXPIRED: 'Your token has expired! Please log in again',
-  USER_NOT_FOUND: 'User not found'
+  USER_NOT_FOUND: 'User not found',
 };
 
 export const DiscordTips = [
@@ -15,38 +21,23 @@ export const DiscordTips = [
   'Hide muted channels in a server by right-clicking the server name.',
   'You can create channel categories to group and organize your channels.',
   'Click the compass in the server list to find new servers',
-  `Discord's official birthday is May 13'th, 2015.`
+  `Discord's official birthday is May 13'th, 2015.`,
 ];
 
 export const Animations = {
-  'BigToSmall': {
-    initial: {
-      scale: 1.1
-    },
-    visible: {
-      scale: 1,
-      transition: {
-        duration: 0.2
-      }
-    },
-    exit: {
-      scale: 2,
-      opacity: 0,
-      transition: {
-        duration: 2
-      }
-    }
+  BigToSmall: {
+    initial: { scale: 1.1 },
+    visible: { scale: 1, transition: { duration: 0.2 } },
+    exit: { scale: 1.1, transition: { duration: 0.2 } },
   },
-  'SmallToBig': {
-    initial: {
-      scale: 0.75
-    },
-    visible: {
-      scale: 1,
-      transition: {
-        duration: 0.3,
-        type: 'spring'
-      }
-    }
-  }
-}
+  SmallToBig: {
+    initial: { scale: 0.75 },
+    visible: { scale: 1, transition: { duration: 0.2, type: 'spring' } },
+    exit: { scale: 0.7, transition: { duration: 0.2 } },
+  },
+  BgOpacity: {
+    initial: { opacity: 0 },
+    visible: { opacity: 1, transition: { duration: 0.2 } },
+    exit: { opacity: 0, transition: { duration: 0.2 } },
+  },
+} as VariantsObject;

@@ -3,12 +3,10 @@ import { BaseAvatar } from 'src/components/views/avatars/BaseAvatar';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import { actions as ui } from 'src/redux/states/ui';
 import { getAvatarUrl } from 'src/utils/utils';
-import { Button } from '../not-implemented/styles';
+import { Button } from '../NotImplemented/styles';
 import {
   AccountProfileCard,
   AccountRemovalSection,
-  DeleteButton,
-  DisableButton,
   Divider,
   EditProfileButton,
   InfoList,
@@ -21,10 +19,10 @@ import {
 import { ListItemEmail } from './sub-components/list-item-email';
 import { ListItemPhone } from './sub-components/list-item-phone';
 import { ListItemUsername } from './sub-components/list-item-username';
-import { ChangePassword } from './sub-modals/ChangePassword';
-import { DeleteAccount } from './sub-modals/ConfirmDeleteAccount';
-import { EditUsername } from './sub-modals/EditUsername';
-import { Options } from './user-settings';
+import { ChangePassword } from '../ChangePassword/ChangePassword';
+import { DeleteAccount } from '../ConfirmDeleteAccount/ConfirmDeleteAccount';
+import { EditUsername } from '../EditUsername/EditUsername';
+import { Options } from './UserSettings';
 
 type Props = { changeOption: (opt: Options) => void };
 
@@ -87,12 +85,13 @@ export const MyAccount: React.FC<Props> = ({ changeOption }) => {
           taking this action.
         </div>
         <div className="actions">
-          <DisableButton
+          <button
             onClick={() => dispatch(ui.openedModal('NotImplemented'))}
-            className="button"
+            className="button contained-button"
+            data-variant="danger"
           >
             Disable Account
-          </DisableButton>
+          </button>
           <button
             onClick={() => dispatch(ui.openedModal('DeleteAccount'))}
             className="button transparent-button"

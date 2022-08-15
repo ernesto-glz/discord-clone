@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import { UserSettings } from 'src/components/modals/user-settings/user-settings';
+import { UserSettings } from 'src/components/modals/UserSettings/UserSettings';
 import { WSListeners } from 'src/components/ws-listener';
-import { NotImplemented } from 'src/components/modals/not-implemented/not-implemented';
-import { LogoutConfirm } from 'src/components/modals/logout-confirm/logout-confirm';
+import { NotImplemented } from 'src/components/modals/NotImplemented/not-implemented';
+import { LogoutConfirm } from 'src/components/modals/LogoutConfirm/logout-confirm';
 import { motion } from 'framer-motion';
 
 export type PageWrapperProps = React.DetailedHTMLProps<
