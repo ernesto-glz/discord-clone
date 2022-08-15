@@ -8,8 +8,8 @@ import { User } from 'src/data/models/user-model';
 export default class implements WSEvent<'READY'> {
   public on = 'READY' as const;
 
-  public async invoke(ws: WSGateway, client: Socket, { jwt }: WS.Params.Ready) {
-    const user = await User.findById(this.getUserIdFromToken(jwt));
+  public async invoke(ws: WSGateway, client: Socket, { token }: WS.Params.Ready) {
+    const user = await User.findById(this.getUserIdFromToken(token));
 
     if (!user) 
       throw new TypeError('User not found');
@@ -31,8 +31,8 @@ export default class implements WSEvent<'READY'> {
     }];
   }
 
-  private getUserIdFromToken(jwt: string) {
-    const decoded = verify(jwt, process.env.JWT_SECRET_KEY) as { id: string };
+  private getUserIdFromToken(token: string) {
+    const decoded = verify(token, process.env.JWT_SECRET_KEY) as { id: string };
     return decoded.id;
   }
 }

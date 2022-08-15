@@ -14,7 +14,7 @@ export default class implements WSEvent<'FRIEND_REQUEST_ACCEPT'> {
     this.joinRooms(ws, client, { channel, from: senderSessions });
 
     return [{
-      emit: 'NEW_FRIEND' as const,
+      emit: 'FRIEND_ADDED' as const,
       to: senderSessions,
       send: {
         requestId: request.id,
@@ -22,7 +22,7 @@ export default class implements WSEvent<'FRIEND_REQUEST_ACCEPT'> {
         user: await User.findById(selfId),
       }
     }, {
-      emit: 'NEW_FRIEND' as const,
+      emit: 'FRIEND_ADDED' as const,
       to: receiverSessions,
       send: {
         requestId: request.id,

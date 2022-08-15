@@ -2,10 +2,9 @@ import { actions as meta } from '../states/meta';
 import { actions as users } from '../states/users';
 import { actions as requests } from '../states/requests';
 import { actions as channels } from '../states/channels';
-import { store } from '../store';
-import { Dispatch } from '@reduxjs/toolkit';
+import { AppDispatch, store } from '../store';
 
-export default () => async (dispatch: Dispatch<any>) => {
+export default () => async (dispatch: AppDispatch) => {
   if (store.getState().meta.fetchedEntities) return;
 
   restClient.call({

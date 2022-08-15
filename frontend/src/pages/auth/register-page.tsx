@@ -44,7 +44,7 @@ const RegisterPage: React.FC = () => {
             <div className="mb-20" />
 
             <Button disabled={loading}>
-              {loading ? <PulseLoader color="white" size={7} /> : 'Continue'}
+              {loading ? <PulseLoader color="white" size={5} /> : 'Continue'}
             </Button>
 
             <div className="form-footer">

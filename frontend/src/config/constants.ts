@@ -31,8 +31,8 @@ export const Animations = {
     exit: { scale: 1.1, transition: { duration: 0.2 } },
   },
   SmallToBig: {
-    initial: { scale: 0.75 },
-    visible: { scale: 1, transition: { duration: 0.2, type: 'spring' } },
+    initial: { scale: 0.7 },
+    visible: { scale: 1, transition: { duration: 0.2 } },
     exit: { scale: 0.7, transition: { duration: 0.2 } },
   },
   BgOpacity: {

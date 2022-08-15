@@ -1,4 +1,4 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore, Dispatch } from '@reduxjs/toolkit';
 import userReducer from './states/auth';
 import metaReducer from './states/meta';
 import channelReducer from './states/channels';
@@ -20,3 +20,6 @@ export const store = configureStore({
     meta: metaReducer,
   }),
 });
+
+export type AppState = typeof store.getState;
+export type AppDispatch = Dispatch<any>;

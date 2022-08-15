@@ -49,7 +49,7 @@ const LoginPage: React.FC = () => {
               <div className="mb-20" />
 
               <Button disabled={loading}>
-                {loading ? <PulseLoader color="white" size={7} /> : 'Login'}
+                {loading ? <PulseLoader color="white" size={5} /> : 'Login'}
               </Button>
 
               <div className="form-footer">

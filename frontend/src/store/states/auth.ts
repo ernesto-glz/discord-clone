@@ -2,6 +2,7 @@ import { createSlice, Dispatch } from '@reduxjs/toolkit';
 import { UserTypes } from '@discord/types';
 import { Store } from 'types/store';
 import { token } from 'src/utils/utils';
+import { AppDispatch } from '../store';
 
 export interface AuthState {
   user?: UserTypes.Self;
@@ -42,11 +43,11 @@ export const ready = () => (dispatch: Dispatch, getState: () => Store.AppState) 
 
   wsClient.call({
     event: 'READY',
-    data: { jwt: token() },
+    data: { token: token() },
   });
 };
 
-export const loginUser = (credentials: Credentials) => (dispatch: Dispatch<any>) => {
+export const loginUser = (credentials: Credentials) => (dispatch: AppDispatch) => {
   const callback = (payload) => {
     if (!payload.token) return;
     localStorage.setItem('access_token', payload.token);
@@ -62,7 +63,7 @@ export const loginUser = (credentials: Credentials) => (dispatch: Dispatch<any>)
   });
 }
 
-export const registerUser = (payload: any) => (dispatch: Dispatch<any>) => {
+export const registerUser = (payload: any) => (dispatch: AppDispatch) => {
   const callback = (data) => {
     localStorage.setItem('access_token', data.token);
     dispatch(ready());
@@ -113,7 +114,7 @@ export const changePassword = (payload: any) => (dispatch: Dispatch) => {
   });
 };
 
-export const deleteAccount = (payload: any) => (dispatch: Dispatch<any>) => {
+export const deleteAccount = (payload: any) => (dispatch: AppDispatch) => {
   const callback = (data) => {
     wsClient.call({
       event: 'USER_UPDATE',
