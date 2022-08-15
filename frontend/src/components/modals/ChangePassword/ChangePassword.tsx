@@ -27,7 +27,7 @@ export const ChangePassword: React.FC = () => {
       body={
         <React.Fragment>
           <FormInput
-            error={findError(errors, 'CURRENT_PWD')}
+            error={findError(errors, ['CURRENT_PWD', 'PASSWORD'])}
             {...register('currentPassword')}
             title="Current password"
           />

@@ -32,13 +32,13 @@ const LoginPage: React.FC = () => {
             </div>
             <div className="form-body">
               <FormInput
-                error={findError(errors, 'EMAIL')}
+                error={findError(errors, ['EMAIL', 'AUTH'])}
                 {...register('email')}
                 title="Email"
               />
               <div className="mb-20" />
               <FormInput
-                error={findError(errors, 'PASSWORD')}
+                error={findError(errors, ['PASSWORD', 'AUTH'])}
                 {...register('password')}
                 title="password"
                 type="password"

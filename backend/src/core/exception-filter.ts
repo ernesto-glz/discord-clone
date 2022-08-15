@@ -1,6 +1,6 @@
 import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus } from '@nestjs/common';
 import { Response, Request } from 'express';
-import { AuthCodes, CurrentPasswordCodes, EmailCodes, NewPasswordCodes, PasswordCodes, UsernameCodes } from '../constants/error-codes';
+import { Errors } from 'src/constants/errors';
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
@@ -44,23 +44,16 @@ export class AllExceptionsFilter implements ExceptionFilter {
   }
 
   private getErrorCode(error: string): string {
-    const emailError = this.searchInObject(EmailCodes, error);
-    const passwordError = this.searchInObject(PasswordCodes, error);
-    const authError = this.searchInObject(AuthCodes, error);
-    const usernameError = this.searchInObject(UsernameCodes, error);
-    const currentPwdError = this.searchInObject(CurrentPasswordCodes, error)
-    const newPwdError = this.searchInObject(NewPasswordCodes, error);
+    const errorsObject = {};
+    const errorsArray = Array.from(Object.entries(Errors)).map(([k, v]) => v);
+    Object.assign(errorsObject, ...errorsArray);
 
-    if (emailError) return emailError;
-    else if (passwordError) return passwordError;
-    else if (authError) return authError;
-    else if (usernameError) return usernameError;
-    else if (currentPwdError) return currentPwdError;
-    else if (newPwdError) return newPwdError;
-    return 'UNKNOWN_CODE';
+    const codeFound = this.findCodeInObject(errorsObject, error);
+    if (!codeFound) return 'UNKNOWN_CODE';
+    return codeFound;
   }
 
-  private searchInObject(object: Object, sarchVal: string) {
+  private findCodeInObject(object: Object, sarchVal: string) {
     return Object.entries(object)
       .filter(([, value]) => value === sarchVal)
       .map(([key]) => key)[0];

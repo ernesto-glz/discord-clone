@@ -41,3 +41,15 @@ export const Animations = {
     exit: { opacity: 0, transition: { duration: 0.2 } },
   },
 } as VariantsObject;
+
+export const ErrorCodes = {
+  EMAIL: ['INVALID_EMAIL_TYPE', 'ALREADY_USED'],
+  PASSWORD: ['INVALID_PASSWORD_TYPE', 'INVALID_PASSWORD'],
+  USERNAME: ['INVALID_USERNAME_TYPE', 'TOO_MANY_USERS'],
+  AUTH: ['ACCOUNT_LOCKED', 'INVALID_CREDENTIALS'],
+  CURRENT_PWD: ['INVALID_CURRENT_PASSWORD_TYPE'],
+  NEW_PWD: ['INVALID_NEW_PASSWORD_TYPE'],
+  CONFIRM_PWD: ['PWD_NOT_MATCH'],
+};
+
+export type ErrorKey = keyof typeof ErrorCodes;
