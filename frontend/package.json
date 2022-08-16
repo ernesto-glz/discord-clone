@@ -10,7 +10,7 @@
     "dev": "vite --host",
     "dev:web": "BROWSER_DEV=true vite",
     "build": "tsc && vite build && electron-builder",
-    "build:web": "tsc && vite build"
+    "build:web": "tsc && vite build --config vite.config.prod.ts"
   },
   "engines": {
     "node": ">=14.17.0"
