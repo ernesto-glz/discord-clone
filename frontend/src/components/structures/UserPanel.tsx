@@ -1,44 +1,36 @@
 import React from 'react';
 import { useAppDispatch, useAppSelector } from 'src/store/hooks';
 import { actions as ui } from 'src/store/states/ui';
-import {
-  Container,
-  Profile,
-  UserData,
-  Icons,
-  MicIcon,
-  HeadphoneIcon,
-  SettingsIcon
-} from './styles';
 import { getAvatarUrl } from 'src/utils/utils';
 import { BaseAvatar } from '../views/avatars/BaseAvatar';
+import { Mic, Headset, Settings } from '@styled-icons/material';
 
 const UserInfo: React.FC = () => {
   const user = useAppSelector((s) => s.auth.user);
   const dispatch = useAppDispatch();
 
-  return (user) ? (
-    <Container>
-      <Profile>
+  const openUserSettings = () => dispatch(ui.openedModal('UserSettings'));
+
+  return user ? (
+    <div className="UserPanel">
+      <div className="Profile">
         <BaseAvatar
           imageUrl={getAvatarUrl(user)}
           displayStatus={true}
           isOnline={true}
         />
-        <UserData>
+        <div className="UserData">
           <strong>{user.username}</strong>
           <span>#{user.discriminator}</span>
-        </UserData>
-      </Profile>
+        </div>
+      </div>
 
-      <Icons>
-        <MicIcon />
-        <HeadphoneIcon />
-        <SettingsIcon
-          onClick={() => dispatch(ui.openedModal('UserSettings'))}
-        />
-      </Icons>
-    </Container>
+      <div className="Menu">
+        <Mic />
+        <Headset />
+        <Settings onClick={openUserSettings} />
+      </div>
+    </div>
   ) : null;
 };
 

@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react';
-import { Profile, UserData } from 'src/components/user-info/styles';
 import { RequestTypes } from '@discord/types';
 import { RequestActionsItem } from './RequestActions';
 import { getAvatarUrl } from 'src/utils/utils';
@@ -19,9 +18,9 @@ export const RequestItem: React.FC<Props> = ({ request, type }) => {
   return (
     <li className="list-item">
       <div>
-        <Profile>
+        <div className='Profile'>
           <BaseAvatar imageUrl={getAvatarUrl(requestUser)} />
-          <UserData>
+          <div className='UserData'>
             <strong>
               {requestUser.username}
               <span className="discriminator" style={{ opacity: 0 }}>
@@ -33,8 +32,8 @@ export const RequestItem: React.FC<Props> = ({ request, type }) => {
                 ? 'Outgoing Friend Request'
                 : 'Incoming Friend Request'}
             </span>
-          </UserData>
-        </Profile>
+          </div>
+        </div>
       </div>
       <RequestActionsItem
         requestUser={requestUser}

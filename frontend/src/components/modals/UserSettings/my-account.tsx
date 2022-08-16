@@ -3,7 +3,6 @@ import { BaseAvatar } from 'src/components/views/avatars/BaseAvatar';
 import { useAppDispatch, useAppSelector } from 'src/store/hooks';
 import { actions as ui } from 'src/store/states/ui';
 import { getAvatarUrl } from 'src/utils/utils';
-import { Button } from '../NotImplemented/styles';
 import {
   AccountProfileCard,
   AccountRemovalSection,
@@ -68,12 +67,12 @@ export const MyAccount: React.FC<Props> = ({ changeOption }) => {
           If you forgot your current password, you always have the possibility
           to recover it using your email on the recovery password page.
         </div>
-        <Button
+        <button
           onClick={() => dispatch(ui.openedModal('ChangePassword'))}
-          className="button"
+          className="button contained-button"
         >
           Change Password
-        </Button>
+        </button>
       </UserSecuritySection>
       <Divider />
       <AccountRemovalSection>

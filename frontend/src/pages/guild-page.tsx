@@ -1,15 +1,16 @@
 import React, { useEffect } from 'react';
+import { Navigate as Redirect } from 'react-router-dom';
 import ChannelPanel from 'src/components/structures/ChannelPanel';
-import ServerName from 'src/components/server/server-name';
 import PageWrapper from './page-wrapper';
 import { useAppDispatch, useAppSelector } from 'src/store/hooks';
-import ServerList from 'src/components/server/server-list';
-import UserInfo from 'src/components/user-info';
-import ChannelList from 'src/components/views/ChannelsList/DMChannelsList';
+import ServerList from 'src/components/structures/ServersListPanel';
+import UserInfo from 'src/components/structures/UserPanel';
+import ChannelList from 'src/components/views/channels_list/DMChannelsList';
 import { actions as uiActions } from 'src/store/states/ui';
 import { useParams } from 'react-router-dom';
 import { getChannel } from 'src/store/states/channels';
-import { ChannelHeader } from 'src/components/views/channel/ChannelHader';
+import { ChannelHeader } from 'src/components/views/channels/ChannelHader';
+import { ChannelsListHeader } from 'src/components/views/channels_list/ChannelsListHeader';
 
 export const GuildPage: React.FC = () => {
   const { channelId, guildId }: any = useParams();
@@ -21,12 +22,16 @@ export const GuildPage: React.FC = () => {
     dispatch(uiActions.pageSwitched({ guild: guildId ?? '@me', channel }))
   }, [channelId])
 
+  if (!channel) {
+    return <Redirect to="/channels/@me" />
+  }
+
   return (ui.activeGuild) ? (
     <PageWrapper pageTitle={`${ui.activeChannel?.name} - Discord Clone` ?? 'Discord Clone'}>
       <section className='app-section'>
         <UserInfo />
         <ServerList />
-        <ServerName />
+        <ChannelsListHeader />
         <ChannelList />
         {ui.activeChannel && <ChannelPanel /> }
         <ChannelHeader />

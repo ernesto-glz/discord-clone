@@ -25,6 +25,14 @@ export const MessageBox: React.FC<Props> = (props) => {
   const {} = useResizeObserver({ scrollbarRef });
   const dispatch = useAppDispatch();
 
+  const focusInput = () => {
+    if (!messageBoxRef.current) return;
+    const isFocused = document.activeElement?.id === messageBoxRef.current.id;
+    if (isFocused) return;
+    messageBoxRef.current.focus();
+    replaceCaret(messageBoxRef.current);
+  }
+
   const resetValue = () => {
     setContent('');
     messageBoxRef.current!.textContent = '';
@@ -47,9 +55,14 @@ export const MessageBox: React.FC<Props> = (props) => {
 
   useEffect(() => {
     if (!messageBoxRef.current) return;
-    messageBoxRef.current.focus();
     messageBoxRef.current.innerText = content;
+    messageBoxRef.current.focus();
     replaceCaret(messageBoxRef.current);
+
+    document.addEventListener('keydown', focusInput);
+    return () => {
+      document.removeEventListener('keydown', focusInput);
+    }
   }, []);
 
   return (

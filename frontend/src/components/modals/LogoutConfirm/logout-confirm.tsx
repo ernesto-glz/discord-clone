@@ -4,6 +4,7 @@ import Modal from '../modal';
 import { Base, Body, CancelButton, Header, LogoutButton } from './styles';
 import { actions as ui } from 'src/store/states/ui';
 import { useNavigate } from 'react-router-dom';
+import { ModalBuilder } from '../ModalBuilder';
 
 export const LogoutConfirm: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -16,19 +17,23 @@ export const LogoutConfirm: React.FC = () => {
   };
 
   return (
-    <Modal background={true} name="LogoutConfirm">
-      <Base>
-        <Header>
+    <ModalBuilder
+      name="LogoutConfirm"
+      background={true}
+      header={
+        <div className='LogoutConfirmHeader'>
           <div className="title">Log Out</div>
           <div className="description">Are you sure you want to logout?</div>
-        </Header>
-        <Body>
+        </div>
+      }
+      footer={
+        <React.Fragment>
           <CancelButton onClick={cancelLogout}>Cancel</CancelButton>
           <LogoutButton className="button" onClick={confirmLogout}>
             Log Out
           </LogoutButton>
-        </Body>
-      </Base>
-    </Modal>
+        </React.Fragment>
+      }
+    />
   );
 };

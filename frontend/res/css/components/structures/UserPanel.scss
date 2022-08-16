@@ -1,0 +1,81 @@
+.UserPanel {
+  grid-area: UP;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: var(--background-secondary-alt);
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 0px;
+
+  .Profile {
+    padding-left: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 3px;
+    width: 120px;
+
+    &:hover {
+      background-color: $background-modifier-accent;
+    }
+  }
+
+  .Menu {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    > svg {
+      width: 30px;
+      height: 30px;
+      color: $white;
+      opacity: 0.7;
+      cursor: pointer;
+      padding: 4px;
+      transition: opacity 0.2s;
+      &:hover {
+        opacity: 1;
+        background: $background-modifier-accent;
+        border-radius: 4px;
+      }
+    }
+  }
+}
+
+.Profile {
+  display: flex;
+  align-items: center;
+}
+
+.UserData {
+  margin-left: 8px;
+  display: flex;
+  flex-direction: column;
+
+  strong {
+    font-size: 14px;
+    color: var(--header-primary);
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    margin-bottom: 2px;
+    > span {
+      color: var(--header-secondary);
+      font-size: 15px;
+      line-height: 16px;
+      font-weight: 300;
+      color: #ffffffb3;
+    }
+  }
+
+  span {
+    color: var(--header-secondary);
+    font-size: 12px;
+    line-height: 13px;
+  }
+
+  .userStatus {
+    color: #ffffff99;
+    font-size: 14px;
+  }
+}

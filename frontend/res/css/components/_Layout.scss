@@ -6,12 +6,12 @@
   grid-template-areas:
     'SL SN CI'
     'SL CL CP'
-    'SL UI CP';
+    'SL UP CP';
   @media (max-width: 1200px) {
     grid-template-areas:
       'SL SN CI'
       'SL CL CP'
-      'SL UI CP';
+      'SL UP CP';
     grid-template-columns: 71px 240px auto;
   }
 }
@@ -24,12 +24,12 @@
   grid-template-areas:
     'SL SN CI CI'
     'SL CL CP RP'
-    'SL UI CP RP';
+    'SL UP CP RP';
   @media (max-width: 1200px) {
     grid-template-areas:
       'SL SN CI'
       'SL CL CP'
-      'SL UI CP';
+      'SL UP CP';
     grid-template-columns: 71px 240px auto;
   }
 }

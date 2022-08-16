@@ -1,10 +1,10 @@
 import React from 'react';
+import classNames from 'classnames';
 import { DiscordLogo } from 'src/components/images/server/discord-logo';
 import { ExploreButton } from 'src/components/images/server/explore-button';
 import { AddServerButton } from 'src/components/images/server/new-server-button';
 import { useAppSelector } from 'src/store/hooks';
 import { getIncomingRequests } from 'src/store/states/requests';
-import { Button } from './styles';
 
 export interface Props {
   selected?: boolean;
@@ -12,7 +12,8 @@ export interface Props {
   isAddButton?: boolean;
   isExploreButton?: boolean;
   hasNotifications?: boolean;
-  mentions?: number;
+  hasMentions?: boolean;
+  notifications?: number;
 }
 
 const ServerButton: React.FC<Props> = ({
@@ -21,23 +22,27 @@ const ServerButton: React.FC<Props> = ({
   isAddButton,
   isExploreButton,
   hasNotifications,
-  mentions
+  notifications,
+  hasMentions
 }) => {
   const requests = useAppSelector(getIncomingRequests());
+  const calcNotifications = isHome ? requests.length : notifications;
 
   return (
-    <Button
-      isHome={isHome}
-      isAddButton={isAddButton}
-      isExploreButton={isExploreButton}
-      hasNotifications={hasNotifications}
-      mentions={isHome ? requests.length : mentions}
-      selected={selected}
+    <button
+      className={classNames('ServerButton', {
+        'isHome': isHome,
+        'actionButton': isExploreButton || isAddButton,
+        'selected': selected,
+        'hasNotifications': hasNotifications || !!calcNotifications,
+        'hasMentions': hasMentions
+      })}
+      data-notifications={calcNotifications}
     >
       {isHome && <DiscordLogo />}
       {isAddButton && <AddServerButton />}
       {isExploreButton && <ExploreButton />}
-    </Button>
+    </button>
   );
 };
 

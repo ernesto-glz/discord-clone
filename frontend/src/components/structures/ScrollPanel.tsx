@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { useAppSelector } from 'src/store/hooks';
 import { getChannelMessages } from 'src/store/states/messages';
-import { DMChannelWelcome } from '../views/channel/DMChannelWelcome';
+import { DMChannelWelcome } from '../views/channels/DMChannelWelcome';
 import { getAvatarUrl } from 'src/utils/utils';
-import { ChannelMessagesLoader } from '../views/channel/ChannelMessagesLoader';
+import { ChannelMessagesLoader } from '../views/channels/ChannelMessagesLoader';
 import InfiniteScroll from './InfiniteScroll';
 
 export interface Props extends React.ComponentProps<'div'> {

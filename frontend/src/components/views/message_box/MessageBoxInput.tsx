@@ -35,10 +35,13 @@ export const MessageBoxInput: React.FC<Props> = (props) => {
      */
     const codeBlocks = findCodeBlocks(contentWithoutLineBreaks);
 
+    console.log(caretOffset);
     for (const block of codeBlocks) {
-      if (block.type === 'opening' && caretOffset > block.endIndex)
+      if (block.type === 'opening' && caretOffset < block.startIndex)
+        setCandSend(true);
+      else if (block.type === 'opening' && caretOffset > block.endIndex)
         setCandSend(false);
-      if (block.type === 'closing' && caretOffset > block.endIndex)
+      else if (block.type === 'closing' && caretOffset > block.endIndex)
         setCandSend(true);
     }
 
@@ -94,6 +97,7 @@ export const MessageBoxInput: React.FC<Props> = (props) => {
     <div
       id="messageInput"
       tabIndex={0}
+      role="textbox"
       ref={boxInputRef}
       autoCorrect="off"
       onKeyDown={onKeyDown}

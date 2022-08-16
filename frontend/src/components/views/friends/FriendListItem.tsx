@@ -1,5 +1,4 @@
 import React from 'react';
-import { Profile, UserData } from 'src/components/user-info/styles';
 import { displayChannel } from 'src/store/states/channels';
 import { FriendItemActions } from './ItemActions';
 import { Entity } from '@discord/types';
@@ -21,13 +20,13 @@ export const FriendListItem: React.FC<Props> = ({ friend }) => {
   return (
     <li className="list-item" onClick={onClick}>
       <div>
-        <Profile>
+        <div className='Profile'>
           <BaseAvatar
             displayStatus={true}
             isOnline={isOnline}
             imageUrl={getAvatarUrl(friend)}
           />
-          <UserData>
+          <div className='UserData'>
             <strong>
               {friend.username}
               <span className="discriminator" style={{ opacity: 0 }}>
@@ -38,8 +37,8 @@ export const FriendListItem: React.FC<Props> = ({ friend }) => {
             <span className="userStatus">
               {isOnline ? 'Online' : 'Offline'}
             </span>
-          </UserData>
-        </Profile>
+          </div>
+        </div>
       </div>
       <FriendItemActions userId={friend.id} />
     </li>

@@ -7,7 +7,7 @@ import { MessageDivider } from 'src/components/views/messages/MessageDivider';
 import { getChannelMessages } from 'src/store/states/messages';
 import { toHTML } from 'discord-markdown';
 import { MessageToolbar } from './MessageToolbar';
-import { MessageBox } from '../MessageBox/MessageBox';
+import { MessageBox } from '../message_box/MessageBox';
 import { BaseAvatar } from '../avatars/BaseAvatar';
 import {
   formatDate,
