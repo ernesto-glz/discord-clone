@@ -8,13 +8,13 @@ services:
     tty: true
     command: mongod --quiet --logpath /dev/null
 
-  app:
-    container_name: discord_dev
+  backend:
+    container_name: discord_backend
     depends_on: [database]
-    image: discord_dev
+    image: discord_backend
     build:
       context: .
-      dockerfile: ./Dockerfile.dev
+      dockerfile: ./backend/.docker/Dockerfile.dev
     environment:
       - PORT=4000
       - MONGO_URI=mongodb://database:27017/discord-clone
@@ -24,4 +24,22 @@ services:
       - ./backend/node_modules:/app/backend/node_modules
       - ./types:/app/types
     ports: [4000:4000, 4001:4001]
+    tty: true
+
+  frontend:
+    container_name: discord_frontend
+    depends_on: [database]
+    image: discord_frontend
+    build:
+      context: .
+      dockerfile: ./frontend/.docker/Dockerfile.dev
+    environment:
+      - VITE_API_ROOT=http://localhost:4000
+      - VITE_WS_ROOT=http://localhost:4001
+      - VITE_API_VERSION=1
+    volumes:
+      - ./frontend:/app/frontend
+      - ./frontend/node_modules:/app/frontend/node_modules
+      - ./types:/app/types
+    ports: [3000:3000, 3001:3001]
     tty: true

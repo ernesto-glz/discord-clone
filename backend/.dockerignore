@@ -8,3 +8,4 @@ upload/
 test/
 coverage/
 node_modules/
+dist/
