@@ -44,13 +44,13 @@
     }
 
     &::-webkit-scrollbar-thumb {
-      background-color: var(--tertiary);
+      background-color: $tertiary;
       min-height: 40px;
       border-radius: 8px;
     }
 
     &::-webkit-scrollbar-track {
-      background-color: var(--background-secondary);
+      background-color: $background-secondary;
       min-height: 40px;
     }
 

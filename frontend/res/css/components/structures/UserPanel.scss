@@ -4,7 +4,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  background-color: var(--background-secondary-alt);
+  background-color: $background-secondary-alt;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 0px;
 
   .Profile {
@@ -53,14 +53,14 @@
 
   strong {
     font-size: 14px;
-    color: var(--header-primary);
+    color: $header-primary;
     font-weight: 600;
     overflow: hidden;
     text-overflow: ellipsis;
     display: block;
     margin-bottom: 2px;
     > span {
-      color: var(--header-secondary);
+      color: $header-secondary;
       font-size: 15px;
       line-height: 16px;
       font-weight: 300;
@@ -69,7 +69,7 @@
   }
 
   span {
-    color: var(--header-secondary);
+    color: $header-secondary;
     font-size: 12px;
     line-height: 13px;
   }

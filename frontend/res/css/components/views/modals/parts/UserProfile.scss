@@ -18,14 +18,14 @@
       &:not(.active) {
         cursor: pointer;
         &:hover {
-          border-bottom-color: var(--brand-experiment);
+          border-bottom-color: $brand-experiment;
         }
       }
 
       &.active {
         border-bottom-color: hsl(
           235,
-          calc(var(--saturation-factor, 1) * 86.1%),
+          calc($saturation-factor * 86.1%),
           77.5%
         );
       }

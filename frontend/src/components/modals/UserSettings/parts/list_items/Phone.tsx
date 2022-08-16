@@ -1,4 +1,3 @@
-import { EditButton, ItemWrapper, Value } from './styles';
 import { actions as ui } from 'src/store/states/ui';
 import { useAppDispatch } from 'src/store/hooks';
 
@@ -8,14 +7,18 @@ export const ListItemPhone = () => {
   const onClick = () => dispatch(ui.openedModal('NotImplemented'));
 
   return (
-    <ItemWrapper style={{ marginTop: '24px' }}>
+    <div className="field" style={{ marginTop: '24px' }}>
       <div className="leftSide">
         <h5>PHONE NUMBER</h5>
-        <Value>You haven't added a phone number yet.</Value>
+        <div className="content">You haven't added a phone number yet.</div>
       </div>
-      <EditButton className="button" onClick={onClick}>
+      <button
+        className="button contained-button"
+        data-variant="neutral"
+        onClick={onClick}
+      >
         <div>Add</div>
-      </EditButton>
-    </ItemWrapper>
+      </button>
+    </div>
   );
 };

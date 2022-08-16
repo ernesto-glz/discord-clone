@@ -1,0 +1,121 @@
+.MyAccount {
+  .ProfileCard {
+    background-color: $background-tertiary;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+
+    .banner {
+      background-color: rgb(29, 22, 22);
+      background-repeat: no-repeat;
+      background-position: 50%;
+      background-size: cover;
+      width: 100%;
+      height: 100px;
+    }
+
+    .userInfo {
+      height: 72px;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 16px 16px 0 120px;
+      box-sizing: border-box;
+    }
+
+    .userAvatar {
+      width: 80px;
+      height: 80px;
+      border: 7px solid $background-tertiary;
+      background-color: $background-tertiary;
+      position: absolute;
+      top: 76px;
+      left: 16px;
+      box-sizing: content-box;
+      border-radius: 50%;
+    }
+
+    .profileInfo {
+      margin-bottom: 6px;
+      color: $header-primary;
+      font-size: 19px;
+      line-height: 24px;
+      font-weight: 600;
+      > .discrim {
+        color: $header-secondary;
+      }
+    }
+
+    .background {
+      border-radius: 8px;
+      background-color: $background-secondary;
+      padding: 16px;
+      margin: 8px 16px 16px;
+    }
+  }
+
+  .divider {
+    width: 100%;
+    height: 1px;
+    border-top: thin solid $background-modifier-accent;
+    margin-top: 40px;
+  }
+
+  .subSection {
+    margin-top: 40px;
+    > .desc {
+      margin-bottom: 16px;
+      color: $header-secondary;
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 300;
+      margin-top: -20px;
+    }
+    > .actions {
+      display: flex;
+      flex-direction: row;
+      gap: 20px;
+    }
+  }
+
+  .field {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    h5 {
+      color: $header-secondary;
+      margin-bottom: 4px;
+      font-size: 12px;
+      line-height: 16px;
+      font-weight: 600;
+    }
+
+    .content {
+      color: $header-primary;
+
+      .discriminator {
+        color: $header-secondary;
+      }
+
+      button {
+        background-color: transparent;
+        color: $text-link;
+        cursor: pointer;
+        width: auto;
+        height: auto;
+        padding: 2px 4px;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .button {
+      height: 32px;
+      min-width: 60px;
+      min-height: 32px;
+    }
+  }
+}

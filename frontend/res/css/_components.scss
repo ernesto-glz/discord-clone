@@ -1,15 +1,10 @@
-/* General */
 @import './components/Layout';
-
-/* Structures */
 @import './components/structures/HeaderPanel.scss';
 @import './components/structures/ChannelPanel.scss';
 @import './components/structures/ScrollPanel.scss';
 @import './components/structures/RightPanel.scss';
 @import './components/structures/UserPanel.scss';
 @import './components/structures/ServerListPanel.scss';
-
-/* Views */
 @import './components/views/LoadingScreen.scss';
 @import './components/views/friends/FriendsPanel.scss';
 @import './components/views/friends/HeaderButton.scss';
@@ -30,13 +25,16 @@
 @import './components/views/channels_list/ChannelsList.scss';
 @import './components/views/channels_list/ChannelsListButton.scss';
 @import './components/views/elements/NotificationBadge.scss';
-@import './components/views/modals/UserProfile.scss';
+@import './components/views/modals/parts/UserProfile.scss';
 @import './components/views/modals/EditAvatar.scss';
 @import './components/views/modals/UploadAvatar.scss';
 @import './components/views/modals/Modal.scss';
 @import './components/views/modals/BaseModal.scss';
 @import './components/views/modals/NotImplemented.scss';
 @import './components/views/modals/LogoutConfirm.scss';
+@import './components/views/modals/UserSettings.scss';
+@import './components/views/modals/parts/MyAccount.scss';
 @import './components/views/servers_list/ServerButton.scss';
 @import './components/views/servers/ServerName.scss';
 @import './components/views/channels_list/ChannelsListHeader.scss';
+@import './components/views/context_menus/ContextMenu.scss';

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { UserSettings } from 'src/components/modals/UserSettings/UserSettings';
 import { WSListeners } from 'src/components/ws-listener';
 import { NotImplemented } from 'src/components/modals/NotImplemented/NotImplemented';
-import { LogoutConfirm } from 'src/components/modals/LogoutConfirm/logout-confirm';
+import { LogoutConfirm } from 'src/components/modals/LogoutConfirm/LogoutConfirm';
 import { motion } from 'framer-motion';
 
 export type PageWrapperProps = React.DetailedHTMLProps<

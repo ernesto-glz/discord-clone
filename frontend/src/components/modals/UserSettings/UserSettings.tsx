@@ -2,24 +2,11 @@ import React, { useState } from 'react';
 import { Image } from 'src/components/views/elements/Image';
 import { useAppDispatch, useAppSelector } from 'src/store/hooks';
 import { actions as ui } from 'src/store/states/ui';
+import { MyAccount } from './parts/MyAccount';
+import { Close } from '@styled-icons/material';
+import { UserProfile } from './parts/UserProfile';
+import classNames from 'classnames';
 import Modal from '../modal';
-import { MyAccount } from './my-account';
-import {
-  ButtonContainer,
-  CloseButton,
-  ContentWrapper,
-  Keybind,
-  NavItem,
-  NavList,
-  NavTitle,
-  SectionTitle,
-  Separator,
-  SettingsBody,
-  SettingsContainer,
-  SidebarRegion,
-  ToolsContainer
-} from './styles';
-import { UserProfile } from './UserProfile';
 
 export type Options = 'Account' | 'Profile' | 'Requests';
 export type ItemProps = { option: Options; name: string };
@@ -28,7 +15,7 @@ export type NavItemProps = { isActive: boolean };
 const sectionTitles = {
   Account: 'My Account',
   Profile: 'User Profile',
-  Requests: 'Friend Requests'
+  Requests: 'Friend Requests',
 };
 
 export const UserSettings: React.FC = () => {
@@ -46,66 +33,61 @@ export const UserSettings: React.FC = () => {
 
   const Item = (props: ItemProps) => {
     const isActive = activeOption === props.option;
-    const onClick = () => {
-      setActiveOption(props.option);
-    };
+    const onClick = () => setActiveOption(props.option);
 
     return (
-      <NavItem isActive={isActive} onClick={onClick}>
+      <div
+        className={classNames('navItem', { active: isActive })}
+        onClick={onClick}
+      >
         {props.name}
-      </NavItem>
+      </div>
     );
   };
 
   return user ? (
-    <Modal
-      background={false}
-      name="UserSettings"
-      animationVariant="BigToSmall"
-    >
-      <SettingsContainer>
-        <SidebarRegion>
+    <Modal background={false} name="UserSettings" animationVariant="BigToSmall">
+      <div className="UserSettings">
+        <div className="sidebar">
           <div className="scrollerBase inputScroller">
             <nav className="settingsNav">
-              <NavList>
-                <NavTitle>User Settings</NavTitle>
+              <div className="navList">
+                <h2 className="navTitle">User Settings</h2>
                 <Item name="My Account" option="Account" />
                 <Item name="User Profile" option="Profile" />
                 <Item name="Friend Requests" option="Requests" />
-                <Separator />
-                <NavItem onClick={openLogoutConfirm} isActive={false}>
-                  Log Out <Image src='/img/exit-arrow.svg' />
-                </NavItem>
-                <Separator />
-              </NavList>
+                <div className="divider" />
+                <div className="navItem" onClick={openLogoutConfirm}>
+                  Log Out <Image src="/img/exit-arrow.svg" />
+                </div>
+                <div className="divider" />
+              </div>
             </nav>
           </div>
-        </SidebarRegion>
-        <SettingsBody>
+        </div>
+        <div className="body">
           <div className="scrollerBase">
-            <ContentWrapper>
-              <div>
-                <SectionTitle>
-                  <h1>{sectionTitles[activeOption]}</h1>
-                </SectionTitle>
-                {activeOption === 'Account' && (
-                  <MyAccount changeOption={setActiveOption} />
-                )}
-                {activeOption === 'Profile' && <UserProfile />}
-                {activeOption === 'Requests' && <h1>Not Implemented</h1>}
+            <div className="contentWrapper">
+              <div className="sectionTitle">
+                <h1>{sectionTitles[activeOption]}</h1>
               </div>
-            </ContentWrapper>
-            <ToolsContainer>
+              {activeOption === 'Account' && (
+                <MyAccount changeOption={setActiveOption} />
+              )}
+              {activeOption === 'Profile' && <UserProfile />}
+              {activeOption === 'Requests' && <h1>Not Implemented</h1>}
+            </div>
+            <div className="toolsContainer">
               <div className="tools">
-                <ButtonContainer onClick={closeModal}>
-                  <CloseButton className="closeBtn" />
-                </ButtonContainer>
-                <Keybind>ESC</Keybind>
+                <div className="toolsButtonWrapper" onClick={closeModal}>
+                  <Close className="closeBtn" />
+                </div>
+                <div className="keybind">ESC</div>
               </div>
-            </ToolsContainer>
+            </div>
           </div>
-        </SettingsBody>
-      </SettingsContainer>
+        </div>
+      </div>
     </Modal>
   ) : null;
 };

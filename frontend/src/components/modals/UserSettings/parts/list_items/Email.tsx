@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useAppSelector } from 'src/store/hooks';
-import { EditButton, ItemWrapper, Value } from './styles';
 
 export const ListItemEmail = () => {
   const [displayState, setDisplayState] = useState<boolean>(false);
@@ -10,21 +9,21 @@ export const ListItemEmail = () => {
   const changeReveal = () => setDisplayState(!displayState);
 
   return (
-    <ItemWrapper style={{ marginTop: '24px' }}>
+    <div className="field" style={{ marginTop: '24px' }}>
       <div className="leftSide">
         <h5>EMAIL</h5>
-        <Value>
+        <div className="content">
           <span>
             {displayState ? email : '*******'}@{provider}
             <button onClick={changeReveal}>
               {displayState ? 'Hide' : 'Reveal'}
             </button>
           </span>
-        </Value>
+        </div>
       </div>
-      <EditButton className="button">
+      <button className="button contained-button" data-variant="neutral">
         <div>Edit</div>
-      </EditButton>
-    </ItemWrapper>
+      </button>
+    </div>
   );
 };

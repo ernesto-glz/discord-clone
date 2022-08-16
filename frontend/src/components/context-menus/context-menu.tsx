@@ -1,5 +1,5 @@
 import React from 'react';
-import { CtxBody, CtxMenu } from './styles';
+import { ContextMenu as Context } from 'react-contextmenu';
 
 interface CtxMenutProps {
   id: string;
@@ -9,8 +9,8 @@ interface CtxMenutProps {
 export const ContextMenu: React.FC<CtxMenutProps> = (props) => {
   return (
     // @ts-expect-error
-    <CtxMenu id={props.id}>
-      <CtxBody>{props.children}</CtxBody>
-    </CtxMenu>
+    <Context className="ContextMenu" id={props.id}>
+      <div className="body">{props.children}</div>
+    </Context>
   );
 };

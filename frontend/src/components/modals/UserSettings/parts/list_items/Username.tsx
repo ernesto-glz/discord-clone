@@ -1,5 +1,4 @@
 import { useAppDispatch, useAppSelector } from 'src/store/hooks';
-import { EditButton, ItemWrapper, Value } from './styles';
 import { actions as ui } from 'src/store/states/ui';
 
 export const ListItemUsername = () => {
@@ -11,17 +10,21 @@ export const ListItemUsername = () => {
   };
 
   return (
-    <ItemWrapper>
+    <div className="field">
       <div className="leftSide">
         <h5>USERNAME</h5>
-        <Value>
+        <div className="content">
           <span>{user.username}</span>
-          <span className="discrim">#{user.discriminator}</span>
-        </Value>
+          <span className="discriminator">#{user.discriminator}</span>
+        </div>
       </div>
-      <EditButton className="button" onClick={onClick}>
+      <button
+        className="button contained-button"
+        data-variant="neutral"
+        onClick={onClick}
+      >
         <div>Edit</div>
-      </EditButton>
-    </ItemWrapper>
+      </button>
+    </div>
   );
 };

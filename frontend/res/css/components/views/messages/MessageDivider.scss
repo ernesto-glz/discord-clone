@@ -2,7 +2,7 @@
   margin-top: 1.5rem;
   margin-bottom: 0.5rem;
   height: 0;
-  border-top: thin solid var(--background-modifier-accent);
+  border-top: thin solid $background-modifier-accent;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -12,8 +12,8 @@
 
   > span {
     padding: 2px 4px;
-    color: var(--text-muted);
-    background: var(--background-primary);
+    color: $text-muted;
+    background: $background-primary;
     line-height: 13px;
     font-size: 12px;
     margin-top: -1px;

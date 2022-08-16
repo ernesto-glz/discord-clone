@@ -1,5 +1,5 @@
 import React from 'react';
-import { CtxItem } from './styles';
+import { MenuItem } from 'react-contextmenu';
 
 interface CtxItemProps {
   children: React.ReactNode;
@@ -8,10 +8,12 @@ interface CtxItemProps {
 
 export const ContextItem: React.FC<CtxItemProps> = ({
   onClick = function () {},
-  children
+  children,
 }) => {
   return (
     // @ts-expect-error
-    <CtxItem onClick={onClick}>{children}</CtxItem>
+    <MenuItem className="menuItem" onClick={onClick}>
+      {children}
+    </MenuItem>
   );
 };

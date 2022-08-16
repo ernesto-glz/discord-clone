@@ -7,7 +7,7 @@
 }
 
 .wanderingCubesItem-3Us-UG {
-  background-color: hsl(235, calc(var(--saturation-factor, 1) * 86.1%), 71.8%);
+  background-color: hsl(235, calc($saturation-factor * 86.1%), 71.8%);
   width: 10px;
   height: 10px;
   position: absolute;

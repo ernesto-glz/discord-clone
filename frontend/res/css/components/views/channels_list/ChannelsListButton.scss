@@ -25,7 +25,7 @@
   }
 
   &.active {
-    background-color: var(--background-modifier-selected);
+    background-color: $background-modifier-selected;
     .channelName {
       color: $white;
     }
@@ -37,7 +37,7 @@
   &:hover {
     background-color: $background-modifier-hover;
     .channelName {
-      color: var(--interactive-hover);
+      color: $interactive-hover;
     }
     .channelButton-close {
       opacity: 1;

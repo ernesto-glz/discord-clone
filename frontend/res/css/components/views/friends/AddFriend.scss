@@ -40,7 +40,7 @@
 .input-container {
   display: flex;
   align-items: center;
-  background: var(--background-tertiary);
+  background: $background-tertiary;
   width: 100%;
   margin-top: 16px;
   padding: 0 12px;
@@ -98,7 +98,7 @@
   height: 40px;
   padding: 10px;
   background: transparent;
-  color: var(--white);
+  color: $header-primary;
   width: 100%;
   font-size: 16px;
   line-height: 20px;

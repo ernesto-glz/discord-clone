@@ -1,0 +1,65 @@
+.ContextMenu {
+  z-index: 9;
+
+  .body {
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    height: auto;
+    min-width: 188px;
+    max-width: 320px;
+    max-height: calc(100vh - 32px);
+    box-shadow: $elevation-high;
+    background: $background-floating;
+    border-radius: 4px;
+
+    div {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden auto;
+      padding: 6px 8px;
+      position: relative;
+      box-sizing: border-box;
+    }
+  }
+
+  .menuItem {
+    color: $interactive-normal;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 32px;
+    padding: 6px 8px;
+    border-radius: 2px;
+    min-width: 188px;
+    max-width: 320px;
+    cursor: pointer;
+
+    .childLeft {
+      flex: 1 1 auto;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 14px;
+    }
+
+    .childRight {
+      width: 18px;
+      height: 18px;
+    }
+
+    &:hover {
+      background-color: $brand-experiment-560;
+    }
+  }
+
+  .divider {
+    box-sizing: border-box;
+    margin: 4px 5px;
+    min-width: 188px;
+    max-width: 320px;
+    height: 1px;
+    background-color: $background-modifier-accent;
+  }
+}

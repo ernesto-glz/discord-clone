@@ -65,4 +65,11 @@
       background-color: $button-danger-background-hover;
     }
   }
+
+  &[data-variant='neutral'] {
+    background-color: $button-secondary-background;
+    &:hover {
+      background-color: $button-secondary-background-hover;
+    }
+  }
 }

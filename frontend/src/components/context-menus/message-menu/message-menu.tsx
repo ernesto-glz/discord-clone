@@ -1,32 +1,34 @@
 import React from 'react';
 import { Entity } from '@discord/types';
-import { LinkImage, Separator } from '../styles';
 import { useAppSelector } from 'src/store/hooks';
 import { ContextMenu } from '../context-menu';
 import { ContextItem } from '../context-item';
 import { copyToClipboard } from 'src/utils/utils';
 import { Image } from 'src/components/views/elements/Image';
+import { Link45deg } from '@styled-icons/bootstrap';
 
 interface Props {
   message: Entity.Message;
 }
 
 const MessageMenu: React.FC<Props> = ({ message }) => {
+  const href = window.location.href;
   const activeGuild = useAppSelector((s) => s.ui.activeGuild);
 
-  return (activeGuild) ? (
+  const copyLink = () => copyToClipboard(`${href}/${message.id}`);
+  const copyMessageId = () => copyToClipboard(message.id);
+
+  return activeGuild ? (
     <ContextMenu id={message.id}>
       <div>
-        <ContextItem
-          onClick={() => copyToClipboard(`${window.location.href}/${message.id}`)}
-        >
+        <ContextItem onClick={copyLink}>
           <p className="childLeft">Copy Message Link</p>
-          <LinkImage className="childRight" />
+          <Link45deg width={18} height={18} className="childRight" />
         </ContextItem>
-        <Separator />
-        <ContextItem key={message.id} onClick={() => copyToClipboard(message.id)}>
+        <div className="divider" />
+        <ContextItem key={message.id} onClick={copyMessageId}>
           <p className="childLeft">Copy ID</p>
-          <Image src='/img/id.svg' className="childRight" />
+          <Image src="/img/id.svg" className="childRight" />
         </ContextItem>
       </div>
     </ContextMenu>

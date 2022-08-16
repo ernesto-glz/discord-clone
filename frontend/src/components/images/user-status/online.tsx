@@ -37,7 +37,7 @@ export const OnlineStatus: React.FC<Props> = (props) => {
         y="0"
         width="10"
         height="15"
-        fill="hsl(139, calc(var(--saturation-factor, 1) * 47.3%), 43.9%)"
+        fill="hsl(139, calc(1 * 47.3%), 43.9%)"
         mask="url(#c4741371-83dd-4c56-a80a-1e53e1153bc4)"
       ></rect>
     </svg>

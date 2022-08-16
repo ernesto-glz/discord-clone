@@ -7,7 +7,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: hsl(0, calc(var(--saturation-factor, 1) * 0%), 100%);
+  color: hsl(0, calc($saturation-factor * 0%), 100%);
   flex: 0 0 auto;
   padding-right: 1px;
   font-size: 12px;

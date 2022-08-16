@@ -1,0 +1,174 @@
+.UserSettings {
+  color: #fff;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  box-sizing: border-box;
+
+  .sidebar {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    background-color: $background-secondary;
+    flex: 1 0 218px;
+    box-sizing: border-box;
+    > .scrollerBase {
+      overflow: hidden scroll;
+      > .settingsNav {
+        height: 100%;
+        width: 218px;
+        padding: 60px 6px 60px 20px;
+      }
+    }
+  }
+
+  .body {
+    position: relative;
+    display: flex;
+    flex: 1 1 800px;
+    align-items: flex-start;
+    background: $background-primary;
+    > .scrollerBase {
+      width: 100%;
+      height: 100%;
+      position: static;
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      overflow-x: hidden;
+    }
+  }
+
+  .sectionTitle {
+    width: 100%;
+    height: 44px;
+
+    h1 {
+      color: $header-primary;
+      margin-bottom: 20px;
+      box-sizing: border-box;
+      font-size: 20px;
+      line-height: 24px;
+    }
+
+    h5 {
+      color: $header-secondary;
+      font-size: 12px;
+      line-height: 16px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+  }
+
+  .contentWrapper {
+    position: relative;
+    padding: 60px 40px 80px;
+    flex: 1 1 auto;
+    max-width: 740px;
+    min-width: 460px;
+    min-height: 100%;
+    overflow: hidden;
+    > div {
+      width: 100%;
+      box-sizing: border-box;
+    }
+  }
+}
+
+.navList {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100%;
+
+  .navTitle {
+    padding-top: 0px !important;
+    padding: 6px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 16px;
+    text-transform: uppercase;
+    color: $channels-default;
+  }
+
+  .navItem {
+    padding-top: 6px;
+    padding-bottom: 6px;
+    margin-bottom: 2px;
+    border-radius: 4px;
+    padding: 6px 10px;
+    color: $interactive-normal;
+    position: relative;
+    font-size: 16px;
+    line-height: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+
+    &.active {
+      background-color: $background-modifier-selected;
+      cursor: default;
+    }
+
+    &:hover {
+      background-color: $background-modifier-selected;
+    }
+  }
+
+  .divider {
+    margin: 8px 10px;
+    height: 1px;
+    background-color: $background-modifier-accent;
+  }
+}
+
+.toolsContainer {
+  margin-right: 21px;
+  position: relative;
+  flex: 0 0 36px;
+  margin-right: 35px;
+  width: 60px;
+  padding-top: 60px;
+
+  .keybind {
+    color: $interactive-normal;
+    margin-top: 8px;
+    font-weight: 600;
+    font-size: 13px;
+    text-align: center;
+  }
+
+  .tools {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+  }
+}
+
+.toolsButtonWrapper {
+  border: 2px solid $interactive-normal;
+  border-radius: 50%;
+  width: 37px;
+  height: 37px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  .closeBtn {
+    width: 23px;
+    height: 23px;
+    color: $interactive-normal;
+  }
+
+  &:hover {
+    border-color: $interactive-hover;
+    background-color: $background-modifier-hover;
+    > .closeBtn {
+      color: $interactive-hover;
+    }
+  }
+}

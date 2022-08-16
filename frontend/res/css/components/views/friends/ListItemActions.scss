@@ -3,18 +3,18 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  color: var(--interactive-normal);
-  background-color: var(--background-secondary);
+  color: $interactive-normal;
+  background-color: $background-secondary;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-left: 10px;
   &:hover {
     svg.accept {
-      color: hsl(139, calc(var(--saturation-factor, 1) * 50.3%), 43.9%);
+      color: hsl(139, calc($saturation-factor * 50.3%), 43.9%);
     }
     svg.cancel {
-      color: var(--info-danger-foreground);
+      color: $info-danger-foreground;
     }
     svg.white-hover {
       color: #fff;
