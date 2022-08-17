@@ -2,7 +2,7 @@
   grid-area: CL;
   display: flex;
   flex-direction: column;
-  padding: 10px 4px 0 10px;
+  padding: 10px 0 0 10px;
   background-color: $background-secondary;
   overflow: hidden scroll;
   &::-webkit-scrollbar {
@@ -46,18 +46,20 @@
   margin-top: 10px;
   padding-left: 10px;
   padding-right: 4px;
-  > span {
+
+  span {
     text-transform: uppercase;
     font-size: 12px;
     font-weight: 600;
     letter-spacing: 0.02em;
     color: $gray;
   }
-  > svg {
-    width: 21px;
-    height: 21px;
+
+  svg {
+    height: 14px;
     color: $interactive-normal;
     cursor: pointer;
+    margin-right: 4px;
   }
 }
 

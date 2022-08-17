@@ -1,7 +1,8 @@
+import { faImage } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { ChangeEvent } from 'react';
 import { useAppDispatch } from 'src/store/hooks';
 import { actions as ui } from 'src/store/states/ui';
-import { ImageAdd } from '@styled-icons/boxicons-solid';
 import { readFile } from 'src/utils/utils';
 import { ModalBuilder } from '../ModalBuilder';
 
@@ -37,7 +38,7 @@ export const UploadAvatar: React.FC<Props> = (props) => {
         body={
           <div className="uploadBox">
             <div className="uploadBoxImage">
-              <ImageAdd width={24} height={24} color="#fff" />
+              <FontAwesomeIcon icon={faImage} color="#fff" />
             </div>
             <div className="uploadBoxText">Upload Image</div>
             <input className="uploadAvatar" type="file" onChange={onInput} />

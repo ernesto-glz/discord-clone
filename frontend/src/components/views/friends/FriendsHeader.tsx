@@ -1,10 +1,8 @@
 import React from 'react';
-import {
-  FileTray as FileIcon,
-  HelpCircle as HelpIcon,
-} from '@styled-icons/ionicons-solid';
 import { HeaderButton } from './HeaderButton';
 import { Image } from '../elements/Image';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleQuestion, faInbox } from '@fortawesome/free-solid-svg-icons';
 
 const FriendsHeader: React.FC = () => {
   return (
@@ -20,8 +18,8 @@ const FriendsHeader: React.FC = () => {
       </div>
 
       <div className="menu-actions">
-        <FileIcon className="menu-image" />
-        <HelpIcon className="menu-image" />
+        <FontAwesomeIcon icon={faInbox} className="menu-image" />
+        <FontAwesomeIcon icon={faCircleQuestion} className="menu-image" />
       </div>
     </div>
   );

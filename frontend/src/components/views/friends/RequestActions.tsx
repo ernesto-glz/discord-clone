@@ -2,7 +2,8 @@ import React from 'react';
 import { Entity, RequestTypes } from '@discord/types';
 import { useAppDispatch } from 'src/store/hooks';
 import { removeRequest, acceptRequest } from 'src/store/states/requests';
-import { Close, Check } from '@styled-icons/material';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck, faClose } from '@fortawesome/free-solid-svg-icons';
 
 interface Props {
   request: RequestTypes.Populated;
@@ -25,11 +26,11 @@ export const RequestActionsItem: React.FC<Props> = ({ request, type }) => {
     <div className="flex">
       {type === 'INCOMING' && (
         <div className="action-button" onClick={handleAccept}>
-          <Check className="accept action-icon" />
+          <FontAwesomeIcon icon={faCheck} className="accept action-icon" />
         </div>
       )}
       <div className="action-button" onClick={handleCancel}>
-        <Close className="cancel action-icon" />
+        <FontAwesomeIcon icon={faClose} className="cancel action-icon" />
       </div>
     </div>
   );

@@ -5,9 +5,10 @@ import { Entity } from '@discord/types';
 import { getAvatarUrl } from 'src/utils/utils';
 import { actions as ui } from 'src/store/states/ui';
 import { BaseAvatar } from 'src/components/views/avatars/BaseAvatar';
-import { Close } from '@styled-icons/material';
-import classNames from 'classnames';
 import { hideChannel } from 'src/store/states/channels';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClose } from '@fortawesome/free-solid-svg-icons';
+import classNames from 'classnames';
 
 type Props = { channel: Entity.Channel };
 
@@ -41,7 +42,11 @@ const ChannelButton: React.FC<Props> = ({ channel }) => {
           <span className="channelName">{channel.name ?? 'Unknown'}</span>
         </div>
       </Link>
-      <Close onClick={hide} className="channelButton-close" />
+      <FontAwesomeIcon
+        icon={faClose}
+        onClick={hide}
+        className="channelButton-close"
+      />
     </div>
   );
 };

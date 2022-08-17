@@ -3,9 +3,10 @@ import { Image } from 'src/components/views/elements/Image';
 import { useAppDispatch, useAppSelector } from 'src/store/hooks';
 import { actions as ui } from 'src/store/states/ui';
 import { MyAccount } from './parts/MyAccount';
-import { Close } from '@styled-icons/material';
 import { UserProfile } from './parts/UserProfile';
 import classNames from 'classnames';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClose } from '@fortawesome/free-solid-svg-icons';
 import Modal from '../modal';
 
 export type Options = 'Account' | 'Profile' | 'Requests';
@@ -80,7 +81,7 @@ export const UserSettings: React.FC = () => {
             <div className="toolsContainer">
               <div className="tools">
                 <div className="toolsButtonWrapper" onClick={closeModal}>
-                  <Close className="closeBtn" />
+                  <FontAwesomeIcon icon={faClose} className="closeBtn" />
                 </div>
                 <div className="keybind">ESC</div>
               </div>

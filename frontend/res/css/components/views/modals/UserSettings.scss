@@ -134,7 +134,7 @@
 
   .keybind {
     color: $interactive-normal;
-    margin-top: 8px;
+    margin-top: 7px;
     font-weight: 600;
     font-size: 13px;
     text-align: center;
@@ -151,16 +151,16 @@
 .toolsButtonWrapper {
   border: 2px solid $interactive-normal;
   border-radius: 50%;
-  width: 37px;
-  height: 37px;
+  width: 36px;
+  height: 36px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
 
   .closeBtn {
-    width: 23px;
-    height: 23px;
+    width: 18px;
+    height: 18px;
     color: $interactive-normal;
   }
 

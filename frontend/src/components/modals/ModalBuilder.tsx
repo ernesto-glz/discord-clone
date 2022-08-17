@@ -1,5 +1,6 @@
+import { faClose } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { FormEvent } from 'react';
-import { Close } from '@styled-icons/material';
 import { useAppDispatch } from 'src/store/hooks';
 import { actions as ui } from 'src/store/states/ui';
 import Modal from './modal';
@@ -38,7 +39,7 @@ export const ModalBuilder: React.FC<Props> = (props) => {
               type="button"
               onClick={closeModal}
             >
-              <Close className="closeIcon" />
+              <FontAwesomeIcon icon={faClose} className="closeIcon" />
             </button>
           )}
           {props.header && <div className="ModalHeader">{props.header}</div>}

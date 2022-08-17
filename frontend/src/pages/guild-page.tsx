@@ -9,7 +9,7 @@ import ChannelList from 'src/components/views/channels_list/DMChannelsList';
 import { actions as uiActions } from 'src/store/states/ui';
 import { useParams } from 'react-router-dom';
 import { getChannel } from 'src/store/states/channels';
-import { ChannelHeader } from 'src/components/views/channels/ChannelHader';
+import { ChannelHeader } from 'src/components/views/channels/ChannelHeader';
 import { ChannelsListHeader } from 'src/components/views/channels_list/ChannelsListHeader';
 
 export const GuildPage: React.FC = () => {

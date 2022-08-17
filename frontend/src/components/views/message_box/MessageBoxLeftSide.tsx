@@ -1,5 +1,6 @@
-import { PlusCircleFill } from '@styled-icons/bootstrap';
 import React from 'react';
+import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface Props {
   editMode?: boolean;
@@ -8,7 +9,7 @@ interface Props {
 export const MessageBoxLeftSide: React.FC<Props> = ({ editMode }) => {
   return !editMode ? (
     <div className="message-box-left">
-      <PlusCircleFill className="option upload" />
+      <FontAwesomeIcon icon={faCirclePlus} className="option upload" />
     </div>
   ) : null;
 };

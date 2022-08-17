@@ -4,8 +4,9 @@ import ChannelButton from './DMChannelButton';
 import { useAppSelector } from 'src/store/hooks';
 import { GenericListButton } from './GenericListButton';
 import { getDMChannels } from 'src/store/states/channels';
-import { Add } from '@styled-icons/material';
 import { EmptyDMS } from 'src/components/images/EmptyDMS';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const ChannelList: React.FC = () => {
   const DMChannels = useAppSelector(getDMChannels());
@@ -17,7 +18,7 @@ const ChannelList: React.FC = () => {
 
       <div className="privateChannelsHeader">
         <span>Direct Messages</span>
-        <Add />
+        <FontAwesomeIcon icon={faPlus} />
       </div>
 
       {DMChannels.length > 0 ? (

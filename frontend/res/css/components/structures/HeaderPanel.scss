@@ -32,16 +32,21 @@
     filter: invert(0.4);
   }
 
-  > svg.type-indicator {
-    fill: $symbol;
-    width: 24px;
-    height: 24px;
+  svg.type-indicator {
+    color: $header-secondary;
+    width: 19px;
+    height: 19px;
   }
 }
 
 .menu-actions {
   display: flex;
   align-items: center;
+
+  svg {
+    color: $header-secondary;
+    height: 20px;
+  }
 }
 
 .menu-image {
