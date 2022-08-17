@@ -98,13 +98,8 @@ export class AuthService {
     return await compare(password, hashedPwd);
   }
 
-  private createToken(user: UserDocument, statusCode: number, res: Response) {
+  private async createToken(user: UserDocument, statusCode: number, res: Response) {
     const payload = { id: user.id };
-
-    const token = sign(payload, process.env.JWT_SECRET_KEY, {
-      expiresIn: process.env.JWT_EXPIRES_IN ?? '30d'
-    });
-
-    res.status(statusCode).json({ token });
+    res.status(statusCode).json({ token: await app.users.createToken(payload) });
   }
 }

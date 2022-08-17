@@ -1,10 +1,9 @@
 import { WS } from '@discord/types';
-import { WebSocketServer, WebSocketGateway, OnGatewayInit, OnGatewayConnection } from '@nestjs/websockets';
 import { readdirSync } from 'fs';
 import { join } from 'path';
 import { Server, Socket } from 'socket.io';
-import { SessionManager } from './modules/session-manager';
 import { WSAction, WSEvent } from './ws-events/ws-event';
+import { WebSocketServer, WebSocketGateway, OnGatewayInit, OnGatewayConnection } from '@nestjs/websockets';
 
 @WebSocketGateway(+process.env.PORT + 1, {
   cors: { origin: '*', methods: ['GET', 'POST'] },
@@ -13,7 +12,7 @@ import { WSAction, WSEvent } from './ws-events/ws-event';
 })
 export class WSGateway implements OnGatewayInit, OnGatewayConnection {
   @WebSocketServer() io: Server;
-  public sessions = new SessionManager();
+  public sessions = app.sessions;
   public events = new Map<keyof WS.To, WSEvent<keyof WS.To>>();
 
   afterInit() {
@@ -29,14 +28,14 @@ export class WSGateway implements OnGatewayInit, OnGatewayConnection {
       } catch {}
     }
 
-    global['app']['sessions'] = this.sessions;
+    global['ws'] = this;
   }
 
   handleConnection(client: Socket) {
     for (const event of this.events.values()) {
       client.on(event.on, async (data: any) => {
         try {
-          const actions = await event.invoke.call(event, this, client, data);
+          const actions = await event.invoke.call(event, client, data);
           for (const action of actions) {
             if (action) this.handle(action);
           }

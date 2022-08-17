@@ -1,6 +1,5 @@
-import { Socket } from 'socket.io';
 import { Entity, WS } from '@discord/types';
-import { WSGateway } from '../websocket';
+import { Socket } from 'socket.io';
 import { WSEvent } from './ws-event';
 import { generateSnowflake } from 'src/utils/snowflake';
 import { Message } from 'src/data/models/message-model';
@@ -11,7 +10,7 @@ import { moveToStart } from 'src/utils/utilts';
 export default class implements WSEvent<'MESSAGE_CREATE'> {
   public on = 'MESSAGE_CREATE' as const;
 
-  public async invoke(ws: WSGateway, client: Socket, { channelId, content }: WS.Params.MessageCreate) {
+  public async invoke(client: Socket, { channelId, content }: WS.Params.MessageCreate) {
     const senderId = ws.sessions.userId(client);
 
     const [message, sender] = await Promise.all([
@@ -28,7 +27,8 @@ export default class implements WSEvent<'MESSAGE_CREATE'> {
     channel.lastMessageId = message.id;
     await channel.save();
 
-    await this.reOrderDms(channel);
+    // Don't wait
+    this.reOrderDms(channel);
 
     return [{
       emit: this.on,
@@ -40,8 +40,10 @@ export default class implements WSEvent<'MESSAGE_CREATE'> {
   private async reOrderDms(channel: Entity.Channel): Promise<void> {
     const { id: channelId, userIds, type } = channel;
     if (type !== 'DM') return;
+    
     const users = await User.find({ $or: [{ _id: userIds[0] }, { _id: userIds[1] }] });
     if (!users.length) return;
+    
     for (const user of users) {
       const DMS = moveToStart(user.activeDMCS, channelId);
       user.activeDMCS = DMS;

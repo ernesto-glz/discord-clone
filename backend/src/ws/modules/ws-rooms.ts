@@ -1,4 +1,6 @@
-import { Socket } from 'socket.io';
+import { Entity } from '@discord/types';
+import { RemoteSocket, Socket } from 'socket.io';
+import { DefaultEventsMap } from 'socket.io/dist/typed-events';
 import { Channel } from 'src/data/models/channel-model';
 import { UserDocument } from 'src/data/models/user-model';
 
@@ -9,6 +11,12 @@ export class WSRooms {
     await client.join(user.guildIds);
     const channelIds = await this.getChannelIds(client, user.guildIds);
     await client.join(channelIds);
+  }
+
+  public async joinDM(channel: Entity.Channel, client: Socket | RemoteSocket<DefaultEventsMap, any>) {
+    const { id: channelId, guildId } = channel;
+    await client.join(guildId);
+    await client.join(channelId);
   }
 
   private async getChannelIds(client: Socket, guildIds: string[]) {

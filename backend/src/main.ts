@@ -3,13 +3,13 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { connect } from 'mongoose';
 import { AuthGuard } from './shared/auth.guard';
-import { defineAppGlobals } from './modules/app';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join, resolve } from 'path';
 import { ValidationPipe } from '@nestjs/common';
 import { delay } from './utils/utilts';
 import { execSync } from 'child_process';
 import helmet from 'helmet';
+import './modules/app';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -27,7 +27,7 @@ async function bootstrap() {
   // Temp fix hot reload broke ws-sessions (only for development)
   await delay(1000);
 
-  if (!process.env.JWT_SECRET_KEY || !process.env.MONGO_URI) {
+  if (!process.env.MONGO_URI) {
     console.log('Some environment variables have not been declared.');
     process.kill(1);
   }
@@ -35,8 +35,6 @@ async function bootstrap() {
   connect(process.env.MONGO_URI)
     .then(() => console.log(`Connected to database ${process.env.MONGO_URI}`))
     .catch((error) => console.log(error.message ?? 'Unable to connect to db'));
-
-  defineAppGlobals();
 
   // Create upload folder if no exists.
   try {

@@ -1,14 +1,9 @@
 import { RequestTypes } from '@discord/types';
-import { Socket } from 'socket.io';
+import { RemoteSocket, Socket } from 'socket.io';
+import { DefaultEventsMap } from 'socket.io/dist/typed-events';
 
 export class SessionManager extends Map<string, string> {
-  public get(clientId: string): string {
-    const userId = super.get(clientId);
-    if (!userId) return 'User not logged in';
-    return userId;
-  }
-
-  public userId(client: Socket) {
+  public userId(client: Socket | RemoteSocket<DefaultEventsMap, any>) {
     return this.get(client.id);
   }
 
@@ -24,8 +19,6 @@ export class SessionManager extends Map<string, string> {
 
   public getSessionsFromRequest(request: RequestTypes.Populated) {
     const { from, to } = request;
-    const senderSessions = this.getSessions(from.id);
-    const receiverSessions = this.getSessions(to.id);
-    return [senderSessions, receiverSessions];
+    return [this.getSessions(from.id), this.getSessions(to.id)];
   }
 }

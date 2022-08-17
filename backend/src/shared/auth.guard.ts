@@ -9,7 +9,7 @@ export type CustomRequest = Request & { user: UserTypes.Self };
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  private decoded: any;
+  private userId: string;
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest() as CustomRequest;
@@ -27,7 +27,7 @@ export class AuthGuard implements CanActivate {
     const token = authHeader.split(' ')[1];
   
     try {
-      this.decoded = verify(token, process.env.JWT_SECRET_KEY);
+      this.userId = await app.users.verifyToken(token);
     } catch (error: any) {
       if (error?.name === 'JsonWebTokenError')
         throw new UnauthorizedException(['Invalid token']);
@@ -37,7 +37,7 @@ export class AuthGuard implements CanActivate {
       throw new UnauthorizedException(['Unauthorized']);
     }
   
-    const user = await User.findById(this.decoded.id);
+    const user = await User.findById(this.userId);
     if (!user)
       throw new UnauthorizedException(['User not found']);
   

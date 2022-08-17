@@ -1,8 +1,8 @@
-import Channels from "src/data/channels";
-import Requests from "src/data/requests";
-import Users from "src/data/users";
-import { SessionManager } from "src/ws/modules/session-manager";
-import { WSRooms } from "src/ws/modules/ws-rooms";
+import Channels from 'src/data/channels';
+import Requests from 'src/data/requests';
+import Users from 'src/data/users';
+import { SessionManager } from 'src/ws/modules/session-manager';
+import { WSRooms } from 'src/ws/modules/ws-rooms';
 
 export interface App {
   users: Users;
@@ -20,7 +20,4 @@ const app = {
   sessions: new SessionManager()
 } as App;
 
-export function defineAppGlobals() {
-  global['app'] = app;
-}
-
+global['app'] = app;

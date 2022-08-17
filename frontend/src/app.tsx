@@ -11,12 +11,12 @@ import { ready } from "./store/states/auth";
 
 type Props = { children: React.ReactNode };
 
-const ReactRouter: React.FC<Props> = ({ children }) => {
-  const userAgent = navigator.userAgent.toLowerCase();
-  const isElectron = userAgent.includes("electron");
-
-  if (isElectron) return <HashRouter>{children}</HashRouter>;
-  return <BrowserRouter>{children}</BrowserRouter>
+const Router: React.FC<Props> = ({ children }) => {
+  return isElectron ? (
+    <HashRouter>{children}</HashRouter>
+  ) : (
+    <BrowserRouter>{children}</BrowserRouter>
+  );
 };
 
 const App: React.FC = () => {
@@ -28,7 +28,7 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
-      <ReactRouter>
+      <Router>
         <Routes>
           <Route path="/" element={<Navigate to="/channels/@me" />} />
           <Route path="/login" element={<LoginPage />} />
@@ -40,7 +40,7 @@ const App: React.FC = () => {
           </Route>
           <Route path="*" element={<h1>404 - Not Found</h1>} />
         </Routes>
-      </ReactRouter>
+      </Router>
     </div>
   );
 };

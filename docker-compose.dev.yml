@@ -18,10 +18,10 @@ services:
     environment:
       - PORT=4000
       - MONGO_URI=mongodb://database:27017/discord-clone
-      - JWT_SECRET_KEY=development
     volumes:
       - ./backend:/app/backend
       - ./backend/node_modules:/app/backend/node_modules
+      - ./backend/keys:/app/backend/keys
       - ./types:/app/types
     ports: [4000:4000, 4001:4001]
     tty: true
