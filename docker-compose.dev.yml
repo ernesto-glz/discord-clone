@@ -5,7 +5,6 @@ services:
     container_name: database
     image: mongo
     ports: [27017:27017]
-    tty: true
     command: mongod --quiet --logpath /dev/null
 
   backend:

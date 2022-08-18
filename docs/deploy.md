@@ -13,7 +13,7 @@ The necessary server-side files that we are going to use are located in scripts/
 </p>
 
 <p>
-On the server create the corresponding folders `discord-backend` `discord-frontend` and copy their corresponding content from the scripts.
+On the server create the corresponding folders ``discord-backend`` ``discord-frontend`` and copy their corresponding content from the scripts.
 
 :warning: Don't forget to configure the `docker-compose` and `docker-compose.override` files overriding the default values.
 
