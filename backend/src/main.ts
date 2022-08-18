@@ -9,10 +9,12 @@ import { ValidationPipe } from '@nestjs/common';
 import { delay } from './utils/utilts';
 import { execSync } from 'child_process';
 import helmet from 'helmet';
+import './modules/logger';
 import './modules/app';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const isProd = process.env.NODE_ENV === 'production';
 
   app.enableCors({ origin: '*' });
   app.setGlobalPrefix('v1');
@@ -25,16 +27,15 @@ async function bootstrap() {
   app.useStaticAssets(join(__dirname, '../assets'), { prefix: '/assets' });
 
   // Temp fix hot reload broke ws-sessions (only for development)
-  await delay(1000);
+  !isProd && (await delay(1000));
 
   if (!process.env.MONGO_URI) {
-    console.log('Some environment variables have not been declared.');
-    process.kill(1);
+    logger.warn('Some environment variables have not been declared.');
   }
 
   connect(process.env.MONGO_URI)
-    .then(() => console.log(`Connected to database ${process.env.MONGO_URI}`))
-    .catch((error) => console.log(error.message ?? 'Unable to connect to db'));
+    .then(() => logger.info(`Connected to database ${process.env.MONGO_URI}`))
+    .catch((error) => logger.error(error.message ?? 'Unable to connect to db'));
 
   // Create upload folder if no exists.
   try {
@@ -43,7 +44,7 @@ async function bootstrap() {
 
   await app
     .listen(process.env.PORT ?? 4000)
-    .then(() => console.log(`API is running on port ${process.env.PORT}`))
-    .catch((error) => console.log(error));
+    .then(() => logger.info(`API is running on port ${process.env.PORT}`))
+    .catch((error) => logger.error(error));
 }
 bootstrap();

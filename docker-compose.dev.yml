@@ -22,9 +22,9 @@ services:
       - ./backend:/app/backend
       - ./backend/node_modules:/app/backend/node_modules
       - ./backend/keys:/app/backend/keys
+      - ./logs:/app/backend/logs
       - ./types:/app/types
     ports: [4000:4000, 4001:4001]
-    tty: true
 
   frontend:
     container_name: discord_frontend
@@ -42,4 +42,3 @@ services:
       - ./frontend/node_modules:/app/frontend/node_modules
       - ./types:/app/types
     ports: [3000:3000, 3001:3001]
-    tty: true
