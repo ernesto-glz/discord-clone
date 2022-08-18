@@ -5,7 +5,7 @@ WORKDIR /app
 
 COPY ./frontend ./frontend
 COPY ./types ./types
-COPY ./nginx ./nginx
+COPY ./scripts/nginx ./nginx
 
 RUN cd /app/frontend && yarn install
 
