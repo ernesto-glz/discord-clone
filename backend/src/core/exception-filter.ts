@@ -21,6 +21,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
       errorMessage = 'Critical internal server error occurred!';
     }
 
+    logger.error(errorMessage);
     const errorResponse = this.getErrorResponse(status, errorMessage, request);
     response.status(status).json(errorResponse);
   }

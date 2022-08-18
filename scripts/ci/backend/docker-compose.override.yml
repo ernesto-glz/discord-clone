@@ -1,0 +1,5 @@
+version: "3"
+
+services:
+  backend:
+    image: user/discord-backend:latest

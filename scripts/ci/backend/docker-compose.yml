@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  database-prod:
+    hostname: database-prod
+    container_name: database-prod
+    image: mongo
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    volumes:
+      - ./database:/data/db
+    ports: [27017:27017]
+
+  backend:
+    container_name: discord_backend
+    depends_on: [database-prod]
+    image: user/discord-backend
+    restart: always
+    environment:
+      - PORT=4000
+      - MONGO_USER=root
+      - MONGO_PASSWORD=password
+      - MONGO_URI=mongodb://localhost:27017/discord-clone
+    ports: [4000:4000, 4001:4001]
+    volumes:
+      - ./keys:/app/backend/keys
+      - ./logs:/app/backend/logs
+      - ./uploads:/app/backend/assets/upload

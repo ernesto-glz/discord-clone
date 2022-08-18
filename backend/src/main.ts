@@ -33,9 +33,19 @@ async function bootstrap() {
     logger.warn('Some environment variables have not been declared.');
   }
 
-  connect(process.env.MONGO_URI)
-    .then(() => logger.info(`Connected to database ${process.env.MONGO_URI}`))
-    .catch((error) => logger.error(error.message ?? 'Unable to connect to db'));
+  try {
+    const config = isProd ?  {
+      authSource: 'admin',
+      auth: {
+        username: process.env.MONGO_USER,
+        password: process.env.MONGO_PASSWORD
+      }
+    } : {};
+    await connect(process.env.MONGO_URI, config)
+    logger.info(`Connected to database ${process.env.MONGO_URI}`);
+  } catch (error) {
+    logger.error(error.message ?? 'Unable to connect to db')
+  }
 
   // Create upload folder if no exists.
   try {
