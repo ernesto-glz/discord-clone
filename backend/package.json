@@ -1,10 +1,10 @@
 {
-  "name": "discord-backend",
-  "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "name": "dclone-backend",
+  "version": "0.1.0",
+  "description": "A discord clone created with ReactJS and NestJS.",
+  "author": "Ernesto Gonzalez <kik0swd@gmail.com>",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",

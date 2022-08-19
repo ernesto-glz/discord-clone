@@ -1,8 +1,8 @@
 {
-  "name": "discord-clone",
+  "name": "dclone-frontend",
   "productName": "Discord Clone",
   "version": "0.1.0",
-  "description": "A discord clone created with react.",
+  "description": "A discord clone created with ReactJS and NestJS.",
   "author": "Ernesto Gonzalez <kik0swd@gmail.com>",
   "license": "MIT",
   "main": "dist/electron/main/index.js",
