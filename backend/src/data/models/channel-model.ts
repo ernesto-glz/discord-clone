@@ -1,31 +1,39 @@
 import { Schema, model, Document } from 'mongoose';
 import { Entity } from '@discord/types';
 import { baseModelConfig } from 'src/config/model-config';
+import { patterns } from 'src/shared/patterns';
 
 export interface ChannelDocument extends Document, Entity.Channel {
   id: string;
 }
-const ChannelTypes = { DM: 'DM', GUILD_TEXT: 'GUILD_TEXT', GUILD_VOICE: 'GUILD_VOICE' };
 
 export const Channel = model<ChannelDocument>('channel', new Schema({
   _id: {
     type: String,
-    required: true
+    required: [true, 'Id is required'],
+    validate: [patterns.snowflake, 'Invalid snowflake id']
+  },
+  name: {
+    type: String,
+    maxlength: [32, 'Name is too long']
   },
   guildId: {
-    type: String
+    type: String,
+    validate: [patterns.snowflake, 'Invalid snowflake id']
   },
   createdBy: {
     type: String,
-    required: true
+    required: [true, 'CreatedBy is required'],
+    validate: [patterns.snowflake, 'Invalid snowflake id']
   },
   lastMessageId: {
-    type: String
+    type: String,
+    validate: [patterns.snowflake, 'Invalid snowflake id']
   },
   type: {
     type: String,
-    enum: Object.values(ChannelTypes),
-    required: true
+    required: [true, 'Type is required'],
+    validate: [patterns.channelType, 'Invalid type']
   },
   userIds: {
     type: [String],

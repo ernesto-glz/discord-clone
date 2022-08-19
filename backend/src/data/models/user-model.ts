@@ -1,6 +1,7 @@
 import { Schema, model, Document } from 'mongoose';
 import { UserTypes } from '@discord/types';
 import { transformUser } from 'src/utils/utilts';
+import { patterns } from 'src/shared/patterns';
 
 export interface UserDocument extends Document, UserTypes.Self {
   id: string;
@@ -11,34 +12,38 @@ const UserStatus = { ONLINE: 'ONLINE', OFFLINE: 'OFFLINE' };
 export const User = model<UserDocument>('user', new Schema({
   _id: {
     type: String,
-    required: true
+    required: [true, 'Id is required'],
+    validate: [patterns.snowflake, 'Invalid snowflake id']
   },
   username: {
     type: String,
-    required: true,
-    trim: true
+    required: [true, 'Username is required'],
+    trim: true,
+    validate: [patterns.username, 'Invalid username']
   },
   email: {
     type: String,
-    required: true,
+    required: [true, 'Email is required'],
     trim: true,
     unique: true,
-    lowercase: true
+    lowercase: true,
+    validate: [patterns.email, 'Invalid email']
   },
   password: {
     type: String,
-    required: true,
+    required: [true, 'Password is required'],
+    minlength: [5, 'Password too low'],
     trim: true,
     select: false,
-    minlength: 5
+    validate: [patterns.password, 'Invalid password']
   },
   discriminator: {
     type: String,
-    required: true
+    required: [true, 'Discriminator is required']
   },
   avatar: {
     type: String,
-    required: true
+    required: [true, 'Avatar URL is required']
   },
   guildIds: {
     type: [String]
@@ -52,8 +57,8 @@ export const User = model<UserDocument>('user', new Schema({
   },
   status: {
     type: String,
-    enum: Object.values(UserStatus),
-    default: 'OFFLINE'
+    default: 'OFFLINE',
+    validate: [patterns.status, 'Invalid status']
   },
   activeDMCS: {
     type: [String],

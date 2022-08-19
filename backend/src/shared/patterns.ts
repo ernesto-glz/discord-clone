@@ -4,4 +4,6 @@ export const patterns = {
   username: /(^(?! |^everyone$|^here$|^me$|^someone$)[A-Za-z\d\-\_ ]{2,32}(?<! )$)/,
   authRoutes: /login$|register$/,
   snowflake: /^\d{18}$/,
+  status: /^ONLINE|^OFFLINE$/,
+  channelType: /^DM|^GUILD_TEXT|^GUILD_VOICE$/
 }

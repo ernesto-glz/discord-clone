@@ -6,6 +6,7 @@ export function transformDocument(doc, ret) {
 }
 
 export function transformUser(doc, user) {
+  if (process.env.NODE_ENV === 'test') return user;
   const isOnline = app.sessions.isOnline(user._id);
   user.status = isOnline ? 'ONLINE' : 'OFFLINE';
   user.id = user._id;
