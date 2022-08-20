@@ -24,6 +24,6 @@ do
   
   # Append configuration property to JS file
   echo "  $varname: \"$value\"," | sed 's/VITE_//' >> ./env-config.js
-done < ../.env
+done < .env
 
 echo "}" >> ./env-config.js
