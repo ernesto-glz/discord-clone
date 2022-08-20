@@ -4,7 +4,7 @@ import { ContextMenu } from '../context-menu';
 import { ContextItem } from '../context-item';
 import { copyToClipboard } from 'src/utils/utils';
 import { Image } from 'src/components/views/elements/Image';
-import { Link45deg } from '@styled-icons/bootstrap';
+// import { Link45deg } from '@styled-icons/bootstrap';
 
 interface Props {
   user: Entity.User;
@@ -21,7 +21,7 @@ const UserMenu: React.FC<Props> = ({ user }) => {
       <div>
         <ContextItem onClick={copyUserLink}>
           <p className="childLeft">Copy User Link</p>
-          <Link45deg width={18} height={18} className="childRight" />
+          {/* <Link45deg width={18} height={18} className="childRight" /> */}
         </ContextItem>
         <div className="divider" />
         <ContextItem key={user.id} onClick={copyUserId}>

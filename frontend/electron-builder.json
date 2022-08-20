@@ -9,19 +9,7 @@
   },
   "extraResources": [
     {
-      "from": "./res/assets",
-      "to": "assets"
-    },
-    {
-      "from": "./res/fonts",
-      "to": "fonts"
-    },
-    {
-      "from": "./res/scripts",
-      "to": "scripts"
-    },
-    {
-      "from": "./res/*.css",
+      "from": "./res/*",
       "to": "."
     }
   ],
