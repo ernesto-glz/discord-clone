@@ -22,12 +22,11 @@ export function extractErrorMessage(error: AxiosError) {
   return data.message;
 }
 
-const API_ROOT = import.meta.env.VITE_API_ROOT;
 export function getAvatarUrl(from: Entity.User | Entity.Channel) {
   const { avatar } = from;
-  if (!avatar) return `${API_ROOT}/assets/avatars/unknown.png`;
-  if (avatar.startsWith('/')) return `${API_ROOT}/assets${avatar}`;
-  return `${API_ROOT}/assets/avatars/${avatar}.png`;
+  if (!avatar) return `${globalEnv.API_ROOT}/assets/avatars/unknown.png`;
+  if (avatar.startsWith('/')) return `${globalEnv.API_ROOT}/assets${avatar}`;
+  return `${globalEnv.API_ROOT}/assets/avatars/${avatar}.png`;
 }
 
 export function copyToClipboard(content: string) {

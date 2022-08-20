@@ -1,9 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 import { token } from 'src/utils/utils';
 
-const API_ROOT = import.meta.env.VITE_API_ROOT;
-const API_VERSION = import.meta.env.VITE_API_VERSION;
-
 export interface RestCall {
   data?: object;
   method?: 'get' | 'post' | 'put' | 'patch' | 'delete';
@@ -18,7 +15,9 @@ export class RestClient {
   public client: AxiosInstance;
 
   constructor() {
-    this.client = axios.create({ baseURL: `${API_ROOT}/v${API_VERSION}` });
+    this.client = axios.create({ 
+      baseURL: `${globalEnv.API_ROOT}/v${globalEnv.API_VERSION}` 
+    });
     this.client.interceptors.request.use((config) => {
       config.headers!.Authorization = `Bearer ${token()}`;
       return config;

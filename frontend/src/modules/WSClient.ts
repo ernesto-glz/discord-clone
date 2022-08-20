@@ -1,8 +1,6 @@
 import { WS } from '@discord/types';
 import { io, Socket } from 'socket.io-client';
 
-const WS_SERVER_ROOT = import.meta.env.VITE_WS_ROOT;
-
 export interface WSArgs {
   data?: object;
   event: keyof WS.To;
@@ -12,7 +10,7 @@ export class WSClient {
   public client: Socket;
 
   constructor() {
-    this.client = io(`${WS_SERVER_ROOT}`, {
+    this.client = io(`${globalEnv.WS_ROOT}`, {
       secure: true,
       path: '/websocket',
       transports: ['websocket', 'polling', 'flashsocket'],

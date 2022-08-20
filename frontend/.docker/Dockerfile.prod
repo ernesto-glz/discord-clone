@@ -6,10 +6,7 @@ WORKDIR /app
 COPY ./frontend ./frontend
 COPY ./types ./types
 COPY ./scripts/nginx ./nginx
-
-ENV VITE_API_ROOT=${API_ROOT}
-ENV VITE_WS_ROOT=${WS_ROOT}
-ENV VITE_API_VERSION=${API_VERSION}
+COPY ./frontend/.env.dist ./frontend/.env
 
 RUN cd /app/frontend && yarn install
 
@@ -25,4 +22,10 @@ COPY --from=builder /app/nginx/nginx.conf /etc/nginx/conf.d
 
 EXPOSE 80
 
-CMD ["nginx", "-g", "daemon off;"]
+WORKDIR /usr/share/nginx/html
+
+RUN apk add --no-cache bash
+
+RUN chmod +x setup-env.sh
+
+CMD ["/bin/bash", "-c", "/usr/share/nginx/html/setup-env.sh && nginx -g \"daemon off;\""]
