@@ -1,11 +1,18 @@
 version: "3"
 
 services:
-  www:
-    image: user/dclone-frontend
+  nginx-proxy:
+    image: jwilder/nginx-proxy
     restart: always
     ports:
       - "80:80"
     volumes:
-      - ./website:/usr/share/nginx/html
-      - ./config/conf.d:/etc/nginx/conf.d
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+
+  www:
+    image: nginx
+    restart: always
+    expose:
+      - "80"
+    environment:
+      - VIRTUAL_HOST=domain.com, www.domain.com

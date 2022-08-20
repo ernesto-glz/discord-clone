@@ -7,6 +7,10 @@ COPY ./frontend ./frontend
 COPY ./types ./types
 COPY ./scripts/nginx ./nginx
 
+ENV VITE_API_ROOT=${API_ROOT}
+ENV VITE_WS_ROOT=${WS_ROOT}
+ENV VITE_API_VERSION=${API_VERSION}
+
 RUN cd /app/frontend && yarn install
 
 RUN cd /app/frontend && yarn build:web

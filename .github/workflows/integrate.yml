@@ -57,6 +57,10 @@ jobs:
           file: ./frontend/.docker/Dockerfile.prod
           push: true
           tags: ${{ secrets.DOCKER_REPO_FRONTEND }}:${{ github.sha }}
+          build-args: |
+            "API_ROOT=${{ secrets.API_ROOT }}"
+            "WS_ROOT=${{ secrets.WS_ROOT }}"
+            "API_VERSION=1" 
 
   deploy-backend:
     runs-on: ubuntu-latest
