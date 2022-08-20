@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  www:
+    image: user/dclone-frontend
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./website:/usr/share/nginx/html
+      - ./config/conf.d:/etc/nginx/conf.d
