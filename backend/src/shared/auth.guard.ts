@@ -1,4 +1,4 @@
-import { UserTypes } from '@discord/types';
+import { UserTypes } from '@dclone/types';
 import { verify } from 'jsonwebtoken';
 import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
 import { User } from 'src/data/models/user-model';

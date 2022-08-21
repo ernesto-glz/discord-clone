@@ -1,4 +1,4 @@
-import { WS } from '@discord/types';
+import { WS } from '@dclone/types';
 import { readdirSync } from 'fs';
 import { join } from 'path';
 import { Server, Socket } from 'socket.io';

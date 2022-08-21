@@ -1,4 +1,4 @@
-import { Entity } from '@discord/types';
+import { Entity } from '@dclone/types';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Channel } from 'src/data/models/channel-model';
 import { Message } from 'src/data/models/message-model';

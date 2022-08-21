@@ -1,4 +1,4 @@
-import { WS } from '@discord/types';
+import { WS } from '@dclone/types';
 import { Socket } from 'socket.io';
 
 export interface WSEvent<T extends keyof WS.To> {

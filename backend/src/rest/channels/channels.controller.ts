@@ -1,4 +1,4 @@
-import { UserTypes } from '@discord/types';
+import { UserTypes } from '@dclone/types';
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { User } from 'src/shared/user.decorator';
 import { ChannelsService } from './channels.service';

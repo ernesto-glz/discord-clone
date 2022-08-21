@@ -1,4 +1,4 @@
-import { Entity } from '@discord/types';
+import { Entity } from '@dclone/types';
 import { Channel, ChannelDocument } from 'src/data/models/channel-model';
 import { User } from 'src/data/models/user-model';
 import DBWrapper from './db-wrapper';

@@ -1,4 +1,4 @@
-import { UserTypes } from '@discord/types';
+import { UserTypes } from '@dclone/types';
 import { Body, Controller, Patch, Post, Res } from '@nestjs/common';
 import { Response } from 'express';
 import { User } from 'src/shared/user.decorator';

@@ -1,5 +1,5 @@
 import { model, Schema, Document } from 'mongoose';
-import { Entity } from '@discord/types';
+import { Entity } from '@dclone/types';
 import { baseModelConfig } from 'src/config/model-config';
 import { patterns } from 'src/shared/patterns';
 

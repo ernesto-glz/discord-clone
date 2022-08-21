@@ -1,4 +1,4 @@
-import { UserTypes } from '@discord/types';
+import { UserTypes } from '@dclone/types';
 import { Body, Controller, Delete, Get } from '@nestjs/common';
 import { User } from 'src/shared/user.decorator';
 import { DeleteUserDto } from './dto/delete-user.dto';

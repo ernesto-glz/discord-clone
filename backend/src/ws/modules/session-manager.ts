@@ -1,4 +1,4 @@
-import { RequestTypes } from '@discord/types';
+import { RequestTypes } from '@dclone/types';
 import { RemoteSocket, Socket } from 'socket.io';
 import { DefaultEventsMap } from 'socket.io/dist/typed-events';
 

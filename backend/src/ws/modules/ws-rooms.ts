@@ -1,4 +1,4 @@
-import { Entity } from '@discord/types';
+import { Entity } from '@dclone/types';
 import { RemoteSocket, Socket } from 'socket.io';
 import { DefaultEventsMap } from 'socket.io/dist/typed-events';
 import { Channel } from 'src/data/models/channel-model';

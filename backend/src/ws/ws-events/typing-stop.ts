@@ -1,6 +1,6 @@
 import { Socket } from 'socket.io';
 import { WSEvent } from './ws-event';
-import { WS } from '@discord/types';
+import { WS } from '@dclone/types';
 
 export default class implements WSEvent<'TYPING_STOP'> {
   public on = 'TYPING_STOP' as const;

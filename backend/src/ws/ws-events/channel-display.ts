@@ -1,4 +1,4 @@
-import { WS } from '@discord/types';
+import { WS } from '@dclone/types';
 import { Socket } from 'socket.io';
 import { User } from 'src/data/models/user-model';
 import { WSEvent } from './ws-event';

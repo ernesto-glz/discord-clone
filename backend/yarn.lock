@@ -332,7 +332,7 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
-"@discord/types@link:../types":
+"@dclone/types@link:../types":
   version "0.0.0"
   uid ""
 

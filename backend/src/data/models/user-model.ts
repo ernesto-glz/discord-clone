@@ -1,5 +1,5 @@
 import { Schema, model, Document } from 'mongoose';
-import { UserTypes } from '@discord/types';
+import { UserTypes } from '@dclone/types';
 import { transformUser } from 'src/utils/utilts';
 import { patterns } from 'src/shared/patterns';
 

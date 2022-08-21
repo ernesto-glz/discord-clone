@@ -1,4 +1,4 @@
-import { UserTypes } from '@discord/types';
+import { UserTypes } from '@dclone/types';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Request } from 'src/data/models/request-model';
 import { User } from 'src/data/models/user-model';

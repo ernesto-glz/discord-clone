@@ -1,5 +1,5 @@
 import { Socket } from 'socket.io';
-import { WS } from '@discord/types';
+import { WS } from '@dclone/types';
 import { WSEvent } from './ws-event';
 
 export default class implements WSEvent<'FRIEND_REQUEST_REMOVE'> {

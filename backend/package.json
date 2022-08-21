@@ -21,7 +21,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@discord/types": "link:../types/",
+    "@dclone/types": "link:../types/",
     "@nestjs/common": "9.0.0",
     "@nestjs/core": "9.0.0",
     "@nestjs/mapped-types": "*",

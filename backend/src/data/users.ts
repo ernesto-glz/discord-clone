@@ -1,4 +1,4 @@
-import { Entity } from '@discord/types';
+import { Entity } from '@dclone/types';
 import { BadRequestException } from '@nestjs/common';
 import { User, UserDocument } from 'src/data/models/user-model';
 import DBWrapper from './db-wrapper';
