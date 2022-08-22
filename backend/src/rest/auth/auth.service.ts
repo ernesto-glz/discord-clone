@@ -2,7 +2,6 @@ import { UserTypes } from '@dclone/types';
 import { BadRequestException, ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { compare, hash } from 'bcrypt';
 import { Response } from 'express';
-import { sign } from 'jsonwebtoken';
 import { User, UserDocument } from 'src/data/models/user-model';
 import { generateSnowflake } from 'src/utils/snowflake';
 import { ChangePasswordDto } from './dto/change-password.dto';
@@ -16,14 +15,14 @@ export class AuthService {
   async loginUser(loginUserDto: LoginUserDto, response: Response) {
     const { email, password } = loginUserDto;
 
-    const userFound = await User.findOne({ email }).select('+password');
+    const user = await User.findOne({ email }).select('+password');
 
-    if (!userFound || !(await this.checkCredentials(password, userFound.password)))
+    if (!user || !(await this.checkCredentials(password, user.password)))
       throw new UnauthorizedException(['Email or password is invalid']);
-    else if (userFound.locked) 
+    else if (user.locked) 
       throw new BadRequestException(['This account is locked!']);
 
-    this.createToken(app.users.secure(userFound), 200, response);
+    this.createToken(user.toObject(), 200, response);
   }
 
   async registerUser(registerUserDto: RegisterUserDto, response: Response) {
@@ -45,7 +44,7 @@ export class AuthService {
       discriminator: discriminator.toString().padStart(4, '0')
     });
 
-    this.createToken(app.users.secure(created), 201, response);
+    this.createToken(created.toObject(), 201, response);
   }
 
   async changeUsername(selfUser: UserTypes.Self, newUsername: string, password: string) {
@@ -98,7 +97,7 @@ export class AuthService {
     return await compare(password, hashedPwd);
   }
 
-  private async createToken(user: UserDocument, statusCode: number, res: Response) {
+  private async createToken(user: Partial<UserTypes.Self>, statusCode: number, res: Response) {
     const payload = { id: user.id };
     res.status(statusCode).json({ token: await app.users.createToken(payload) });
   }

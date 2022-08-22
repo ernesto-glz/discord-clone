@@ -5,7 +5,7 @@ import { Message } from 'src/data/models/message-model';
 import { User } from 'src/data/models/user-model';
 import { generateSnowflake } from 'src/utils/snowflake';
 
-export type CreatedDM = { channel: Entity.Channel, alreadyExists: boolean };
+export type CreatedDM = { channel: Entity.Channel };
 
 @Injectable()
 export class ChannelsService {
@@ -14,8 +14,8 @@ export class ChannelsService {
   public async createDM(selfId: string, userId: string): Promise<CreatedDM> {
     const guildId = generateSnowflake();
 
-    const channel = await app.channels.checkIfExistsDM(selfId, userId);
-    if (channel) return { channel, alreadyExists: true };
+    const channel = await app.channels.getDM(selfId, userId);
+    if (channel) return { channel };
 
     const created = await Channel.create({
       _id: generateSnowflake(),
@@ -30,29 +30,22 @@ export class ChannelsService {
       { $push: { guildIds: guildId, activeDMCS: created.id } }
     );
 
-    return { channel: created, alreadyExists: false };
+    return { channel: created };
   }
 
   async getMessages(channelId: string, userId: string, backSize: number) {
-    const channel = await Channel.findOne({
-      _id: channelId,
-      $or: [{ sender: userId }, { receiver: userId }]
-    });
-    
-    if (!channel)
-      throw new BadRequestException(['No messages found']);
-    
+    const channel = await Channel.findOne({ _id: channelId });
+    if (!channel) throw new BadRequestException(['No messages found']);
+
     const channelMsgs = await Message.find({ channelId });
     const batchSize = 30;
     const back = Math.max(channelMsgs.length - +(backSize || batchSize), 0);
     const slicedMsgs = channelMsgs.slice(back);
 
-    if (!slicedMsgs.length)
-      return { channelId, total: 0, list: [] };
+    if (!slicedMsgs.length) return { channelId, total: 0, list: [] };
 
     const lastMessage = slicedMsgs[slicedMsgs.length - 1];
-    if (lastMessage.id === channel.lastMessageId)
-      app.users.markAsRead(userId, lastMessage);
+    if (lastMessage.id === channel.lastMessageId) app.users.markAsRead(userId, lastMessage);
 
     return { channelId, total: channelMsgs.length, list: slicedMsgs };
   }

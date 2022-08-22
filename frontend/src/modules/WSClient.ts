@@ -10,7 +10,7 @@ export class WSClient {
   public client: Socket;
 
   constructor() {
-    this.client = io(`${globalEnv.WS_ROOT}`, {
+    this.client = io(globalEnv.WS_ROOT, {
       secure: true,
       path: '/websocket',
       transports: ['websocket', 'polling', 'flashsocket'],

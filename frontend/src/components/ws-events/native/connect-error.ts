@@ -1,5 +1,5 @@
 import { AuthErrors } from 'src/config/constants';
-import { actions as auth, logoutUser, ready } from 'src/store/states/auth';
+import { actions as auth, logoutUser } from 'src/store/states/auth';
 import { actions as meta } from 'src/store/states/meta';
 import { AppDispatch, AppState } from 'src/store/store';
 import { WSEvent } from '../ws-events';
