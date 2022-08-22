@@ -10,8 +10,8 @@ export const LoadingScreen: React.FC = () => {
     <PageWrapper>
       <div className='loading-screen'>
         <video autoPlay className='spinner' muted loop playsInline>
-          <source src={_r('/media/logo_spinner.webm')} type="video/webm" />
-          <source src={_r('/media/logo_spinner.mp4')} type="video/mp4" />
+          <source src={_r('/media/loading_logo_spin.webm')} type="video/webm" />
+          <source src={_r('/media/loading_logo_spin.mp4')} type="video/mp4" />
           <Image src='/img/loading-skeleton.png' />
         </video>
         <h4 className='title'>Did you know</h4>
