@@ -15,10 +15,11 @@ export default class Requests extends DBWrapper<string, RequestDocument> {
     })
   }
 
-  async checkExistence(fromId: string, userId: string) {
+  async find(fromId: string, userId: string) {
     return await Request.findOne({
       $or: [{ $and: [{ from: userId }, { to: fromId }] }, 
-      { $and: [{ from: fromId }, { to: userId }] }]
+        { $and: [{ from: fromId }, { to: userId }] }
+      ]
     });
   }
 }

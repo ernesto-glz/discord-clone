@@ -9,6 +9,13 @@ export const notInArray = (arr: any[]) => (old: any) => {
   return !arr.some((e) => e.id === old.id);
 };
 
+export const notRepeated = (arr: any[], element: any) => {
+  const alreadyExists = arr.find((e) => e.id === element.id);
+  if (alreadyExists)
+    return arr;
+  return [...arr, element];
+}
+
 export const token = () => localStorage.getItem('access_token');
 
 export function extractErrorMessage(error: AxiosError) {

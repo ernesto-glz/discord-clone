@@ -13,7 +13,7 @@ export class UsersService {
   
     const [channels, users, requests] = await Promise.all([
       Channel.find({ userIds: userId }),
-      User.find({ guildIds: { $in: guildIds } }),
+      app.users.getGuildUsers(guildIds),
       app.requests.get(userId)
     ]);
   

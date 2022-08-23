@@ -1,4 +1,4 @@
-import { createSlice, Dispatch } from '@reduxjs/toolkit';
+import { createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit';
 import { UserTypes } from '@discord/types';
 import { Store } from 'types/store';
 import { token } from 'src/utils/utils';
@@ -29,7 +29,7 @@ export const slice = createSlice({
       delete auth.user;
       auth.attemptedLogin = false;
     },
-    updatedUser: (auth, { payload }) => {
+    updatedUser: (auth, { payload }: PayloadAction<Partial<UserTypes.Self>>) => {
       Object.assign(auth.user as unknown as object, payload as unknown as object);
     }
   }

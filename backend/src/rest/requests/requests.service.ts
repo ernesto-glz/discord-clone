@@ -12,27 +12,28 @@ export class RequestsService {
 
   async create(createRequestDto: CreateRequestDto, self: UserTypes.Self) {
     const { username, discriminator } = createRequestDto;
-    const userFound = await User.findOne({ username, discriminator });
+    const user = await User.findOne({ username, discriminator });
 
-    if (!userFound || userFound.id === self.id) 
+    if (!user || user.id === self.id) 
       throw new BadRequestException(
         [`Hm, didn't work. Double check that the capitalization, spelling, any spaces, and numbers are correct.`]
       )
 
-    const alreadyRequest = await app.requests.checkExistence(self.id, userFound.id);
+    const alreadyExists = await app.requests.find(self.id, user.id);
 
-    if (self.friendIds.includes(userFound.id))
+    if (self.friendIds.includes(user.id))
       throw new BadRequestException([`You're already friends with that user!`]);
-    else if (alreadyRequest) 
+    else if (alreadyExists) 
       throw new BadRequestException(['Friend request already exists']);
 
-    const created = await Request.create({
+    const request = new Request({
       _id: generateSnowflake(),
       from: self.id,
-      to: userFound.id
+      to: user.id
     });
-
-    return await Request.findOne({ _id: created.id }).populate(['from', 'to']);
+    await request.save();
+    
+    return await request.populate(['from', 'to']);
   }
 
   async delete(requestId: string, selfId: string) {
@@ -44,28 +45,22 @@ export class RequestsService {
     if (!request) 
       throw new BadRequestException(['Request not found']);
 
-    await Request.findByIdAndDelete(requestId);
+    await request.delete();
     return request;
   }
 
   async accept(requestId: string, selfId: string) {
     const request = await Request.findOne({ _id: requestId, to: selfId });
+    const { from, to } = request;
 
     if (!request)
       throw new BadRequestException(['Request not found']);
 
-    await Request.findByIdAndDelete(requestId);
+    await request.delete();
+    await app.users.addFriend(from, to);
+    await app.users.addFriend(to, from);
 
-    await User.updateOne({ _id: request.from }, {
-      $push: { friendIds: request.to }
-    });
-    
-    await User.updateOne({ _id: request.to }, {
-      $push: { friendIds: request.from }
-    });
-
-    const createdDM = await this.channelsService.createDM(request.from, request.to);
-
-    return { friendId: request.from, channel: createdDM.channel };
+    const DM = await this.channelsService.createDM(from, to);
+    return { friendId: from, channel: DM };
   }
 }

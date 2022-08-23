@@ -33,7 +33,9 @@ export declare namespace WS {
     /* Indicates that you stopped writing in a channel. */
     TYPING_STOP: Params.Typing;
     /* Update a user with a given token. */
-    USER_UPDATE: Args.UserUpdate;
+    USER_UPDATE: Params.UserUpdate;
+    /* Remove a friend */
+    FRIEND_REMOVE: Params.FriendRemove;
     /* Manually disconnect from the websocket. */
     disconnect: any;
   }
@@ -63,6 +65,8 @@ export declare namespace WS {
     FRIEND_ADDED: Args.FriendAdded;
     /* Called when a user is updated (email, username) */
     USER_UPDATE: Args.UserUpdate;
+    /* Called when a friend is removed */
+    FRIEND_REMOVE: Args.FriendRemove;
     /* obvious :L */
     error: object;
   }
@@ -106,14 +110,12 @@ export declare namespace WS {
 
     export interface UserUpdate {
       token: string;
-      partialUser: {
-        username?: string;
-        discriminator?: string;
-        status?: UserTypes.StatusType;
-        email?: string;
-        guildIds?: string[];
-        friendIds?: string[];
-      };
+      partialUser: Partial<UserTypes.Self>;
+    }
+
+    export interface FriendRemove {
+      token: string;
+      userId: string;
     }
   }
 
@@ -174,14 +176,11 @@ export declare namespace WS {
 
     export interface UserUpdate {
       userId: string;
-      partialUser: {
-        username?: string;
-        discriminator?: string;
-        status?: UserTypes.StatusType;
-        email?: string;
-        guildIds?: string[];
-        friendIds?: string[];
-      };
+      partialUser: Partial<UserTypes.Self>;
+    }
+
+    export interface FriendRemove {
+      userId: string;
     }
   }
 }

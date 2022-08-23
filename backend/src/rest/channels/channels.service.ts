@@ -1,21 +1,18 @@
-import { Entity } from '@dclone/types';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Channel } from 'src/data/models/channel-model';
 import { Message } from 'src/data/models/message-model';
 import { User } from 'src/data/models/user-model';
 import { generateSnowflake } from 'src/utils/snowflake';
 
-export type CreatedDM = { channel: Entity.Channel };
-
 @Injectable()
 export class ChannelsService {
   constructor() {}
 
-  public async createDM(selfId: string, userId: string): Promise<CreatedDM> {
+  public async createDM(selfId: string, userId: string) {
     const guildId = generateSnowflake();
 
     const channel = await app.channels.getDM(selfId, userId);
-    if (channel) return { channel };
+    if (channel) return channel;
 
     const created = await Channel.create({
       _id: generateSnowflake(),
@@ -30,7 +27,7 @@ export class ChannelsService {
       { $push: { guildIds: guildId, activeDMCS: created.id } }
     );
 
-    return { channel: created };
+    return created;
   }
 
   async getMessages(channelId: string, userId: string, backSize: number) {

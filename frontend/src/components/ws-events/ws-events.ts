@@ -7,6 +7,7 @@ import * as MessageCreate from './messages/message-create';
 import * as MessageUpdate from './messages/message-update';
 import * as PresenceUpdate from './users/presence-update';
 import * as FriendAdded from './friends/friend-added';
+import * as FriendRemove from './friends/friend-remove';
 import * as RequestCreate from './requests/request-create';
 import * as RequestRemove from './requests/request-remove';
 import * as TypingStart from './typing/typing-start';
@@ -22,11 +23,7 @@ type OnWS = WS.From & {
 
 export interface WSEvent<T extends keyof OnWS> {
   on: T;
-  invoke: (
-    state: AppState,
-    dispatch: AppDispatch,
-    args: OnWS[T]
-  ) => any;
+  invoke: (state: AppState, dispatch: AppDispatch, args: OnWS[T]) => any;
 }
 
 export default [
@@ -44,4 +41,5 @@ export default [
   UserUpdate.default,
   ChannelDisplay.default,
   ChannelHide.default,
+  FriendRemove.default,
 ];

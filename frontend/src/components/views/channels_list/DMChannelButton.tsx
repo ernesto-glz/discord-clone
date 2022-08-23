@@ -14,10 +14,11 @@ type Props = { channel: Entity.Channel };
 
 const ChannelButton: React.FC<Props> = ({ channel }) => {
   const { dmUserId } = channel;
+  const self = useAppSelector((s) => s.auth.user)!;
   const dmUser = useAppSelector((s) => s.users.find((u) => u.id === dmUserId));
   const { activeGuild, activeChannel } = useAppSelector((s) => s.ui);
   const isActive = activeChannel?.id === channel.id;
-  const isOnline = dmUser?.status === 'ONLINE';
+  const isOnline = dmUser?.status === 'ONLINE' && self.friendIds.includes(dmUser.id);
   const url = `/channels/${activeGuild}/${channel.id}`;
   const dispatch = useAppDispatch();
 

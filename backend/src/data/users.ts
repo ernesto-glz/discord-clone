@@ -6,15 +6,6 @@ import { sign, verify } from 'jsonwebtoken';
 import { readFile } from 'fs/promises';
 
 export default class Users extends DBWrapper<string, UserDocument> {
-  public secure(user: UserDocument) {
-    const u = { ...user.toObject() } as any;
-    delete u.email;
-    delete u.lastReadMessageIds;
-    delete u.activeDMCS;
-    delete u.password;
-    return u;
-  }
-
   public async calcDiscriminator(username: string) {
     const usersLength = await User.countDocuments({ username });
     const discriminator = usersLength + 1;
@@ -41,6 +32,14 @@ export default class Users extends DBWrapper<string, UserDocument> {
     await user.save();
   }
 
+  public async addFriend(userId: string, friend: string) {
+    return await User.updateOne({ _id: userId }, { $push: { friendIds: friend } })
+  }
+
+  public async getGuildUsers(guildIds: string[]) {
+    return await User.find({ guildIds: { $in: guildIds } });
+  }
+
   public async createToken(payload: { id: string }) {
     const key = await readFile('./keys/jwt', { encoding: 'utf-8' });
     return sign(payload, key, { algorithm: 'RS512', expiresIn: '30d' });
@@ -51,6 +50,15 @@ export default class Users extends DBWrapper<string, UserDocument> {
     const key = await readFile('./keys/jwt', { encoding: 'utf-8' });
     const decoded = verify(token as string, key, { algorithms: ['RS512'] }) as UserToken;
     return decoded?.id;
+  }
+
+  public secure(user: UserDocument): Entity.User {
+    const u = { ...user.toObject() } as any;
+    delete u.email;
+    delete u.lastReadMessageIds;
+    delete u.activeDMCS;
+    delete u.password;
+    return u;
   }
 }
 

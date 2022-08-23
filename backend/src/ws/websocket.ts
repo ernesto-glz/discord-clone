@@ -4,6 +4,7 @@ import { join } from 'path';
 import { Server, Socket } from 'socket.io';
 import { WSAction, WSEvent } from './ws-events/ws-event';
 import { WebSocketServer, WebSocketGateway, OnGatewayInit, OnGatewayConnection } from '@nestjs/websockets';
+import { isArray } from 'class-validator';
 
 @WebSocketGateway(+process.env.PORT + 1, {
   cors: { origin: '*', methods: ['GET', 'POST'] },
@@ -47,6 +48,11 @@ export class WSGateway implements OnGatewayInit, OnGatewayConnection {
   }
 
   public handle(action: WSAction<keyof WS.From>) {
-    this.io.to(action.to).emit(action.emit, action.send);
+    const socketIds = action.to;
+    if (!isArray(socketIds))
+      return this.io.to(socketIds ?? '').emit(action.emit, action.send);
+
+    const to = socketIds.length ? socketIds : [''];
+    return this.io.to(to).emit(action.emit, action.send);
   }
 }

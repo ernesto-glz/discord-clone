@@ -7,6 +7,11 @@ export class SessionManager extends Map<string, string> {
     return this.get(client.id);
   }
 
+  /*
+   * Returns the active sessions of a user.
+   * In case of being disconnected return empty array.
+   * websocket.ts handles this empty array and converts it to a string so as not to cause a broadcast.
+   */
   public getSessions(userId: string) {
     return Array.from(this.entries())
       .filter(([, value]) => value === userId)

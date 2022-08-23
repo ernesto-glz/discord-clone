@@ -1,7 +1,7 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { notInArray, token } from 'src/utils/utils';
 import { Store } from 'types/store';
-import { UserTypes, WS } from '@discord/types';
+import { Entity, UserTypes, WS } from '@discord/types';
 
 export const slice = createSlice({
   name: 'users',
@@ -13,6 +13,14 @@ export const slice = createSlice({
     updated: (users, { payload }: PayloadAction<WS.Args.UserUpdate>) => {
       const user = users.find((e) => e.id === payload.userId);
       if (user) Object.assign(user, payload.partialUser);
+    },
+    added: (users, { payload }: PayloadAction<Entity.User>) => {
+      const user = users.find((u) => u.id === payload.id);
+      if (user) {
+        Object.assign(user, payload);
+        return;
+      }
+      users.push(payload);
     }
   }
 });
@@ -44,4 +52,11 @@ export const updateSelf = (payload: Partial<UserTypes.Self>) => (dispatch) => {
 export const uploadUserAvatar = (file: File) => (dispatch) => {
   const uploadCallback = async ({ url }) => dispatch(updateSelf({ avatar: url }));
   restClient.uploadFile(file, uploadCallback);
+}
+
+export const removeFriend = (userId: string) => (dispatch) => {
+  wsClient.call({
+    event: 'FRIEND_REMOVE',
+    data: { userId, token: token() }
+  })
 }
