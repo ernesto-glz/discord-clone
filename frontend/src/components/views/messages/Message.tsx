@@ -16,6 +16,8 @@ import {
   getTime,
 } from 'src/utils/date';
 import classNames from 'classnames';
+import { MenuTrigger } from 'src/components/context-menus/menu-trigger';
+import MessageMenu from 'src/components/context-menus/message-menu/message-menu';
 
 export interface Props {
   message: Entity.Message;
@@ -52,7 +54,7 @@ const Message: React.FC<Props> = ({ message, wrappedRef }) => {
   };
 
   return (
-    <React.Fragment>
+    <MenuTrigger id={message.id}>
       {isActuallyNewDay() && <MessageDivider date={message.createdAt!} />}
       <li
         ref={wrappedRef}
@@ -83,7 +85,8 @@ const Message: React.FC<Props> = ({ message, wrappedRef }) => {
           )}
         </div>
       </li>
-    </React.Fragment>
+      <MessageMenu message={message} />
+    </MenuTrigger>
   );
 };
 

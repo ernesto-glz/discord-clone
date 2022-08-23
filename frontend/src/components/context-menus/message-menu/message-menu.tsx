@@ -5,6 +5,8 @@ import { ContextMenu } from '../context-menu';
 import { ContextItem } from '../context-item';
 import { copyToClipboard } from 'src/utils/utils';
 import { Image } from 'src/components/views/elements/Image';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLink } from '@fortawesome/free-solid-svg-icons';
 // import { Link45deg } from '@styled-icons/bootstrap';
 
 interface Props {
@@ -20,17 +22,21 @@ const MessageMenu: React.FC<Props> = ({ message }) => {
 
   return activeGuild ? (
     <ContextMenu id={message.id}>
-      <div>
-        <ContextItem onClick={copyLink}>
-          <p className="childLeft">Copy Message Link</p>
-          {/* <Link45deg width={18} height={18} className="childRight" /> */}
-        </ContextItem>
-        <div className="divider" />
-        <ContextItem key={message.id} onClick={copyMessageId}>
-          <p className="childLeft">Copy ID</p>
+      {/* <ContextItem>
+        <p className="childLeft">Copy</p>
+        <p className="childRight">Ctrl+C</p>
+      </ContextItem>
+      <div className="divider" /> */}
+      <ContextItem onClick={copyLink}>
+        <p className="childLeft">Copy Message Link</p>
+        <FontAwesomeIcon icon={faLink} />
+      </ContextItem>
+      <ContextItem key={message.id} onClick={copyMessageId}>
+        <p className="childLeft">Copy ID</p>
+        <div className="imageContainer">
           <Image src="/img/id.svg" className="childRight" />
-        </ContextItem>
-      </div>
+        </div>
+      </ContextItem>
     </ContextMenu>
   ) : null;
 };

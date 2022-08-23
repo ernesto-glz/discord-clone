@@ -21,10 +21,10 @@ export const actions = slice.actions;
 export default slice.reducer;
 
 export const displayChannel = (userId: string) => (dispatch: Dispatch) => {
-  const callback = (data) => {
+  const callback = (channel) => {
     wsClient.call({
       event: 'CHANNEL_DISPLAY',
-      data: { channelId: data.channel.id }
+      data: { channelId: channel.id }
     });
   };
   restClient.call({

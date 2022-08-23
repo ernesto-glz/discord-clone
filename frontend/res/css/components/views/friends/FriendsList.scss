@@ -27,7 +27,7 @@
       font-weight: 500;
       line-height: 18px;
 
-      &:hover {
+      &:hover, &.active {
         background: $background-modifier-hover;
         box-shadow: none;
         border-radius: 8px;
