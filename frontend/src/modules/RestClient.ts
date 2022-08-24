@@ -37,12 +37,13 @@ export class RestClient {
     } catch (error: any) {
       const response = error.response;
       if (!response?.data) return;
+
       const errors = response.data?.errors;
-      if (errorEvent) {
-        if (errorEvent === 'REQUEST_CREATE_FAILED')
-          return events.emit(errorEvent, errors[0]?.message ?? response.data);
-        events.emit(errorEvent, errors ?? [{ message: response.data }]);
-      }
+      if (!errorEvent) return;
+      if (errorEvent === 'REQUEST_CREATE_FAILED')
+        return events.emit(errorEvent, errors[0]?.message ?? response.data);
+
+      events.emit(errorEvent, errors ?? [{ message: response.data }]);
     }
   }
 

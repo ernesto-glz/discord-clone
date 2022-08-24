@@ -14,7 +14,6 @@ export class AuthService {
 
   async loginUser(loginUserDto: LoginUserDto, response: Response) {
     const { email, password } = loginUserDto;
-
     const user = await User.findOne({ email }).select('+password');
 
     if (!user || !(await this.checkCredentials(password, user.password)))
@@ -62,17 +61,13 @@ export class AuthService {
       ? await app.users.calcDiscriminator(selfUser.username)
       : selfUser.discriminator;
     
-    await User.updateOne({ _id: selfUser.id }, { 
-      username: newUsername,
-      discriminator: discriminator.toString().padStart(4, '0') 
-    });
-
-    const user = await User.findById(selfUser.id);
-    const secured = app.users.secure(user!);
+    self.username = newUsername;
+    self.discriminator = discriminator.toString().padStart(4, '0');
+    await self.save();
 
     return {
       userId: selfUser.id,
-      partialUser: secured
+      partialUser: app.users.secure(self)
     };
   }
 
@@ -84,7 +79,8 @@ export class AuthService {
       throw new UnauthorizedException(['Password does not match.']);
       
     const hashedPassword = await this.hashPassword(newPassword);
-    await User.updateOne({ _id: selfUser.id }, { password: hashedPassword });
+    self.password = hashedPassword;
+    await self.save();
 
     return { response: 'Password changed successfully!' };
   }

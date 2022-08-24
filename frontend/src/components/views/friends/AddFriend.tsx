@@ -53,9 +53,8 @@ export const AddFriend: React.FC = () => {
             className={classNames('response', result.type, {
               displayed: !!result.message,
             })}
-          >
-            {result.message}
-          </div>
+            dangerouslySetInnerHTML={{ __html: result.message ?? '' }}
+          />
         </form>
       </div>
       <div className="friends-panel center">

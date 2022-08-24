@@ -3,7 +3,7 @@
   width: 100%;
   padding: 20px 30px;
 
-  > h2.title {
+  .title {
     font-size: 16px;
     line-height: 20px;
     text-transform: uppercase;
@@ -12,24 +12,24 @@
 }
 
 .add-friend-form {
-  > p.advertise {
+  .advertise {
     font-size: 14px;
     line-height: 20px;
     font-weight: 300;
     color: $header-secondary;
   }
 
-  > div.Error {
+  .Error {
     font-size: 15px;
     color: $text-danger;
   }
 
-  > div.Success {
+  .Success {
     font-size: 15px;
     color: hsl(139, calc($saturation-factor * 47.3%), 43.9%);
   }
 
-  > div.response {
+  .response {
     &.displayed {
       margin-top: 10px;
       margin-bottom: -10px;
@@ -63,7 +63,7 @@
     border-color: #ff0000;
   }
 
-  > .inputWrapper {
+  .inputWrapper {
     flex: 1 1 auto;
     margin-right: 16px;
     padding: 4px 0;
@@ -74,7 +74,7 @@
     white-space: pre;
   }
 
-  > button.send {
+  button.send {
     cursor: pointer;
     height: 32px;
     font-weight: 500;

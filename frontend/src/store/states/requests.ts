@@ -32,7 +32,7 @@ export const createRequest = (payload: any) => (dispatch: Dispatch) => {
     });
     events.emit(
       'REQUEST_CREATE_SUCCEEDED',
-      `Friend request sent to ${target.username}#${target.discriminator}`
+      `Friend request sent to <strong>${target.username}#${target.discriminator}</strong>`
     );
   }
 

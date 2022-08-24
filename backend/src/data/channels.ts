@@ -13,9 +13,11 @@ export default class Channels extends DBWrapper<string, ChannelDocument> {
 
   async fillInfo(channel: Entity.Channel, userId: string): Promise<Entity.Channel> {
     if (channel.type !== 'DM') return channel;
+
     const { userIds } = channel;
     const id = userIds[0] === userId ? userIds[1] : userIds[0];
     const user = await User.findById(id);
+
     return {
       ...channel,
       name: user?.username ?? 'Deleted User',

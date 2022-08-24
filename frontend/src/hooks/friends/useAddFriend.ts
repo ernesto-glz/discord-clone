@@ -17,7 +17,7 @@ export const useAddFriend = () => {
     message: null,
     type: null,
   });
-  const { handleSubmit, register, getValues } = useForm<AddFriend>();
+  const { handleSubmit, register, getValues, reset } = useForm<AddFriend>();
   const dispatch = useAppDispatch();
 
   const onSubmit = handleSubmit(() => {
@@ -45,6 +45,7 @@ export const useAddFriend = () => {
   useEffect(() => {
     events.on('REQUEST_CREATE_SUCCEEDED', (message) => {
       setResult({ message, type: 'Success' });
+      reset();
     });
     events.on('REQUEST_CREATE_FAILED', (message) => {
       setResult({ message, type: 'Error' });
