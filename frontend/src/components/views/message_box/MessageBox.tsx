@@ -9,6 +9,7 @@ import { actions as ui } from 'src/store/states/ui';
 import { createMessage, updateMessage } from 'src/store/states/messages';
 import classNames from 'classnames';
 import { replaceCaret } from 'src/utils/dom';
+import { actionKeys } from 'src/utils/keyboard';
 
 interface Props {
   content?: string;
@@ -25,10 +26,15 @@ export const MessageBox: React.FC<Props> = (props) => {
   const {} = useResizeObserver({ scrollbarRef });
   const dispatch = useAppDispatch();
 
-  const focusInput = () => {
+  const focusInput = (ev: KeyboardEvent) => {
     if (!messageBoxRef.current) return;
+    
+    // Prevent focus element when another element is already focused.
+    const anotherElementFocused = !document.activeElement?.contains(document.body);
     const isFocused = document.activeElement?.id === messageBoxRef.current.id;
-    if (isFocused) return;
+    const isValidKey = !actionKeys.includes(ev.key);
+    if (isFocused || !anotherElementFocused || !isValidKey) return;
+    
     messageBoxRef.current.focus();
     replaceCaret(messageBoxRef.current);
   }
