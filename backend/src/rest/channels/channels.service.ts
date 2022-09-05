@@ -1,8 +1,10 @@
+import { UserTypes } from '@dclone/types';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Channel } from 'src/data/models/channel-model';
 import { Message } from 'src/data/models/message-model';
 import { User } from 'src/data/models/user-model';
 import { generateSnowflake } from 'src/utils/snowflake';
+import { DeleteMessageDto } from './dto/delete-message.dto';
 
 @Injectable()
 export class ChannelsService {
@@ -45,5 +47,25 @@ export class ChannelsService {
     if (lastMessage.id === channel.lastMessageId) app.users.markAsRead(userId, lastMessage);
 
     return { channelId, total: channelMsgs.length, list: slicedMsgs };
+  }
+
+  async deleteMessage(params: DeleteMessageDto, self: UserTypes.Self) {
+    return Channel.findById(params.channelId)
+      .then(async () => {
+        const message = await Message.findById(params.messageId);
+        if (!message) throw new BadRequestException('Message not found');
+
+        /**
+         * For now there are no servers so:
+         * only check if the user is the creator of the message
+         */
+        if (self.id !== message.sender)
+          throw new BadRequestException('You are not permitted to perform this action.');
+
+        return await message.delete();
+      })
+      .catch((error) => {
+        throw new BadRequestException(error);
+      });
   }
 }

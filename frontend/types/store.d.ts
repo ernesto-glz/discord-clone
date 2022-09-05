@@ -18,6 +18,7 @@ export declare namespace Store {
       friendsSection: 'ONLINE' | 'ALL' | 'PENDING' | 'ADD';
       editingMessageId?: string;
       lastScrollbarPos: { [channelId: string]: number };
+      deleteMessageTarget: { messageId: string, channelId: string };
     };
     users: Entity.User[];
     messages: {

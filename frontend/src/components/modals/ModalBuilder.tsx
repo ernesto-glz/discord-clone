@@ -43,7 +43,7 @@ export const ModalBuilder: React.FC<Props> = (props) => {
             </button>
           )}
           {props.header && <div className="ModalHeader">{props.header}</div>}
-          {props.body && <div className="ModalBody">{props.body}</div>}
+          {props.body && <div className="ModalBody scrollerBase scroller inputScroller">{props.body}</div>}
           {props.footer && <div className="ModalFooter">{props.footer}</div>}
         </div>
       </form>

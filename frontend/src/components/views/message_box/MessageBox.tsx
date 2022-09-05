@@ -28,13 +28,13 @@ export const MessageBox: React.FC<Props> = (props) => {
 
   const focusInput = (ev: KeyboardEvent) => {
     if (!messageBoxRef.current) return;
-    
+
     // Prevent focus element when another element is already focused.
     const anotherElementFocused = !document.activeElement?.contains(document.body);
     const isFocused = document.activeElement?.id === messageBoxRef.current.id;
     const isValidKey = !actionKeys.includes(ev.key);
     if (isFocused || !anotherElementFocused || !isValidKey) return;
-    
+
     messageBoxRef.current.focus();
     replaceCaret(messageBoxRef.current);
   }
@@ -46,8 +46,8 @@ export const MessageBox: React.FC<Props> = (props) => {
 
   const saveMessage = () => {
     (editingMessageId)
-      ? dispatch(updateMessage(editingMessageId, { content }))
-      : dispatch(createMessage({ channelId: channel.id, content: content.trim() }));
+      ? updateMessage(editingMessageId, { content })
+      : createMessage({ channelId: channel.id, content: content.trim() });
 
     resetValue();
     dispatch(ui.stoppedEditingMessage());

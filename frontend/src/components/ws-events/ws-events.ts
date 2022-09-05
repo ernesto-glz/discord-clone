@@ -5,6 +5,7 @@ import * as Connect from './native/connect';
 import * as ConnectError from './native/connect-error';
 import * as MessageCreate from './messages/message-create';
 import * as MessageUpdate from './messages/message-update';
+import * as MessageDelete from './messages/message-delete';
 import * as PresenceUpdate from './users/presence-update';
 import * as FriendAdded from './friends/friend-added';
 import * as FriendRemove from './friends/friend-remove';
@@ -32,6 +33,7 @@ export default [
   ConnectError.default,
   MessageCreate.default,
   MessageUpdate.default,
+  MessageDelete.default,
   PresenceUpdate.default,
   FriendAdded.default,
   RequestCreate.default,

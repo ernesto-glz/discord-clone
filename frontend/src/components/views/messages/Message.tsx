@@ -22,9 +22,10 @@ import MessageMenu from 'src/components/context-menus/message-menu/message-menu'
 export interface Props {
   message: Entity.Message;
   wrappedRef?: React.RefObject<HTMLLIElement>;
+  onlyStructure?: boolean;
 }
 
-const Message: React.FC<Props> = ({ message, wrappedRef }) => {
+const Message: React.FC<Props> = ({ message, wrappedRef, onlyStructure }) => {
   const channel = useAppSelector((s) => s.ui.activeChannel)!;
   const messages = useAppSelector(getChannelMessages(channel.id));
   const author = useAppSelector(getUserById(message.sender)) as Entity.User;
@@ -44,8 +45,7 @@ const Message: React.FC<Props> = ({ message, wrappedRef }) => {
     return minSince < minsToSeparate && prev.sender === message.sender;
   };
 
-  const isActuallyExtra = isExtra();
-  const isActuallyNewDay = () => {
+  const isNewDay = () => {
     const index = messages.findIndex((m) => m.id === message.id);
     const prev = messages[index - 1];
     if (!prev) return true;
@@ -53,16 +53,21 @@ const Message: React.FC<Props> = ({ message, wrappedRef }) => {
     return getDiffInDays(message.createdAt, prev.createdAt) > 0;
   };
 
+  const isActuallyExtra = onlyStructure ? false : isExtra();
+  const isActuallyNewDay = onlyStructure ? false : isNewDay();
+
   return (
     <MenuTrigger id={message.id}>
-      {isActuallyNewDay() && <MessageDivider date={message.createdAt!} />}
+      {isActuallyNewDay && <MessageDivider date={message.createdAt!} />}
       <li
         ref={wrappedRef}
         className={classNames('chat-message', { isExtra: isActuallyExtra })}
       >
-        <div className="message-toolbar">
-          <MessageToolbar message={message} />
-        </div>
+        {!onlyStructure && (
+          <div className="message-toolbar">
+            <MessageToolbar message={message} />
+          </div>
+        )}
         {isActuallyExtra ? (
           <p className="message-date">{getTime(message.createdAt)}</p>
         ) : (

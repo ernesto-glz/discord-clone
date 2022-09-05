@@ -4,6 +4,7 @@ import { WSListeners } from 'src/components/ws-listener';
 import { NotImplemented } from 'src/components/modals/NotImplemented/NotImplemented';
 import { LogoutConfirm } from 'src/components/modals/LogoutConfirm/LogoutConfirm';
 import { motion } from 'framer-motion';
+import { MessageDelete } from 'src/components/modals/MessageDelete/MessageDelete';
 
 export type PageWrapperProps = React.DetailedHTMLProps<
   React.HTMLAttributes<HTMLDivElement>,
@@ -21,6 +22,7 @@ const PageWrapper: React.FC<PageWrapperProps> = (props) => {
       <UserSettings />
       <NotImplemented />
       <LogoutConfirm />
+      <MessageDelete />
       {props.children}
     </motion.div>
   );

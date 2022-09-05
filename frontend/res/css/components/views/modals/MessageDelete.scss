@@ -1,0 +1,27 @@
+.deleteMessageBody {
+  margin-top: -10px;
+  background-color: hsl(220, calc($saturation-factor * 7.7%), 22.9%);
+  box-shadow: 0 0 0 1px hsla(216, calc($saturation-factor * 7.2%), 13.5%, 0.6),
+    0 2px 10px 0 hsla(0, calc($saturation-factor * 0%), 0%, 0.2);
+  border-radius: 3px;
+  padding-bottom: 10px;
+
+  .chat-message {
+    user-select: none !important;
+    &:hover {
+      background-color: transparent !important;
+    }
+  }
+
+  .avatar-container {
+    cursor: default;
+  }
+
+  .message-header {
+    user-select: none !important;
+  }
+
+  .message-content {
+    user-select: none !important;
+  }
+}

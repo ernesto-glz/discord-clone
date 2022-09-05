@@ -28,6 +28,8 @@ export declare namespace WS {
     MESSAGE_CREATE: Params.MessageCreate;
     /* Update an existing message in a channel */
     MESSAGE_UPDATE: Params.MessageUpdate;
+    /* Delete a message */
+    MESSAGE_DELETE: Args.MessageDelete;
     /* Indicate that you are typing in a channel. */
     TYPING_START: Params.Typing;
     /* Indicates that you stopped writing in a channel. */
@@ -53,10 +55,12 @@ export declare namespace WS {
     CHANNEL_HIDE: Args.ChannelUpdate;
     /* Called when a channel of type DM is displayed by user  */
     CHANNEL_DISPLAY: Args.ChannelUpdate;
-    /* Called when a message is created  */
+    /* Called when a message is created */
     MESSAGE_CREATE: Args.MessageCreate;
-    /* Called when a message is updated  */
+    /* Called when a message is updated */
     MESSAGE_UPDATE: Args.MessageUpdate;
+    /* Called when a message is deleted */
+    MESSAGE_DELETE: Args.MessageDelete;
     /* Called when a user in room start typing  */
     TYPING_START: Args.Typing;
     /* Called when a user in room stop typing  */
@@ -104,6 +108,11 @@ export declare namespace WS {
       content?: string;
     }
 
+    export interface MessageDelete {
+      messageId: string;
+      channelId: string;
+    }
+
     export interface Typing {
       channelId: string;
     }
@@ -141,23 +150,20 @@ export declare namespace WS {
       message: Entity.Message;
     }
 
+    export interface MessageUpdate {
+      messageId: string;
+      partialMessage: Entity.Message;
+    }
+
+    export interface MessageDelete {
+      messageId: string;
+      channelId: string;
+    }
+
     export interface FriendAdded {
       requestId: string;
       user: Entity.User;
       channel: Entity.Channel;
-    }
-
-    export interface MessageCreate {
-      id: string;
-      sender: string;
-      channelId: string;
-      guildId: string;
-      content: string;
-    }
-
-    export interface MessageUpdate {
-      messageId: string;
-      partialMessage: Entity.Message;
     }
 
     export interface Typing {

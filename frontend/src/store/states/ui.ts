@@ -12,6 +12,7 @@ export const slice = createSlice({
   initialState: {
     friendsSection: 'ONLINE',
     lastScrollbarPos: {},
+    deleteMessageTarget: {},
   } as Store.AppState['ui'],
   reducers: {
     pageSwitched: (ui, { payload }: PayloadAction<PageSwitch>) => {
@@ -45,6 +46,9 @@ export const slice = createSlice({
     },
     setLastScrollbarPos: (state, { payload }) => {
       state.lastScrollbarPos[payload.channelId] = payload.position;
+    },
+    setDeleteMessageTarget: (state, { payload }) => {
+      state.deleteMessageTarget = payload;
     },
   },
 });
