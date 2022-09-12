@@ -4,6 +4,7 @@ import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from
 import { User } from 'src/data/models/user-model';
 import { Request } from 'express';
 import { patterns } from './patterns';
+import { Reflector } from '@nestjs/core';
 
 export type CustomRequest = Request & { user: UserTypes.Self };
 
@@ -11,13 +12,13 @@ export type CustomRequest = Request & { user: UserTypes.Self };
 export class AuthGuard implements CanActivate {
   private userId: string;
 
+  constructor(private readonly reflector: Reflector) {}
+
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest() as CustomRequest;
-    
-    // Don't apply to [login, register] routes
-    if (patterns.authRoutes.test(request.path))
-      return true;
+    const isPublic = this.reflector.get<boolean>('isPublic', context.getHandler());
 
+    if (isPublic) return true;
     return await this.validateToken(request);
   }
 

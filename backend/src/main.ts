@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { connect } from 'mongoose';
 import { AuthGuard } from './shared/auth.guard';
@@ -15,10 +15,11 @@ import './modules/app';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const isProd = process.env.NODE_ENV === 'production';
+  const reflector = app.get(Reflector);
 
   app.enableCors({ origin: '*' });
   app.setGlobalPrefix('v1');
-  app.useGlobalGuards(new AuthGuard());
+  app.useGlobalGuards(new AuthGuard(reflector));
   app.useGlobalPipes(new ValidationPipe());
   app.use(helmet.xssFilter());
   app.use(helmet.noSniff());
